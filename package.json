@@ -1,0 +1,21 @@
+{
+  "name": "stylebase",
+  "version": "0.1.0",
+  "author": "VChet",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js",
+    "database": "mongod --bind_ip 127.0.0.1 --port 27017",
+    "server": "nodemon server.js"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "helmet": "^3.23.3",
+    "mongoose": "^5.9.23",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
