@@ -21,15 +21,16 @@ function getStyleData(req, res) {
 }
 
 async function addStyle(req, res) {
-  const { link } = req.body;
+  // TODO: check is not fork, is not private
+  const { repoLink } = req.body;
 
-  Style.findOne({ repoLink: link }, (error, style) => {
+  Style.findOne({ repoLink }, (error, style) => {
     if (error) return res.status(500).json({ error });
     if (style) {
       return res.status(409).json({ error: `This repository was already added to our base` });
     }
 
-    const newStyle = new Style({ repoLink: link });
+    const newStyle = new Style({ repoLink });
     newStyle.save(error => {
       if (error) return res.status(500).json({ error });
       return res.status(201).json({ style: newStyle });
