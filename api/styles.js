@@ -40,6 +40,7 @@ async function retrieveRepositoryData(link) {
       forks: repo.data.forks,
       issues: repo.data.open_issues,
       license: repo.data.license,
+      isPrivate: repo.data.private,
       isArchived: repo.data.archived,
       isFork: repo.data.fork
     };
@@ -62,14 +63,24 @@ function getStyleData(req, res) {
   });
 }
 
-async function addStyle(req, res) {
-  // TODO: check is not fork, is not private
+function addStyle(req, res) {
   const { repoLink } = req.body;
 
-  Style.findOne({ repoLink }, (error, style) => {
+  Style.findOne({ repoLink }, async (error, style) => {
     if (error) return res.status(500).json({ error });
     if (style) {
-      return res.status(409).json({ error: `This repository was already added to our base` });
+      return res.status(409).json({ error: `Repository was already added to our base` });
+    }
+    const data = await retrieveRepositoryData(repoLink);
+    if (data.isPrivate || data.status === 404) {
+      return res.status(400).json({ error: `Repository was not found or private` });
+    }
+    if (data.error) return res.status(data.status).json({ error: data.error });
+    if (data.isArchived) {
+      return res.status(400).json({ error: `Repository is archived` });
+    }
+    if (data.isFork) {
+      return res.status(400).json({ error: `Repository is forked` });
     }
 
     const newStyle = new Style({ repoLink });
