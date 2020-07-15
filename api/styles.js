@@ -11,9 +11,17 @@ const axios = require("axios");
 const { Style } = require("../models/style");
 
 function getStyles(req, res) {
-  Style.find().exec((error, styles) => {
+  // TODO: add pagination
+  Style.find({}).lean().exec(async (error, styles) => {
     if (error) return res.status(500).json({ error });
-    return res.status(200).json({ styles });
+
+    let stylesArr;
+    try {
+      stylesArr = await Promise.all(styles.map(style => retrieveRepositoryData(style.repoLink)));
+      return res.status(200).json({ styles: stylesArr });
+    } catch (error) {
+      return res.status(error.response.status).json({ error: error.response.statusText });
+    }
   });
 }
 
