@@ -11,21 +11,6 @@ const repoImages = require("repo-images");
 
 const { Style } = require("../models/style");
 
-function getStyles(req, res) {
-  // TODO: add pagination
-  Style.find({}).lean().exec(async (error, styles) => {
-    if (error) return res.status(500).json({ error });
-
-    let stylesArr;
-    try {
-      stylesArr = await Promise.all(styles.map(style => retrieveRepositoryData(style.repoLink)));
-      return res.status(200).json({ styles: stylesArr });
-    } catch (error) {
-      return res.status(error.response.status).json({ error: error.response.statusText });
-    }
-  });
-}
-
 async function retrieveRepositoryData(link) {
   const repoURL = new URL(link);
   const pathname = repoURL.pathname;
@@ -68,6 +53,21 @@ async function retrieveRepositoryData(link) {
   }
 }
 
+function getStyles(req, res) {
+  // TODO: add pagination
+  Style.find({}).lean().exec(async (error, styles) => {
+    if (error) return res.status(500).json({ error });
+
+    let stylesArr;
+    try {
+      stylesArr = await Promise.all(styles.map(style => retrieveRepositoryData(style.repoLink)));
+      return res.status(200).json({ styles: stylesArr });
+    } catch (error) {
+      return res.status(error.response.status).json({ error: error.response.statusText });
+    }
+  });
+}
+
 function getStyleData(req, res) {
   Style.findById(req.params.id, async (error, style) => {
     if (error) return res.status(500).json({ error });
@@ -85,18 +85,18 @@ function addStyle(req, res) {
   Style.findOne({ repoLink }, async (error, style) => {
     if (error) return res.status(500).json({ error });
     if (style) {
-      return res.status(409).json({ error: `Repository was already added to our base` });
+      return res.status(409).json({ error: "Repository was already added to our base" });
     }
     const data = await retrieveRepositoryData(repoLink);
     if (data.isPrivate || data.status === 404) {
-      return res.status(400).json({ error: `Repository was not found or private` });
+      return res.status(404).json({ error: "Repository was not found or private" });
     }
     if (data.error) return res.status(data.status).json({ error: data.error });
     if (data.isArchived) {
-      return res.status(400).json({ error: `Repository is archived` });
+      return res.status(400).json({ error: "Repository is archived" });
     }
     if (data.isFork) {
-      return res.status(400).json({ error: `Repository is forked` });
+      return res.status(400).json({ error: "Repository is forked" });
     }
 
     const newStyle = new Style({ repoLink });
