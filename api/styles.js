@@ -7,6 +7,7 @@ module.exports = {
 };
 
 const axios = require("axios");
+const repoImages = require("repo-images");
 
 const { Style } = require("../models/style");
 
@@ -30,15 +31,22 @@ async function retrieveRepositoryData(link) {
   const pathname = repoURL.pathname;
 
   try {
-    const [contents, repo] = await Promise.all([
-      axios.get(`https://api.github.com/repos${pathname}/contents`),
-      axios.get(`https://api.github.com/repos${pathname}`)
+    const [repo, contents] = await Promise.all([
+      axios.get(`https://api.github.com/repos${pathname}`),
+      axios.get(`https://api.github.com/repos${pathname}/contents`)
     ]);
     const usercss = contents.data.find(file => file.name.includes("user.css"));
+    const images = await repoImages(pathname.substr(1));
+    let preview;
+    if (images.length) {
+      const previewObj = images.reduce((a, b) => (a.size > b.size) ? a : b);
+      preview = `https://raw.githubusercontent.com${pathname}/master/${previewObj.path}`;
+    }
 
     return {
       url: link,
       usercss: usercss.download_url,
+      preview: preview,
       name: repo.data.name.replace(/-/g, " "),
       description: repo.data.description,
       owner: repo.data.owner.login,
