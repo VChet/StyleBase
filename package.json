@@ -19,6 +19,10 @@
     "repo-images": "^1.0.1"
   },
   "devDependencies": {
+    "eslint": "^7.5.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-sonarjs": "^0.5.0",
     "nodemon": "^2.0.4"
   }
 }
