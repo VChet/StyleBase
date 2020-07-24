@@ -1,11 +1,3 @@
-module.exports = {
-  getStyles,
-  getStyleData,
-  addStyle,
-  updateStyle,
-  deleteStyle
-};
-
 const axios = require("axios");
 const repoImages = require("repo-images");
 
@@ -13,7 +5,7 @@ const { Style } = require("../models/style");
 
 async function retrieveRepositoryData(link) {
   const repoURL = new URL(link);
-  const pathname = repoURL.pathname;
+  const { pathname } = repoURL;
 
   try {
     const [repo, contents] = await Promise.all([
@@ -24,14 +16,14 @@ async function retrieveRepositoryData(link) {
     const images = await repoImages(pathname.substr(1));
     let preview;
     if (images.length) {
-      const previewObj = images.reduce((a, b) => (a.size > b.size) ? a : b);
+      const previewObj = images.reduce((a, b) => (a.size > b.size ? a : b));
       preview = `https://raw.githubusercontent.com${pathname}/master/${previewObj.path}`;
     }
 
     return {
       url: link,
       usercss: usercss.download_url,
-      preview: preview,
+      preview,
       name: repo.data.name.replace(/-/g, " "),
       description: repo.data.description,
       owner: repo.data.owner.login,
@@ -62,8 +54,8 @@ function getStyles(req, res) {
     try {
       stylesArr = await Promise.all(styles.map(style => retrieveRepositoryData(style.repoLink)));
       return res.status(200).json({ styles: stylesArr });
-    } catch (error) {
-      return res.status(error.response.status).json({ error: error.response.statusText });
+    } catch (dataError) {
+      return res.status(dataError.response.status).json({ error: dataError.response.statusText });
     }
   });
 }
@@ -100,8 +92,8 @@ function addStyle(req, res) {
     }
 
     const newStyle = new Style({ repoLink });
-    newStyle.save(error => {
-      if (error) return res.status(500).json({ error });
+    newStyle.save((saveError) => {
+      if (saveError) return res.status(500).json({ error: saveError });
       return res.status(201).json({ style: newStyle });
     });
   });
@@ -109,9 +101,7 @@ function addStyle(req, res) {
 
 function updateStyle(req, res) {
   const { styleId, ...styleData } = req.body;
-  if (!styleId) return res.status(400).json({
-    error: "Request must contain styleId field"
-  });
+  if (!styleId) return res.status(400).json({ error: "Request must contain styleId field" });
 
   Style.findByIdAndUpdate(
     styleId,
@@ -126,11 +116,19 @@ function updateStyle(req, res) {
 
 async function deleteStyle(req, res) {
   const { styleId } = req.body;
-  const style = await Style.findById(styleId).lean();
-  if (!style) return res.status(404).json({ error: "Style doesn't exist" });
+  const existingStyle = await Style.findById(styleId).lean();
+  if (!existingStyle) return res.status(404).json({ error: "Style doesn't exist" });
 
   Style.findByIdAndRemove(styleId, (error, style) => {
     if (error) return res.status(500).json({ error });
     return res.status(200).json({ style });
   });
 }
+
+module.exports = {
+  getStyles,
+  getStyleData,
+  addStyle,
+  updateStyle,
+  deleteStyle
+};

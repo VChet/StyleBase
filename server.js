@@ -4,6 +4,7 @@ const express = require("express");
 const config = require("./config");
 const { addExpressMiddleware } = require("./common");
 const api = require("./api/routes");
+
 const clientIndex = path.join(__dirname, "public/index.html");
 
 const app = express();
@@ -13,7 +14,7 @@ addExpressMiddleware(app);
 
 app.use(express.static("public"));
 app.use("/api", api);
-app.get("*", (req, res, next) => res.sendFile(clientIndex));
+app.get("*", (req, res) => res.sendFile(clientIndex));
 
 app.set("port", PORT);
 app.listen(app.get("port"), () => {

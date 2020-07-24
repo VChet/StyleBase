@@ -1,7 +1,3 @@
-module.exports = {
-  addExpressMiddleware,
-};
-
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const helmet = require("helmet");
@@ -26,3 +22,5 @@ function addExpressMiddleware(app) {
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(compression());
 }
+
+module.exports = { addExpressMiddleware };

@@ -1,4 +1,5 @@
 const express = require("express");
+
 const router = express.Router();
 
 const {
@@ -7,7 +8,7 @@ const {
   addStyle,
   updateStyle,
   deleteStyle
-} = require("../api/styles");
+} = require("./styles");
 
 router.get("/styles", getStyles);
 router.get("/style/:id", getStyleData);
