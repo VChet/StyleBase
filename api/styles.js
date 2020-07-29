@@ -83,20 +83,14 @@ function addStyle(req, res) {
 
   Style.findOne({ repoLink }, async (error, style) => {
     if (error) return res.status(500).json({ error });
-    if (style) {
-      return res.status(409).json({ error: "Repository was already added to our base" });
-    }
+    if (style) return res.status(409).json({ error: "Repository was already added to our base" });
+
     const data = await retrieveRepositoryData(repoLink);
-    if (data.isPrivate || data.status === 404) {
-      return res.status(404).json({ error: "Repository was not found or private" });
-    }
+    if (data.status === 404) return res.status(404).json({ error: "Repository was not found" });
     if (data.error) return res.status(data.status).json({ error: data.error });
-    if (data.isArchived) {
-      return res.status(400).json({ error: "Repository is archived" });
-    }
-    if (data.isFork) {
-      return res.status(400).json({ error: "Repository is forked" });
-    }
+    if (data.isPrivate) return res.status(403).json({ error: "Repository is private" });
+    if (data.isArchived) return res.status(400).json({ error: "Repository is archived" });
+    if (data.isFork) return res.status(400).json({ error: "Repository is forked" });
 
     const newStyle = new Style({ repoLink });
     newStyle.save((saveError) => {
@@ -124,7 +118,7 @@ function updateStyle(req, res) {
 async function deleteStyle(req, res) {
   const { styleId } = req.body;
   const existingStyle = await Style.findById(styleId).lean();
-  if (!existingStyle) return res.status(404).json({ error: "Style doesn't exist" });
+  if (!existingStyle) return res.status(404).json({ error: "Style does not exist" });
 
   Style.findByIdAndRemove(styleId, (error, style) => {
     if (error) return res.status(500).json({ error });
