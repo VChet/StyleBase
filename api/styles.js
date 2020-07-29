@@ -13,6 +13,13 @@ async function retrieveRepositoryData(link) {
       axios.get(`https://api.github.com/repos${pathname}/contents`)
     ]);
     const usercss = contents.data.find(file => file.name.includes("user.css"));
+    if (!usercss) {
+      return {
+        status: 400,
+        error: "Repository does not contain usercss file"
+      };
+    }
+
     const images = await repoImages(pathname.substr(1));
     let preview;
     if (images.length) {
