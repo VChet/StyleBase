@@ -22,7 +22,7 @@ async function retrieveRepositoryData(link) {
       };
     }
 
-    const images = await repoImages(pathname.substr(1));
+    const images = await repoImages(pathname.substr(1), { token: GHToken });
     let preview;
     if (images.length) {
       const previewObj = images.reduce((a, b) => (a.size > b.size ? a : b));
