@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const compression = require("compression");
 
 const config = require("./config");
+const { initCollection } = require("./models/init");
 
 mongoose.connect(config.mongoUrl, {
   useCreateIndex: true,
@@ -14,6 +15,7 @@ mongoose.connect(config.mongoUrl, {
 });
 
 mongoose.connection.on("error", console.error.bind(console, "MongoDB connection error:"));
+initCollection();
 
 function addExpressMiddleware(app) {
   app.use(morgan("dev"));

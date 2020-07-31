@@ -39,7 +39,7 @@ async function retrieveRepositoryData(link) {
       watchers: repo.data.subscribers_count,
       forks: repo.data.forks,
       issues: repo.data.open_issues,
-      license: repo.data.license,
+      license: repo.data.license.spdx_id,
       isPrivate: repo.data.private,
       isArchived: repo.data.archived,
       isFork: repo.data.fork
@@ -56,14 +56,7 @@ function getStyles(req, res) {
   // TODO: add pagination
   Style.find({}).lean().exec(async (error, styles) => {
     if (error) return res.status(500).json({ error });
-
-    let stylesArr;
-    try {
-      stylesArr = await Promise.all(styles.map(style => retrieveRepositoryData(style.repoLink)));
-      return res.status(200).json({ styles: stylesArr });
-    } catch (dataError) {
-      return res.status(dataError.response.status).json({ error: dataError.response.statusText });
-    }
+    return res.status(200).json({ styles });
   });
 }
 
@@ -71,7 +64,7 @@ function getStyleData(req, res) {
   Style.findById(req.params.id, async (error, style) => {
     if (error) return res.status(500).json({ error });
 
-    const data = await retrieveRepositoryData(style.repoLink);
+    const data = await retrieveRepositoryData(style.repository);
     if (data.error) return res.status(data.status).json({ error: data.error });
 
     res.status(200).json({ data });
@@ -79,20 +72,20 @@ function getStyleData(req, res) {
 }
 
 function addStyle(req, res) {
-  const { repoLink } = req.body;
+  const { repository } = req.body;
 
-  Style.findOne({ repoLink }, async (error, style) => {
+  Style.findOne({ repository }, async (error, style) => {
     if (error) return res.status(500).json({ error });
     if (style) return res.status(409).json({ error: "Repository was already added to our base" });
 
-    const data = await retrieveRepositoryData(repoLink);
+    const data = await retrieveRepositoryData(repository);
     if (data.status === 404) return res.status(404).json({ error: "Repository was not found" });
     if (data.error) return res.status(data.status).json({ error: data.error });
     if (data.isPrivate) return res.status(403).json({ error: "Repository is private" });
     if (data.isArchived) return res.status(400).json({ error: "Repository is archived" });
     if (data.isFork) return res.status(400).json({ error: "Repository is forked" });
 
-    const newStyle = new Style({ repoLink });
+    const newStyle = new Style(data);
     newStyle.save((saveError) => {
       if (saveError) return res.status(500).json({ error: saveError });
       return res.status(201).json({ style: newStyle });
@@ -101,18 +94,30 @@ function addStyle(req, res) {
 }
 
 function updateStyle(req, res) {
-  const { styleId, ...styleData } = req.body;
+  const styleId = req.params.id;
   if (!styleId) return res.status(400).json({ error: "Request must contain styleId field" });
 
-  Style.findByIdAndUpdate(
-    styleId,
-    styleData,
-    { new: true },
-    (error, newStyle) => {
-      if (error) return res.status(500).json({ error });
-      return res.status(200).json({ style: newStyle });
-    }
-  );
+  Style.findById(styleId, async (error, style) => {
+    if (error) return res.status(500).json({ error });
+    if (!style) return res.status(404).json({ error: "Style was not found in our base" });
+
+    const data = await retrieveRepositoryData(style.repository);
+    if (data.status === 404) return res.status(404).json({ error: "Repository was not found" });
+    if (data.error) return res.status(data.status).json({ error: data.error });
+    if (data.isPrivate) return res.status(403).json({ error: "Repository is private" });
+    if (data.isArchived) return res.status(400).json({ error: "Repository is archived" });
+    if (data.isFork) return res.status(400).json({ error: "Repository is forked" });
+
+    Style.findByIdAndUpdate(
+      styleId,
+      data,
+      { new: true },
+      (updateError, newStyle) => {
+        if (updateError) return res.status(500).json({ error: updateError });
+        return res.status(200).json({ style: newStyle });
+      }
+    );
+  });
 }
 
 async function deleteStyle(req, res) {
