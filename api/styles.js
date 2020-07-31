@@ -141,11 +141,11 @@ function updateAllStyles(req, res) {
 }
 
 async function deleteStyle(req, res) {
-  const { styleId } = req.body;
-  const existingStyle = await Style.findById(styleId).lean();
+  const { url } = req.body;
+  const existingStyle = await Style.findOne({ url }).lean();
   if (!existingStyle) return res.status(404).json({ error: "Style does not exist" });
 
-  Style.findByIdAndRemove(styleId, (error, style) => {
+  Style.findOneAndDelete({ url }, (error, style) => {
     if (error) return res.status(500).json({ error });
     return res.status(200).json({ style });
   });
