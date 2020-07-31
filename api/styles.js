@@ -122,6 +122,24 @@ function updateStyle(req, res) {
   });
 }
 
+function updateAllStyles(req, res) {
+  Style.find({}).lean().exec(async (error, styles) => {
+    if (error) return res.status(500).json({ error });
+
+    try {
+      const Bulk = Style.collection.initializeUnorderedBulkOp();
+      const stylesArr = await Promise.all(styles.map(style => retrieveRepositoryData(style.repository)));
+      stylesArr.map(style => Bulk.find({ repository: style.url }).update({ $set: style }));
+      Bulk.execute((bulkError, result) => {
+        if (bulkError) return res.status(500).json({ error: bulkError });
+        return res.status(200).json({ result });
+      });
+    } catch (dataError) {
+      return res.status(500).json({ error: dataError });
+    }
+  });
+}
+
 async function deleteStyle(req, res) {
   const { styleId } = req.body;
   const existingStyle = await Style.findById(styleId).lean();
@@ -138,5 +156,6 @@ module.exports = {
   getStyleData,
   addStyle,
   updateStyle,
+  updateAllStyles,
   deleteStyle
 };
