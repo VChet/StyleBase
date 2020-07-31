@@ -66,7 +66,7 @@ function getStyleData(req, res) {
   Style.findById(req.params.id, async (error, style) => {
     if (error) return res.status(500).json({ error });
 
-    const data = await retrieveRepositoryData(style.repository);
+    const data = await retrieveRepositoryData(style.url);
     if (data.error) return res.status(data.status).json({ error: data.error });
 
     res.status(200).json({ data });
@@ -74,13 +74,13 @@ function getStyleData(req, res) {
 }
 
 function addStyle(req, res) {
-  const { repository } = req.body;
+  const { url } = req.body;
 
-  Style.findOne({ repository }, async (error, style) => {
+  Style.findOne({ url }, async (error, style) => {
     if (error) return res.status(500).json({ error });
     if (style) return res.status(409).json({ error: "Repository was already added to our base" });
 
-    const data = await retrieveRepositoryData(repository);
+    const data = await retrieveRepositoryData(url);
     if (data.status === 404) return res.status(404).json({ error: "Repository was not found" });
     if (data.error) return res.status(data.status).json({ error: data.error });
     if (data.isPrivate) return res.status(403).json({ error: "Repository is private" });
@@ -103,7 +103,7 @@ function updateStyle(req, res) {
     if (error) return res.status(500).json({ error });
     if (!style) return res.status(404).json({ error: "Style was not found in our base" });
 
-    const data = await retrieveRepositoryData(style.repository);
+    const data = await retrieveRepositoryData(style.url);
     if (data.status === 404) return res.status(404).json({ error: "Repository was not found" });
     if (data.error) return res.status(data.status).json({ error: data.error });
     if (data.isPrivate) return res.status(403).json({ error: "Repository is private" });
@@ -128,8 +128,8 @@ function updateAllStyles(req, res) {
 
     try {
       const Bulk = Style.collection.initializeUnorderedBulkOp();
-      const stylesArr = await Promise.all(styles.map(style => retrieveRepositoryData(style.repository)));
-      stylesArr.map(style => Bulk.find({ repository: style.url }).update({ $set: style }));
+      const stylesArr = await Promise.all(styles.map(style => retrieveRepositoryData(style.url)));
+      stylesArr.map(style => Bulk.find({ url: style.url }).update({ $set: style }));
       Bulk.execute((bulkError, result) => {
         if (bulkError) return res.status(500).json({ error: bulkError });
         return res.status(200).json({ result });

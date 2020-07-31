@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const schema = new Schema({
-  repository: {
+  url: {
     type: String,
     required: true,
     unique: true
