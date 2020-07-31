@@ -2,15 +2,17 @@ const axios = require("axios");
 const repoImages = require("repo-images");
 
 const { Style } = require("../models/style");
+const { GHToken } = require("../config");
 
 async function retrieveRepositoryData(link) {
   const repoURL = new URL(link);
   const { pathname } = repoURL;
 
   try {
+    const config = { headers: { Authorization: `token ${GHToken}` } };
     const [repo, contents] = await Promise.all([
-      axios.get(`https://api.github.com/repos${pathname}`),
-      axios.get(`https://api.github.com/repos${pathname}/contents`)
+      axios.get(`https://api.github.com/repos${pathname}`, config),
+      axios.get(`https://api.github.com/repos${pathname}/contents`, config)
     ]);
     const usercss = contents.data.find(file => file.name.includes("user.css"));
     if (!usercss) {
