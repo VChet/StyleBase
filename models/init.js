@@ -1,4 +1,4 @@
-const { Style } = require("./style");
+const { Style } = require("./Style");
 
 function initCollection() {
   if (process.env.NODE_ENV === "test") return;

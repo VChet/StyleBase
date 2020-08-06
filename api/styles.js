@@ -1,7 +1,7 @@
 const axios = require("axios");
 const repoImages = require("repo-images");
 
-const { Style } = require("../models/style");
+const { Style } = require("../models/Style");
 const { GHToken } = require("../config");
 
 async function retrieveRepositoryData(link) {
