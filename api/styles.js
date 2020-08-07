@@ -72,13 +72,9 @@ function getStyles(req, res) {
 }
 
 function getStyleData(req, res) {
-  Style.findById(req.params.id, async (error, style) => {
+  Style.findById(req.params.id, (error, style) => {
     if (error) return res.status(500).json({ error });
-
-    const data = await retrieveRepositoryData(style.url);
-    if (data.error) return res.status(data.status).json({ error: data.error });
-
-    res.status(200).json({ data });
+    return res.status(200).json({ style });
   });
 }
 
