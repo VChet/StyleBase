@@ -11,7 +11,7 @@ const {
   deleteStyle
 } = require("./styles");
 
-router.get("/styles", getStyles);
+router.get("/styles/:page?", getStyles);
 router.get("/style/:id", getStyleData);
 router.post("/style/add", addStyle);
 router.get("/style/update/all", updateAllStyles);

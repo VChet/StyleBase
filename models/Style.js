@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const mongoosePaginate = require("mongoose-paginate-v2");
 
 const { Schema } = mongoose;
 
@@ -23,5 +24,7 @@ const schema = new Schema({
   isArchived: Boolean,
   isFork: Boolean
 });
+
+schema.plugin(mongoosePaginate);
 
 exports.Style = mongoose.model("Style", schema);

@@ -55,10 +55,19 @@ async function retrieveRepositoryData(link) {
 }
 
 function getStyles(req, res) {
-  // TODO: add pagination
-  Style.find({}).lean().exec(async (error, styles) => {
+  const { page = 1 } = req.params;
+
+  const customLabels = { totalDocs: "totalStyles", docs: "styles" };
+  const options = {
+    page,
+    limit: 10,
+    collation: { locale: "en" },
+    customLabels
+  };
+
+  Style.paginate({}, options, async (error, data) => {
     if (error) return res.status(500).json({ error });
-    return res.status(200).json({ styles });
+    return res.status(200).json(data);
   });
 }
 
