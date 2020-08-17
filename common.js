@@ -25,4 +25,27 @@ function addExpressMiddleware(app) {
   app.use(compression());
 }
 
-module.exports = { addExpressMiddleware };
+function CORSMiddleware(app) {
+  app.use((req, res, next) => {
+    const origin = req.get("Origin");
+    res.header("Access-Control-Allow-Origin", origin || "*");
+    res.header(
+      "Access-Control-Allow-Methods",
+      "DELETE,GET,HEAD,POST,PUT,OPTIONS,TRACE"
+    );
+    res.header(
+      "Access-Control-Allow-Headers",
+      "X-HTTP-Method-Override, Content-Type, Accept, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+    );
+    res.header("Access-Control-Allow-Credentials", "true");
+
+    req.method === "OPTIONS" ?
+      res.end() :
+      next();
+  });
+}
+
+module.exports = {
+  addExpressMiddleware,
+  CORSMiddleware
+};

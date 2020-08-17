@@ -2,12 +2,16 @@ const path = require("path");
 const express = require("express");
 
 const config = require("./config");
-const { addExpressMiddleware } = require("./common");
+const {
+  addExpressMiddleware,
+  CORSMiddleware
+} = require("./common");
 const api = require("./api/routes");
 
 const app = express();
 const PORT = process.env.PORT || config.appPort;
 
+CORSMiddleware(app);
 addExpressMiddleware(app);
 
 app.use(express.static("public"));
