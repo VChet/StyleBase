@@ -3,9 +3,12 @@ const morgan = require("morgan");
 const helmet = require("helmet");
 const bodyParser = require("body-parser");
 const compression = require("compression");
+const Agenda = require("agenda");
 
 const config = require("./config");
 const { initCollection } = require("./models/init");
+const { Style } = require("./models/Style");
+const { retrieveRepositoryData } = require("./api/styles");
 
 mongoose.connect(config.mongoUrl, {
   useCreateIndex: true,
@@ -16,6 +19,31 @@ mongoose.connect(config.mongoUrl, {
 
 mongoose.connection.on("error", console.error.bind(console, "MongoDB connection error:"));
 initCollection();
+
+const agenda = new Agenda({
+  db: {
+    address: config.mongoUrl,
+    options: {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    }
+  }
+});
+
+agenda.define("Update all styles", () => {
+  Style.find({}).lean().exec(async (error, styles) => {
+    if (error)console.log({ error });
+    const Bulk = Style.collection.initializeUnorderedBulkOp();
+    const stylesArr = await Promise.all(styles.map(style => retrieveRepositoryData(style.url)));
+    stylesArr.map(style => Bulk.find({ url: style.url }).update({ $set: style }));
+    Bulk.execute((bulkError, result) => {
+      if (error)console.log({ bulkError });
+      console.log("Data updated", result);
+    });
+  });
+});
+
+agenda.start().then(() => agenda.every("0 0 * * *", "Update all styles"));
 
 function addExpressMiddleware(app) {
   app.use(morgan("dev"));

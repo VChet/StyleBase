@@ -157,6 +157,7 @@ async function deleteStyle(req, res) {
 }
 
 module.exports = {
+  retrieveRepositoryData,
   getStyles,
   getStyleData,
   addStyle,
