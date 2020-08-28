@@ -74,6 +74,7 @@ function getStyles(req, res) {
 function getStyleData(req, res) {
   Style.findById(req.params.id, (error, style) => {
     if (error) return res.status(500).json({ error });
+    if (!style) return res.status(404).json({ error: "Style not found" });
     return res.status(200).json({ style });
   });
 }
