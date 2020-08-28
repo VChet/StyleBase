@@ -79,6 +79,14 @@ function getStyleData(req, res) {
   });
 }
 
+function searchStyle(req, res) {
+  Style.find({ $text: { $search: req.query.query } }, (error, styles) => {
+    if (error) return res.status(500).json({ error });
+    if (!styles.length) return res.status(404).json({ error: "Nothing found" });
+    return res.status(200).json({ styles });
+  });
+}
+
 function addStyle(req, res) {
   const { url } = req.body;
 
@@ -161,6 +169,7 @@ module.exports = {
   retrieveRepositoryData,
   getStyles,
   getStyleData,
+  searchStyle,
   addStyle,
   updateStyle,
   updateAllStyles,

@@ -25,6 +25,7 @@ const schema = new Schema({
   isFork: Boolean
 });
 
+schema.index({ name: "text", owner: "text" });
 schema.plugin(mongoosePaginate);
 
 exports.Style = mongoose.model("Style", schema);
