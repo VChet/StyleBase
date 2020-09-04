@@ -56,13 +56,21 @@ async function retrieveRepositoryData(link) {
 
 function getStyles(req, res) {
   const { page = 1 } = req.params;
+  let { sort } = req.query;
+
+  if (req.query.sort === "stars") {
+    sort = "-stargazers";
+  } else if (req.query.sort === "update") {
+    sort = "-lastUpdate";
+  }
 
   const customLabels = { totalDocs: "totalStyles", docs: "styles" };
   const options = {
     page,
+    sort,
+    customLabels,
     limit: 10,
-    collation: { locale: "en" },
-    customLabels
+    collation: { locale: "en" }
   };
 
   Style.paginate({}, options, async (error, data) => {
