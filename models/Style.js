@@ -22,7 +22,11 @@ const schema = new Schema({
   license: String,
   isPrivate: Boolean,
   isArchived: Boolean,
-  isFork: Boolean
+  isFork: Boolean,
+  added: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 schema.index({ name: "text", owner: "text" });
