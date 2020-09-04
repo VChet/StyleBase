@@ -9,7 +9,8 @@ const {
   addStyle,
   updateAllStyles,
   updateStyle,
-  deleteStyle
+  deleteStyle,
+  getStylesByAuthor
 } = require("./styles");
 
 router.get("/styles/:page?", getStyles);
@@ -19,5 +20,6 @@ router.post("/style/add", addStyle);
 router.put("/style/update/all", updateAllStyles);
 router.put("/style/update/:id", updateStyle);
 router.delete("/style/delete", deleteStyle);
+router.get("/author/:author/:page?", getStylesByAuthor);
 
 module.exports = router;
