@@ -1,0 +1,17 @@
+button {
+  cursor: pointer;
+}
+
+.style-button {
+  border: 1px solid #D37B53;
+  background-color: transparent;
+  border-radius: 5px;
+  color: #D37B53;
+}
+
+.style-button-filled {
+  border: 1px solid #D37B53;
+  border-radius: 5px;
+  background-color: #D37B53;
+  color: #FFFFFF;
+}
