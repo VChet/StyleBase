@@ -85,7 +85,6 @@ export default {
   font-family: Roboto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #faf6f0;
 }
 
 .container {
