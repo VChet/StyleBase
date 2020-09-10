@@ -22,8 +22,8 @@
       size="extra-large"
       :open="showStyleInfoModal"
       @close="
-        showStyleInfoModal = false
-        selectedStyle = {}
+        showStyleInfoModal = false;
+        selectedStyle = {};
       "
     >
       <template #body>
@@ -65,9 +65,9 @@
 </template>
 
 <script>
-import axios from 'axios'
-import StyleCard from '@/components/StyleCard'
-import BaseDialog from '@/components/BaseDialog'
+import axios from 'axios';
+import StyleCard from '@/components/StyleCard';
+import BaseDialog from '@/components/BaseDialog';
 
 export default {
   name: 'Home',
@@ -83,60 +83,60 @@ export default {
       selectedStyle: {},
 
       showStyleInfoModal: false
-    }
+    };
   },
   watch: {
     selectedOption: function() {
-      this.getStyles()
+      this.getStyles();
     }
   },
   created() {
     axios
       .get('/api/styles')
       .then(response => {
-        this.styles = response.data.styles
+        this.styles = response.data.styles;
       })
       .catch(error => {
-        console.error(error)
-      })
+        console.error(error);
+      });
   },
   methods: {
     getStyles() {
-      let params
+      let params;
       switch (this.selectedOption) {
         case 1:
-          params = { sort: 'update' }
-          break
+          params = { sort: 'update' };
+          break;
         case 2:
-          params = { sort: 'stars' }
-          break
+          params = { sort: 'stars' };
+          break;
         default:
-          params = {}
-          break
+          params = {};
+          break;
       }
       axios
         .get('/api/styles', { params })
         .then(response => {
-          this.styles = response.data.styles
+          this.styles = response.data.styles;
         })
         .catch(error => {
-          console.error(error)
-        })
+          console.error(error);
+        });
     },
     onOpenStyleCard(_id) {
-      this.showStyleInfoModal = true
+      this.showStyleInfoModal = true;
 
       axios
         .get(`/api/style/${_id}`)
         .then(styleData => {
-          this.selectedStyle = styleData.data.style
+          this.selectedStyle = styleData.data.style;
         })
         .catch(error => {
-          console.error(error)
-        })
+          console.error(error);
+        });
     }
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

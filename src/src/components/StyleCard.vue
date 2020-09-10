@@ -38,9 +38,9 @@ export default {
   data() {
     return {
       showInstallBlock: false
-    }
+    };
   }
-}
+};
 </script>
 
 <style scoped lang="scss">

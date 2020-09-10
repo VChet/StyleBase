@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import clickOutside from '@/directives/clickOutside'
-import CloseButton from '@/components/CloseButton.vue'
+import clickOutside from '@/directives/clickOutside';
+import CloseButton from '@/components/CloseButton.vue';
 
 export default {
   name: 'BaseDialog',
@@ -42,7 +42,7 @@ export default {
       required: false,
       default: 'medium',
       validator(size) {
-        return ['small', 'medium', 'large', 'extra-large', 'maximum'].indexOf(size) !== -1
+        return ['small', 'medium', 'large', 'extra-large', 'maximum'].indexOf(size) !== -1;
       }
     },
     loading: {
@@ -73,17 +73,17 @@ export default {
   },
   methods: {
     onClose() {
-      this.$emit('close')
+      this.$emit('close');
     },
     onClickOutside() {
       if (this.clickOutside) {
-        this.$emit('close')
+        this.$emit('close');
       } else {
-        this.$emit('clickOutside')
+        this.$emit('clickOutside');
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

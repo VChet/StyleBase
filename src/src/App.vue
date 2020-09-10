@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import axios from 'axios'
-import Home from './views/Home.vue'
-import BaseDialog from '@/components/BaseDialog'
+import axios from 'axios';
+import Home from './views/Home.vue';
+import BaseDialog from '@/components/BaseDialog';
 
 export default {
   name: 'App',
@@ -59,7 +59,7 @@ export default {
       errors: {
         submitStyle: ''
       }
-    }
+    };
   },
   methods: {
     submitStyle(url) {
@@ -68,16 +68,16 @@ export default {
           url
         })
         .then(response => {
-          console.log(response)
-          this.showAddStyleModal = false
-          this.newStyleUrl = ''
+          console.log(response);
+          this.showAddStyleModal = false;
+          this.newStyleUrl = '';
         })
         .catch(error => {
-          this.errors.submitStyle = error.response.data.error
-        })
+          this.errors.submitStyle = error.response.data.error;
+        });
     }
   }
-}
+};
 </script>
 
 <style lang="scss">

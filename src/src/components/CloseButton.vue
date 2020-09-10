@@ -8,7 +8,7 @@
 <script>
 export default {
   name: 'CloseButton'
-}
+};
 </script>
 
 <style lang="scss" scoped>
