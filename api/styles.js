@@ -69,7 +69,7 @@ function getStyles(req, res) {
     page,
     sort,
     customLabels,
-    limit: 10,
+    limit: 16,
     collation: { locale: "en" }
   };
 
