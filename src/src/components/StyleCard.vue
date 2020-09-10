@@ -2,7 +2,6 @@
   <div class="style-card">
     <div class="image-container">
       <img v-if="preview" :src="preview" :alt="`Preview of ${name} style`" />
-      <!-- FIXME: make selectable via tab button -->
       <a class="style-button-filled" :href="usercss" rel="noopener" target="_blank">Install</a>
     </div>
 
@@ -48,13 +47,14 @@ export default {
   height: 240px;
   width: 260px;
 
-  &:hover {
+  &:hover,
+  &:focus-within {
     img {
       opacity: 0.5;
     }
 
     a {
-      visibility: visible;
+      opacity: 1;
     }
   }
 }
@@ -68,10 +68,11 @@ export default {
     width: 100%;
     height: inherit;
     object-fit: cover;
+    transition: opacity 0.2s;
   }
 
   a {
-    visibility: hidden;
+    opacity: 0;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -80,6 +81,11 @@ export default {
     height: 30px;
     padding: 5px 0;
     font-size: 18px;
+    transition: opacity 0.2s;
+
+    &:focus {
+      opacity: 1;
+    }
   }
 }
 
