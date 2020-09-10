@@ -54,8 +54,8 @@
             </div>
 
             <div class="info-footer-buttons">
-              <a class="style-button" :href="selectedStyle.url" target="_blank">Repository</a>
-              <a class="style-button-filled" :href="selectedStyle.usercss" target="_blank">Install</a>
+              <a class="style-button" :href="selectedStyle.url" rel="noopener" target="_blank">Repository</a>
+              <a class="style-button-filled" :href="selectedStyle.usercss" rel="noopener" target="_blank">Install</a>
             </div>
           </div>
         </div>

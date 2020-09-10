@@ -3,7 +3,7 @@
     <div class="image-container">
       <img v-if="preview" :src="preview" :alt="`Preview of ${name} style`" />
       <!-- FIXME: make selectable via tab button -->
-      <a class="style-button-filled" :href="usercss" target="_blank">Install</a>
+      <a class="style-button-filled" :href="usercss" rel="noopener" target="_blank">Install</a>
     </div>
 
     <div class="card-data" @click="$emit('open', _id)">
