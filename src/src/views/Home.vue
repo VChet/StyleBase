@@ -1,29 +1,20 @@
 <template>
   <section class="Home">
+    <ul class="sort-options">
+      <li>
+        <button :class="{ active: selectedOption === 0 }" @click="selectedOption = 0">Recently added</button>
+      </li>
+      <li>
+        <button :class="{ active: selectedOption === 1 }" @click="selectedOption = 1">Recently updated</button>
+      </li>
+      <li>
+        <button :class="{ active: selectedOption === 2 }" @click="selectedOption = 2">Most liked</button>
+      </li>
+    </ul>
     <section class="content-section">
-      <div class="section-header">
-        Popular
-      </div>
+      <div class="section-header">{{ sortOptions[selectedOption] }} styles</div>
       <div class="section-content">
-        <style-card v-for="style in popularStyles" :key="style._id" v-bind="style" @open="onOpenStyleCard" />
-      </div>
-    </section>
-
-    <section class="content-section">
-      <div class="section-header">
-        Recently updated
-      </div>
-      <div class="section-content">
-        <style-card v-for="style in recentlyUpdatedStyles" :key="style._id" v-bind="style" @open="onOpenStyleCard" />
-      </div>
-    </section>
-
-    <section class="content-section">
-      <div class="section-header">
-        Recently added
-      </div>
-      <div class="section-content">
-        <style-card v-for="style in recentlyAddedStyles" :key="style._id" v-bind="style" @open="onOpenStyleCard" />
+        <style-card v-for="style in styles" :key="style._id" v-bind="style" @open="onOpenStyleCard" />
       </div>
     </section>
 
@@ -86,52 +77,52 @@ export default {
   },
   data() {
     return {
-      popularStyles: [],
-      recentlyUpdatedStyles: [],
-      recentlyAddedStyles: [],
-
+      sortOptions: ['Recently added', 'Recently updated', 'Most liked'],
+      selectedOption: 0,
+      styles: [],
       selectedStyle: {},
 
       showStyleInfoModal: false
     }
   },
+  watch: {
+    selectedOption: function() {
+      this.getStyles()
+    }
+  },
   created() {
-    axios
-      .get('/api/styles', {
-        params: {
-          sort: 'stars'
-        }
-      })
-      .then(response => {
-        this.popularStyles = response.data.styles.slice(0, 4)
-      })
-      .catch(error => {
-        console.error(error)
-      })
-
-    axios
-      .get('/api/styles', {
-        params: {
-          sort: 'update'
-        }
-      })
-      .then(response => {
-        this.recentlyUpdatedStyles = response.data.styles.slice(0, 4)
-      })
-      .catch(error => {
-        console.error(error)
-      })
-
     axios
       .get('/api/styles')
       .then(response => {
-        this.recentlyAddedStyles = response.data.styles.slice(0, 4)
+        this.styles = response.data.styles
       })
       .catch(error => {
         console.error(error)
       })
   },
   methods: {
+    getStyles() {
+      let params
+      switch (this.selectedOption) {
+        case 1:
+          params = { sort: 'update' }
+          break
+        case 2:
+          params = { sort: 'stars' }
+          break
+        default:
+          params = {}
+          break
+      }
+      axios
+        .get('/api/styles', { params })
+        .then(response => {
+          this.styles = response.data.styles
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    },
     onOpenStyleCard(_id) {
       this.showStyleInfoModal = true
 
@@ -151,6 +142,38 @@ export default {
 <style scoped lang="scss">
 .content-section {
   margin-bottom: 1rem;
+}
+
+.sort-options {
+  display: flex;
+  list-style-type: none;
+  list-style-image: none;
+}
+
+.sort-options li {
+  padding: 0.5rem;
+}
+
+.sort-options li:first-child {
+  margin-left: auto;
+}
+
+.sort-options li button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: transparent;
+  border-radius: 4px;
+  font-size: 1.25rem;
+  transition: color 0.2s;
+}
+
+.sort-options li button:hover {
+  color: lightsalmon;
+}
+
+.sort-options li button.active {
+  background-color: #272727;
+  color: #fff;
 }
 
 .section-header {
