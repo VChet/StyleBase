@@ -42,9 +42,11 @@ export default {
 
 <style scoped lang="scss">
 .style-card {
+  position: relative;
+  flex: 1 1 auto;
+  margin: 1rem;
   height: 240px;
   width: 260px;
-  position: relative;
 
   &:hover {
     img {

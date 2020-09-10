@@ -11,9 +11,9 @@
         <button :class="{ active: selectedOption === 2 }" @click="selectedOption = 2">Most liked</button>
       </li>
     </ul>
-    <section class="content-section">
+    <section class="main-container">
       <div class="section-header">{{ sortOptions[selectedOption] }} styles</div>
-      <div class="section-content">
+      <div class="style-grid">
         <style-card v-for="style in styles" :key="style._id" v-bind="style" @open="onOpenStyleCard" />
       </div>
     </section>
@@ -140,7 +140,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.content-section {
+.main-container {
   margin-bottom: 1rem;
 }
 
@@ -184,13 +184,13 @@ export default {
   font-size: 22px;
   color: #47525e;
   padding-left: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 2rem;
 }
 
-.section-content {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 30px;
+.style-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -1rem;
 }
 
 .style-info-title {
