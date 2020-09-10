@@ -4,8 +4,13 @@ html,
 body,
 #app {
   height: 100vh;
+  min-width: 320px;
 }
 
 body {
   margin: 0;
+}
+
+ul {
+  padding: 0;
 }

@@ -140,6 +140,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import '@/styles/mixins/media.scss';
+
 .main-container {
   margin-bottom: 1rem;
 }
@@ -148,32 +150,40 @@ export default {
   display: flex;
   list-style-type: none;
   list-style-image: none;
-}
 
-.sort-options li {
-  padding: 0.5rem;
-}
+  li {
+    margin: 0.5rem;
+  }
 
-.sort-options li:first-child {
-  margin-left: auto;
-}
+  li:first-child {
+    margin-left: auto;
 
-.sort-options li button {
-  padding: 0.5rem 1rem;
-  border: none;
-  background-color: transparent;
-  border-radius: 4px;
-  font-size: 1.25rem;
-  transition: color 0.2s;
-}
+    @include media-size-tablet {
+      margin-left: unset;
+    }
+  }
 
-.sort-options li button:hover {
-  color: lightsalmon;
-}
+  li button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: transparent;
+    border-radius: 4px;
+    font-size: 1.25rem;
+    transition: color 0.2s;
+  }
 
-.sort-options li button.active {
-  background-color: #272727;
-  color: #fff;
+  li button:hover {
+    color: lightsalmon;
+  }
+
+  li button.active {
+    background-color: #272727;
+    color: #fff;
+  }
+
+  @include media-size-tablet {
+    overflow: auto;
+  }
 }
 
 .section-header {
