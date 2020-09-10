@@ -54,8 +54,8 @@
             </div>
 
             <div class="info-footer-buttons">
-              <a class="style-button" :href="selectedStyle.url">Repository</a>
-              <a class="style-button-filled">Install</a>
+              <a class="style-button" :href="selectedStyle.url" target="_blank">Repository</a>
+              <a class="style-button-filled" :href="selectedStyle.usercss" target="_blank">Install</a>
             </div>
           </div>
         </div>
@@ -243,10 +243,6 @@ export default {
     margin-right: 27px;
     width: 175px;
     height: 50px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
   }
 
   a:last-child {
