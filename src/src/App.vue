@@ -80,11 +80,27 @@ export default {
 
 <style lang="scss">
 @import './styles/main.scss';
+@font-face {
+  font-family: Gilroy;
+  font-weight: normal;
+  font-style: normal;
+  src: url('./styles/fonts/Gilroy-Regular.woff2') format('woff2'),
+    url('./styles/fonts/Gilroy-Regular.woff') format('woff');
+}
+@font-face {
+  font-family: Gilroy;
+  font-weight: bold;
+  font-style: normal;
+  src: url('./styles/fonts/Gilroy-Bold.woff2') format('woff2'), url('./styles/fonts/Gilroy-Bold.woff') format('woff');
+}
 
-#app {
-  font-family: Roboto;
+#app,
+::placeholder {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: Gilroy;
+  font-size: 16px;
+  color: #47525e;
 }
 
 .container {
@@ -137,8 +153,7 @@ nav button {
 }
 
 .dialog-title {
-  color: #47525e;
-  font-size: 31px;
+  font-size: 30px;
   margin-bottom: 2rem;
   text-align: center;
 }

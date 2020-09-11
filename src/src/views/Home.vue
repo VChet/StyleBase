@@ -215,7 +215,6 @@ export default {
   background-color: #f5e6cc;
   height: 38px;
   font-size: 22px;
-  color: #47525e;
   padding-left: 0.5rem;
   margin-bottom: 2rem;
 }
@@ -231,11 +230,12 @@ export default {
   align-items: center;
   background-color: #f5e6cc;
   margin-bottom: 1rem;
-  padding: 0.5rem 1rem;
+  padding: 1rem;
 
-  & div {
-    color: #47525e;
-  }
+  .style-info-title {
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 1;
 
   .owner {
     font-size: 1rem;
@@ -268,7 +268,6 @@ export default {
 .style-info-description {
   margin: 1rem 0;
   font-size: 20px;
-  color: #47525e;
 }
 
 .style-info-image {
@@ -285,7 +284,6 @@ export default {
     padding: 0.5rem 1rem;
     background-color: #f5e6cc;
     font-size: 20px;
-    color: #47525e;
     transition: opacity 0.4s;
   }
 
@@ -310,7 +308,6 @@ export default {
         a {
           text-decoration: none;
           font-size: 24px;
-          color: #47525e;
           transition: color 0.2s;
 
           &:hover {

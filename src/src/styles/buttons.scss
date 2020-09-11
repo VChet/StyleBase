@@ -1,5 +1,9 @@
-button {
+button,
+a {
+  border-radius: 5px;
+  font-family: Gilroy;
   cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 a.style-button,
