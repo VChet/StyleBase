@@ -41,8 +41,8 @@
 
 <script>
 import axios from 'axios';
-import Home from './views/Home.vue';
 import BaseDialog from '@/components/BaseDialog';
+import Home from './views/Home.vue';
 
 export default {
   name: 'App',

@@ -1,22 +1,22 @@
-let clickOutsideEvent
+let clickOutsideEvent;
 
 const clickOutside = {
   bind(el) {
     clickOutsideEvent = event => {
-      const target = event.target
+      const { target } = event;
 
-      if (!(el == target || el.contains(target))) {
-        el.dispatchEvent(new Event('clickOutside'))
+      if (!(el === target || el.contains(target))) {
+        el.dispatchEvent(new Event('clickOutside'));
       }
-    }
+    };
 
-    document.addEventListener('click', clickOutsideEvent)
-    document.addEventListener('touchstart', clickOutsideEvent)
+    document.addEventListener('click', clickOutsideEvent);
+    document.addEventListener('touchstart', clickOutsideEvent);
   },
   unbind() {
-    document.removeEventListener('click', clickOutsideEvent)
-    document.removeEventListener('touchstart', clickOutsideEvent)
+    document.removeEventListener('click', clickOutsideEvent);
+    document.removeEventListener('touchstart', clickOutsideEvent);
   }
-}
+};
 
-export default clickOutside
+export default clickOutside;
