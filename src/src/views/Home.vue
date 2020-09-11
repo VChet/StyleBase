@@ -1,29 +1,20 @@
 <template>
   <section class="Home">
-    <section class="content-section">
-      <div class="section-header">
-        Popular
-      </div>
-      <div class="section-content">
-        <style-card v-for="style in popularStyles" :key="style._id" v-bind="style" @open="onOpenStyleCard" />
-      </div>
-    </section>
-
-    <section class="content-section">
-      <div class="section-header">
-        Recently updated
-      </div>
-      <div class="section-content">
-        <style-card v-for="style in recentlyUpdatedStyles" :key="style._id" v-bind="style" @open="onOpenStyleCard" />
-      </div>
-    </section>
-
-    <section class="content-section">
-      <div class="section-header">
-        Recently added
-      </div>
-      <div class="section-content">
-        <style-card v-for="style in recentlyAddedStyles" :key="style._id" v-bind="style" @open="onOpenStyleCard" />
+    <ul class="sort-options">
+      <li>
+        <button :class="{ active: selectedOption === 0 }" @click="selectedOption = 0">Recently added</button>
+      </li>
+      <li>
+        <button :class="{ active: selectedOption === 1 }" @click="selectedOption = 1">Recently updated</button>
+      </li>
+      <li>
+        <button :class="{ active: selectedOption === 2 }" @click="selectedOption = 2">Most liked</button>
+      </li>
+    </ul>
+    <section class="main-container">
+      <div class="section-header">{{ sortOptions[selectedOption] }} styles</div>
+      <div class="style-grid">
+        <style-card v-for="style in styles" :key="style._id" v-bind="style" @open="onOpenStyleCard" />
       </div>
     </section>
 
@@ -31,8 +22,8 @@
       size="extra-large"
       :open="showStyleInfoModal"
       @close="
-        showStyleInfoModal = false
-        selectedStyle = {}
+        showStyleInfoModal = false;
+        selectedStyle = {};
       "
     >
       <template #body>
@@ -63,8 +54,8 @@
             </div>
 
             <div class="info-footer-buttons">
-              <a class="style-button" :href="selectedStyle.url">Repository</a>
-              <a class="style-button-filled">Install</a>
+              <a class="style-button" :href="selectedStyle.url" rel="noopener" target="_blank">Repository</a>
+              <a class="style-button-filled" :href="selectedStyle.usercss" rel="noopener" target="_blank">Install</a>
             </div>
           </div>
         </div>
@@ -74,9 +65,9 @@
 </template>
 
 <script>
-import axios from 'axios'
-import StyleCard from '@/components/StyleCard'
-import BaseDialog from '@/components/BaseDialog'
+import axios from 'axios';
+import StyleCard from '@/components/StyleCard';
+import BaseDialog from '@/components/BaseDialog';
 
 export default {
   name: 'Home',
@@ -86,71 +77,113 @@ export default {
   },
   data() {
     return {
-      popularStyles: [],
-      recentlyUpdatedStyles: [],
-      recentlyAddedStyles: [],
-
+      sortOptions: ['Recently added', 'Recently updated', 'Most liked'],
+      selectedOption: 0,
+      styles: [],
       selectedStyle: {},
 
       showStyleInfoModal: false
+    };
+  },
+  watch: {
+    selectedOption: function() {
+      this.getStyles();
     }
   },
   created() {
     axios
-      .get('/api/styles', {
-        params: {
-          sort: 'stars'
-        }
-      })
-      .then(response => {
-        this.popularStyles = response.data.styles.slice(0, 4)
-      })
-      .catch(error => {
-        console.error(error)
-      })
-
-    axios
-      .get('/api/styles', {
-        params: {
-          sort: 'update'
-        }
-      })
-      .then(response => {
-        this.recentlyUpdatedStyles = response.data.styles.slice(0, 4)
-      })
-      .catch(error => {
-        console.error(error)
-      })
-
-    axios
       .get('/api/styles')
       .then(response => {
-        this.recentlyAddedStyles = response.data.styles.slice(0, 4)
+        this.styles = response.data.styles;
       })
       .catch(error => {
-        console.error(error)
-      })
+        console.error(error);
+      });
   },
   methods: {
+    getStyles() {
+      let params;
+      switch (this.selectedOption) {
+        case 1:
+          params = { sort: 'update' };
+          break;
+        case 2:
+          params = { sort: 'stars' };
+          break;
+        default:
+          params = {};
+          break;
+      }
+      axios
+        .get('/api/styles', { params })
+        .then(response => {
+          this.styles = response.data.styles;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
     onOpenStyleCard(_id) {
-      this.showStyleInfoModal = true
+      this.showStyleInfoModal = true;
 
       axios
         .get(`/api/style/${_id}`)
         .then(styleData => {
-          this.selectedStyle = styleData.data.style
+          this.selectedStyle = styleData.data.style;
         })
         .catch(error => {
-          console.error(error)
-        })
+          console.error(error);
+        });
     }
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
-.content-section {
+@import '@/styles/mixins/media.scss';
+
+.main-container {
   margin-bottom: 1rem;
+}
+
+.sort-options {
+  display: flex;
+  list-style-type: none;
+  list-style-image: none;
+
+  li {
+    margin: 0.5rem;
+  }
+
+  li:first-child {
+    margin-left: auto;
+
+    @include media-size-tablet {
+      margin-left: unset;
+    }
+  }
+
+  li button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: transparent;
+    border-radius: 4px;
+    font-size: 1.25rem;
+    transition: color 0.2s;
+  }
+
+  li button:hover {
+    color: lightsalmon;
+  }
+
+  li button.active {
+    background-color: #272727;
+    color: #fff;
+  }
+
+  @include media-size-tablet {
+    overflow: auto;
+  }
 }
 
 .section-header {
@@ -161,13 +194,13 @@ export default {
   font-size: 22px;
   color: #47525e;
   padding-left: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 2rem;
 }
 
-.section-content {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  column-gap: 30px;
+.style-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -2rem;
 }
 
 .style-info-title {
@@ -220,10 +253,6 @@ export default {
     margin-right: 27px;
     width: 175px;
     height: 50px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
   }
 
   a:last-child {

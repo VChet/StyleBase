@@ -14,7 +14,8 @@ const schema = new Schema({
   name: String,
   description: String,
   owner: String,
-  lastUpdate: String,
+  created: Date,
+  lastUpdate: Date,
   stargazers: Number,
   watchers: Number,
   forks: Number,
@@ -23,10 +24,6 @@ const schema = new Schema({
   isPrivate: Boolean,
   isArchived: Boolean,
   isFork: Boolean,
-  added: {
-    type: Date,
-    default: Date.now
-  }
 });
 
 schema.index({ name: "text", owner: "text" });

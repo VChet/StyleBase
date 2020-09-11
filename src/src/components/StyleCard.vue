@@ -1,16 +1,12 @@
 <template>
   <div class="style-card">
-    <div class="card-image" @mouseover="showInstallBlock = true" @mouseleave="showInstallBlock = false">
-      <img v-if="preview" width="260px" height="152px" :src="preview" />
-      <div v-if="showInstallBlock" class="install">
-        <button @click="$emit('open', _id)">Install</button>
-      </div>
+    <div class="image-container">
+      <img v-if="preview" :src="preview" :alt="`Preview of ${name} style`" />
+      <a class="style-button-filled" :href="usercss" rel="noopener" target="_blank">Install</a>
     </div>
 
-    <div class="card-data">
-      <div class="data-name">
-        {{ name }}
-      </div>
+    <div class="card-data" @click="$emit('open', _id)">
+      <span class="data-name">{{ name }}</span>
     </div>
   </div>
 </template>
@@ -29,33 +25,70 @@ export default {
       required: true,
       default: 'Some awesome style'
     },
+    usercss: {
+      type: String,
+      required: true,
+      default: ''
+    },
     preview: {
       type: String,
       required: false,
       default: ''
     }
-  },
-  data() {
-    return {
-      showInstallBlock: false
-    }
   }
-}
+};
 </script>
 
 <style scoped lang="scss">
 .style-card {
-  height: 240px;
+  position: relative;
+  overflow: hidden;
+  flex: 1 1 auto;
+  margin: 2rem;
   width: 260px;
+  border-radius: 4px;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+
+  &:hover,
+  &:focus-within {
+    img {
+      opacity: 0.5;
+    }
+
+    a {
+      opacity: 1;
+    }
+  }
 }
 
-.card-image {
-  height: 152px;
-  border: 2px solid #c0ccda;
+.image-container {
+  background-color: #f5e6cc;
+  height: 200px;
   position: relative;
 
-  &:hover {
-    background-color: rgba(245, 230, 204, 0.75);
+  img {
+    width: 100%;
+    height: inherit;
+    object-fit: cover;
+    transition: opacity 0.2s;
+  }
+
+  a {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 30px;
+    padding: 5px 0;
+    font-size: 18px;
+    transition: background-color 0.2s, opacity 0.2s;
+
+    &:focus {
+      opacity: 1;
+    }
   }
 }
 
@@ -68,30 +101,12 @@ export default {
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
-  height: 88px;
+  height: 80px;
+  cursor: pointer;
 }
 
 .data-name {
   font-size: 20px;
   color: #47525e;
-}
-
-.install {
-  top: 50%;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-
-  button {
-    border: 1px solid #d37b53;
-    background-color: #d37b53;
-    border-radius: 5px;
-    width: 169px;
-    height: 50px;
-
-    color: #ffffff;
-    font-size: 18px;
-  }
 }
 </style>

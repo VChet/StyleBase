@@ -1,19 +1,17 @@
 <template>
   <div id="app">
-    <nav class="nav">
-      <div class="nav-logo">
-        style base
+    <header>
+      <div class="logo">style base</div>
+
+      <div class="search-container">
+        <label for="search" class="visually-hidden">Style search</label>
+        <input id="search" class="search-input" type="text" placeholder="Search..." />
       </div>
 
-      <div class="nav-search">
-        <input class="search-input" type="text" placeholder="Search..." />
-      </div>
-
-      <div class="nav-buttons">
+      <nav>
         <button @click="showAddStyleModal = true">Add style</button>
-        <button>About</button>
-      </div>
-    </nav>
+      </nav>
+    </header>
 
     <div class="container">
       <Home />
@@ -40,9 +38,9 @@
 </template>
 
 <script>
-import axios from 'axios'
-import Home from './views/Home.vue'
-import BaseDialog from '@/components/BaseDialog'
+import axios from 'axios';
+import Home from './views/Home.vue';
+import BaseDialog from '@/components/BaseDialog';
 
 export default {
   name: 'App',
@@ -59,7 +57,7 @@ export default {
       errors: {
         submitStyle: ''
       }
-    }
+    };
   },
   methods: {
     submitStyle(url) {
@@ -68,16 +66,16 @@ export default {
           url
         })
         .then(response => {
-          console.log(response)
-          this.showAddStyleModal = false
-          this.newStyleUrl = ''
+          console.log(response);
+          this.showAddStyleModal = false;
+          this.newStyleUrl = '';
         })
         .catch(error => {
-          this.errors.submitStyle = error.response.data.error
-        })
+          this.errors.submitStyle = error.response.data.error;
+        });
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
@@ -87,7 +85,6 @@ export default {
   font-family: Roboto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #faf6f0;
 }
 
 .container {
@@ -96,7 +93,7 @@ export default {
   padding-top: 10px;
 }
 
-.nav {
+header {
   background-color: #272727;
   padding: 12px 20px 12px 20px;
   align-items: center;
@@ -104,12 +101,12 @@ export default {
   justify-content: space-between;
 }
 
-.nav-logo {
+.logo {
   color: #ffffff;
   font-size: 32px;
 }
 
-.nav-search {
+.search-container {
   flex: 0 0 50%;
   display: flex;
 }
@@ -124,7 +121,7 @@ export default {
   padding-left: 18px;
 }
 
-.nav-buttons button {
+nav button {
   background: none;
   border: none;
   color: #ffffff;
