@@ -200,7 +200,7 @@ export default {
 .style-grid {
   display: flex;
   flex-wrap: wrap;
-  margin: -1rem;
+  margin: -2rem;
 }
 
 .style-info-title {

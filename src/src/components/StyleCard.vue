@@ -43,8 +43,7 @@ export default {
 .style-card {
   position: relative;
   flex: 1 1 auto;
-  margin: 1rem;
-  height: 240px;
+  margin: 2rem;
   width: 260px;
 
   &:hover,
@@ -61,7 +60,7 @@ export default {
 
 .image-container {
   background-color: #f5e6cc;
-  height: 150px;
+  height: 200px;
   position: relative;
 
   img {
