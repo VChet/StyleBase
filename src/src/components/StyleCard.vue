@@ -2,11 +2,11 @@
   <div class="style-card">
     <div class="image-container">
       <img v-if="preview" :src="preview" :alt="`Preview of ${name} style`" />
-      <a class="style-button-filled" :href="usercss" rel="noopener" target="_blank">Install</a>
+      <a class="button style-button-filled" :href="usercss" rel="noopener" target="_blank">Install</a>
     </div>
 
-    <div class="card-data" @click="$emit('open', _id)">
-      <span class="data-name">{{ name }}</span>
+    <div class="data" @click="$emit('open', _id)">
+      <span class="name">{{ name }}</span>
     </div>
   </div>
 </template>
@@ -96,17 +96,23 @@ export default {
   background-color: #e0e6ed;
 }
 
-.card-data {
+.data {
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #ffffff;
   height: 80px;
   cursor: pointer;
-}
 
-.data-name {
-  font-size: 20px;
-  color: #47525e;
+  .name {
+    font-size: 20px;
+    font-weight: bold;
+    transition: color 0.2s;
+  }
+
+  &:hover .name,
+  &:focus .name {
+    color: #d37b53;
+  }
 }
 </style>

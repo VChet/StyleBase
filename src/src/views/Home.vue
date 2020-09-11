@@ -2,13 +2,17 @@
   <section class="Home">
     <ul class="sort-options">
       <li>
-        <button :class="{ active: selectedOption === 0 }" @click="selectedOption = 0">Recently added</button>
+        <button class="link" :class="{ active: selectedOption === 0 }" @click="selectedOption = 0">
+          Recently added
+        </button>
       </li>
       <li>
-        <button :class="{ active: selectedOption === 1 }" @click="selectedOption = 1">Recently updated</button>
+        <button class="link" :class="{ active: selectedOption === 1 }" @click="selectedOption = 1">
+          Recently updated
+        </button>
       </li>
       <li>
-        <button :class="{ active: selectedOption === 2 }" @click="selectedOption = 2">Most liked</button>
+        <button class="link" :class="{ active: selectedOption === 2 }" @click="selectedOption = 2">Most liked</button>
       </li>
     </ul>
     <section class="main-container">
@@ -33,7 +37,7 @@
               {{ selectedStyle.name }}
               <span class="owner">
                 <!-- TODO: add styles grid filtered by owner handler -->
-                by <button>{{ selectedStyle.owner }}</button>
+                by <button class="link">{{ selectedStyle.owner }}</button>
               </span>
             </div>
             <div class="style-info-date">Updated: {{ selectedStyle.lastUpdate | dateFromNow }}</div>
@@ -66,7 +70,7 @@
                 <a :href="selectedStyle.url" rel="noopener" target="_blank"> {{ selectedStyle.watchers }} watchers </a>
               </li>
               <li class="buttons">
-                <a class="style-button-filled" :href="selectedStyle.usercss" rel="noopener" target="_blank">
+                <a class="button style-button-filled" :href="selectedStyle.usercss" rel="noopener" target="_blank">
                   Install
                 </a>
               </li>
@@ -176,36 +180,26 @@ export default {
 
   li {
     margin: 0.5rem;
-  }
 
-  li:first-child {
-    margin-left: auto;
+    &:first-child {
+      margin-left: auto;
 
-    @include media-size-tablet {
-      margin-left: unset;
+      @include media-size-tablet {
+        margin-left: unset;
+      }
     }
-  }
 
-  li button {
-    padding: 0.5rem 1rem;
-    border: none;
-    background-color: transparent;
-    border-radius: 4px;
-    font-size: 1.25rem;
-    transition: color 0.2s;
-  }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1.25rem;
+      transition: color 0.2s;
+    }
 
-  li button:hover {
-    color: lightsalmon;
-  }
-
-  li button.active {
-    background-color: #272727;
-    color: #fff;
-  }
-
-  @include media-size-tablet {
-    overflow: auto;
+    button.active {
+      background-color: #d37b53;
+      outline-color: #ad552c;
+      color: #fff;
+    }
   }
 }
 
@@ -237,26 +231,19 @@ export default {
     font-weight: bold;
     line-height: 1;
 
-  .owner {
-    font-size: 1rem;
+    .owner {
+      font-size: 1rem;
+      font-weight: normal;
 
-    button {
-      padding: 0;
-      border: none;
-      font-size: initial;
-      background-color: transparent;
-      color: #d37b53;
-      transition: color 0.2s;
-      cursor: pointer;
+      button {
+        font-size: initial;
+        color: #d37b53;
 
-      &:hover {
-        text-decoration: underline;
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
-  }
-
-  .style-info-title {
-    font-size: 34px;
   }
 
   .style-info-date {
@@ -306,13 +293,7 @@ export default {
     li {
       &:not(.buttons) {
         a {
-          text-decoration: none;
           font-size: 24px;
-          transition: color 0.2s;
-
-          &:hover {
-            color: #d37b53;
-          }
         }
       }
 

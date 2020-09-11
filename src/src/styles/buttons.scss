@@ -6,20 +6,39 @@ a {
   transition: background-color 0.2s, color 0.2s;
 }
 
-a.style-button,
-a.style-button-filled {
+a:not(.button) {
+  text-decoration: none;
+  color: #47525e;
+
+  &:hover,
+  &:focus {
+    color: #d37b53;
+  }
+}
+
+a.button {
   display: inline-flex;
   justify-content: center;
   align-items: center;
   text-decoration: none;
   line-height: 1;
-  transition: background-color 0.2s;
+}
+
+button.link {
+  padding: 0;
+  background: none;
+  border: none;
+
+  &:hover,
+  &:focus {
+    color: #d37b53;
+  }
 }
 
 .style-button {
   border: 1px solid #d37b53;
   background-color: transparent;
-  border-radius: 5px;
+  font-weight: bold;
   color: #d37b53;
 
   &:hover {
@@ -35,8 +54,8 @@ a.style-button-filled {
 
 .style-button-filled {
   border: 1px solid #d37b53;
-  border-radius: 5px;
   background-color: #d37b53;
+  font-weight: bold;
   color: #ffffff;
 
   &:hover {

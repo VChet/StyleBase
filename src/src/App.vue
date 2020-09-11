@@ -137,14 +137,14 @@ header {
   padding-left: 18px;
 }
 
-nav button {
-  background: none;
-  border: none;
-  color: #ffffff;
-  font-size: 20px;
+  nav button {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
 
-  &:not(:last-child) {
-    margin-right: 0.5rem;
+    &:not(:last-child) {
+      margin-right: 0.5rem;
+    }
   }
 }
 
