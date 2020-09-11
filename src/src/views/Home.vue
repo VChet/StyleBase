@@ -28,35 +28,49 @@
     >
       <template #body>
         <div :style="{ width: '100%', maxWidth: '100%' }">
-          <div class="style-info-title">
-            <div>{{ selectedStyle.name }}</div>
-            <div>Updated: {{ selectedStyle.lastUpdate }}</div>
+          <div class="style-info-header">
+            <div class="style-info-title">
+              {{ selectedStyle.name }}
+              <span class="owner">
+                <!-- TODO: add styles grid filtered by owner handler -->
+                by <button>{{ selectedStyle.owner }}</button>
+              </span>
+            </div>
+            <div class="style-info-date">Updated: {{ selectedStyle.lastUpdate | dateFromNow }}</div>
           </div>
+
+          <div class="style-info-description">{{ selectedStyle.description }}</div>
 
           <div class="style-info-image">
             <img v-if="selectedStyle.preview" :style="{ maxWidth: '100%' }" :src="selectedStyle.preview" />
             <div v-else :style="{ backgroundColor: '#C0CCDA', height: '500px' }"></div>
+            <div class="style-licence">{{ selectedStyle.license }}</div>
           </div>
 
-          <div class="style-info-footer">
-            <div class="info-footer-metrics">
-              <div>
-                <div>{{ selectedStyle.stargazers }} stars</div>
-
-                <div>{{ selectedStyle.forks }} forks</div>
-              </div>
-
-              <div>
-                <div>{{ selectedStyle.issues }} issues</div>
-
-                <div>{{ selectedStyle.watchers }} watchers</div>
-              </div>
-            </div>
-
-            <div class="info-footer-buttons">
-              <a class="style-button" :href="selectedStyle.url" rel="noopener" target="_blank">Repository</a>
-              <a class="style-button-filled" :href="selectedStyle.usercss" rel="noopener" target="_blank">Install</a>
-            </div>
+          <div class="style-info-content">
+            <ul>
+              <li>
+                <a :href="selectedStyle.url" rel="noopener" target="_blank"> {{ selectedStyle.stargazers }} stars </a>
+              </li>
+              <li>
+                <a :href="`${selectedStyle.url}/forks`" rel="noopener" target="_blank">
+                  {{ selectedStyle.forks }} forks
+                </a>
+              </li>
+              <li>
+                <a :href="`${selectedStyle.url}/issues`" rel="noopener" target="_blank">
+                  {{ selectedStyle.issues }} issues
+                </a>
+              </li>
+              <li>
+                <a :href="selectedStyle.url" rel="noopener" target="_blank"> {{ selectedStyle.watchers }} watchers </a>
+              </li>
+              <li class="buttons">
+                <a class="style-button-filled" :href="selectedStyle.usercss" rel="noopener" target="_blank">
+                  Install
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </template>
@@ -66,6 +80,9 @@
 
 <script>
 import axios from 'axios';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
 import StyleCard from '@/components/StyleCard';
 import BaseDialog from '@/components/BaseDialog';
 
@@ -88,6 +105,12 @@ export default {
   watch: {
     selectedOption: function() {
       this.getStyles();
+    }
+  },
+  filters: {
+    dateFromNow: function(timestamp) {
+      dayjs.extend(relativeTime);
+      return dayjs(timestamp).fromNow();
     }
   },
   created() {
@@ -203,60 +226,111 @@ export default {
   margin: -2rem;
 }
 
-.style-info-title {
+.style-info-header {
   display: flex;
   align-items: center;
   background-color: #f5e6cc;
-  margin-bottom: 24px;
-  padding: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
 
   & div {
     color: #47525e;
   }
 
-  div:nth-child(1) {
+  .owner {
+    font-size: 1rem;
+
+    button {
+      padding: 0;
+      border: none;
+      font-size: initial;
+      background-color: transparent;
+      color: #d37b53;
+      transition: color 0.2s;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .style-info-title {
     font-size: 34px;
   }
 
-  div:last-child {
+  .style-info-date {
+    font-size: 20px;
     margin-left: auto;
   }
 }
 
-.style-info-image {
-  margin-bottom: 1.5rem;
-}
-
-.style-info-footer {
-  margin-bottom: 2rem;
-}
-
-.info-footer-metrics {
-  display: flex;
-  flex: 1 0 0;
+.style-info-description {
+  margin: 1rem 0;
+  font-size: 20px;
   color: #47525e;
-  font-size: 30px;
+}
 
-  div {
-    flex: 0 0 25%;
+.style-info-image {
+  position: relative;
+
+  img {
+    border-radius: 4px;
+  }
+
+  .style-licence {
+    position: absolute;
+    top: 2rem;
+    right: 0;
+    padding: 0.5rem 1rem;
+    background-color: #f5e6cc;
+    font-size: 20px;
+    color: #47525e;
+    transition: opacity 0.4s;
+  }
+
+  &:hover {
+    .style-licence {
+      opacity: 0;
+    }
   }
 }
 
-.style-info-footer {
-  display: flex;
-}
+.style-info-content {
+  margin-bottom: 2rem;
 
-.info-footer-buttons {
-  margin-left: auto;
+  ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    list-style: none;
 
-  a {
-    margin-right: 27px;
-    width: 175px;
-    height: 50px;
-  }
+    li {
+      &:not(.buttons) {
+        a {
+          text-decoration: none;
+          font-size: 24px;
+          color: #47525e;
+          transition: color 0.2s;
 
-  a:last-child {
-    margin-right: 0;
+          &:hover {
+            color: #d37b53;
+          }
+        }
+      }
+
+      &.buttons {
+        a {
+          margin-right: 1rem;
+          width: 175px;
+          height: 50px;
+        }
+
+        a:last-child {
+          margin-right: 0;
+        }
+      }
+    }
   }
 }
 </style>
