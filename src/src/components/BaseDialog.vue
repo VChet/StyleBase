@@ -88,25 +88,25 @@ export default {
 
 <style lang="scss" scoped>
 .base-dialog {
+  position: absolute;
   top: 5vh;
+  right: 0;
+  left: 0;
+  overflow: hidden;
   // min-width: calc(#{$viewport-minimum} - 40px);
   min-width: calc(320px - 40px);
   max-width: calc(100% - 40px);
   min-height: 300px;
-  border-radius: 0.3rem;
   width: 90%;
-  background: rgb(255, 255, 255);
-  border: 0;
-  outline: 0;
-  padding: 0;
-  overflow: hidden;
-  pointer-events: auto;
   margin: auto;
-  position: absolute;
-  left: 0;
-  right: 0;
+  padding: 0;
   background-color: #faf6f0;
   border: 1px solid #b8977e;
+  border-radius: 0.3rem;
+  outline: 0;
+  pointer-events: auto;
+  box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14),
+    0px 9px 46px 8px rgba(0, 0, 0, 0.12);
 
   &.small {
     // max-width: calc(#{$breakpoint-small} - 40px);

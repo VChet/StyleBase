@@ -42,9 +42,13 @@ export default {
 <style scoped lang="scss">
 .style-card {
   position: relative;
+  overflow: hidden;
   flex: 1 1 auto;
   margin: 2rem;
   width: 260px;
+  border-radius: 4px;
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 
   &:hover,
   &:focus-within {
