@@ -89,7 +89,16 @@ function getStyleData(req, res) {
 }
 
 function searchStyle(req, res) {
-  Style.find({ $text: { $search: req.query.query } }, (error, styles) => {
+  const { page = 1 } = req.params;
+  const customLabels = { totalDocs: "totalStyles", docs: "styles" };
+  const options = {
+    page,
+    limit: 16,
+    collation: { locale: "en" },
+    customLabels
+  };
+
+  Style.paginate({ $text: { $search: req.query.query } }, options, (error, styles) => {
     if (error) return res.status(500).json({ error });
     if (!styles.length) return res.status(404).json({ error: "Nothing found" });
     return res.status(200).json({ styles });
@@ -181,7 +190,7 @@ function getStylesByAuthor(req, res) {
   const customLabels = { totalDocs: "totalStyles", docs: "styles" };
   const options = {
     page,
-    limit: 10,
+    limit: 16,
     collation: { locale: "en" },
     customLabels
   };

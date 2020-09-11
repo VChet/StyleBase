@@ -20,11 +20,11 @@ const {
 
 router.get("/styles/:page?", cacheSuccessful, getStyles);
 router.get("/style/:id", cacheSuccessful, getStyleData);
-router.get("/search", searchStyle);
+router.get("/search/:page?", searchStyle);
+router.get("/author/:author/:page?", cacheSuccessful, getStylesByAuthor);
 router.post("/style/add", addStyle);
 router.put("/style/update/all", updateAllStyles);
 router.put("/style/update/:id", updateStyle);
 router.delete("/style/delete", deleteStyle);
-router.get("/author/:author/:page?", getStylesByAuthor);
 
 module.exports = router;

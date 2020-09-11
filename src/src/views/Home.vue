@@ -1,14 +1,18 @@
 <template>
-  <section class="Home">
+  <main class="Home">
     <ul class="sort-options">
       <li>
-        <button :class="{ active: selectedOption === 0 }" @click="selectedOption = 0">Recently added</button>
+        <button class="link" :class="{ active: selectedOption === 0 }" @click="selectedOption = 0">
+          Recently added
+        </button>
       </li>
       <li>
-        <button :class="{ active: selectedOption === 1 }" @click="selectedOption = 1">Recently updated</button>
+        <button class="link" :class="{ active: selectedOption === 1 }" @click="selectedOption = 1">
+          Recently updated
+        </button>
       </li>
       <li>
-        <button :class="{ active: selectedOption === 2 }" @click="selectedOption = 2">Most liked</button>
+        <button class="link" :class="{ active: selectedOption === 2 }" @click="selectedOption = 2">Most liked</button>
       </li>
     </ul>
     <section class="main-container">
@@ -28,44 +32,61 @@
     >
       <template #body>
         <div :style="{ width: '100%', maxWidth: '100%' }">
-          <div class="style-info-title">
-            <div>{{ selectedStyle.name }}</div>
-            <div>Updated: {{ selectedStyle.lastUpdate }}</div>
+          <div class="style-info-header">
+            <div class="style-info-title">
+              {{ selectedStyle.name }}
+              <span class="owner">
+                <!-- TODO: add styles grid filtered by owner handler -->
+                by <button class="link">{{ selectedStyle.owner }}</button>
+              </span>
+            </div>
+            <div class="style-info-date">Updated: {{ selectedStyle.lastUpdate | dateFromNow }}</div>
           </div>
+
+          <div class="style-info-description">{{ selectedStyle.description }}</div>
 
           <div class="style-info-image">
             <img v-if="selectedStyle.preview" :style="{ maxWidth: '100%' }" :src="selectedStyle.preview" />
             <div v-else :style="{ backgroundColor: '#C0CCDA', height: '500px' }"></div>
+            <div class="style-licence">{{ selectedStyle.license }}</div>
           </div>
 
-          <div class="style-info-footer">
-            <div class="info-footer-metrics">
-              <div>
-                <div>{{ selectedStyle.stargazers }} stars</div>
-
-                <div>{{ selectedStyle.forks }} forks</div>
-              </div>
-
-              <div>
-                <div>{{ selectedStyle.issues }} issues</div>
-
-                <div>{{ selectedStyle.watchers }} watchers</div>
-              </div>
-            </div>
-
-            <div class="info-footer-buttons">
-              <a class="style-button" :href="selectedStyle.url" rel="noopener" target="_blank">Repository</a>
-              <a class="style-button-filled" :href="selectedStyle.usercss" rel="noopener" target="_blank">Install</a>
-            </div>
+          <div class="style-info-content">
+            <ul>
+              <li>
+                <a :href="selectedStyle.url" rel="noopener" target="_blank"> {{ selectedStyle.stargazers }} stars </a>
+              </li>
+              <li>
+                <a :href="`${selectedStyle.url}/forks`" rel="noopener" target="_blank">
+                  {{ selectedStyle.forks }} forks
+                </a>
+              </li>
+              <li>
+                <a :href="`${selectedStyle.url}/issues`" rel="noopener" target="_blank">
+                  {{ selectedStyle.issues }} issues
+                </a>
+              </li>
+              <li>
+                <a :href="selectedStyle.url" rel="noopener" target="_blank"> {{ selectedStyle.watchers }} watchers </a>
+              </li>
+              <li class="buttons">
+                <a class="button style-button-filled" :href="selectedStyle.usercss" rel="noopener" target="_blank">
+                  Install
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </template>
     </base-dialog>
-  </section>
+  </main>
 </template>
 
 <script>
 import axios from 'axios';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
 import StyleCard from '@/components/StyleCard';
 import BaseDialog from '@/components/BaseDialog';
 
@@ -88,6 +109,12 @@ export default {
   watch: {
     selectedOption: function() {
       this.getStyles();
+    }
+  },
+  filters: {
+    dateFromNow: function(timestamp) {
+      dayjs.extend(relativeTime);
+      return dayjs(timestamp).fromNow();
     }
   },
   created() {
@@ -151,38 +178,32 @@ export default {
   list-style-type: none;
   list-style-image: none;
 
-  li {
-    margin: 0.5rem;
-  }
-
-  li:first-child {
-    margin-left: auto;
-
-    @include media-size-tablet {
-      margin-left: unset;
-    }
-  }
-
-  li button {
-    padding: 0.5rem 1rem;
-    border: none;
-    background-color: transparent;
-    border-radius: 4px;
-    font-size: 1.25rem;
-    transition: color 0.2s;
-  }
-
-  li button:hover {
-    color: lightsalmon;
-  }
-
-  li button.active {
-    background-color: #272727;
-    color: #fff;
-  }
-
   @include media-size-tablet {
     overflow: auto;
+  }
+
+  li {
+    margin: 0.5rem;
+
+    &:first-child {
+      margin-left: auto;
+
+      @include media-size-tablet {
+        margin-left: unset;
+      }
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1.25rem;
+      transition: color 0.2s;
+    }
+
+    button.active {
+      background-color: #d37b53;
+      outline-color: #ad552c;
+      color: #fff;
+    }
   }
 }
 
@@ -192,7 +213,6 @@ export default {
   background-color: #f5e6cc;
   height: 38px;
   font-size: 22px;
-  color: #47525e;
   padding-left: 0.5rem;
   margin-bottom: 2rem;
 }
@@ -203,60 +223,96 @@ export default {
   margin: -2rem;
 }
 
-.style-info-title {
+.style-info-header {
   display: flex;
   align-items: center;
   background-color: #f5e6cc;
-  margin-bottom: 24px;
+  margin-bottom: 1rem;
   padding: 1rem;
 
-  & div {
-    color: #47525e;
+  .style-info-title {
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 1;
+
+    .owner {
+      font-size: 1rem;
+      font-weight: normal;
+
+      button {
+        font-size: initial;
+        color: #d37b53;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
 
-  div:nth-child(1) {
-    font-size: 34px;
-  }
-
-  div:last-child {
+  .style-info-date {
+    font-size: 20px;
     margin-left: auto;
   }
 }
 
+.style-info-description {
+  margin: 1rem 0;
+  font-size: 20px;
+}
+
 .style-info-image {
-  margin-bottom: 1.5rem;
+  position: relative;
+
+  img {
+    border-radius: 4px;
+  }
+
+  .style-licence {
+    position: absolute;
+    top: 2rem;
+    right: 0;
+    padding: 0.5rem 1rem;
+    background-color: #f5e6cc;
+    font-size: 20px;
+    transition: opacity 0.4s;
+  }
+
+  &:hover {
+    .style-licence {
+      opacity: 0;
+    }
+  }
 }
 
-.style-info-footer {
+.style-info-content {
   margin-bottom: 2rem;
-}
 
-.info-footer-metrics {
-  display: flex;
-  flex: 1 0 0;
-  color: #47525e;
-  font-size: 30px;
+  ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    list-style: none;
 
-  div {
-    flex: 0 0 25%;
-  }
-}
+    li {
+      &:not(.buttons) {
+        a {
+          font-size: 24px;
+        }
+      }
 
-.style-info-footer {
-  display: flex;
-}
+      &.buttons {
+        a {
+          margin-right: 1rem;
+          width: 175px;
+          height: 50px;
+        }
 
-.info-footer-buttons {
-  margin-left: auto;
-
-  a {
-    margin-right: 27px;
-    width: 175px;
-    height: 50px;
-  }
-
-  a:last-child {
-    margin-right: 0;
+        a:last-child {
+          margin-right: 0;
+        }
+      }
+    }
   }
 }
 </style>

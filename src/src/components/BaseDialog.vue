@@ -100,7 +100,6 @@ export default {
   width: 90%;
   margin: auto;
   padding: 0;
-  background-color: #faf6f0;
   border: 1px solid #b8977e;
   border-radius: 0.3rem;
   outline: 0;
@@ -134,6 +133,7 @@ export default {
 
 .base-dialog-window {
   min-height: inherit;
+  background-color: #faf6f0;
 
   &.loading {
     opacity: 0.3;
