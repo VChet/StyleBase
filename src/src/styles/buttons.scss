@@ -2,12 +2,6 @@ button {
   cursor: pointer;
 }
 
-.style-button {
-  border: 1px solid #d37b53;
-  background-color: transparent;
-  border-radius: 5px;
-  color: #d37b53;
-}
 a.style-button,
 a.style-button-filled {
   display: inline-flex;
@@ -15,6 +9,24 @@ a.style-button-filled {
   align-items: center;
   text-decoration: none;
   line-height: 1;
+  transition: background-color 0.2s;
+}
+
+.style-button {
+  border: 1px solid #d37b53;
+  background-color: transparent;
+  border-radius: 5px;
+  color: #d37b53;
+
+  &:hover {
+    background-color: #f4ebdd;
+  }
+  &:focus {
+    background-color: #eddfca;
+  }
+  &:active {
+    background-color: #e7d4b7;
+  }
 }
 
 .style-button-filled {
@@ -22,4 +34,17 @@ a.style-button-filled {
   border-radius: 5px;
   background-color: #d37b53;
   color: #ffffff;
+
+  &:hover {
+    background-color: #ce6c3e;
+    border-color: #ce6c3e;
+  }
+  &:focus {
+    background-color: #c15f31;
+    border-color: #c15f31;
+  }
+  &:active {
+    background-color: #ad552c;
+    border-color: #ad552c;
+  }
 }

@@ -80,7 +80,7 @@ export default {
     height: 30px;
     padding: 5px 0;
     font-size: 18px;
-    transition: opacity 0.2s;
+    transition: background-color 0.2s, opacity 0.2s;
 
     &:focus {
       opacity: 1;
