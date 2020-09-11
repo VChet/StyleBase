@@ -1,16 +1,18 @@
 <template>
   <div id="app">
     <header>
-      <div class="logo">style base</div>
+      <div class="container">
+        <div class="logo">stylebase</div>
 
-      <div class="search-container">
-        <label for="search" class="visually-hidden">Style search</label>
-        <input id="search" class="search-input" type="text" placeholder="Search..." />
+        <div class="search-container">
+          <label for="search" class="visually-hidden">Style search</label>
+          <input id="search" type="text" placeholder="Search..." />
+        </div>
+
+        <nav>
+          <button class="link" @click="showAddStyleModal = true">add style</button>
+        </nav>
       </div>
-
-      <nav>
-        <button @click="showAddStyleModal = true">Add style</button>
-      </nav>
     </header>
 
     <div class="container">
@@ -79,7 +81,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import './styles/main.scss';
+@import '@/styles/main.scss';
+@import '@/styles/mixins/media.scss';
+
 @font-face {
   font-family: Gilroy;
   font-weight: normal;
@@ -107,35 +111,53 @@ export default {
   margin: auto;
   max-width: 80%;
   padding-top: 10px;
+
+  @include media-size-tablet {
+    max-width: 90%;
+  }
+
+  @include media-size-mobile {
+    max-width: 95%;
+  }
 }
 
 header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   background-color: #272727;
-  padding: 12px 20px 12px 20px;
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-}
 
-.logo {
-  color: #ffffff;
-  font-size: 32px;
-}
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
 
-.search-container {
-  flex: 0 0 50%;
-  display: flex;
-}
+    .logo {
+      color: #ffffff;
+      font-size: 28px;
+      font-weight: bold;
+    }
 
-.search-input {
-  height: 100%;
-  width: 100%;
-  border: 1px solid #8492a6;
-  border-radius: 5px;
-  height: 41px;
-  font-size: 18px;
-  padding-left: 18px;
-}
+    .search-container {
+      display: flex;
+      flex: 0 0 50%;
+      margin: 0 1rem;
+
+      input {
+        width: 100%;
+        height: 40px;
+        border: 1px solid #8492a6;
+        border-radius: 5px;
+        font-size: 18px;
+        padding-left: 18px;
+      }
+
+      @include media-size-mobile {
+        display: none;
+      }
+    }
+  }
 
   nav button {
     color: #ffffff;

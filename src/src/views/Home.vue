@@ -1,5 +1,5 @@
 <template>
-  <section class="Home">
+  <main class="Home">
     <ul class="sort-options">
       <li>
         <button class="link" :class="{ active: selectedOption === 0 }" @click="selectedOption = 0">
@@ -79,7 +79,7 @@
         </div>
       </template>
     </base-dialog>
-  </section>
+  </main>
 </template>
 
 <script>
@@ -177,6 +177,10 @@ export default {
   display: flex;
   list-style-type: none;
   list-style-image: none;
+
+  @include media-size-tablet {
+    overflow: auto;
+  }
 
   li {
     margin: 0.5rem;
