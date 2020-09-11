@@ -30,7 +30,7 @@ async function retrieveRepositoryData(link) {
     }
 
     return {
-      url: link,
+      url: repo.data.html_url,
       usercss: usercss.download_url,
       preview,
       name: repo.data.name.replace(/-/g, " "),
