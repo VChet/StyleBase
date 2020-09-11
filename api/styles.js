@@ -36,6 +36,7 @@ async function retrieveRepositoryData(link) {
       name: repo.data.name.replace(/-/g, " "),
       description: repo.data.description,
       owner: repo.data.owner.login,
+      created: repo.data.created_at,
       lastUpdate: repo.data.updated_at,
       stargazers: repo.data.stargazers_count,
       watchers: repo.data.subscribers_count,
