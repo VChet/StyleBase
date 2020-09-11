@@ -40,7 +40,7 @@
                 by <button class="link">{{ selectedStyle.owner }}</button>
               </span>
             </div>
-            <div class="style-info-date">Updated: {{ selectedStyle.lastUpdate | dateFromNow }}</div>
+            <div class="style-info-date">Updated: {{ dateFromNow }}</div>
           </div>
 
           <div class="style-info-description">{{ selectedStyle.description }}</div>
@@ -106,15 +106,15 @@ export default {
       showStyleInfoModal: false
     };
   },
-  watch: {
-    selectedOption: function() {
-      this.getStyles();
+  computed: {
+    dateFromNow() {
+      dayjs.extend(relativeTime);
+      return dayjs(this.selectedStyle.lastUpdate).fromNow();
     }
   },
-  filters: {
-    dateFromNow: function(timestamp) {
-      dayjs.extend(relativeTime);
-      return dayjs(timestamp).fromNow();
+  watch: {
+    selectedOption() {
+      this.getStyles();
     }
   },
   created() {
