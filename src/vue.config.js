@@ -1,6 +1,13 @@
 module.exports = {
   css: {
-    sourceMap: process.env.NODE_ENV === 'development'
+    sourceMap: process.env.NODE_ENV === 'development',
+    loaderOptions: {
+      sass: {
+        prependData: `
+          @import "~@/styles/mixins/media";
+        `
+      }
+    }
   },
 
   devServer: {
@@ -10,4 +17,4 @@ module.exports = {
       }
     }
   }
-}
+};
