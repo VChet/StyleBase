@@ -48,6 +48,13 @@ async function retrieveRepositoryData(link) {
       isFork: repo.data.fork
     };
   } catch (error) {
+    if (!error.response) {
+      console.log(error);
+      return {
+        status: 500,
+        error: "Unhandled server error"
+      };
+    }
     return {
       status: error.response.status,
       error: error.response.statusText
