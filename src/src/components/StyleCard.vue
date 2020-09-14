@@ -125,8 +125,9 @@ export default {
 }
 
 .data {
-  position: relative;
-  height: 90px;
+  display: flex;
+  flex-direction: column;
+  height: 100px;
   padding: 1rem;
   background-color: #fff;
   cursor: pointer;
@@ -143,11 +144,7 @@ export default {
   }
 
   .footer {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: inherit;
+    margin-top: auto;
     display: flex;
     justify-content: space-between;
   }
