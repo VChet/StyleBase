@@ -22,6 +22,10 @@ body,
   background-color: #faf6f0;
 }
 
+body.no-scroll {
+  overflow: hidden;
+}
+
 #app,
 ::placeholder {
   -webkit-font-smoothing: antialiased;

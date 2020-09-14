@@ -82,11 +82,12 @@ export default {
 
 <style lang="scss" scoped>
 .base-dialog {
-  height: 100%;
-  width: 100%;
   position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
   background: rgba(0, 0, 0, 0.5);
   z-index: 10;
 }
@@ -95,9 +96,8 @@ export default {
   position: relative;
   top: 5vh;
   background-color: #faf6f0;
-  max-height: 90%;
   width: 80%;
-  margin: auto;
+  margin: auto auto 1rem auto;
   padding: 0.5rem 1.5rem 1.5rem 1.5rem;
   overflow: hidden;
   border-radius: 0.3rem;

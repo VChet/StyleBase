@@ -99,6 +99,10 @@ export default {
   watch: {
     selectedOption() {
       this.getStyles();
+    },
+    showStyleInfoModal(isActive) {
+      const $body = document.body;
+      isActive ? $body.classList.add('no-scroll') : $body.classList.remove('no-scroll');
     }
   },
   created() {
