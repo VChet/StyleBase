@@ -6,12 +6,20 @@
     </div>
 
     <div class="data" @click="$emit('open', _id)">
-      <span class="name">{{ name }}</span>
+      <div class="name">{{ name }}</div>
+      <div>by {{ owner }}</div>
+      <div class="footer">
+        <span>{{ stargazers }} stars</span>
+        <span>updated {{ dateFromNow }}</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+
 export default {
   name: 'StyleCard',
   props: {
@@ -25,6 +33,21 @@ export default {
       required: true,
       default: 'Some awesome style'
     },
+    owner: {
+      type: String,
+      required: true,
+      default: 'Author'
+    },
+    stargazers: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    lastUpdate: {
+      type: String,
+      required: false,
+      default: ''
+    },
     usercss: {
       type: String,
       required: true,
@@ -34,6 +57,12 @@ export default {
       type: String,
       required: false,
       default: ''
+    }
+  },
+  computed: {
+    dateFromNow() {
+      dayjs.extend(relativeTime);
+      return dayjs(this.lastUpdate).fromNow();
     }
   }
 };
@@ -96,11 +125,10 @@ export default {
 }
 
 .data {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  height: 90px;
+  padding: 1rem;
   background-color: #fff;
-  height: 80px;
   cursor: pointer;
 
   .name {
@@ -112,6 +140,16 @@ export default {
   &:hover .name,
   &:focus .name {
     color: var(--color-main);
+  }
+
+  .footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: inherit;
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>
