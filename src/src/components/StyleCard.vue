@@ -47,7 +47,7 @@ export default {
   margin: 2rem;
   width: 260px;
   border-radius: 4px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--color-border);
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.12);
   transition: transform 0.2s;
 
@@ -95,15 +95,11 @@ export default {
   }
 }
 
-.card-no-image {
-  background-color: #e0e6ed;
-}
-
 .data {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffffff;
+  background-color: #fff;
   height: 80px;
   cursor: pointer;
 
@@ -115,7 +111,7 @@ export default {
 
   &:hover .name,
   &:focus .name {
-    color: #d37b53;
+    color: var(--color-main);
   }
 }
 </style>

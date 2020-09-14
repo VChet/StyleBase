@@ -110,7 +110,7 @@ export default {
 
       button {
         font-size: initial;
-        color: #d37b53;
+        color: var(--color-main);
 
         &:hover {
           text-decoration: underline;
@@ -142,7 +142,7 @@ export default {
     top: 2rem;
     right: 0;
     padding: 0.5rem 1rem;
-    background-color: #f0f0f0;
+    background-color: var(--color-border);
     border-radius: 2px 0 0 2px;
     font-size: 20px;
     transition: opacity 0.4s;

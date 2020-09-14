@@ -40,7 +40,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 10;
-  background-color: #faf6f0;
+  background-color: var(--color-bg);
 
   .container {
     display: flex;
@@ -62,7 +62,7 @@ header {
       input {
         width: 100%;
         height: 40px;
-        border: 2px solid #f0f0f0;
+        border: 2px solid var(--color-border);
         border-radius: 5px;
         font-size: 18px;
         padding-left: 18px;
@@ -80,7 +80,7 @@ header {
     outline: 0;
     font-size: 18px;
     font-weight: bold;
-    color: #47525e;
+    color: var(--color-text);
     transition: color 0.2s, border-color 0.2s;
 
     &:not(:last-child) {
@@ -88,8 +88,8 @@ header {
     }
 
     &:focus {
-      color: #d37b53;
-      border-color: orange;
+      color: var(--color-main);
+      border-color: var(--color-focus);
     }
   }
 }

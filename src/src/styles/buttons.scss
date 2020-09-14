@@ -8,11 +8,11 @@ a {
 
 a:not(.button) {
   text-decoration: none;
-  color: #47525e;
+  color: var(--color-text);
 
   &:hover,
   &:focus {
-    color: #d37b53;
+    color: var(--color-main);
   }
 }
 
@@ -31,43 +31,43 @@ button.link {
 
   &:hover,
   &:focus {
-    color: #d37b53;
+    color: var(--color-main);
   }
 }
 
 .style-button {
-  border: 1px solid #d37b53;
+  border: 1px solid var(--color-main);
   background-color: transparent;
   font-weight: bold;
-  color: #d37b53;
+  color: var(--color-main);
 
   &:hover {
-    background-color: #f4ebdd;
+    background-color: var(--color-main-lightest);
   }
   &:focus {
-    background-color: #eddfca;
+    background-color: var(--color-main-lighter);
   }
   &:active {
-    background-color: #e7d4b7;
+    background-color: var(--color-main-light);
   }
 }
 
 .style-button-filled {
-  border: 1px solid #d37b53;
-  background-color: #d37b53;
+  border: 1px solid var(--color-main);
+  background-color: var(--color-main);
   font-weight: bold;
   color: #ffffff;
 
   &:hover {
-    background-color: #ce6c3e;
-    border-color: #ce6c3e;
+    background-color: var(--color-main-dark);
+    border-color: var(--color-main-dark);
   }
   &:focus {
-    background-color: #c15f31;
-    border-color: #c15f31;
+    background-color: var(--color-main-darker);
+    border-color: var(--color-main-darker);
   }
   &:active {
-    background-color: #ad552c;
-    border-color: #ad552c;
+    background-color: var(--color-main-darkest);
+    border-color: var(--color-main-darkest);
   }
 }

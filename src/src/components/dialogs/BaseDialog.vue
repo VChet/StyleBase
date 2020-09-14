@@ -97,7 +97,7 @@ export default {
   margin: auto auto 1rem auto;
   padding: 2rem;
   overflow: hidden;
-  background-color: #faf6f0;
+  background-color: var(--color-bg);
   border-radius: 0.3rem;
 
   &:focus {

@@ -70,7 +70,7 @@ export default {
 
   input {
     height: 50px;
-    border: 2px solid #f0f0f0;
+    border: 2px solid var(--color-border);
     border-radius: 5px;
     width: 264px;
     font-size: 18px;

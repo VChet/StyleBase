@@ -158,14 +158,14 @@ export default {
   margin: 3rem 0;
   user-select: none;
   background-color: #fff;
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--color-border);
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.12);
 
   .feature-item {
     padding: 1.5rem;
 
     &:not(:first-of-type) {
-      border-left: 1px solid #f0f0f0;
+      border-left: 1px solid var(--color-border);
     }
 
     div {
@@ -183,7 +183,7 @@ export default {
     .feature-item {
       flex-basis: 100%;
       padding: 1rem;
-      border-left: 2px solid #f0f0f0;
+      border-left: 2px solid var(--color-border);
     }
   }
 }
@@ -201,7 +201,7 @@ export default {
     height: 2px;
     margin: 0 1.5rem;
     border: none;
-    background-color: #ebebeb;
+    background-color: var(--color-border);
   }
 
   .sort-options {
@@ -225,16 +225,16 @@ export default {
         font-size: 1rem;
         text-transform: lowercase;
         transition: color 0.2s, border-color 0.2s;
-        color: #47525e;
+        color: var(--color-text);
 
         &.active {
-          color: #d37b53;
-          border-color: #d37b53;
+          color: var(--color-main);
+          border-color: var(--color-main);
         }
 
         &:focus {
-          color: #d37b53;
-          border-color: orange;
+          color: var(--color-main);
+          border-color: var(--color-focus);
         }
       }
     }

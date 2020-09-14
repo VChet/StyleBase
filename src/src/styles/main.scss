@@ -14,12 +14,26 @@
   src: url('~@/styles/fonts/Gilroy-Bold.woff2') format('woff2'), url('~@/styles/fonts/Gilroy-Bold.woff') format('woff');
 }
 
+:root {
+  --color-bg: #faf6f0;
+  --color-text: #47525e;
+  --color-focus: #ffa500;
+  --color-border: #e0e0e0;
+  --color-main-lightest: #f4ebdd;
+  --color-main-lighter: #eddfca;
+  --color-main-light: #e7d4b7;
+  --color-main: #d37b53;
+  --color-main-dark: #ce6c3e;
+  --color-main-darker: #c15f31;
+  --color-main-darkest: #ad552c;
+}
+
 html,
 body,
 #app {
   height: 100vh;
   min-width: 320px;
-  background-color: #faf6f0;
+  background-color: var(--color-bg);
 }
 
 body.no-scroll {
@@ -32,7 +46,7 @@ body.no-scroll {
   -moz-osx-font-smoothing: grayscale;
   font-family: Gilroy;
   font-size: 16px;
-  color: #47525e;
+  color: var(--color-text);
 }
 
 body {
