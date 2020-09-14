@@ -1,7 +1,7 @@
 <template>
   <base-dialog v-if="open" size="small" @close="$emit('close')">
     <template>
-      <div class="dialog-title">Here come another style...</div>
+      <div class="dialog-title">Here comes another style...</div>
 
       <div class="dialog-input">
         <input v-model="url" type="text" placeholder="Link to repository" />
@@ -60,7 +60,7 @@ export default {
 <style scoped lang="scss">
 .dialog-title {
   font-size: 30px;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
@@ -69,8 +69,8 @@ export default {
   margin-bottom: 1.5rem;
 
   input {
-    border: 1px solid #d37b53;
     height: 50px;
+    border: 2px solid #f0f0f0;
     border-radius: 5px;
     width: 264px;
     font-size: 18px;

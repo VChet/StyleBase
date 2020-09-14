@@ -40,7 +40,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 10;
-  background-color: #272727;
+  background-color: #faf6f0;
 
   .container {
     display: flex;
@@ -49,9 +49,9 @@ header {
     padding: 1rem 0;
 
     .logo {
-      color: #ffffff;
       font-size: 28px;
       font-weight: bold;
+      user-select: none;
     }
 
     .search-container {
@@ -62,7 +62,7 @@ header {
       input {
         width: 100%;
         height: 40px;
-        border: 1px solid #8492a6;
+        border: 2px solid #f0f0f0;
         border-radius: 5px;
         font-size: 18px;
         padding-left: 18px;
@@ -75,12 +75,21 @@ header {
   }
 
   nav button {
-    color: #ffffff;
+    border-radius: 0;
+    border-bottom: 3px solid transparent;
+    outline: 0;
     font-size: 18px;
     font-weight: bold;
+    color: #47525e;
+    transition: color 0.2s, border-color 0.2s;
 
     &:not(:last-child) {
       margin-right: 0.5rem;
+    }
+
+    &:focus {
+      color: #d37b53;
+      border-color: orange;
     }
   }
 }

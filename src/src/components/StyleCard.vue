@@ -47,11 +47,14 @@ export default {
   margin: 2rem;
   width: 260px;
   border-radius: 4px;
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
-    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  border: 1px solid #e0e0e0;
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s;
 
   &:hover,
   &:focus-within {
+    transform: translateY(-4px);
+
     img {
       opacity: 0.5;
     }

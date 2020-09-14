@@ -93,11 +93,11 @@ export default {
 .base-dialog-window {
   position: relative;
   top: 5vh;
-  background-color: #faf6f0;
   width: 80%;
   margin: auto auto 1rem auto;
   padding: 2rem;
   overflow: hidden;
+  background-color: #faf6f0;
   border-radius: 0.3rem;
 
   &:focus {

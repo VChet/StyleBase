@@ -157,13 +157,15 @@ export default {
   width: 100%;
   margin: 3rem 0;
   user-select: none;
-  border: 2px solid #f0f0f0;
+  background-color: #fff;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.12);
 
   .feature-item {
     padding: 1.5rem;
 
     &:not(:first-of-type) {
-      border-left: 2px solid #f0f0f0;
+      border-left: 1px solid #f0f0f0;
     }
 
     div {

@@ -6,7 +6,8 @@
           {{ styleData.name }}
           <span class="owner">
             <!-- TODO: add styles grid filtered by owner handler -->
-            by <button class="link">{{ styleData.owner }}</button>
+            by
+            <button class="link">{{ styleData.owner }}</button>
           </span>
         </div>
         <div class="style-info-date">Updated: {{ dateFromNow }}</div>
@@ -17,27 +18,42 @@
       <div class="style-info-image">
         <img v-if="styleData.preview" :style="{ maxWidth: '100%' }" :src="styleData.preview" />
         <div v-else :style="{ backgroundColor: '#C0CCDA', height: '500px' }"></div>
-        <div class="style-licence">{{ styleData.license }}</div>
+        <div class="style-license">{{ styleData.license }}</div>
       </div>
 
       <div class="style-info-content">
         <ul>
           <li>
-            <a :href="styleData.url" rel="noopener" target="_blank"> {{ styleData.stargazers }} stars </a>
+            <a :href="styleData.url" rel="noopener" target="_blank">{{ styleData.stargazers }} stars</a>
           </li>
           <li>
-            <a :href="`${styleData.url}/forks`" rel="noopener" target="_blank"> {{ styleData.forks }} forks </a>
+            <a
+              :href="`${styleData.url}/forks`"
+              rel="noopener"
+              target="_blank"
+            >{{ styleData.forks }} forks</a>
           </li>
           <li>
-            <a :href="`${styleData.url}/issues`" rel="noopener" target="_blank"> {{ styleData.issues }} issues </a>
+            <a
+              :href="`${styleData.url}/issues`"
+              rel="noopener"
+              target="_blank"
+            >{{ styleData.issues }} issues</a>
           </li>
           <li>
-            <a :href="styleData.url" rel="noopener" target="_blank"> {{ styleData.watchers }} watchers </a>
+            <a
+              :href="styleData.url"
+              rel="noopener"
+              target="_blank"
+            >{{ styleData.watchers }} watchers</a>
           </li>
           <li class="buttons">
-            <a class="button style-button-filled" :href="styleData.usercss" rel="noopener" target="_blank">
-              Install
-            </a>
+            <a
+              class="button style-button-filled"
+              :href="styleData.usercss"
+              rel="noopener"
+              target="_blank"
+            >Install</a>
           </li>
         </ul>
       </div>
@@ -121,18 +137,19 @@ export default {
     border-radius: 4px;
   }
 
-  .style-licence {
+  .style-license {
     position: absolute;
     top: 2rem;
     right: 0;
     padding: 0.5rem 1rem;
-    background-color: #f5e6cc;
+    background-color: #f0f0f0;
+    border-radius: 2px 0 0 2px;
     font-size: 20px;
     transition: opacity 0.4s;
   }
 
   &:hover {
-    .style-licence {
+    .style-license {
       opacity: 0;
     }
   }
@@ -142,6 +159,7 @@ export default {
   margin-bottom: 2rem;
 
   ul {
+    margin: 2rem 0 0;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -150,7 +168,7 @@ export default {
     li {
       &:not(.buttons) {
         a {
-          font-size: 24px;
+          font-size: 1.75rem;
         }
       }
 
