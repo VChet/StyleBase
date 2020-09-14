@@ -42,7 +42,7 @@ async function retrieveRepositoryData(link) {
       watchers: repo.data.subscribers_count,
       forks: repo.data.forks,
       issues: repo.data.open_issues,
-      license: repo.data.license.spdx_id,
+      license: (repo.data.license && repo.data.license.spdx_id) || "",
       isPrivate: repo.data.private,
       isArchived: repo.data.archived,
       isFork: repo.data.fork
