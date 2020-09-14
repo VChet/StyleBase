@@ -13,12 +13,16 @@ export default {
 
 <style lang="scss" scoped>
 .close-button {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  margin: 0;
   background-color: transparent;
   border-color: transparent;
   cursor: pointer;
-  height: 2rem;
-  position: relative;
-  width: 2rem;
 
   &:hover .cross-first-line,
   &:hover .cross-second-line {

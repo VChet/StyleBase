@@ -1,5 +1,5 @@
 <template>
-  <base-dialog v-if="open" size="medium" @close="$emit('close')">
+  <base-dialog v-if="open" size="small" @close="$emit('close')">
     <template>
       <div class="dialog-title">Here come another style...</div>
 

@@ -10,9 +10,7 @@
         @clickOutside="onClickOutside"
         @keydown.esc="onClose"
       >
-        <div class="close-button-container">
-          <close-button v-if="!closeButtonHidden" @click="onClose" />
-        </div>
+        <close-button v-if="!closeButtonHidden" @click="onClose" />
 
         <div>
           <slot></slot>
@@ -98,7 +96,7 @@ export default {
   background-color: #faf6f0;
   width: 80%;
   margin: auto auto 1rem auto;
-  padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+  padding: 2rem;
   overflow: hidden;
   border-radius: 0.3rem;
 
@@ -107,21 +105,16 @@ export default {
   }
 
   &.small {
-    max-width: 360px;
+    max-width: 450px;
   }
 
   &.medium {
-    max-width: 500px;
+    max-width: 600px;
   }
 
   &.extra-large {
     max-width: 1130px;
   }
-}
-
-.close-button-container {
-  text-align: right;
-  margin-bottom: 0.5rem;
 }
 
 .transition-dialog {

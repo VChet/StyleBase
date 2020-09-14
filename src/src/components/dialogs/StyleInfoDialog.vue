@@ -81,9 +81,7 @@ export default {
 .style-info-header {
   display: flex;
   align-items: center;
-  background-color: #f5e6cc;
-  margin-bottom: 1rem;
-  padding: 1rem;
+  margin-bottom: 1.5rem;
 
   .style-info-title {
     font-size: 30px;
