@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="container">
-      <div class="logo">stylebase</div>
+      <a class="logo" href="/" rel="home">StyleBase</a>
 
       <div class="search-container">
         <label for="search" class="visually-hidden">Style search</label>
@@ -9,7 +9,7 @@
       </div>
 
       <nav>
-        <button class="link" @click="$emit('open-nav-link', 'showAddStyleModal')">add style</button>
+        <button class="link" @click="$emit('open-nav-link', 'showAddStyleModal')">Add Style</button>
       </nav>
     </div>
   </header>
@@ -38,7 +38,6 @@ header {
     .logo {
       font-size: 28px;
       font-weight: bold;
-      user-select: none;
     }
 
     .search-container {
