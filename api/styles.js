@@ -63,6 +63,8 @@ function getStyles(req, res) {
     sort = "-stargazers";
   } else if (req.query.sort === "update") {
     sort = "-lastUpdate";
+  } else {
+    sort = "-_id";
   }
 
   const customLabels = { totalDocs: "totalStyles", docs: "styles" };
