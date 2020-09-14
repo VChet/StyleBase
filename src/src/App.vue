@@ -38,19 +38,3 @@ export default {
 <style lang="scss">
 @import '@/styles/main.scss';
 </style>
-
-<style scoped lang="scss">
-.container {
-  margin: auto;
-  max-width: 80%;
-  padding-top: 10px;
-
-  @include media-size-tablet {
-    max-width: 90%;
-  }
-
-  @include media-size-mobile {
-    max-width: 95%;
-  }
-}
-</style>

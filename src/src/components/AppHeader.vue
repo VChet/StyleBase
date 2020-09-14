@@ -22,20 +22,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  margin: auto;
-  max-width: 80%;
-  padding-top: 10px;
-
-  @include media-size-tablet {
-    max-width: 90%;
-  }
-
-  @include media-size-mobile {
-    max-width: 95%;
-  }
-}
-
 header {
   position: sticky;
   top: 0;
@@ -46,7 +32,8 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1rem 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 
     .logo {
       font-size: 28px;

@@ -148,7 +148,7 @@ export default {
 
 <style scoped lang="scss">
 .main-container {
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
 .features {
