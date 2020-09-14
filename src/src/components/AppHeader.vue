@@ -9,6 +9,7 @@
       </div>
 
       <nav>
+        <button class="link" @click="$emit('open-nav-link', 'showHowtoUseModal')">How to Use</button>
         <button class="link" @click="$emit('open-nav-link', 'showAddStyleModal')">Add Style</button>
       </nav>
     </div>
@@ -58,24 +59,31 @@ header {
         display: none;
       }
     }
-  }
 
-  nav button {
-    border-radius: 0;
-    border-bottom: 3px solid transparent;
-    outline: 0;
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--color-text);
-    transition: color 0.2s, border-color 0.2s;
+    a,
+    button {
+      border-radius: 0;
+      outline: 0;
+      border-bottom: 2px solid transparent;
+      color: var(--color-text);
+      transition: color 0.2s, border-color 0.2s;
 
-    &:not(:last-child) {
-      margin-right: 0.5rem;
+      &:hover {
+        color: var(--color-main);
+      }
+
+      &:focus {
+        color: var(--color-main);
+        border-color: var(--color-focus);
+      }
     }
 
-    &:focus {
-      color: var(--color-main);
-      border-color: var(--color-focus);
+    nav button {
+      font-size: 18px;
+
+      &:not(:last-child) {
+        margin-right: 1.5rem;
+      }
     }
   }
 }
