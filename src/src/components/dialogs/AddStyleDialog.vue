@@ -5,7 +5,7 @@
 
       <div class="dialog-input">
         <input v-model="url" type="text" placeholder="Link to repository" />
-        <div v-if="error">{{ error }}</div>
+        <div class="error" v-if="error">{{ error }}</div>
       </div>
 
       <div class="dialog-buttons">
@@ -75,6 +75,11 @@ export default {
     width: 264px;
     font-size: 18px;
     padding: 0 15px 0 15px;
+  }
+
+  .error {
+    margin: 1rem 0;
+    color: red;
   }
 }
 
