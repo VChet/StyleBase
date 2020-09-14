@@ -1,24 +1,57 @@
 <template>
   <main class="Home">
-    <ul class="sort-options">
-      <li>
-        <button class="link" :class="{ active: selectedOption === 0 }" @click="selectedOption = 0">
-          Recently added
-        </button>
-      </li>
-      <li>
-        <button class="link" :class="{ active: selectedOption === 1 }" @click="selectedOption = 1">
-          Recently updated
-        </button>
-      </li>
-      <li>
-        <button class="link" :class="{ active: selectedOption === 2 }" @click="selectedOption = 2">Most liked</button>
-      </li>
-    </ul>
+    <section class="features">
+      <div class="feature-item">
+        <div>Automatic Updates</div>
+        <span>Install once and receive updates automatically</span>
+      </div>
+      <div class="feature-item">
+        <div>Free to Share</div>
+        <span>Anyone can add own style</span>
+      </div>
+      <div class="feature-item">
+        <div>Open Source</div>
+        <span>Install directly from repository</span>
+      </div>
+    </section>
     <section class="main-container">
-      <div class="section-header">{{ sortOptions[selectedOption] }} styles</div>
+      <div class="section-header">
+        <div class="title">Styles</div>
+        <hr />
+        <ul class="sort-options">
+          <li>
+            <button
+              type="button"
+              class="link"
+              :class="{ active: selectedOption === 0 }"
+              @click="selectedOption = 0"
+            >Recently added</button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="link"
+              :class="{ active: selectedOption === 1 }"
+              @click="selectedOption = 1"
+            >Recently updated</button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="link"
+              :class="{ active: selectedOption === 2 }"
+              @click="selectedOption = 2"
+            >Most liked</button>
+          </li>
+        </ul>
+      </div>
       <div class="style-grid">
-        <style-card v-for="style in styles" :key="style._id" v-bind="style" @open="onOpenStyleCard" />
+        <style-card
+          v-for="style in styles"
+          :key="style._id"
+          v-bind="style"
+          @open="onOpenStyleCard"
+        />
       </div>
     </section>
 
@@ -114,36 +147,37 @@ export default {
   margin-bottom: 1rem;
 }
 
-.sort-options {
+.features {
   display: flex;
-  list-style-type: none;
-  list-style-image: none;
+  justify-content: space-between;
+  width: 100%;
+  margin: 3rem 0;
+  user-select: none;
+  border: 2px solid #f0f0f0;
 
-  @include media-size-tablet {
-    overflow: auto;
+  .feature-item {
+    padding: 1.5rem;
+
+    &:not(:first-of-type) {
+      border-left: 2px solid #f0f0f0;
+    }
+
+    div {
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
   }
 
-  li {
-    margin: 0.5rem;
+  @include media-size-tablet {
+    margin: 1.5rem 0;
+    border: none;
+    flex-wrap: wrap;
 
-    &:first-child {
-      margin-left: auto;
-
-      @include media-size-tablet {
-        margin-left: unset;
-      }
-    }
-
-    button {
-      padding: 0.5rem 1rem;
-      font-size: 1.25rem;
-      transition: color 0.2s;
-    }
-
-    button.active {
-      background-color: #d37b53;
-      outline-color: #ad552c;
-      color: #fff;
+    .feature-item {
+      flex-basis: 100%;
+      padding: 1rem;
+      border-left: 2px solid #f0f0f0;
     }
   }
 }
@@ -151,11 +185,54 @@ export default {
 .section-header {
   display: flex;
   align-items: center;
-  background-color: #f5e6cc;
-  height: 38px;
-  font-size: 22px;
-  padding-left: 0.5rem;
+  height: 40px;
   margin-bottom: 2rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+
+  hr {
+    flex-grow: 1;
+    height: 2px;
+    margin: 0 1.5rem;
+    border: none;
+    background-color: #ebebeb;
+  }
+
+  .sort-options {
+    margin-left: auto;
+    display: flex;
+    list-style-type: none;
+    list-style-image: none;
+
+    @include media-size-tablet {
+      overflow: auto;
+    }
+
+    li {
+      margin: 0 1rem;
+
+      button {
+        padding: 0.25rem 0;
+        border-bottom: 2px solid transparent;
+        border-radius: 0;
+        outline: 0;
+        font-size: 1rem;
+        text-transform: lowercase;
+        transition: color 0.2s, border-color 0.2s;
+        color: #47525e;
+
+        &.active {
+          color: #d37b53;
+          border-color: #d37b53;
+        }
+
+        &:focus {
+          color: #d37b53;
+          border-color: orange;
+        }
+      }
+    }
+  }
 }
 
 .style-grid {
