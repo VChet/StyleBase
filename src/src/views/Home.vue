@@ -1,9 +1,5 @@
 <template>
   <main class="Home">
-    <section class="search-container">
-      <label for="search" class="visually-hidden">Style search</label>
-      <input id="search" type="text" placeholder="Search..." />
-    </section>
     <section class="features">
       <div class="feature-item">
         <div>Automatic Updates</div>
@@ -18,29 +14,32 @@
         <span>Install directly from repository</span>
       </div>
     </section>
+    <section class="search-container">
+      <label for="search" class="visually-hidden">Style search</label>
+      <input id="search" v-model="input" type="text" placeholder="Search by style or owner name..." />
+      <close-button v-show="searchQuery" @click="resetSearch" />
+    </section>
     <section class="main-container">
       <div class="section-header">
         <div class="title">Styles</div>
         <hr />
-        <ul class="sort-options">
+        <ul class="sort-options" v-show="!searchQuery">
           <li v-for="(option, index) in sortOptions" :key="index">
             <button
               type="button"
               class="link"
               :class="{ active: selectedOption === index }"
               @click="selectedOption = index"
-            >{{ option }}</button>
+            >
+              {{ option }}
+            </button>
           </li>
         </ul>
       </div>
-      <div class="style-grid">
-        <style-card
-          v-for="style in styles"
-          :key="style._id"
-          v-bind="style"
-          @open="onOpenStyleCard"
-        />
+      <div class="style-grid" v-if="styles.length">
+        <style-card v-for="style in styles" :key="style._id" v-bind="style" @open="onOpenStyleCard" />
       </div>
+      <div class="no-results" v-else>No results</div>
     </section>
 
     <style-info-dialog
@@ -61,20 +60,26 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 
 import StyleCard from '@/components/StyleCard';
 import StyleInfoDialog from '@/components/dialogs/StyleInfoDialog';
+import CloseButton from '@/components/CloseButton.vue';
 
 export default {
   name: 'Home',
   components: {
     StyleCard,
-    StyleInfoDialog
+    StyleInfoDialog,
+    CloseButton
   },
   data() {
     return {
+      styles: [],
+
+      searchQuery: '',
+      timeout: '',
+
       sortOptions: ['Recently added', 'Recently updated', 'Most liked'],
       selectedOption: 0,
-      styles: [],
-      selectedStyle: {},
 
+      selectedStyle: {},
       showStyleInfoModal: false
     };
   },
@@ -82,6 +87,17 @@ export default {
     dateFromNow() {
       dayjs.extend(relativeTime);
       return dayjs(this.selectedStyle.lastUpdate).fromNow();
+    },
+    input: {
+      get() {
+        return this.searchQuery;
+      },
+      set(val) {
+        this.searchQuery = val;
+        if (!val.length) return this.resetSearch();
+        if (this.timeout) clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => this.searchStyles(), 500);
+      }
     }
   },
   watch: {
@@ -102,6 +118,9 @@ export default {
       .catch(error => {
         console.error(error);
       });
+  },
+  destroyed() {
+    clearInterval(this.timeout);
   },
   methods: {
     getStyles() {
@@ -126,6 +145,20 @@ export default {
           console.error(error);
         });
     },
+    searchStyles() {
+      axios
+        .get(`/api/search?query=${this.searchQuery}`)
+        .then(response => {
+          this.styles = response.data.styles;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    resetSearch() {
+      this.searchQuery = '';
+      this.getStyles();
+    },
     onOpenStyleCard(_id) {
       this.showStyleInfoModal = true;
       this.selectedStyle = this.styles.find(style => style._id === _id);
@@ -139,29 +172,11 @@ export default {
   margin-bottom: 3rem;
 }
 
-.search-container {
-  display: flex;
-
-  input {
-    width: 100%;
-    height: 40px;
-    border: 2px solid var(--color-border);
-    border-radius: 5px;
-    font-size: 18px;
-    padding-left: 18px;
-    outline: 0;
-
-    &:focus {
-      border-color: var(--color-focus);
-    }
-  }
-}
-
 .features {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin: 3rem 0;
+  margin: 2rem 0;
   user-select: none;
   background-color: #fff;
   border: 1px solid var(--color-border);
@@ -191,6 +206,31 @@ export default {
       padding: 1rem;
       border-left: 2px solid var(--color-border);
     }
+  }
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  margin-bottom: 2rem;
+
+  input {
+    width: 100%;
+    height: 40px;
+    border: 2px solid var(--color-border);
+    border-radius: 5px;
+    font-size: 18px;
+    padding-left: 18px;
+    outline: 0;
+
+    &:focus {
+      border-color: var(--color-focus);
+    }
+  }
+
+  .close-button {
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 
@@ -251,5 +291,10 @@ export default {
   display: flex;
   flex-wrap: wrap;
   margin: -2rem;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 1.5rem;
 }
 </style>
