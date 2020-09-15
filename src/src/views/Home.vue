@@ -23,29 +23,13 @@
         <div class="title">Styles</div>
         <hr />
         <ul class="sort-options">
-          <li>
+          <li v-for="(option, index) in sortOptions" :key="index">
             <button
               type="button"
               class="link"
-              :class="{ active: selectedOption === 0 }"
-              @click="selectedOption = 0"
-            >Recently added</button>
-          </li>
-          <li>
-            <button
-              type="button"
-              class="link"
-              :class="{ active: selectedOption === 1 }"
-              @click="selectedOption = 1"
-            >Recently updated</button>
-          </li>
-          <li>
-            <button
-              type="button"
-              class="link"
-              :class="{ active: selectedOption === 2 }"
-              @click="selectedOption = 2"
-            >Most liked</button>
+              :class="{ active: selectedOption === index }"
+              @click="selectedOption = index"
+            >{{ option }}</button>
           </li>
         </ul>
       </div>
