@@ -109,8 +109,7 @@ function searchStyle(req, res) {
 
   Style.paginate({ $text: { $search: req.query.query } }, options, (error, styles) => {
     if (error) return res.status(500).json({ error });
-    if (!styles.length) return res.status(404).json({ error: "Nothing found" });
-    return res.status(200).json({ styles });
+    return res.status(200).json(styles);
   });
 }
 
