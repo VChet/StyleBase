@@ -24,36 +24,27 @@
       <div class="style-info-content">
         <ul>
           <li>
-            <a :href="styleData.url" rel="noopener" target="_blank">{{ styleData.stargazers }} stars</a>
+            <a :href="styleData.url" rel="noopener" target="_blank">
+              {{ pluralize(styleData.stargazers, 'star') }}
+            </a>
           </li>
           <li>
-            <a
-              :href="`${styleData.url}/forks`"
-              rel="noopener"
-              target="_blank"
-            >{{ styleData.forks }} forks</a>
+            <a :href="`${styleData.url}/forks`" rel="noopener" target="_blank">
+              {{ pluralize(styleData.forks, 'fork') }}
+            </a>
           </li>
           <li>
-            <a
-              :href="`${styleData.url}/issues`"
-              rel="noopener"
-              target="_blank"
-            >{{ styleData.issues }} issues</a>
+            <a :href="`${styleData.url}/issues`" rel="noopener" target="_blank">
+              {{ pluralize(styleData.issues, 'issue') }}
+            </a>
           </li>
           <li>
-            <a
-              :href="styleData.url"
-              rel="noopener"
-              target="_blank"
-            >{{ styleData.watchers }} watchers</a>
+            <a :href="styleData.url" rel="noopener" target="_blank">
+              {{ pluralize(styleData.watchers, 'watcher') }}
+            </a>
           </li>
           <li class="buttons">
-            <a
-              class="button style-button-filled"
-              :href="styleData.usercss"
-              rel="noopener"
-              target="_blank"
-            >Install</a>
+            <a class="button style-button-filled" :href="styleData.usercss" rel="noopener" target="_blank">Install</a>
           </li>
         </ul>
       </div>
@@ -88,6 +79,11 @@ export default {
     dateFromNow() {
       dayjs.extend(relativeTime);
       return dayjs(this.styleData.lastUpdate).fromNow();
+    }
+  },
+  methods: {
+    pluralize(num, noun, suffix = 's') {
+      return `${num} ${noun}${num === 1 ? '' : suffix}`;
     }
   }
 };

@@ -9,7 +9,7 @@
       <div class="name">{{ name }}</div>
       <div>by {{ owner }}</div>
       <div class="footer">
-        <span>{{ stargazers }} stars</span>
+        <span>{{ pluralize(stargazers, 'star') }}</span>
         <span>updated {{ dateFromNow }}</span>
       </div>
     </div>
@@ -63,6 +63,11 @@ export default {
     dateFromNow() {
       dayjs.extend(relativeTime);
       return dayjs(this.lastUpdate).fromNow();
+    }
+  },
+  methods: {
+    pluralize(num, noun, suffix = 's') {
+      return `${num} ${noun}${num === 1 ? '' : suffix}`;
     }
   }
 };
