@@ -1,5 +1,9 @@
 <template>
   <main class="Home">
+    <section class="search-container">
+      <label for="search" class="visually-hidden">Style search</label>
+      <input id="search" type="text" placeholder="Search..." />
+    </section>
     <section class="features">
       <div class="feature-item">
         <div>Automatic Updates</div>
@@ -149,6 +153,24 @@ export default {
 <style scoped lang="scss">
 .main-container {
   margin-bottom: 3rem;
+}
+
+.search-container {
+  display: flex;
+
+  input {
+    width: 100%;
+    height: 40px;
+    border: 2px solid var(--color-border);
+    border-radius: 5px;
+    font-size: 18px;
+    padding-left: 18px;
+    outline: 0;
+
+    &:focus {
+      border-color: var(--color-focus);
+    }
+  }
 }
 
 .features {
