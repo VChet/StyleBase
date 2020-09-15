@@ -38,23 +38,24 @@ export default {
 
 .cross-first-line,
 .cross-second-line {
-  background-color: rgba(0, 0, 0, 0.3);
   position: absolute;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: background-color 0.2s;
 }
 
 .cross-first-line {
-  height: 1px;
-  left: 0px;
-  top: 50%;
-  transform: translate(0%, -50%) rotate(45deg);
   width: 100%;
+  height: 1px;
+  top: 50%;
+  left: 0;
+  transform: translate(0%, -50%) rotate(45deg);
 }
 
 .cross-second-line {
-  height: 100%;
-  left: 50%;
-  top: 0px;
-  transform: translate(-50%, 0%) rotate(45deg);
   width: 1px;
+  height: 100%;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0%) rotate(45deg);
 }
 </style>
