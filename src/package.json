@@ -12,6 +12,7 @@
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "dayjs": "^1.8.35",
+    "normalize.css": "^8.0.1",
     "vue": "^2.6.11"
   },
   "devDependencies": {
