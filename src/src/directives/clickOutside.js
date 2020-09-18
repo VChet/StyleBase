@@ -10,7 +10,7 @@ const clickOutside = {
     clickOutsideEvent = event => {
       const { target } = event;
 
-      if (initialMacrotaskEnded && (el !== target || !el.contains(target))) {
+      if (initialMacrotaskEnded && !(el === target || el.contains(target))) {
         el.dispatchEvent(new Event('clickOutside'));
       }
     };
