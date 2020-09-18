@@ -29,5 +29,8 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-sonarjs": "^0.5.0",
     "nodemon": "^2.0.4"
+  },
+  "gitHooks": {
+    "pre-commit": "vue-cli-service lint"
   }
 }
