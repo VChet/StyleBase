@@ -16,14 +16,21 @@
     </section>
     <section class="search-container">
       <label for="search" class="visually-hidden">Style search</label>
-      <input id="search" v-model="input" type="text" placeholder="Search by style or owner name..." />
+      <input
+        id="search"
+        v-model.lazy="searchQuery"
+        v-debounce="500"
+        type="text"
+        placeholder="Search by style or owner name..."
+        @change="searchStyles"
+      />
       <close-button v-show="searchQuery" @click="resetSearch" />
     </section>
     <section class="main-container">
       <div class="section-header">
         <div class="title">Styles</div>
         <hr />
-        <ul class="sort-options" v-show="!searchQuery">
+        <ul v-show="!searchQuery" class="sort-options">
           <li v-for="(option, index) in sortOptions" :key="index">
             <button
               type="button"
@@ -36,10 +43,10 @@
           </li>
         </ul>
       </div>
-      <div class="style-grid" v-if="styles.length">
+      <div v-if="styles.length" class="style-grid">
         <style-card v-for="style in styles" :key="style._id" v-bind="style" @open="onOpenStyleCard" />
       </div>
-      <div class="no-results" v-else>No results</div>
+      <div v-else class="no-results">No results</div>
     </section>
 
     <style-info-dialog
@@ -61,6 +68,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import StyleCard from '@/components/StyleCard';
 import StyleInfoDialog from '@/components/dialogs/StyleInfoDialog';
 import CloseButton from '@/components/CloseButton.vue';
+import debounce from '@/directives/debounce';
 
 export default {
   name: 'Home',
@@ -68,6 +76,9 @@ export default {
     StyleCard,
     StyleInfoDialog,
     CloseButton
+  },
+  directives: {
+    debounce
   },
   data() {
     return {
@@ -87,18 +98,18 @@ export default {
     dateFromNow() {
       dayjs.extend(relativeTime);
       return dayjs(this.selectedStyle.lastUpdate).fromNow();
-    },
-    input: {
-      get() {
-        return this.searchQuery;
-      },
-      set(val) {
-        this.searchQuery = val;
-        if (!val.length) return this.resetSearch();
-        if (this.timeout) clearTimeout(this.timeout);
-        this.timeout = setTimeout(() => this.searchStyles(), 500);
-      }
     }
+    // input: {
+    //   get() {
+    //     return this.searchQuery;
+    //   },
+    //   set(val) {
+    //     this.searchQuery = val;
+    //     if (!val.length) return this.resetSearch();
+    //     if (this.timeout) clearTimeout(this.timeout);
+    //     this.timeout = setTimeout(() => this.searchStyles(), 500);
+    //   }
+    // }
   },
   watch: {
     selectedOption() {
@@ -146,14 +157,18 @@ export default {
         });
     },
     searchStyles() {
-      axios
-        .get(`/api/search?query=${this.searchQuery}`)
-        .then(response => {
-          this.styles = response.data.styles;
-        })
-        .catch(error => {
-          console.error(error);
-        });
+      if (this.searchQuery) {
+        axios
+          .get(`/api/search?query=${this.searchQuery}`)
+          .then(response => {
+            this.styles = response.data.styles;
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      } else {
+        this.resetSearch();
+      }
     },
     resetSearch() {
       this.searchQuery = '';
