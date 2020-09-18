@@ -83,6 +83,11 @@ export default {
   data() {
     return {
       styles: [],
+      isLoading: true,
+      pagination: {
+        page: 1,
+        hasNextPage: false
+      },
 
       searchQuery: '',
       timeout: '',
@@ -125,13 +130,23 @@ export default {
       .get('/api/styles')
       .then(response => {
         this.styles = response.data.styles;
+        this.pagination = {
+          page: response.data.page,
+          hasNextPage: response.data.hasNextPage
+        };
+
+        window.addEventListener('scroll', this.infiniteScroll);
       })
       .catch(error => {
         console.error(error);
+      })
+      .finally(() => {
+        this.isLoading = false;
       });
   },
   destroyed() {
     clearInterval(this.timeout);
+    window.removeEventListener('scroll', this.infiniteScroll);
   },
   methods: {
     getStyles() {
@@ -147,13 +162,53 @@ export default {
           params = {};
           break;
       }
+
+      this.isLoading = true;
       axios
         .get('/api/styles', { params })
         .then(response => {
           this.styles = response.data.styles;
+          this.pagination = {
+            page: response.data.page,
+            hasNextPage: response.data.hasNextPage
+          };
         })
         .catch(error => {
           console.error(error);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
+    },
+    getMoreStyles() {
+      let params;
+      switch (this.selectedOption) {
+        case 1:
+          params = { sort: 'update' };
+          break;
+        case 2:
+          params = { sort: 'stars' };
+          break;
+        default:
+          params = {};
+          break;
+      }
+
+      this.isLoading = true;
+      axios
+        .get(`/api/styles/${this.pagination.page}`, { params })
+        .then(response => {
+          this.styles = [...this.styles, response.data.styles];
+          this.pagination = {
+            page: response.data.page,
+            hasNextPage: response.data.hasNextPage
+          };
+        })
+        .catch(error => {
+          console.error(error);
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
     },
     searchStyles() {
@@ -177,6 +232,16 @@ export default {
     onOpenStyleCard(_id) {
       this.showStyleInfoModal = true;
       this.selectedStyle = this.styles.find(style => style._id === _id);
+    },
+    infiniteScroll() {
+      if (
+        document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight &&
+        this.pagination.hasNextPage &&
+        !this.isLoading
+      ) {
+        this.pagination.page++;
+        this.getMoreStyles();
+      }
     }
   }
 };
