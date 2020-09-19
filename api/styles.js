@@ -5,8 +5,17 @@ const { Style } = require("../models/Style");
 const { GHToken } = require("../config");
 
 async function retrieveRepositoryData(link) {
-  const repoURL = new URL(link);
-  const { pathname } = repoURL;
+  let repoURL;
+  let pathname;
+  try {
+    repoURL = new URL(link);
+    pathname = repoURL.pathname;
+  } catch (error) {
+    return {
+      status: 400,
+      error: "Invalid URL",
+    };
+  }
 
   try {
     const config = { headers: { Authorization: `token ${GHToken}` } };
