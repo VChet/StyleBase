@@ -368,9 +368,9 @@ export default {
 }
 
 .style-grid {
-  display: flex;
-  flex-wrap: wrap;
-  margin: -2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
 }
 
 .no-results {

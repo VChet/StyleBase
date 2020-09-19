@@ -77,9 +77,7 @@ export default {
 .style-card {
   position: relative;
   overflow: hidden;
-  flex: 1 1 auto;
-  margin: 2rem;
-  width: 260px;
+  width: 100%;
   border-radius: 4px;
   border: 1px solid var(--color-border);
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.12);
