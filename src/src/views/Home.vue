@@ -90,7 +90,6 @@ export default {
       },
 
       searchQuery: '',
-      timeout: '',
 
       sortOptions: ['Recently added', 'Recently updated', 'Most liked'],
       selectedOption: 0,
@@ -104,17 +103,6 @@ export default {
       dayjs.extend(relativeTime);
       return dayjs(this.selectedStyle.lastUpdate).fromNow();
     }
-    // input: {
-    //   get() {
-    //     return this.searchQuery;
-    //   },
-    //   set(val) {
-    //     this.searchQuery = val;
-    //     if (!val.length) return this.resetSearch();
-    //     if (this.timeout) clearTimeout(this.timeout);
-    //     this.timeout = setTimeout(() => this.searchStyles(), 500);
-    //   }
-    // }
   },
   watch: {
     selectedOption() {
@@ -145,7 +133,6 @@ export default {
       });
   },
   destroyed() {
-    clearInterval(this.timeout);
     window.removeEventListener('scroll', this.infiniteScroll);
   },
   methods: {

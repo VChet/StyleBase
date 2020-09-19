@@ -58,16 +58,13 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$refs.modal.focus());
     this.$refs.modal.focus();
   },
   methods: {
     onClose() {
-      console.log('onClose');
       this.$emit('close');
     },
     onClickOutside() {
-      console.log('1');
       if (this.clickOutside) {
         this.$emit('close');
       } else {
