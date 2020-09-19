@@ -60,6 +60,16 @@ ul {
   padding: 0;
 }
 
+input {
+  border: 2px solid var(--color-border);
+  border-radius: 5px;
+  outline: 0;
+
+  &:focus {
+    border-color: var(--color-focus);
+  }
+}
+
 .container {
   width: 100%;
   padding-right: 1rem;

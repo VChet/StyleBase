@@ -284,15 +284,8 @@ export default {
   input {
     width: 100%;
     height: 40px;
-    border: 2px solid var(--color-border);
-    border-radius: 5px;
     font-size: 18px;
     padding-left: 18px;
-    outline: 0;
-
-    &:focus {
-      border-color: var(--color-focus);
-    }
   }
 
   .close-button {

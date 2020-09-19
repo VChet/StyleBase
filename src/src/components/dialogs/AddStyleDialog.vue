@@ -70,8 +70,6 @@ export default {
 
   input {
     height: 50px;
-    border: 2px solid var(--color-border);
-    border-radius: 5px;
     width: 264px;
     font-size: 18px;
     padding: 0 15px 0 15px;
