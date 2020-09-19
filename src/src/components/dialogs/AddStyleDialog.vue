@@ -35,11 +35,15 @@ export default {
   data() {
     return {
       url: '',
+      isSubmitting: false,
       error: ''
     };
   },
   methods: {
     submitStyle() {
+      if (!this.url.includes('github.com')) return (this.error = 'Should be github.com repository');
+      if (this.isSubmitting) return;
+      this.isSubmitting = true;
       axios
         .post('/api/style/add', {
           url: this.url
@@ -51,6 +55,9 @@ export default {
         })
         .catch(error => {
           this.error = error.response.data.error;
+        })
+        .finally(() => {
+          this.isSubmitting = false;
         });
     }
   }
