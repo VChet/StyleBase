@@ -176,37 +176,6 @@ export default {
           this.isLoading = false;
         });
     },
-    getMoreStyles() {
-      let params;
-      switch (this.selectedOption) {
-        case 1:
-          params = { sort: 'update' };
-          break;
-        case 2:
-          params = { sort: 'stars' };
-          break;
-        default:
-          params = {};
-          break;
-      }
-
-      this.isLoading = true;
-      axios
-        .get(`/api/styles/${this.pagination.page}`, { params })
-        .then(response => {
-          this.styles = [...this.styles, response.data.styles];
-          this.pagination = {
-            page: response.data.page,
-            hasNextPage: response.data.hasNextPage
-          };
-        })
-        .catch(error => {
-          console.error(error);
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
-    },
     searchStyles() {
       if (this.searchQuery) {
         axios
@@ -235,6 +204,45 @@ export default {
       this.searchQuery = '';
       this.ownerFilter = '';
       this.getStyles();
+    },
+    getMoreStyles() {
+      let URL = `/api/styles/${this.pagination.page}`;
+      if (this.searchQuery) {
+        URL = `/api/search/${this.pagination.page}?query=${this.searchQuery}`;
+      }
+      if (this.ownerFilter) {
+        URL = `/api/author/${this.ownerFilter}/${this.pagination.page}`;
+      }
+
+      let params;
+      switch (this.selectedOption) {
+        case 1:
+          params = { sort: 'update' };
+          break;
+        case 2:
+          params = { sort: 'stars' };
+          break;
+        default:
+          params = {};
+          break;
+      }
+
+      this.isLoading = true;
+      axios
+        .get(URL, { params })
+        .then(response => {
+          this.styles = [...this.styles, response.data.styles];
+          this.pagination = {
+            page: response.data.page,
+            hasNextPage: response.data.hasNextPage
+          };
+        })
+        .catch(error => {
+          console.error(error);
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     onOpenStyleCard(_id) {
       this.showStyleInfoModal = true;
