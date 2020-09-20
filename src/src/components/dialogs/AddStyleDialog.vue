@@ -10,6 +10,7 @@
         <button class="style-button" type="button" @click="$emit('close')">Not now</button>
         <vue-recaptcha
           ref="recaptcha"
+          tabindex="0"
           size="invisible"
           :sitekey="sitekey"
           @verify="submitStyle"
