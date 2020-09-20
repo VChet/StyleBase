@@ -20,7 +20,7 @@
       <div class="style-info-image">
         <img v-if="styleData.preview" :src="styleData.preview" />
         <div v-else class="no-image">No preview</div>
-        <div class="style-license">{{ styleData.license }}</div>
+        <div v-if="styleData.license" class="style-license">{{ styleData.license }}</div>
       </div>
 
       <div class="style-info-content">
