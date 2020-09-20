@@ -43,7 +43,7 @@ agenda.define("Update all styles", () => {
   });
 });
 
-agenda.start().then(() => agenda.every("0 0 * * *", "Update all styles"));
+agenda.start().then(() => agenda.every("0 * * * *", "Update all styles"));
 
 function addExpressMiddleware(app) {
   app.use(morgan("dev"));
