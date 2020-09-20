@@ -31,6 +31,11 @@ export default {
       showAddStyleModal: false
     };
   },
+  mounted() {
+    this.$gtag.pageview({
+      page_path: '/'
+    });
+  },
   methods: {
     openNavLink(navLink) {
       this[navLink] = true;
