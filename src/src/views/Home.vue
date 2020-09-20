@@ -203,6 +203,7 @@ export default {
     resetFilters() {
       this.searchQuery = '';
       this.ownerFilter = '';
+      this.pagination.page = 1;
       this.getStyles();
     },
     getMoreStyles() {
