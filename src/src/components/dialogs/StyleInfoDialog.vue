@@ -7,7 +7,9 @@
           <span class="owner">
             <!-- TODO: add styles grid filtered by owner handler -->
             by
-            <button class="link" @click="$emit('search-by-owner', styleData.owner)">{{ styleData.owner }}</button>
+            <button class="link" type="button" @click="$emit('search-by-owner', styleData.owner)">
+              {{ styleData.owner }}
+            </button>
           </span>
         </div>
         <div class="style-info-date">Updated: {{ dateFromNow }}</div>

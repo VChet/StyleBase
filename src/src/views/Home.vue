@@ -39,8 +39,8 @@
         <ul v-show="!searchQuery && !ownerFilter" class="sort-options">
           <li v-for="(option, index) in sortOptions" :key="index">
             <button
-              type="button"
               class="link"
+              type="button"
               :class="{ active: selectedOption === index }"
               @click="selectedOption = index"
             >
@@ -58,7 +58,7 @@
     <style-info-dialog
       :open="showStyleInfoModal"
       :style-data="selectedStyle"
-      @search-by-owner="value => (ownerFilter = value)"
+      @search-by-owner="(value) => (ownerFilter = value)"
       @close="closeStyleModal"
     />
   </main>
@@ -125,7 +125,7 @@ export default {
   created() {
     axios
       .get('/api/styles')
-      .then(response => {
+      .then((response) => {
         this.styles = response.data.styles;
         this.pagination = {
           page: response.data.page,
@@ -134,7 +134,7 @@ export default {
 
         window.addEventListener('scroll', this.infiniteScroll);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       })
       .finally(() => {
@@ -162,14 +162,14 @@ export default {
       this.isLoading = true;
       axios
         .get('/api/styles', { params })
-        .then(response => {
+        .then((response) => {
           this.styles = response.data.styles;
           this.pagination = {
             page: response.data.page,
             hasNextPage: response.data.hasNextPage
           };
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         })
         .finally(() => {
@@ -180,10 +180,10 @@ export default {
       if (this.searchQuery) {
         axios
           .get(`/api/search?query=${this.searchQuery}`)
-          .then(response => {
+          .then((response) => {
             this.styles = response.data.styles;
           })
-          .catch(error => {
+          .catch((error) => {
             console.error(error);
           });
       } else {
@@ -193,10 +193,10 @@ export default {
     searchByOwner() {
       axios
         .get(`/api/owner/${this.ownerFilter}`)
-        .then(response => {
+        .then((response) => {
           this.styles = response.data.styles;
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
     },
@@ -231,14 +231,14 @@ export default {
       this.isLoading = true;
       axios
         .get(URL, { params })
-        .then(response => {
+        .then((response) => {
           this.styles = this.styles.concat(response.data.styles);
           this.pagination = {
             page: response.data.page,
             hasNextPage: response.data.hasNextPage
           };
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         })
         .finally(() => {
@@ -247,7 +247,7 @@ export default {
     },
     onOpenStyleCard(_id) {
       this.showStyleInfoModal = true;
-      this.selectedStyle = this.styles.find(style => style._id === _id);
+      this.selectedStyle = this.styles.find((style) => style._id === _id);
     },
     closeStyleModal() {
       this.showStyleInfoModal = false;

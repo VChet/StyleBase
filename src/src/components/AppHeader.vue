@@ -3,8 +3,8 @@
     <div class="container">
       <a class="logo" href="/" rel="home">StyleBase</a>
       <nav>
-        <button class="link" @click="$emit('open-nav-link', 'showHowtoUseModal')">How to Use</button>
-        <button class="link" @click="$emit('open-nav-link', 'showAddStyleModal')">Add Style</button>
+        <button class="link" type="button" @click="$emit('open-nav-link', 'showHowtoUseModal')">How to Use</button>
+        <button class="link" type="button" @click="$emit('open-nav-link', 'showAddStyleModal')">Add Style</button>
       </nav>
     </div>
   </header>
