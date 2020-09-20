@@ -13,7 +13,8 @@
     "core-js": "^3.6.5",
     "dayjs": "^1.8.35",
     "normalize.css": "^8.0.1",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-gtag": "^1.9.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
