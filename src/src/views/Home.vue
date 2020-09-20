@@ -24,13 +24,19 @@
         placeholder="Search by style or owner name..."
         @change="searchStyles"
       />
-      <close-button v-show="searchQuery" @click="resetSearch" />
+      <close-button v-show="searchQuery" @click="resetFilters" />
     </section>
     <section class="main-container">
       <div class="section-header">
-        <div class="title">Styles</div>
+        <div class="title">
+          Styles
+          <span v-if="ownerFilter">
+            by {{ ownerFilter }}
+            <close-button @click="resetFilters" />
+          </span>
+        </div>
         <hr />
-        <ul v-show="!searchQuery" class="sort-options">
+        <ul v-show="!searchQuery && !ownerFilter" class="sort-options">
           <li v-for="(option, index) in sortOptions" :key="index">
             <button
               type="button"
@@ -52,10 +58,8 @@
     <style-info-dialog
       :open="showStyleInfoModal"
       :style-data="selectedStyle"
-      @close="
-        showStyleInfoModal = false;
-        selectedStyle = {};
-      "
+      @search-by-owner="value => (ownerFilter = value)"
+      @close="closeStyleModal"
     />
   </main>
 </template>
@@ -90,6 +94,7 @@ export default {
       },
 
       searchQuery: '',
+      ownerFilter: '',
 
       sortOptions: ['Recently added', 'Recently updated', 'Most liked'],
       selectedOption: 0,
@@ -107,6 +112,10 @@ export default {
   watch: {
     selectedOption() {
       this.getStyles();
+    },
+    ownerFilter(filter) {
+      this.closeStyleModal();
+      if (filter) this.searchByOwner();
     },
     showStyleInfoModal(isActive) {
       const $body = document.body;
@@ -209,16 +218,31 @@ export default {
             console.error(error);
           });
       } else {
-        this.resetSearch();
+        this.resetFilters();
       }
     },
-    resetSearch() {
+    searchByOwner() {
+      axios
+        .get(`/api/author/${this.ownerFilter}`)
+        .then(response => {
+          this.styles = response.data.styles;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    },
+    resetFilters() {
       this.searchQuery = '';
+      this.ownerFilter = '';
       this.getStyles();
     },
     onOpenStyleCard(_id) {
       this.showStyleInfoModal = true;
       this.selectedStyle = this.styles.find(style => style._id === _id);
+    },
+    closeStyleModal() {
+      this.showStyleInfoModal = false;
+      this.selectedStyle = {};
     },
     infiniteScroll() {
       if (
@@ -299,8 +323,18 @@ export default {
   align-items: center;
   height: 40px;
   margin-bottom: 2rem;
-  font-size: 1.25rem;
-  font-weight: bold;
+
+  .title {
+    font-size: 1.25rem;
+    font-weight: bold;
+
+    .close-button {
+      top: unset;
+      right: unset;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
 
   hr {
     flex-grow: 1;
