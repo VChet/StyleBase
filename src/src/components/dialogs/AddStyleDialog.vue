@@ -51,6 +51,7 @@ export default {
         .then(response => {
           console.log(response);
           this.url = '';
+          this.error = '';
           this.$emit('close');
         })
         .catch(error => {
