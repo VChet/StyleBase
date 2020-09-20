@@ -3,9 +3,7 @@ module.exports = {
     sourceMap: process.env.NODE_ENV === 'development',
     loaderOptions: {
       sass: {
-        prependData: `
-          @import "~@/styles/mixins/media";
-        `
+        additionalData: `@import "~@/styles/mixins/media";`
       }
     }
   },
