@@ -2,15 +2,21 @@
   <base-dialog v-if="open" size="small" @close="$emit('close')">
     <template>
       <div class="dialog-title">Here comes another style...</div>
-
       <div class="dialog-input">
         <input v-model="url" type="text" placeholder="Link to repository" />
-        <div class="error" v-if="error">{{ error }}</div>
+        <div v-if="error" class="error">{{ error }}</div>
       </div>
-
       <div class="dialog-buttons">
-        <button class="style-button" @click="$emit('close')">Not now</button>
-        <button class="style-button-filled" @click="submitStyle">Add</button>
+        <button class="style-button" type="button" @click="$emit('close')">Not now</button>
+        <vue-recaptcha
+          ref="recaptcha"
+          size="invisible"
+          :sitekey="sitekey"
+          @verify="submitStyle"
+          @expired="onCaptchaExpired"
+        >
+          <button class="style-button-filled" type="submit">Add</button>
+        </vue-recaptcha>
       </div>
     </template>
   </base-dialog>
@@ -18,12 +24,15 @@
 
 <script>
 import axios from 'axios';
+import VueRecaptcha from 'vue-recaptcha';
+
 import BaseDialog from '@/components/dialogs/BaseDialog';
 
 export default {
   name: 'StyleInfoDialog',
   components: {
-    BaseDialog
+    BaseDialog,
+    VueRecaptcha
   },
   props: {
     open: {
@@ -36,30 +45,35 @@ export default {
     return {
       url: '',
       isSubmitting: false,
-      error: ''
+      error: '',
+      sitekey: process.env.VUE_APP_RECAPTCHA_TOKEN
     };
   },
   methods: {
-    submitStyle() {
+    submitStyle(recaptchaToken) {
+      if (!this.url || this.isSubmitting) return;
       if (!this.url.includes('github.com')) return (this.error = 'Should be github.com repository');
-      if (this.isSubmitting) return;
       this.isSubmitting = true;
       axios
         .post('/api/style/add', {
+          recaptchaToken,
           url: this.url
         })
-        .then(response => {
+        .then((response) => {
           console.log(response);
           this.url = '';
           this.error = '';
           this.$emit('close');
         })
-        .catch(error => {
+        .catch((error) => {
           this.error = error.response.data.error;
         })
         .finally(() => {
           this.isSubmitting = false;
         });
+    },
+    onCaptchaExpired() {
+      this.$refs.recaptcha.reset();
     }
   }
 };
