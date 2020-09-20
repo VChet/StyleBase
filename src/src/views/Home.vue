@@ -232,7 +232,7 @@ export default {
       axios
         .get(URL, { params })
         .then(response => {
-          this.styles = [...this.styles, response.data.styles];
+          this.styles = this.styles.concat(response.data.styles);
           this.pagination = {
             page: response.data.page,
             hasNextPage: response.data.hasNextPage
