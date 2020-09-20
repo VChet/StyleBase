@@ -18,8 +18,8 @@
       <div class="style-info-description">{{ styleData.description }}</div>
 
       <div class="style-info-image">
-        <img v-if="styleData.preview" :style="{ maxWidth: '100%' }" :src="styleData.preview" />
-        <div v-else :style="{ backgroundColor: '#C0CCDA', height: '500px' }"></div>
+        <img v-if="styleData.preview" :src="styleData.preview" />
+        <div v-else class="no-image">No preview</div>
         <div class="style-license">{{ styleData.license }}</div>
       </div>
 
@@ -132,7 +132,19 @@ export default {
   position: relative;
 
   img {
+    max-width: 100%;
     border-radius: 4px;
+  }
+
+  .no-image {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f5e6cc;
+    opacity: 0.6;
+    user-select: none;
+    font-size: 2rem;
   }
 
   .style-license {
