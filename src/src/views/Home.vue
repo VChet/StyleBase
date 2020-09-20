@@ -192,7 +192,7 @@ export default {
     },
     searchByOwner() {
       axios
-        .get(`/api/author/${this.ownerFilter}`)
+        .get(`/api/owner/${this.ownerFilter}`)
         .then(response => {
           this.styles = response.data.styles;
         })
@@ -212,7 +212,7 @@ export default {
         URL = `/api/search/${this.pagination.page}?query=${this.searchQuery}`;
       }
       if (this.ownerFilter) {
-        URL = `/api/author/${this.ownerFilter}/${this.pagination.page}`;
+        URL = `/api/owner/${this.ownerFilter}/${this.pagination.page}`;
       }
 
       let params;

@@ -200,9 +200,9 @@ async function deleteStyle(req, res) {
   });
 }
 
-function getStylesByAuthor(req, res) {
-  const { author, page = 1 } = req.params;
-  if (!author) return res.status(400).json({ error: "Request must contain author name" });
+function getStylesByOwner(req, res) {
+  const { owner, page = 1 } = req.params;
+  if (!owner) return res.status(400).json({ error: "Request must contain repository owner" });
 
   const customLabels = { totalDocs: "totalStyles", docs: "styles" };
   const options = {
@@ -212,7 +212,7 @@ function getStylesByAuthor(req, res) {
     customLabels
   };
 
-  Style.paginate({ owner: author }, options, async (error, data) => {
+  Style.paginate({ owner }, options, async (error, data) => {
     if (error) return res.status(500).json({ error });
     return res.status(200).json(data);
   });
@@ -227,5 +227,5 @@ module.exports = {
   updateStyle,
   updateAllStyles,
   deleteStyle,
-  getStylesByAuthor
+  getStylesByOwner
 };

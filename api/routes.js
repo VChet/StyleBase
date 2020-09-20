@@ -15,13 +15,13 @@ const {
   updateAllStyles,
   updateStyle,
   deleteStyle,
-  getStylesByAuthor
+  getStylesByOwner
 } = require("./styles");
 
 router.get("/styles/:page?", cacheSuccessful, getStyles);
 router.get("/style/:id", cacheSuccessful, getStyleData);
 router.get("/search/:page?", searchStyle);
-router.get("/author/:author/:page?", cacheSuccessful, getStylesByAuthor);
+router.get("/owner/:owner/:page?", cacheSuccessful, getStylesByOwner);
 router.post("/style/add", addStyle);
 router.put("/style/update/all", updateAllStyles);
 router.put("/style/update/:id", updateStyle);

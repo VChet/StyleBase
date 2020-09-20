@@ -36,7 +36,7 @@ export default {
     owner: {
       type: String,
       required: true,
-      default: 'Author'
+      default: 'Owner'
     },
     stargazers: {
       type: Number,
