@@ -1,3 +1,9 @@
+# Libs
 node_modules/
 
+# Build files
+public/
+
+# Configuration
 config.js
+.env
