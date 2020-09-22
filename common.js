@@ -47,7 +47,25 @@ agenda.start().then(() => agenda.every("0 * * * *", "Update all styles"));
 
 function addExpressMiddleware(app) {
   app.use(morgan("dev"));
-  app.use(helmet());
+  app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        "default-src": ["'self'"],
+        "img-src": [
+          "'self'",
+          "https://raw.githubusercontent.com",
+          "https://www.google-analytics.com"
+        ],
+        "script-src": [
+          "'self'",
+          "https://www.google.com/recaptcha/", "https://www.gstatic.com/recaptcha/",
+          "https://www.googletagmanager.com", "https://www.google-analytics.com"
+        ],
+        "frame-src": ["'self'", "https://www.google.com/recaptcha/"],
+        "connect-src": ["'self'", "https://www.google-analytics.com"]
+      }
+    }
+  }));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(compression());
