@@ -1,0 +1,117 @@
+@import '~normalize.css';
+@import './buttons.scss';
+
+@font-face {
+  font-family: Gilroy;
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+  src: url('~@/styles/fonts/Gilroy-Regular.woff2') format('woff2'),
+    url('~@/styles/fonts/Gilroy-Regular.woff') format('woff');
+}
+@font-face {
+  font-family: Gilroy;
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+  src: url('~@/styles/fonts/Gilroy-Bold.woff2') format('woff2'), url('~@/styles/fonts/Gilroy-Bold.woff') format('woff');
+}
+
+:root {
+  --color-bg: #faf6f0;
+  --color-text: #47525e;
+  --color-focus: #ffa500;
+  --color-border: #e0e0e0;
+  --color-main-lightest: #f4ebdd;
+  --color-main-lighter: #eddfca;
+  --color-main-light: #e7d4b7;
+  --color-main: #d37b53;
+  --color-main-dark: #ce6c3e;
+  --color-main-darker: #c15f31;
+  --color-main-darkest: #ad552c;
+}
+
+html,
+body,
+#app {
+  min-height: 100vh;
+  min-width: 320px;
+  background-color: var(--color-bg);
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+#app,
+::placeholder {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: Gilroy, sans-serif;
+  font-size: 16px;
+  color: var(--color-text);
+}
+
+body {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+}
+
+input {
+  border: 2px solid var(--color-border);
+  border-radius: 5px;
+  outline: 0;
+
+  &:focus {
+    border-color: var(--color-focus);
+  }
+}
+
+.container {
+  width: 100%;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+// Hidden element for screen-reader
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}

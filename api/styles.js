@@ -5,8 +5,17 @@ const { Style } = require("../models/Style");
 const { GHToken } = require("../config");
 
 async function retrieveRepositoryData(link) {
-  const repoURL = new URL(link);
-  const { pathname } = repoURL;
+  let repoURL;
+  let pathname;
+  try {
+    repoURL = new URL(link);
+    pathname = repoURL.pathname;
+  } catch (error) {
+    return {
+      status: 400,
+      error: "Invalid URL",
+    };
+  }
 
   try {
     const config = { headers: { Authorization: `token ${GHToken}` } };
@@ -36,17 +45,25 @@ async function retrieveRepositoryData(link) {
       name: repo.data.name.replace(/-/g, " "),
       description: repo.data.description,
       owner: repo.data.owner.login,
+      created: repo.data.created_at,
       lastUpdate: repo.data.updated_at,
       stargazers: repo.data.stargazers_count,
       watchers: repo.data.subscribers_count,
       forks: repo.data.forks,
       issues: repo.data.open_issues,
-      license: repo.data.license.spdx_id,
+      license: (repo.data.license && repo.data.license.spdx_id) || "",
       isPrivate: repo.data.private,
       isArchived: repo.data.archived,
       isFork: repo.data.fork
     };
   } catch (error) {
+    if (!error.response) {
+      console.log(error);
+      return {
+        status: 500,
+        error: "Unhandled server error"
+      };
+    }
     return {
       status: error.response.status,
       error: error.response.statusText
@@ -62,6 +79,8 @@ function getStyles(req, res) {
     sort = "-stargazers";
   } else if (req.query.sort === "update") {
     sort = "-lastUpdate";
+  } else {
+    sort = "-_id";
   }
 
   const customLabels = { totalDocs: "totalStyles", docs: "styles" };
@@ -69,7 +88,7 @@ function getStyles(req, res) {
     page,
     sort,
     customLabels,
-    limit: 10,
+    limit: 16,
     collation: { locale: "en" }
   };
 
@@ -88,10 +107,18 @@ function getStyleData(req, res) {
 }
 
 function searchStyle(req, res) {
-  Style.find({ $text: { $search: req.query.query } }, (error, styles) => {
+  const { page = 1 } = req.params;
+  const customLabels = { totalDocs: "totalStyles", docs: "styles" };
+  const options = {
+    page,
+    limit: 16,
+    collation: { locale: "en" },
+    customLabels
+  };
+
+  Style.paginate({ $text: { $search: req.query.query } }, options, (error, styles) => {
     if (error) return res.status(500).json({ error });
-    if (!styles.length) return res.status(404).json({ error: "Nothing found" });
-    return res.status(200).json({ styles });
+    return res.status(200).json(styles);
   });
 }
 
@@ -173,19 +200,19 @@ async function deleteStyle(req, res) {
   });
 }
 
-function getStylesByAuthor(req, res) {
-  const { author, page = 1 } = req.params;
-  if (!author) return res.status(400).json({ error: "Request must contain author name" });
+function getStylesByOwner(req, res) {
+  const { owner, page = 1 } = req.params;
+  if (!owner) return res.status(400).json({ error: "Request must contain repository owner" });
 
   const customLabels = { totalDocs: "totalStyles", docs: "styles" };
   const options = {
     page,
-    limit: 10,
+    limit: 16,
     collation: { locale: "en" },
     customLabels
   };
 
-  Style.paginate({ owner: author }, options, async (error, data) => {
+  Style.paginate({ owner }, options, async (error, data) => {
     if (error) return res.status(500).json({ error });
     return res.status(200).json(data);
   });
@@ -200,5 +227,5 @@ module.exports = {
   updateStyle,
   updateAllStyles,
   deleteStyle,
-  getStylesByAuthor
+  getStylesByOwner
 };
