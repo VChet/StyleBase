@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require("express");
+const passport = require("passport");
 
 const config = require("./config");
 const {
@@ -16,6 +17,9 @@ addExpressMiddleware(app);
 
 app.use(express.static("public"));
 app.use("/api", api);
+
+app.get("/login", passport.authenticate("github", { scope: ["user:email"] }));
+app.get("/github/callback", passport.authenticate("github"), (req, res) => res.redirect("/"));
 
 const clientIndex = path.join(__dirname, "public/index.html");
 app.get("*", (req, res) => res.sendFile(clientIndex));

@@ -1,15 +1,24 @@
 const mongoose = require("mongoose");
+
+const Agenda = require("agenda");
+
+const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
+const passport = require("passport");
+const GitHubStrategy = require("passport-github2").Strategy;
+
 const morgan = require("morgan");
 const helmet = require("helmet");
 const bodyParser = require("body-parser");
 const compression = require("compression");
-const Agenda = require("agenda");
 
 const config = require("./config");
-const { initCollection } = require("./models/init");
+const { User } = require("./models/User");
 const { Style } = require("./models/Style");
+const { initCollection } = require("./models/init");
 const { retrieveRepositoryData } = require("./api/styles");
 
+// Database
 mongoose.connect(config.mongoUrl, {
   useCreateIndex: true,
   useFindAndModify: false,
@@ -17,9 +26,34 @@ mongoose.connect(config.mongoUrl, {
   useUnifiedTopology: true
 });
 
+config.session.store = new MongoStore({
+  mongooseConnection: mongoose.connection,
+  ttl: 14 * 24 * 60 * 60
+});
 mongoose.connection.on("error", console.error.bind(console, "MongoDB connection error:"));
 initCollection();
 
+// Authentication
+passport.use(
+  new GitHubStrategy({
+    clientID: config.GHOAuth.clientId,
+    clientSecret: config.GHOAuth.clientSecret,
+    callbackURL: "/github/callback"
+  }, User.findOrCreate.bind(User))
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id, (error, user) => {
+    if (error) return done(error);
+    return done(null, user);
+  });
+});
+
+// Agenda
 const agenda = new Agenda({
   db: {
     address: config.mongoUrl,
@@ -31,13 +65,14 @@ const agenda = new Agenda({
 });
 
 agenda.define("Update all styles", () => {
+  // TODO: move to schema
   Style.find({}).lean().exec(async (error, styles) => {
     if (error)console.log({ error });
     const Bulk = Style.collection.initializeUnorderedBulkOp();
     const stylesArr = await Promise.all(styles.map(style => retrieveRepositoryData(style.url)));
     stylesArr.map(style => Bulk.find({ url: style.url }).update({ $set: style }));
     Bulk.execute((bulkError, result) => {
-      if (error)console.log({ bulkError });
+      if (bulkError) console.log({ bulkError });
       console.log("Data updated", result);
     });
   });
@@ -45,6 +80,7 @@ agenda.define("Update all styles", () => {
 
 agenda.start().then(() => agenda.every("0 * * * *", "Update all styles"));
 
+// Middleware
 function addExpressMiddleware(app) {
   app.use(morgan("dev"));
   app.use(helmet({
@@ -68,6 +104,9 @@ function addExpressMiddleware(app) {
   }));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(session(config.session));
+  app.use(passport.initialize());
+  app.use(passport.session());
   app.use(compression());
 }
 
