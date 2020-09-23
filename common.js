@@ -36,8 +36,8 @@ initCollection();
 // Authentication
 passport.use(
   new GitHubStrategy({
-    clientID: config.GHOAuth.clientId,
-    clientSecret: config.GHOAuth.clientSecret,
+    clientID: config.github.OAuth.clientId,
+    clientSecret: config.github.OAuth.clientSecret,
     callbackURL: "/github/callback"
   }, User.findOrCreate.bind(User))
 );

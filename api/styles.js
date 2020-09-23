@@ -2,7 +2,7 @@ const axios = require("axios");
 const repoImages = require("repo-images");
 
 const { Style } = require("../models/Style");
-const { GHToken } = require("../config");
+const { token } = require("../config").github;
 
 async function retrieveRepositoryData(link) {
   let repoURL;
@@ -18,7 +18,7 @@ async function retrieveRepositoryData(link) {
   }
 
   try {
-    const config = { headers: { Authorization: `token ${GHToken}` } };
+    const config = { headers: { Authorization: `token ${token}` } };
     const [repo, contents] = await Promise.all([
       axios.get(`https://api.github.com/repos${pathname}`, config),
       axios.get(`https://api.github.com/repos${pathname}/contents`, config)
@@ -31,7 +31,7 @@ async function retrieveRepositoryData(link) {
       };
     }
 
-    const images = await repoImages(pathname.substr(1), { token: GHToken });
+    const images = await repoImages(pathname.substr(1), { token });
     let preview;
     if (images.length) {
       const previewObj = images.reduce((a, b) => (a.size > b.size ? a : b));

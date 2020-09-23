@@ -8,10 +8,12 @@ module.exports = {
     resave: true,
     saveUninitialized: false
   },
-  GHOAuth: {
-    clientId: "",
-    clientSecret: ""
+  github: {
+    OAuth: { // https://github.com/settings/developers
+      clientId: "",
+      clientSecret: ""
+    },
+    token: "" // https://github.com/settings/tokens with public_repo scope
   },
-  GHToken: "Personal access token",
-  CaptchaSecretKey: ""
+  CaptchaSecretKey: "" // https://www.google.com/recaptcha
 };
