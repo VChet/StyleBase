@@ -274,7 +274,6 @@ export default {
 
 .features {
   display: flex;
-  justify-content: space-between;
   width: 100%;
   margin: 2rem 0;
   user-select: none;
@@ -283,6 +282,7 @@ export default {
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.12);
 
   .feature-item {
+    flex: 1;
     padding: 1.5rem;
 
     &:not(:first-of-type) {
