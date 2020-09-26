@@ -105,6 +105,7 @@ export default {
     .owner {
       font-size: 1rem;
       font-weight: normal;
+      white-space: nowrap;
 
       button {
         font-size: initial;
@@ -166,16 +167,21 @@ export default {
 }
 
 .style-info-content {
-  margin-bottom: 2rem;
-
   ul {
-    margin: 2rem 0 0;
+    margin: 0;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-around;
     list-style: none;
 
     li {
+      margin: 1rem;
+
+      @include media-size-tablet {
+        margin: 0.5rem;
+      }
+
       &:not(.buttons) {
         a {
           font-size: 1.75rem;
@@ -191,6 +197,11 @@ export default {
 
         a:last-child {
           margin-right: 0;
+        }
+
+        @include media-size-tablet {
+          text-align: center;
+          flex-basis: 100%;
         }
       }
     }
