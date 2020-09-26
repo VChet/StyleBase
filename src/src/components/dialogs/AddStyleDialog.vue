@@ -1,13 +1,13 @@
 <template>
   <base-dialog v-if="open" size="small" @close="$emit('close')">
     <template>
-      <div class="dialog-title">Here comes another style...</div>
+      <div class="dialog-title">Add new style</div>
       <div class="dialog-input">
-        <input v-model="url" type="text" placeholder="Link to repository" />
-        <div v-if="error" class="error">{{ error }}</div>
+        <input v-model.trim="url" type="text" placeholder="Link to GitHub repository" />
+        <close-button @click="url = ''" />
       </div>
       <div class="dialog-buttons">
-        <button class="style-button" type="button" @click="$emit('close')">Not now</button>
+        <button class="style-button" type="button" :disabled="isSubmitting" @click="$emit('close')">Not now</button>
         <vue-recaptcha
           ref="recaptcha"
           tabindex="0"
@@ -28,11 +28,13 @@ import axios from 'axios';
 import VueRecaptcha from 'vue-recaptcha';
 
 import BaseDialog from '@/components/dialogs/BaseDialog';
+import CloseButton from '@/components/CloseButton.vue';
 
 export default {
   name: 'StyleInfoDialog',
   components: {
     BaseDialog,
+    CloseButton,
     VueRecaptcha
   },
   props: {
@@ -46,14 +48,13 @@ export default {
     return {
       url: '',
       isSubmitting: false,
-      error: '',
       sitekey: process.env.VUE_APP_RECAPTCHA_TOKEN
     };
   },
   methods: {
     submitStyle(recaptchaToken) {
       if (!this.url || this.isSubmitting) return;
-      if (!this.url.includes('github.com')) return (this.error = 'Should be github.com repository');
+      if (!this.url.includes('github.com')) return alert('Should be github.com repository');
       this.isSubmitting = true;
       axios
         .post('/api/style/add', {
@@ -61,13 +62,12 @@ export default {
           url: this.url
         })
         .then((response) => {
-          console.log(response);
           this.url = '';
-          this.error = '';
           this.$emit('close');
+          alert(`"${response.name}" added successfully`);
         })
         .catch((error) => {
-          this.error = error.response.data.error;
+          alert(error.response.data.error);
         })
         .finally(() => {
           this.isSubmitting = false;
@@ -88,19 +88,21 @@ export default {
 }
 
 .dialog-input {
-  text-align: center;
+  position: relative;
   margin-bottom: 1.5rem;
 
   input {
+    box-sizing: border-box;
+    width: 100%;
     height: 50px;
-    width: 264px;
-    font-size: 18px;
     padding: 0 15px 0 15px;
   }
 
-  .error {
-    margin: 1rem 0;
-    color: red;
+  .close-button {
+    width: 1.5rem;
+    height: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 
