@@ -7,7 +7,7 @@ const clickOutside = {
       initialMacrotaskEnded = true;
     }, 0);
 
-    clickOutsideEvent = event => {
+    clickOutsideEvent = (event) => {
       const { target } = event;
 
       if (initialMacrotaskEnded && !(el === target || el.contains(target))) {
@@ -15,11 +15,11 @@ const clickOutside = {
       }
     };
 
-    document.addEventListener('click', clickOutsideEvent);
+    document.addEventListener('mousedown', clickOutsideEvent);
     document.addEventListener('touchstart', clickOutsideEvent);
   },
   unbind() {
-    document.removeEventListener('click', clickOutsideEvent);
+    document.removeEventListener('mousedown', clickOutsideEvent);
     document.removeEventListener('touchstart', clickOutsideEvent);
   }
 };
