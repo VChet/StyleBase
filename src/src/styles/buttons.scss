@@ -4,6 +4,12 @@ a {
   font-family: Gilroy, sans-serif;
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
+
+  &.disabled,
+  &:disabled {
+    opacity: 0.8;
+    pointer-events: none;
+  }
 }
 
 a:not(.button) {
