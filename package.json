@@ -8,7 +8,8 @@
     "db:start": "mongod --bind_ip 127.0.0.1 --port 27017",
     "db:drop": "mongo stylebase --eval 'printjson(db.dropDatabase())'",
     "server": "nodemon server.js",
-    "client": "cd src/ && npm start"
+    "client:start": "cd src/ && npm start",
+    "client:build": "cd src/ && npm run build"
   },
   "dependencies": {
     "agenda": "^3.1.0",
