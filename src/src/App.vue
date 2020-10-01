@@ -6,6 +6,8 @@
       <Home />
     </div>
 
+    <app-footer />
+
     <how-to-use-dialog :open="showHowtoUseModal" @close="showHowtoUseModal = false" />
     <add-style-dialog :open="showAddStyleModal" @close="showAddStyleModal = false" />
   </div>
@@ -13,17 +15,19 @@
 
 <script>
 import AppHeader from '@/components/AppHeader.vue';
+import Home from '@/views/Home.vue';
+import AppFooter from '@/components/AppFooter.vue';
 import HowToUseDialog from '@/components/dialogs/HowToUseDialog.vue';
 import AddStyleDialog from '@/components/dialogs/AddStyleDialog.vue';
-import Home from '@/views/Home.vue';
 
 export default {
   name: 'App',
   components: {
     AppHeader,
+    Home,
+    AppFooter,
     HowToUseDialog,
-    AddStyleDialog,
-    Home
+    AddStyleDialog
   },
   data() {
     return {
