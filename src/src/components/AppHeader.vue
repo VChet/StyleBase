@@ -33,34 +33,40 @@ header {
     .logo {
       font-size: 28px;
       font-weight: bold;
-    }
 
-    a,
-    button {
-      border-radius: 0;
-      outline: 0;
-      border-bottom: 2px solid transparent;
-      color: var(--color-text);
-      transition: color 0.2s, border-color 0.2s;
-
-      &:hover {
-        color: var(--color-main);
-      }
-
-      &:focus {
-        color: var(--color-main);
-        border-color: var(--color-focus);
+      @include media-size-mobile {
+        font-size: 24px;
       }
     }
 
-    nav button {
-      font-size: 18px;
+    nav {
+      button {
+        border-radius: 0;
+        outline: 0;
+        border-bottom: 2px solid transparent;
+        font-size: 18px;
+        color: var(--color-text);
+        transition: color 0.2s, border-color 0.2s;
 
-      &:not(:last-child) {
-        margin-right: 1.5rem;
+        &:hover {
+          color: var(--color-main);
+        }
+
+        &:focus {
+          color: var(--color-main);
+          border-color: var(--color-focus);
+        }
 
         @include media-size-mobile {
-          margin-right: 0.5rem;
+          font-size: 16px;
+        }
+
+        &:not(:last-child) {
+          margin-right: 1.5rem;
+
+          @include media-size-mobile {
+            margin-right: 0.5rem;
+          }
         }
       }
     }
