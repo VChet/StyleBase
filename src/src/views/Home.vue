@@ -330,8 +330,11 @@ export default {
 .section-header {
   display: flex;
   align-items: center;
-  height: 40px;
   margin-bottom: 2rem;
+
+  @include media-size-mobile {
+    flex-direction: column;
+  }
 
   .title {
     font-size: 1.25rem;
@@ -358,10 +361,6 @@ export default {
     display: flex;
     list-style-type: none;
     list-style-image: none;
-
-    @include media-size-tablet {
-      overflow: auto;
-    }
 
     li {
       margin: 0 1rem;
