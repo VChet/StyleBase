@@ -268,6 +268,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.Home {
+  flex: 1;
+}
+
 .main-container {
   margin-bottom: 3rem;
 }
