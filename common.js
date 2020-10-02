@@ -92,6 +92,7 @@ function addExpressMiddleware(app) {
           "https://raw.githubusercontent.com",
           "https://www.google-analytics.com"
         ],
+        "style-src": ["'self'", "'unsafe-inline'"],
         "script-src": [
           "'self'",
           "https://www.google.com/recaptcha/", "https://www.gstatic.com/recaptcha/",

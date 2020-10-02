@@ -22,7 +22,10 @@ app.get("/login", passport.authenticate("github", { scope: ["user:email"] }));
 app.get("/github/callback", passport.authenticate("github"), (req, res) => res.redirect("/"));
 
 const clientIndex = path.join(__dirname, "public/index.html");
-app.get("*", (req, res) => res.sendFile(clientIndex));
+const maintenance = path.join(__dirname, "maintenance.html");
+app.get("*", (req, res) => res.sendFile(clientIndex, (error) => {
+  if (error && error.code === "ENOENT") return res.status(503).sendFile(maintenance);
+}));
 
 app.set("port", PORT);
 app.listen(app.get("port"), () => {
