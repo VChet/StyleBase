@@ -22,7 +22,6 @@
         v-debounce="500"
         type="text"
         placeholder="Search by style or owner name..."
-        @change="searchStyles"
       />
       <close-button v-show="searchQuery" @click="resetFilters" />
     </section>
@@ -117,6 +116,9 @@ export default {
       this.closeStyleModal();
       if (filter) this.searchByOwner();
     },
+    searchQuery() {
+      this.searchStyles();
+    },
     showStyleInfoModal(isActive) {
       const $body = document.body;
       isActive ? $body.classList.add('no-scroll') : $body.classList.remove('no-scroll');
@@ -143,6 +145,7 @@ export default {
   },
   mounted() {
     const pathname = window.location.pathname.split('/');
+    if (pathname[1] === 'search') return (this.searchQuery = pathname[2]);
     const owner = pathname[1];
     const name = pathname[2];
     if (!owner || !name) return;
@@ -188,12 +191,14 @@ export default {
         axios
           .get(`/api/search?query=${this.searchQuery}`)
           .then((response) => {
+            window.history.replaceState({}, document.title, `/search/${this.searchQuery}`);
             this.styles = response.data.styles;
           })
           .catch((error) => {
             console.error(error);
           });
       } else {
+        window.history.replaceState({}, document.title, '/');
         this.resetFilters();
       }
     },
