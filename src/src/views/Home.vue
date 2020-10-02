@@ -141,6 +141,13 @@ export default {
         this.isLoading = false;
       });
   },
+  mounted() {
+    const pathname = window.location.pathname.split('/');
+    const owner = pathname[1];
+    const name = pathname[2];
+    if (!owner || !name) return;
+    this.openStyleCard({ owner, name });
+  },
   destroyed() {
     window.removeEventListener('scroll', this.infiniteScroll);
   },
