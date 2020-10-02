@@ -1,5 +1,5 @@
 <template>
-  <base-dialog v-if="open" size="extra-large" @close="$emit('close')">
+  <base-dialog v-if="open" size="extra-large" @close="closeModal">
     <template>
       <div class="style-info-header">
         <div class="style-info-title">
@@ -84,6 +84,10 @@ export default {
     }
   },
   methods: {
+    closeModal() {
+      window.history.replaceState({}, document.title, '/');
+      this.$emit('close');
+    },
     pluralize(num, noun, suffix = 's') {
       return `${num} ${noun}${num === 1 ? '' : suffix}`;
     }
