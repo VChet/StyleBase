@@ -253,7 +253,7 @@ export default {
         });
     },
     openStyleCard(styleData) {
-      window.history.replaceState({}, document.title, `${styleData.owner}/${styleData.name}`);
+      window.history.replaceState({}, document.title, `/${styleData.owner}/${styleData.name}`);
 
       this.showStyleInfoModal = true;
       this.selectedStyle = this.styles.find(
