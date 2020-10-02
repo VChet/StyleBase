@@ -4,7 +4,7 @@
       <div class="dialog-title">Add new style</div>
       <div class="dialog-input">
         <input v-model.trim="url" type="text" placeholder="Link to GitHub repository" />
-        <close-button @click="url = ''" />
+        <close-button v-show="url" @click="url = ''" />
       </div>
       <div class="dialog-buttons">
         <button class="style-button" type="button" :disabled="isSubmitting" @click="$emit('close')">Not now</button>
