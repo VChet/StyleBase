@@ -150,7 +150,7 @@ export default {
     if (!owner) return;
     const name = pathname[2];
     if (!name) return (this.ownerFilter = owner);
-    this.openStyleCard({ owner, name });
+    this.getStyle(owner, name);
   },
   destroyed() {
     window.removeEventListener('scroll', this.infiniteScroll);
@@ -185,6 +185,17 @@ export default {
         })
         .finally(() => {
           this.isLoading = false;
+        });
+    },
+    getStyle(owner, name) {
+      const params = { owner, name };
+      axios
+        .get('/api/style', { params })
+        .then((response) => {
+          this.openStyleCard(response.data.style);
+        })
+        .catch((error) => {
+          console.error(error);
         });
     },
     searchStyles() {
