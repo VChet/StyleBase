@@ -80,8 +80,6 @@ agenda.define("Update all styles", () => {
 
 if (process.env.NODE_ENV === "production") {
   agenda.start().then(() => agenda.every("0 * * * *", "Update all styles"));
-} else {
-  agenda.stop().then(() => console.log("Agenda stopped"));
 }
 
 // Middleware
