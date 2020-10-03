@@ -7,7 +7,6 @@
             {{ styleData.name.replace(/-/g, ' ') }}
           </a>
           <span class="owner">
-            <!-- TODO: add styles grid filtered by owner handler -->
             by
             <button class="link" type="button" @click="$emit('search-by-owner', styleData.owner)">
               {{ styleData.owner }}
