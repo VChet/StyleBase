@@ -5,7 +5,7 @@
       <a class="button style-button-filled" :href="usercss" rel="noopener" target="_blank">Install</a>
     </div>
 
-    <div class="data" @click="$emit('open', _id)">
+    <div class="data" @click="$emit('open', { owner, name })">
       <div class="name">{{ name.replace(/-/g, ' ') }}</div>
       <div>by {{ owner }}</div>
       <div class="footer">

@@ -22,7 +22,6 @@
         v-debounce="500"
         type="text"
         placeholder="Search by style or owner name..."
-        @change="searchStyles"
       />
       <close-button v-show="searchQuery" @click="resetFilters" />
     </section>
@@ -50,7 +49,7 @@
         </ul>
       </div>
       <div v-if="styles.length" class="style-grid">
-        <style-card v-for="style in styles" :key="style._id" v-bind="style" @open="onOpenStyleCard" />
+        <style-card v-for="style in styles" :key="style._id" v-bind="style" @open="openStyleCard" />
       </div>
       <div v-else class="no-results">No results</div>
     </section>
@@ -117,6 +116,9 @@ export default {
       this.closeStyleModal();
       if (filter) this.searchByOwner();
     },
+    searchQuery() {
+      this.searchStyles();
+    },
     showStyleInfoModal(isActive) {
       const $body = document.body;
       isActive ? $body.classList.add('no-scroll') : $body.classList.remove('no-scroll');
@@ -140,6 +142,15 @@ export default {
       .finally(() => {
         this.isLoading = false;
       });
+  },
+  mounted() {
+    const pathname = window.location.pathname.split('/');
+    if (pathname[1] === 'search') return (this.searchQuery = pathname[2]);
+    const owner = pathname[1];
+    if (!owner) return;
+    const name = pathname[2];
+    if (!name) return (this.ownerFilter = owner);
+    this.getStyle(owner, name);
   },
   destroyed() {
     window.removeEventListener('scroll', this.infiniteScroll);
@@ -176,11 +187,23 @@ export default {
           this.isLoading = false;
         });
     },
+    getStyle(owner, name) {
+      const params = { owner, name };
+      axios
+        .get('/api/style', { params })
+        .then((response) => {
+          this.openStyleCard(response.data.style);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     searchStyles() {
       if (this.searchQuery) {
         axios
           .get(`/api/search?query=${this.searchQuery}`)
           .then((response) => {
+            window.history.replaceState({}, document.title, `/search/${this.searchQuery}`);
             this.styles = response.data.styles;
           })
           .catch((error) => {
@@ -194,6 +217,7 @@ export default {
       axios
         .get(`/api/owner/${this.ownerFilter}`)
         .then((response) => {
+          window.history.replaceState({}, document.title, `/${this.ownerFilter}`);
           this.styles = response.data.styles;
         })
         .catch((error) => {
@@ -201,6 +225,7 @@ export default {
         });
     },
     resetFilters() {
+      window.history.replaceState({}, document.title, '/');
       this.searchQuery = '';
       this.ownerFilter = '';
       this.pagination.page = 1;
@@ -245,11 +270,16 @@ export default {
           this.isLoading = false;
         });
     },
-    onOpenStyleCard(_id) {
+    openStyleCard(styleData) {
+      window.history.replaceState({}, document.title, `/${styleData.owner}/${styleData.name}`);
+
       this.showStyleInfoModal = true;
-      this.selectedStyle = this.styles.find((style) => style._id === _id);
+      this.selectedStyle = this.styles.find(
+        (style) => style.owner === styleData.owner && style.name === styleData.name
+      );
     },
     closeStyleModal() {
+      if (!this.searchQuery && !this.ownerFilter) window.history.replaceState({}, document.title, '/');
       this.showStyleInfoModal = false;
       this.selectedStyle = {};
     },
