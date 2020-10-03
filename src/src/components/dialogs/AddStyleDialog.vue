@@ -64,7 +64,7 @@ export default {
         .then((response) => {
           this.url = '';
           this.$emit('close');
-          alert(`"${response.name}" added successfully`);
+          alert(`"${response.data.style.name}" added successfully`);
         })
         .catch((error) => {
           alert(error.response.data.error);
