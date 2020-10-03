@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/VChet/StyleBase/compare/v1.1.0...v1.1.1) (2020-10-03)
+
+
+### Bug Fixes
+
+* **add style:** fix style name in successful response ([d4e5e91](https://github.com/VChet/StyleBase/commit/d4e5e91624be160b1a0a693c0e9e9089528e20c5))
+* **search bar:** change placeholder text ([fa52b64](https://github.com/VChet/StyleBase/commit/fa52b647f4377e4aecb80c34e6f39abc63158759))
+
 ## [1.1.0](https://github.com/VChet/StyleBase/compare/v1.0.0...v1.1.0) (2020-10-03)
 
 
