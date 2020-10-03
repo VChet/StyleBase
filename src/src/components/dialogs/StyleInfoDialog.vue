@@ -3,7 +3,7 @@
     <template>
       <div class="style-info-header">
         <div class="style-info-title">
-          {{ styleData.name }}
+          {{ styleData.name.replace(/-/g, ' ') }}
           <span class="owner">
             <!-- TODO: add styles grid filtered by owner handler -->
             by
