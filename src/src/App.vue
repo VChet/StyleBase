@@ -1,11 +1,7 @@
 <template>
   <div id="app">
     <app-header @open-nav-link="openNavLink" />
-
-    <div class="container">
-      <Home />
-    </div>
-
+    <Home />
     <app-footer />
 
     <how-to-use-dialog :open="showHowtoUseModal" @close="showHowtoUseModal = false" />

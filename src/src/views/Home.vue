@@ -1,58 +1,60 @@
 <template>
   <main class="Home">
-    <section class="features">
-      <div class="feature-item">
-        <div>Automatic Updates</div>
-        <span>Install once and receive updates automatically</span>
-      </div>
-      <div class="feature-item">
-        <div>Free to Share</div>
-        <span>Anyone can add own style</span>
-      </div>
-      <div class="feature-item">
-        <div>Open Source</div>
-        <span>Install directly from repository</span>
-      </div>
-    </section>
-    <section class="search-container">
-      <label for="search" class="visually-hidden">Style search</label>
-      <input
-        id="search"
-        v-model.lazy="searchQuery"
-        v-debounce="500"
-        type="text"
-        placeholder="Search by style or owner name..."
-      />
-      <close-button v-show="searchQuery" @click="resetFilters" />
-    </section>
-    <section class="main-container">
-      <div class="section-header">
-        <div class="title">
-          Styles
-          <span v-if="ownerFilter">
-            by {{ ownerFilter }}
-            <close-button @click="resetFilters" />
-          </span>
+    <div class="container">
+      <section class="features">
+        <div class="feature-item">
+          <div>Automatic Updates</div>
+          <span>Install once and receive updates automatically</span>
         </div>
-        <hr />
-        <ul v-show="!searchQuery && !ownerFilter" class="sort-options">
-          <li v-for="(option, index) in sortOptions" :key="index">
-            <button
-              class="link"
-              type="button"
-              :class="{ active: selectedOption === index }"
-              @click="selectedOption = index"
-            >
-              {{ option }}
-            </button>
-          </li>
-        </ul>
-      </div>
-      <div v-if="styles.length" class="style-grid">
-        <style-card v-for="style in styles" :key="style._id" v-bind="style" @open="openStyleCard" />
-      </div>
-      <div v-else class="no-results">No results</div>
-    </section>
+        <div class="feature-item">
+          <div>Free to Share</div>
+          <span>Anyone can add own style</span>
+        </div>
+        <div class="feature-item">
+          <div>Open Source</div>
+          <span>Install directly from repository</span>
+        </div>
+      </section>
+      <section class="search-container">
+        <label for="search" class="visually-hidden">Style search</label>
+        <input
+          id="search"
+          v-model.lazy="searchQuery"
+          v-debounce="500"
+          type="text"
+          placeholder="Search by style or owner name..."
+        />
+        <close-button v-show="searchQuery" @click="resetFilters" />
+      </section>
+      <section class="main-container">
+        <div class="section-header">
+          <div class="title">
+            Styles
+            <span v-if="ownerFilter">
+              by {{ ownerFilter }}
+              <close-button @click="resetFilters" />
+            </span>
+          </div>
+          <hr />
+          <ul v-show="!searchQuery && !ownerFilter" class="sort-options">
+            <li v-for="(option, index) in sortOptions" :key="index">
+              <button
+                class="link"
+                type="button"
+                :class="{ active: selectedOption === index }"
+                @click="selectedOption = index"
+              >
+                {{ option }}
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div v-if="styles.length" class="style-grid">
+          <style-card v-for="style in styles" :key="style._id" v-bind="style" @open="openStyleCard" />
+        </div>
+        <div v-else class="no-results">No results</div>
+      </section>
+    </div>
 
     <style-info-dialog
       :open="showStyleInfoModal"
@@ -298,7 +300,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.Home {
+main {
   flex: 1;
 }
 
