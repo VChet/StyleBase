@@ -99,7 +99,9 @@ function getStyles(req, res) {
 }
 
 function getStyleData(req, res) {
-  Style.findById(req.params.id, (error, style) => {
+  const { owner, name } = req.query;
+  if (!owner || !name) return res.status(400).json({ error: "Request must contain owner and name fields" });
+  Style.findOne({ owner, name }, (error, style) => {
     if (error) return res.status(500).json({ error });
     if (!style) return res.status(404).json({ error: "Style not found" });
     return res.status(200).json({ style });

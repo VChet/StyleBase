@@ -60,7 +60,7 @@ const {
 } = require("./users");
 
 router.get("/styles/:page?", cacheSuccessful, getStyles);
-router.get("/style/:id", cacheSuccessful, getStyleData);
+router.get("/style", cacheSuccessful, getStyleData);
 router.get("/search/:page?", searchStyle);
 router.get("/owner/:owner/:page?", cacheSuccessful, getStylesByOwner);
 router.post("/style/add", recaptcha, addStyle);
