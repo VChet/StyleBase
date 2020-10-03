@@ -147,8 +147,9 @@ export default {
     const pathname = window.location.pathname.split('/');
     if (pathname[1] === 'search') return (this.searchQuery = pathname[2]);
     const owner = pathname[1];
+    if (!owner) return;
     const name = pathname[2];
-    if (!owner || !name) return;
+    if (!name) return (this.ownerFilter = owner);
     this.openStyleCard({ owner, name });
   },
   destroyed() {
@@ -198,7 +199,6 @@ export default {
             console.error(error);
           });
       } else {
-        window.history.replaceState({}, document.title, '/');
         this.resetFilters();
       }
     },
@@ -206,6 +206,7 @@ export default {
       axios
         .get(`/api/owner/${this.ownerFilter}`)
         .then((response) => {
+          window.history.replaceState({}, document.title, `/${this.ownerFilter}`);
           this.styles = response.data.styles;
         })
         .catch((error) => {
@@ -213,6 +214,7 @@ export default {
         });
     },
     resetFilters() {
+      window.history.replaceState({}, document.title, '/');
       this.searchQuery = '';
       this.ownerFilter = '';
       this.pagination.page = 1;
@@ -266,6 +268,7 @@ export default {
       );
     },
     closeStyleModal() {
+      if (!this.searchQuery && !this.ownerFilter) window.history.replaceState({}, document.title, '/');
       this.showStyleInfoModal = false;
       this.selectedStyle = {};
     },
