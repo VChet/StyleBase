@@ -22,7 +22,7 @@
           v-model.lazy="searchQuery"
           v-debounce="500"
           type="text"
-          placeholder="Search by style or owner name..."
+          placeholder="Search by style name or owner..."
         />
         <close-button v-show="searchQuery" @click="resetFilters" />
       </section>
