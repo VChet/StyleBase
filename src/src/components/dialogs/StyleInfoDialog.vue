@@ -16,7 +16,7 @@
         <div class="style-info-date">Updated: {{ dateFromNow }}</div>
       </div>
 
-      <div class="style-info-description">{{ styleData.description }}</div>
+      <div class="style-info-description" v-html="parseEmoji(styleData.description)"></div>
 
       <div class="style-info-image">
         <img v-if="styleData.preview" :src="styleData.preview" />
@@ -58,6 +58,8 @@
 <script>
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import emoji from 'node-emoji';
+import emojiFallback from '@/githubEmoji.json';
 
 import BaseDialog from '@/components/dialogs/BaseDialog';
 
@@ -87,6 +89,12 @@ export default {
   methods: {
     pluralize(num, noun, suffix = 's') {
       return `${num} ${noun}${num === 1 ? '' : suffix}`;
+    },
+    parseEmoji(text) {
+      const onMissing = (name) => {
+        return `<img class="emoji" src="${emojiFallback[name]}.png" alt="${name}" />`;
+      };
+      return emoji.emojify(text, onMissing);
     }
   }
 };
