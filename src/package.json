@@ -1,7 +1,11 @@
 {
   "name": "stylebase-frontend",
   "version": "1.0.0",
-  "private": true,
+  "author": "VChet",
+  "contributors": [
+    "rudnovd"
+  ],
+  "license": "MIT",
   "scripts": {
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
