@@ -34,7 +34,8 @@ async function retrieveRepositoryData(link) {
     const images = await repoImages(pathname.substr(1), { token });
     let preview;
     if (images.length) {
-      const previewObj = images.reduce((a, b) => (a.size > b.size ? a : b));
+      let previewObj = images.find((img) => img.path.includes("preview"));
+      if (!previewObj) previewObj = images.reduce((a, b) => (a.size > b.size ? a : b));
       preview = `https://raw.githubusercontent.com${pathname}/master/${previewObj.path}`;
     }
 
