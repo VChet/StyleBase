@@ -136,6 +136,8 @@ export default {
   cursor: pointer;
 
   .name {
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 20px;
     font-weight: bold;
     transition: color 0.2s;
