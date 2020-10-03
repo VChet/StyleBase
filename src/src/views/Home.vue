@@ -393,8 +393,9 @@ main {
   }
 
   .sort-options {
-    margin-left: auto;
     display: flex;
+    margin: 0;
+    margin-left: auto;
     list-style-type: none;
     list-style-image: none;
 
@@ -402,7 +403,8 @@ main {
       margin: 0 1rem;
 
       button {
-        padding: 0.25rem 0;
+        padding-bottom: 0.25rem;
+        margin-bottom: -0.25rem;
         border-bottom: 2px solid transparent;
         border-radius: 0;
         outline: 0;
