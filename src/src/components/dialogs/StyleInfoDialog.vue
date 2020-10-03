@@ -3,7 +3,9 @@
     <template>
       <div class="style-info-header">
         <div class="style-info-title">
-          {{ styleData.name.replace(/-/g, ' ') }}
+          <a :href="`${styleData.url}`" rel="noopener" target="_blank">
+            {{ styleData.name.replace(/-/g, ' ') }}
+          </a>
           <span class="owner">
             <!-- TODO: add styles grid filtered by owner handler -->
             by
@@ -26,12 +28,12 @@
       <div class="style-info-content">
         <ul>
           <li>
-            <a :href="styleData.url" rel="noopener" target="_blank">
+            <a :href="`${styleData.url}/stargazers`" rel="noopener" target="_blank">
               {{ pluralize(styleData.stargazers, 'star') }}
             </a>
           </li>
           <li>
-            <a :href="`${styleData.url}/forks`" rel="noopener" target="_blank">
+            <a :href="`${styleData.url}/network/members`" rel="noopener" target="_blank">
               {{ pluralize(styleData.forks, 'fork') }}
             </a>
           </li>
@@ -41,7 +43,7 @@
             </a>
           </li>
           <li>
-            <a :href="styleData.url" rel="noopener" target="_blank">
+            <a :href="`${styleData.url}/watchers`" rel="noopener" target="_blank">
               {{ pluralize(styleData.watchers, 'watcher') }}
             </a>
           </li>
