@@ -71,6 +71,7 @@ export default {
         })
         .finally(() => {
           this.isSubmitting = false;
+          this.$gtag.event('add style request', { event_category: 'add style dialog' });
         });
     },
     onCaptchaExpired() {

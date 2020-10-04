@@ -2,7 +2,15 @@
   <div class="style-card">
     <div class="image-container">
       <img v-if="preview" :src="preview" :alt="`Preview of ${name} style`" />
-      <a class="button style-button-filled" :href="usercss" rel="noopener" target="_blank">Install</a>
+      <a
+        class="button style-button-filled"
+        :href="usercss"
+        rel="noopener"
+        target="_blank"
+        @click="$gtag.event('install', { event_category: 'stylecard' })"
+      >
+        Install
+      </a>
     </div>
 
     <div class="data" @click="$emit('open', { owner, name })">
