@@ -16,6 +16,7 @@
         <div class="style-info-date">Updated {{ dateFromNow(styleData.lastUpdate) }}</div>
       </div>
 
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <div class="style-info-description" v-html="parseEmoji(styleData.description)"></div>
 
       <div class="style-info-image">

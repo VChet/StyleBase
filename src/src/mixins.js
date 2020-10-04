@@ -17,7 +17,9 @@ const styleInfoMixin = {
     },
     parseEmoji(text) {
       const onMissing = (name) => {
-        return `<img class="emoji" src="${emojiFallback[name]}.png" alt="${name}" />`;
+        const url = emojiFallback[name];
+        if (!url) return '';
+        return `<img class="emoji" src="${url}.png" alt="${name}" />`;
       };
       return emoji.emojify(text, onMissing);
     }
