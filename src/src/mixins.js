@@ -8,6 +8,9 @@ const styleInfoMixin = {
     pluralize(num, noun, suffix = 's') {
       return `${num} ${noun}${num === 1 ? '' : suffix}`;
     },
+    removeDashes(text) {
+      return text.replace(/[-_]/g, ' ');
+    },
     dateFromNow(date) {
       dayjs.extend(relativeTime);
       return dayjs(date).fromNow();

@@ -6,7 +6,7 @@
     </div>
 
     <div class="data" @click="$emit('open', { owner, name })">
-      <div class="name">{{ name.replace(/-/g, ' ') }}</div>
+      <div class="name">{{ removeDashes(name) }}</div>
       <div>by {{ owner }}</div>
       <div class="footer">
         <span>{{ pluralize(stargazers, 'star') }}</span>

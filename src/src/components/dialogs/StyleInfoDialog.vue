@@ -4,7 +4,7 @@
       <div class="style-info-header">
         <div class="style-info-title">
           <a :href="`${styleData.url}`" rel="noopener" target="_blank">
-            {{ styleData.name.replace(/-/g, ' ') }}
+            {{ removeDashes(styleData.name) }}
           </a>
           <span class="owner">
             by
