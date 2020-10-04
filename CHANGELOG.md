@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/VChet/StyleBase/compare/v1.1.1...v1.2.0) (2020-10-04)
+
+
+### Features
+
+* **analytics:** add events for StyleCard and AddStyleDialog ([0dd1abb](https://github.com/VChet/StyleBase/commit/0dd1abba65889aa1e7f5296ee58735f3e09e4239))
+* support site search in omnibox ([d801c51](https://github.com/VChet/StyleBase/commit/d801c51991d7ef5f3f047306510af0349d9ca4cc))
+
+
+### Bug Fixes
+
+* **agenda:** remove condition when agenda stops ([2c5e5d7](https://github.com/VChet/StyleBase/commit/2c5e5d7d7465d47e6c36a549cd58e5c4abe2d2f7))
+* **parser:** prioritize image with "preview" in file name ([620bfd6](https://github.com/VChet/StyleBase/commit/620bfd6c734a286b0b5453dff7d09952de7bf89e))
+* **style card:** cut long names ([683b300](https://github.com/VChet/StyleBase/commit/683b300cd540541789daa7041a523b14c15e5328))
+* **style info:** add mixin to replace dash and underscore in style name ([179c058](https://github.com/VChet/StyleBase/commit/179c0581db932d6f40ff6df6e80e0b8fa5e952f0))
+* **style info:** parse and replace emojis in description ([45dc100](https://github.com/VChet/StyleBase/commit/45dc1009e80785d6d8c789536dbdf8c59865434a))
+* **style info:** update links ([021a073](https://github.com/VChet/StyleBase/commit/021a073f5670c65c3025abffddee438d4986e0f8))
+
 ### [1.1.1](https://github.com/VChet/StyleBase/compare/v1.1.0...v1.1.1) (2020-10-03)
 
 
