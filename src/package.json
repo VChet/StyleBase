@@ -16,6 +16,7 @@
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "dayjs": "^1.8.36",
+    "node-emoji": "^1.10.0",
     "normalize.css": "^8.0.1",
     "vue": "^2.6.12",
     "vue-gtag": "^1.9.1",

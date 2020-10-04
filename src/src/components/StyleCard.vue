@@ -14,22 +14,22 @@
     </div>
 
     <div class="data" @click="$emit('open', { owner, name })">
-      <div class="name">{{ name.replace(/-/g, ' ') }}</div>
+      <div class="name">{{ removeDashes(name) }}</div>
       <div>by {{ owner }}</div>
       <div class="footer">
         <span>{{ pluralize(stargazers, 'star') }}</span>
-        <span>updated {{ dateFromNow }}</span>
+        <span>updated {{ dateFromNow(lastUpdate) }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import { styleInfoMixin } from '@/mixins';
 
 export default {
   name: 'StyleCard',
+  mixins: [styleInfoMixin],
   props: {
     // eslint-disable-next-line vue/prop-name-casing
     _id: {
@@ -66,17 +66,6 @@ export default {
       type: String,
       required: false,
       default: ''
-    }
-  },
-  computed: {
-    dateFromNow() {
-      dayjs.extend(relativeTime);
-      return dayjs(this.lastUpdate).fromNow();
-    }
-  },
-  methods: {
-    pluralize(num, noun, suffix = 's') {
-      return `${num} ${noun}${num === 1 ? '' : suffix}`;
     }
   }
 };

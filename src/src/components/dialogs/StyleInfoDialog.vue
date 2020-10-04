@@ -4,7 +4,7 @@
       <div class="style-info-header">
         <div class="style-info-title">
           <a :href="`${styleData.url}`" rel="noopener" target="_blank">
-            {{ styleData.name.replace(/-/g, ' ') }}
+            {{ removeDashes(styleData.name) }}
           </a>
           <span class="owner">
             by
@@ -13,10 +13,11 @@
             </button>
           </span>
         </div>
-        <div class="style-info-date">Updated: {{ dateFromNow }}</div>
+        <div class="style-info-date">Updated {{ dateFromNow(styleData.lastUpdate) }}</div>
       </div>
 
-      <div class="style-info-description">{{ styleData.description }}</div>
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <div class="style-info-description" v-html="parseEmoji(styleData.description)"></div>
 
       <div class="style-info-image">
         <img v-if="styleData.preview" :src="styleData.preview" />
@@ -56,8 +57,7 @@
 </template>
 
 <script>
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import { styleInfoMixin } from '@/mixins';
 
 import BaseDialog from '@/components/dialogs/BaseDialog';
 
@@ -66,6 +66,7 @@ export default {
   components: {
     BaseDialog
   },
+  mixins: [styleInfoMixin],
   props: {
     open: {
       type: Boolean,
@@ -76,17 +77,6 @@ export default {
       type: Object,
       required: true,
       default: () => {}
-    }
-  },
-  computed: {
-    dateFromNow() {
-      dayjs.extend(relativeTime);
-      return dayjs(this.styleData.lastUpdate).fromNow();
-    }
-  },
-  methods: {
-    pluralize(num, noun, suffix = 's') {
-      return `${num} ${noun}${num === 1 ? '' : suffix}`;
     }
   }
 };
