@@ -67,8 +67,6 @@
 
 <script>
 import axios from 'axios';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
 
 import StyleCard from '@/components/StyleCard';
 import StyleInfoDialog from '@/components/dialogs/StyleInfoDialog';
@@ -103,12 +101,6 @@ export default {
       selectedStyle: {},
       showStyleInfoModal: false
     };
-  },
-  computed: {
-    dateFromNow() {
-      dayjs.extend(relativeTime);
-      return dayjs(this.selectedStyle.lastUpdate).fromNow();
-    }
   },
   watch: {
     selectedOption() {

@@ -13,7 +13,7 @@
             </button>
           </span>
         </div>
-        <div class="style-info-date">Updated: {{ dateFromNow }}</div>
+        <div class="style-info-date">Updated {{ dateFromNow(styleData.lastUpdate) }}</div>
       </div>
 
       <div class="style-info-description" v-html="parseEmoji(styleData.description)"></div>
@@ -56,10 +56,7 @@
 </template>
 
 <script>
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
-import emoji from 'node-emoji';
-import emojiFallback from '@/githubEmoji.json';
+import { styleInfoMixin } from '@/mixins';
 
 import BaseDialog from '@/components/dialogs/BaseDialog';
 
@@ -68,6 +65,7 @@ export default {
   components: {
     BaseDialog
   },
+  mixins: [styleInfoMixin],
   props: {
     open: {
       type: Boolean,
@@ -78,23 +76,6 @@ export default {
       type: Object,
       required: true,
       default: () => {}
-    }
-  },
-  computed: {
-    dateFromNow() {
-      dayjs.extend(relativeTime);
-      return dayjs(this.styleData.lastUpdate).fromNow();
-    }
-  },
-  methods: {
-    pluralize(num, noun, suffix = 's') {
-      return `${num} ${noun}${num === 1 ? '' : suffix}`;
-    },
-    parseEmoji(text) {
-      const onMissing = (name) => {
-        return `<img class="emoji" src="${emojiFallback[name]}.png" alt="${name}" />`;
-      };
-      return emoji.emojify(text, onMissing);
     }
   }
 };
