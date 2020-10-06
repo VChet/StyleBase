@@ -109,6 +109,10 @@ export default {
     max-width: 600px;
   }
 
+  &.large {
+    max-width: 800px;
+  }
+
   &.extra-large {
     max-width: 1130px;
   }

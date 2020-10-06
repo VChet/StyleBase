@@ -1,6 +1,7 @@
 <template>
   <footer>
     <div class="container">
+      <button class="link" type="button" @click="$emit('open-nav-link', 'showPrivacyModal')">Privacy Policy</button>
       <a href="https://github.com/VChet/StyleBase" rel="noopener" target="_blank">Code on GitHub</a>
     </div>
   </footer>
@@ -21,6 +22,11 @@ footer {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
     text-align: right;
+  }
+
+  button,
+  a:not(:last-child) {
+    margin-right: 1rem;
   }
 }
 </style>

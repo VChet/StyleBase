@@ -2,10 +2,11 @@
   <div id="app">
     <app-header @open-nav-link="openNavLink" />
     <Home />
-    <app-footer />
+    <app-footer @open-nav-link="openNavLink" />
 
     <how-to-use-dialog :open="showHowtoUseModal" @close="showHowtoUseModal = false" />
     <add-style-dialog :open="showAddStyleModal" @close="showAddStyleModal = false" />
+    <privacy-policy-dialog :open="showPrivacyModal" @close="showPrivacyModal = false" />
   </div>
 </template>
 
@@ -15,6 +16,7 @@ import Home from '@/views/Home.vue';
 import AppFooter from '@/components/AppFooter.vue';
 import HowToUseDialog from '@/components/dialogs/HowToUseDialog.vue';
 import AddStyleDialog from '@/components/dialogs/AddStyleDialog.vue';
+import PrivacyPolicyDialog from '@/components/dialogs/PrivacyPolicyDialog.vue';
 
 export default {
   name: 'App',
@@ -23,12 +25,14 @@ export default {
     Home,
     AppFooter,
     HowToUseDialog,
-    AddStyleDialog
+    AddStyleDialog,
+    PrivacyPolicyDialog
   },
   data() {
     return {
       showHowtoUseModal: false,
-      showAddStyleModal: false
+      showAddStyleModal: false,
+      showPrivacyModal: false
     };
   },
   mounted() {
