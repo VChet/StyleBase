@@ -1,10 +1,10 @@
 <template>
   <div class="style-card">
     <div class="image-container">
-      <img v-if="preview" :src="preview" :alt="`Preview of ${name} style`" />
+      <img v-if="styleData.preview" :src="styleData.preview" :alt="`Preview of ${styleData.name} style`" />
       <a
         class="button style-button-filled"
-        :href="usercss"
+        :href="styleData.usercss"
         rel="noopener"
         target="_blank"
         @click="$gtag.event('install', { event_category: 'stylecard' })"
@@ -13,12 +13,12 @@
       </a>
     </div>
 
-    <div class="data" @click="$emit('open', { owner, name })">
-      <div class="name">{{ removeDashes(name) }}</div>
-      <div>by {{ owner }}</div>
+    <div class="data" @click="$emit('open', $props.styleData)">
+      <div class="name">{{ removeDashes(styleData.name) }}</div>
+      <div>by {{ styleData.owner }}</div>
       <div class="footer">
-        <span>{{ pluralize(stargazers, 'star') }}</span>
-        <span>updated {{ dateFromNow(lastUpdate) }}</span>
+        <span>{{ pluralize(styleData.stargazers, 'star') }}</span>
+        <span>updated {{ dateFromNow(styleData.lastUpdate) }}</span>
       </div>
     </div>
   </div>
@@ -31,41 +31,10 @@ export default {
   name: 'StyleCard',
   mixins: [styleInfoMixin],
   props: {
-    // eslint-disable-next-line vue/prop-name-casing
-    _id: {
-      type: String,
-      required: false,
-      default: ''
-    },
-    name: {
-      type: String,
+    styleData: {
+      type: Object,
       required: true,
-      default: 'Some awesome style'
-    },
-    owner: {
-      type: String,
-      required: true,
-      default: 'Owner'
-    },
-    stargazers: {
-      type: Number,
-      required: false,
-      default: 0
-    },
-    lastUpdate: {
-      type: String,
-      required: false,
-      default: ''
-    },
-    usercss: {
-      type: String,
-      required: true,
-      default: ''
-    },
-    preview: {
-      type: String,
-      required: false,
-      default: ''
+      default: () => {}
     }
   }
 };

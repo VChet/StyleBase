@@ -50,7 +50,7 @@
           </ul>
         </div>
         <div v-if="styles.length" class="style-grid">
-          <style-card v-for="style in styles" :key="style._id" v-bind="style" @open="openStyleCard" />
+          <style-card v-for="style in styles" :key="style._id" :style-data="style" @open="openStyleCard" />
         </div>
         <div v-else class="no-results">No results</div>
       </section>
@@ -267,10 +267,8 @@ export default {
     openStyleCard(styleData) {
       window.history.replaceState({}, `${styleData.name} | Stylebase`, `/${styleData.owner}/${styleData.name}`);
 
+      this.selectedStyle = styleData;
       this.showStyleInfoModal = true;
-      this.selectedStyle = this.styles.find(
-        (style) => style.owner === styleData.owner && style.name === styleData.name
-      );
     },
     closeStyleModal() {
       if (!this.searchQuery && !this.ownerFilter) window.history.replaceState({}, document.title, '/');
