@@ -1,7 +1,8 @@
 button,
 a {
   border-radius: 5px;
-  font-family: Gilroy, sans-serif;
+  text-decoration: none;
+  color: var(--color-text);
   cursor: pointer;
   transition: background-color 0.2s, color 0.2s;
 
@@ -13,9 +14,6 @@ a {
 }
 
 a:not(.button) {
-  text-decoration: none;
-  color: var(--color-text);
-
   &:hover,
   &:focus {
     color: var(--color-main);
@@ -26,7 +24,6 @@ a.button {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  text-decoration: none;
   line-height: 1;
 }
 

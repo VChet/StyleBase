@@ -22,7 +22,6 @@ export default {
   margin: 0;
   background-color: transparent;
   border-color: transparent;
-  cursor: pointer;
 
   &:hover .cross-first-line,
   &:hover .cross-second-line {

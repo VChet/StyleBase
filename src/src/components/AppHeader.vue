@@ -45,8 +45,6 @@ header {
         outline: 0;
         border-bottom: 2px solid transparent;
         font-size: 18px;
-        color: var(--color-text);
-        transition: color 0.2s, border-color 0.2s;
 
         &:hover {
           color: var(--color-main);

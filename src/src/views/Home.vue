@@ -401,7 +401,6 @@ main {
         font-size: 1rem;
         text-transform: lowercase;
         transition: color 0.2s, border-color 0.2s;
-        color: var(--color-text);
 
         &.active {
           color: var(--color-main);
