@@ -112,10 +112,6 @@ export default {
     },
     searchQuery() {
       this.searchStyles();
-    },
-    showStyleInfoModal(isActive) {
-      const $body = document.body;
-      isActive ? $body.classList.add('no-scroll') : $body.classList.remove('no-scroll');
     }
   },
   created() {

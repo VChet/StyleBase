@@ -35,6 +35,17 @@ export default {
       showPrivacyModal: false
     };
   },
+  computed: {
+    haveActiveModal() {
+      return this.showHowtoUseModal || this.showAddStyleModal || this.showPrivacyModal;
+    }
+  },
+  watch: {
+    haveActiveModal(isActive) {
+      const $body = document.body;
+      isActive ? $body.classList.add('no-scroll') : $body.classList.remove('no-scroll');
+    }
+  },
   mounted() {
     this.$gtag.pageview({
       page_path: '/'
