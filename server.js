@@ -1,6 +1,7 @@
 const express = require("express");
-
+const os = require("os");
 const config = require("./config");
+
 const {
   addExpressMiddleware,
   CORSMiddleware
@@ -20,7 +21,7 @@ app.use(routes);
 
 app.set("port", PORT);
 app.listen(app.get("port"), () => {
-  console.log(`Server is up and running on port ${PORT}`);
+  console.log(`Server is up and running on hostname ${os.hostname()}, port ${app.get("port")}`);
 });
 
 module.exports = app;
