@@ -2,6 +2,7 @@
   <div class="style-card">
     <div class="image-container">
       <img v-if="styleData.preview" :src="styleData.preview" :alt="`Preview of ${styleData.name} style`" />
+      <img v-else class="no-image" src="@/images/no-image.png" alt="No preview" />
       <a
         class="button style-button-filled"
         :href="styleData.usercss"
@@ -65,11 +66,14 @@ export default {
 }
 
 .image-container {
-  background-color: #f5e6cc;
-  height: 200px;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  background-color: #f5e6cc;
 
-  img {
+  img:not(.no-image) {
     width: 100%;
     height: inherit;
     object-fit: cover;

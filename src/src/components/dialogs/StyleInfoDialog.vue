@@ -21,7 +21,7 @@
 
       <div class="style-info-image">
         <img v-if="styleData.preview" :src="styleData.preview" />
-        <div v-else class="no-image">No preview</div>
+        <img v-else class="no-image" src="@/images/no-image.png" alt="No preview" />
         <div v-if="styleData.license" class="style-license">{{ styleData.license }}</div>
       </div>
 
@@ -122,21 +122,14 @@ export default {
 
 .style-info-image {
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
 
   img {
     max-width: 100%;
     border-radius: 4px;
-  }
-
-  .no-image {
-    height: 150px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #f5e6cc;
-    opacity: 0.6;
-    user-select: none;
-    font-size: 2rem;
   }
 
   .style-license {
