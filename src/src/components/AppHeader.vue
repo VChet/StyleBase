@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="container">
-      <a class="logo" href="/" rel="home">StyleBase</a>
+      <button class="link logo" @click="scrollToTop">StyleBase</button>
       <nav>
         <button class="link" type="button" @click="$emit('open-nav-link', 'showHowtoUseModal')">How to Use</button>
         <button class="link" type="button" @click="$emit('open-nav-link', 'showAddStyleModal')">Add Style</button>
@@ -12,7 +12,12 @@
 
 <script>
 export default {
-  name: 'AppHeader'
+  name: 'AppHeader',
+  methods: {
+    scrollToTop() {
+      window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+    }
+  }
 };
 </script>
 
@@ -30,6 +35,17 @@ header {
     padding-top: 1rem;
     padding-bottom: 1rem;
 
+    button,
+    a {
+      border-radius: 0;
+      outline: 0;
+      border-bottom: 2px solid transparent;
+
+      &:focus {
+        border-color: var(--color-focus);
+      }
+    }
+
     .logo {
       font-size: 28px;
       font-weight: bold;
@@ -41,19 +57,7 @@ header {
 
     nav {
       button {
-        border-radius: 0;
-        outline: 0;
-        border-bottom: 2px solid transparent;
         font-size: 18px;
-
-        &:hover {
-          color: var(--color-main);
-        }
-
-        &:focus {
-          color: var(--color-main);
-          border-color: var(--color-focus);
-        }
 
         @include media-size-mobile {
           font-size: 16px;
