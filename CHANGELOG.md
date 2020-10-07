@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/VChet/StyleBase/compare/v1.2.0...v1.3.0) (2020-10-07)
+
+
+### Features
+
+* **footer:** add contact email ([0277f51](https://github.com/VChet/StyleBase/commit/0277f515de349f93b2f2104497dd38f754ae3f37))
+* **privacy policy:** add privacy policy popup ([480b0dc](https://github.com/VChet/StyleBase/commit/480b0dc6eb51a0c77572814059589eea7b197073))
+
+
+### Bug Fixes
+
+* **header:** scroll to top on logo click ([b001569](https://github.com/VChet/StyleBase/commit/b0015691a34cb5a372fc72d5b8076e61e1be2995))
+* **style card:** add image for empty preview ([f6775b3](https://github.com/VChet/StyleBase/commit/f6775b304648c7f49e9933a6091a2d4cbc2121b0))
+* set document title when changing history state ([c6c608a](https://github.com/VChet/StyleBase/commit/c6c608a1acfc01b7faa6bd235418d300ade841a8))
+
 ## [1.2.0](https://github.com/VChet/StyleBase/compare/v1.1.1...v1.2.0) (2020-10-04)
 
 
