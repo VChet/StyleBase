@@ -8,6 +8,10 @@
         accessible from https://stylebase.cc, and how we use it.
       </p>
       <p>
+        If you have additional questions or require more information about our Privacy Policy, do not hesitate to
+        contact us through email at <a href="mailto:feedback@stylebase.cc" rel="noopener">feedback@stylebase.cc</a>
+      </p>
+      <p>
         This Privacy Policy applies only to our online activities and is valid for visitors to our website with regards
         to the information that they shared and/or collect in StyleBase. This policy is not applicable to any
         information collected offline or via channels other than this website.

@@ -1,6 +1,7 @@
 <template>
   <footer>
     <div class="container">
+      <a href="mailto:feedback@stylebase.cc" rel="noopener">Contact Us</a>
       <button class="link" type="button" @click="$emit('open-nav-link', 'showPrivacyModal')">Privacy Policy</button>
       <a href="https://github.com/VChet/StyleBase" rel="noopener" target="_blank">Code on GitHub</a>
     </div>
