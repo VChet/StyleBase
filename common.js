@@ -91,6 +91,7 @@ function addExpressMiddleware(app) {
         "default-src": ["'self'"],
         "img-src": [
           "'self'",
+          "data:",
           "https://raw.githubusercontent.com",
           "https://www.google-analytics.com"
         ],
