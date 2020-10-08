@@ -67,8 +67,8 @@ async function retrieveRepositoryData(link) {
       };
     }
     return {
-      status: error.response.status,
-      error: error.response.statusText
+      status: error.response.status || error.response.statusCode,
+      error: error.response.statusText || error.response.statusMessage
     };
   }
 }
