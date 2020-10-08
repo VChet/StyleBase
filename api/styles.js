@@ -93,7 +93,7 @@ function getStyles(req, res) {
     collation: { locale: "en" }
   };
 
-  Style.paginate({}, options, async (error, data) => {
+  Style.paginate({}, options, (error, data) => {
     if (error) return res.status(500).json({ error });
     return res.status(200).json(data);
   });
@@ -215,7 +215,7 @@ function getStylesByOwner(req, res) {
     customLabels
   };
 
-  Style.paginate({ owner }, options, async (error, data) => {
+  Style.paginate({ owner }, options, (error, data) => {
     if (error) return res.status(500).json({ error });
     return res.status(200).json(data);
   });
