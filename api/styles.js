@@ -31,12 +31,13 @@ async function retrieveRepositoryData(link) {
       };
     }
 
-    const images = await repoImages(pathname.substr(1), { token });
+    const branch = repo.data.default_branch;
+    const images = await repoImages(pathname.substr(1), { token, branch });
     let preview;
     if (images.length) {
       let previewObj = images.find((img) => img.path.includes("preview"));
       if (!previewObj) previewObj = images.reduce((a, b) => (a.size > b.size ? a : b));
-      preview = `https://raw.githubusercontent.com${pathname}/master/${previewObj.path}`;
+      preview = `https://raw.githubusercontent.com${pathname}/${branch}/${previewObj.path}`;
     }
 
     return {
