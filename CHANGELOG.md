@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/VChet/StyleBase/compare/v1.3.0...v1.3.1) (2020-10-08)
+
+
+### Bug Fixes
+
+* **parser:** add error status and text fields ([6349c5a](https://github.com/VChet/StyleBase/commit/6349c5a84ed56eaf983de1b36802ba16747e567a))
+* **parser:** set default branch ([6d41942](https://github.com/VChet/StyleBase/commit/6d4194290ddc6265070f75975134ea5035449ade))
+* **rate limiter:** send error message as object ([be6f2fc](https://github.com/VChet/StyleBase/commit/be6f2fcb7bc83485b9df45511faeca795ae5bb61))
+* **routes:** disable middleware checks on non production environment ([3f65f15](https://github.com/VChet/StyleBase/commit/3f65f155f8fafa709ae0046da2fd6ce1954ad2c4))
+* **style info:** restore no-scroll class in body when modal is active ([62863f7](https://github.com/VChet/StyleBase/commit/62863f74122832004e04ea6591104070a57f6a2c))
+
 ## [1.3.0](https://github.com/VChet/StyleBase/compare/v1.2.0...v1.3.0) (2020-10-07)
 
 
