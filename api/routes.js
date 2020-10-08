@@ -16,8 +16,7 @@ const cacheSuccessful = cache("10 minutes", onlyStatus200);
 const GHRateLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
   max: 1,
-  message:
-    "Too many update requests made from this IP, please try again after 10 minutes"
+  message: { error: "Too many update requests made from this IP, please try again after 10 minutes" }
 });
 
 const recaptcha = (req, res, next) => {
