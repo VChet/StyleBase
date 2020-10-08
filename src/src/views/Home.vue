@@ -366,6 +366,10 @@ main {
     font-size: 1.25rem;
     font-weight: bold;
 
+    @include media-size-mobile {
+      margin-bottom: 1rem;
+    }
+
     .close-button {
       top: unset;
       right: unset;
