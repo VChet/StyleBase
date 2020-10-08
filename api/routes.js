@@ -16,10 +16,12 @@ const cacheSuccessful = cache("10 minutes", onlyStatus200);
 const GHRateLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
   max: 1,
-  message: { error: "Too many update requests made from this IP, please try again after 10 minutes" }
+  message: { error: "Too many update requests made from this IP, please try again after 10 minutes" },
+  skip: () => process.env.NODE_ENV !== "production"
 });
 
 const recaptcha = (req, res, next) => {
+  if (process.env.NODE_ENV !== "production") return next();
   const { recaptchaToken } = req.body;
   axios
     .post(`https://www.google.com/recaptcha/api/siteverify?secret=${CaptchaSecretKey}&response=${recaptchaToken}`)
@@ -34,6 +36,7 @@ const recaptcha = (req, res, next) => {
 };
 
 function isAdmin(req, res, next) {
+  if (process.env.NODE_ENV !== "production") return next();
   if (!req.isAuthenticated()) {
     return res.status(401).json({ error: "Authentication is required to perform this action" });
   }
