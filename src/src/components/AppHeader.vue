@@ -1,7 +1,11 @@
 <template>
-  <header>
+  <header :class="{ active: menuIsActive }">
     <div class="container">
       <button class="link logo" @click="scrollToTop">StyleBase</button>
+      <button class="link burger-menu" @click="menuIsActive = !menuIsActive">
+        <span></span>
+        <span></span>
+      </button>
       <nav>
         <button class="link" type="button" @click="$emit('open-nav-link', 'showHowtoUseModal')">How to Use</button>
         <button class="link" type="button" @click="$emit('open-nav-link', 'showAddStyleModal')">Add Style</button>
@@ -13,6 +17,11 @@
 <script>
 export default {
   name: 'AppHeader',
+  data() {
+    return {
+      menuIsActive: false
+    };
+  },
   methods: {
     scrollToTop() {
       window.scroll({ top: 0, left: 0, behavior: 'smooth' });
@@ -29,48 +38,118 @@ header {
   background-color: var(--color-bg);
 
   .container {
+    position: relative;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     padding-top: 1rem;
     padding-bottom: 1rem;
+  }
 
-    button,
-    a {
-      border-radius: 0;
-      outline: 0;
-      border-bottom: 2px solid transparent;
+  button,
+  a {
+    outline: 0;
+    border-radius: 0;
+    border-bottom: 2px solid transparent;
+    font-size: 18px;
 
-      &:focus {
-        border-color: var(--color-focus);
+    &:focus {
+      border-color: var(--color-focus);
+    }
+  }
+
+  .logo {
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .burger-menu {
+    display: none;
+    position: relative;
+    width: 2rem;
+    height: 2rem;
+
+    @include media-size-mobile {
+      display: inline-block;
+    }
+
+    span {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: var(--color-text);
+      transition: transform 0.3s;
+
+      &:nth-child(1) {
+        top: 10px;
+      }
+      &:nth-child(2) {
+        bottom: 10px;
       }
     }
 
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
+    &:focus {
+      border-color: transparent;
 
-      @include media-size-mobile {
-        font-size: 24px;
+      span {
+        background-color: var(--color-focus);
+      }
+    }
+  }
+
+  nav {
+    button {
+      margin-left: 1.5rem;
+    }
+
+    @include media-size-mobile {
+      display: flex;
+      flex-basis: 100%;
+      flex-direction: column;
+      align-items: flex-start;
+      background-color: var(--color-bg);
+      animation: slide-in 0.5s forwards;
+      overflow: hidden;
+
+      button {
+        margin-top: 0.75rem;
+        margin-left: 0rem;
+      }
+    }
+  }
+
+  &.active {
+    .burger-menu span {
+      top: 13px;
+
+      &:nth-child(1) {
+        transform: rotate(45deg);
+      }
+      &:nth-child(2) {
+        transform: rotate(-45deg);
       }
     }
 
     nav {
-      button {
-        font-size: 18px;
-
-        @include media-size-mobile {
-          font-size: 16px;
-        }
-
-        &:not(:last-child) {
-          margin-right: 1.5rem;
-
-          @include media-size-mobile {
-            margin-right: 0.5rem;
-          }
-        }
-      }
+      animation: slide-out 0.5s forwards;
+    }
+  }
+  @keyframes slide-out {
+    from {
+      max-height: 0;
+    }
+    to {
+      max-height: 5rem;
+    }
+  }
+  @keyframes slide-in {
+    from {
+      max-height: 5rem;
+    }
+    to {
+      max-height: 0;
     }
   }
 }
