@@ -149,10 +149,10 @@ function addStyle(req, res) {
 }
 
 function updateStyle(req, res) {
-  const styleId = req.params.id;
-  if (!styleId) return res.status(400).json({ error: "Request must contain styleId field" });
+  const { url } = req.body;
+  if (!url) return res.status(400).json({ error: "Request must contain url field" });
 
-  Style.findById(styleId, async (error, style) => {
+  Style.findOne({ url }, async (error, style) => {
     if (error) return res.status(500).json({ error });
     if (!style) return res.status(404).json({ error: "Style was not found in our base" });
 
@@ -163,8 +163,8 @@ function updateStyle(req, res) {
     if (data.isArchived) return res.status(400).json({ error: "Repository is archived" });
     if (data.isFork) return res.status(400).json({ error: "Repository is forked" });
 
-    Style.findByIdAndUpdate(
-      styleId,
+    Style.findOneAndUpdate(
+      { url },
       data,
       { new: true },
       (updateError, newStyle) => {
@@ -195,6 +195,7 @@ function updateAllStyles(req, res) {
 
 async function deleteStyle(req, res) {
   const { url } = req.body;
+  if (!url) return res.status(400).json({ error: "Request must contain url field" });
   const existingStyle = await Style.findOne({ url }).lean();
   if (!existingStyle) return res.status(404).json({ error: "Style does not exist" });
 
