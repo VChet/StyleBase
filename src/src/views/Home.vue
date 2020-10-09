@@ -197,7 +197,7 @@ export default {
         axios
           .get(`/api/search?query=${this.searchQuery}`)
           .then((response) => {
-            window.history.replaceState({}, `${this.searchQuery} | Stylebase`, `/search/${this.searchQuery}`);
+            window.history.replaceState({}, `${this.searchQuery} | StyleBase`, `/search/${this.searchQuery}`);
             this.styles = response.data.styles;
           })
           .catch((error) => {
@@ -211,7 +211,7 @@ export default {
       axios
         .get(`/api/owner/${this.ownerFilter}`)
         .then((response) => {
-          window.history.replaceState({}, `Styles by ${this.ownerFilter} | Stylebase`, `/${this.ownerFilter}`);
+          window.history.replaceState({}, `Styles by ${this.ownerFilter} | StyleBase`, `/${this.ownerFilter}`);
           this.styles = response.data.styles;
         })
         .catch((error) => {
@@ -265,7 +265,7 @@ export default {
         });
     },
     openStyleCard(styleData) {
-      window.history.replaceState({}, `${styleData.name} | Stylebase`, `/${styleData.owner}/${styleData.name}`);
+      window.history.replaceState({}, `${styleData.name} | StyleBase`, `/${styleData.owner}/${styleData.name}`);
 
       this.selectedStyle = styleData;
       this.showStyleInfoModal = true;
