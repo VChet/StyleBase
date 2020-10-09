@@ -193,6 +193,25 @@ function updateAllStyles(req, res) {
   });
 }
 
+async function editStyle(req, res) {
+  const { url, customName, customPreview } = req.body;
+  if (!url) return res.status(400).json({ error: "Request must contain url field" });
+  if (!customName || !customPreview) {
+    return res.status(400).json({ error: "Request must contain customName or customPreview fields" });
+  }
+  const existingStyle = await Style.findOne({ url }).lean();
+  if (!existingStyle) return res.status(404).json({ error: "Style does not exist" });
+
+  Style.findOneAndUpdate(
+    { url },
+    { $set: { customName, customPreview } },
+    { new: true },
+    (error, style) => {
+      if (error) return res.status(500).json({ error });
+      return res.status(200).json({ style });
+    });
+}
+
 async function deleteStyle(req, res) {
   const { url } = req.body;
   if (!url) return res.status(400).json({ error: "Request must contain url field" });
@@ -231,6 +250,7 @@ module.exports = {
   addStyle,
   updateStyle,
   updateAllStyles,
+  editStyle,
   deleteStyle,
   getStylesByOwner
 };

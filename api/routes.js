@@ -53,6 +53,7 @@ const {
   addStyle,
   updateAllStyles,
   updateStyle,
+  editStyle,
   deleteStyle,
   getStylesByOwner
 } = require("./styles");
@@ -68,6 +69,7 @@ router.get("/owner/:owner/:page?", cacheSuccessful, getStylesByOwner);
 router.post("/style/add", recaptcha, addStyle);
 router.put("/style/update/all", GHRateLimiter, updateAllStyles);
 router.put("/style/update", GHRateLimiter, updateStyle);
+router.put("/style/edit", isAdmin, editStyle);
 router.delete("/style/delete", isAdmin, deleteStyle);
 
 router.get("/me", getCurrentUser);

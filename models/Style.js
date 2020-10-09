@@ -24,9 +24,11 @@ const schema = new Schema({
   isPrivate: Boolean,
   isArchived: Boolean,
   isFork: Boolean,
+  customName: String,
+  customPreview: String
 });
 
-schema.index({ name: "text", owner: "text" });
+schema.index({ name: "text", customName: "text", owner: "text" });
 schema.plugin(mongoosePaginate);
 
 exports.Style = mongoose.model("Style", schema);
