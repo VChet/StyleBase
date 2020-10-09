@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <app-header @open-nav-link="openNavLink" />
+    <app-header :user="user" @open-nav-link="openNavLink" />
     <Home />
     <app-footer @open-nav-link="openNavLink" />
 
@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import AppHeader from '@/components/AppHeader.vue';
 import Home from '@/views/Home.vue';
 import AppFooter from '@/components/AppFooter.vue';
@@ -32,7 +34,9 @@ export default {
     return {
       showHowtoUseModal: false,
       showAddStyleModal: false,
-      showPrivacyModal: false
+      showPrivacyModal: false,
+
+      user: {}
     };
   },
   computed: {
@@ -46,10 +50,23 @@ export default {
       isActive ? $body.classList.add('no-scroll') : $body.classList.remove('no-scroll');
     }
   },
+  beforeMount() {
+    this.getUser();
+  },
   mounted() {
     this.$gtag.pageview({ page_path: window.location.pathname });
   },
   methods: {
+    getUser() {
+      axios
+        .get('/api/me')
+        .then((response) => {
+          if (!response.data.error) this.user = response.data.user;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    },
     openNavLink(navLink) {
       this[navLink] = true;
     }

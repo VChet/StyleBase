@@ -9,6 +9,8 @@
       <nav>
         <button class="link" type="button" @click="$emit('open-nav-link', 'showHowtoUseModal')">How to Use</button>
         <button class="link" type="button" @click="$emit('open-nav-link', 'showAddStyleModal')">Add Style</button>
+        <a v-if="!user.username" href="/login">Login</a>
+        <button v-else class="link" type="button">{{ user.username }}</button>
       </nav>
     </div>
   </header>
@@ -17,6 +19,13 @@
 <script>
 export default {
   name: 'AppHeader',
+  props: {
+    user: {
+      type: Object,
+      required: true,
+      default: () => {}
+    }
+  },
   data() {
     return {
       menuIsActive: false
@@ -70,7 +79,7 @@ header {
     width: 2rem;
     height: 2rem;
 
-    @include media-size-mobile {
+    @include media-size-tablet {
       display: inline-block;
     }
 
@@ -100,11 +109,12 @@ header {
   }
 
   nav {
-    button {
+    button,
+    a {
       margin-left: 1.5rem;
     }
 
-    @include media-size-mobile {
+    @include media-size-tablet {
       display: flex;
       flex-basis: 100%;
       flex-direction: column;
@@ -113,7 +123,8 @@ header {
       animation: slide-in 0.5s forwards;
       overflow: hidden;
 
-      button {
+      button,
+      a {
         margin-top: 0.75rem;
         margin-left: 0rem;
       }
@@ -141,12 +152,12 @@ header {
       max-height: 0;
     }
     to {
-      max-height: 5rem;
+      max-height: 10rem;
     }
   }
   @keyframes slide-in {
     from {
-      max-height: 5rem;
+      max-height: 10rem;
     }
     to {
       max-height: 0;
