@@ -4,6 +4,7 @@ const rateLimit = require("express-rate-limit");
 const axios = require("axios");
 
 const { CaptchaSecretKey } = require("../config");
+const { Style } = require("../models/Style");
 
 // Middleware
 const router = express.Router();
@@ -35,16 +36,25 @@ const recaptcha = (req, res, next) => {
     });
 };
 
-function isAdmin(req, res, next) {
+const isAuthorized = async (req, res, next) => {
+  const { url } = req.body;
+  if (!url) return res.status(400).json({ error: "Request must contain url field" });
+  const existingStyle = await Style.findOne({ url }).lean();
+  if (!existingStyle) return res.status(404).json({ error: "Style does not exist" });
+  req.styleData = existingStyle;
+
   if (process.env.NODE_ENV !== "production") return next();
+
   if (!req.isAuthenticated()) {
     return res.status(401).json({ error: "Authentication is required to perform this action" });
   }
-  if (req.user.role !== "Admin") {
+  const isAdmin = req.user.role === "Admin";
+  const isOwner = req.user.username === existingStyle.owner;
+  if (!isAdmin && !isOwner) {
     return res.status(403).json({ error: "You are not authorized to perform this action" });
   }
   next();
-}
+};
 
 const {
   getStyles,
@@ -69,8 +79,8 @@ router.get("/owner/:owner/:page?", cacheSuccessful, getStylesByOwner);
 router.post("/style/add", recaptcha, addStyle);
 router.put("/style/update/all", GHRateLimiter, updateAllStyles);
 router.put("/style/update", GHRateLimiter, updateStyle);
-router.put("/style/edit", isAdmin, editStyle);
-router.delete("/style/delete", isAdmin, deleteStyle);
+router.put("/style/edit", isAuthorized, editStyle);
+router.delete("/style/delete", isAuthorized, deleteStyle);
 
 router.get("/me", getCurrentUser);
 
