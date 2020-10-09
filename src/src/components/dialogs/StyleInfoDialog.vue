@@ -4,7 +4,7 @@
       <div class="style-info-header">
         <div class="style-info-title">
           <a :href="`${styleData.url}`" rel="noopener" target="_blank">
-            {{ removeDashes(styleData.name) }}
+            {{ styleData.customName || removeDashes(styleData.name) }}
           </a>
           <span class="owner">
             by
@@ -20,7 +20,8 @@
       <div class="style-info-description" v-html="parseEmoji(styleData.description)"></div>
 
       <div class="style-info-image">
-        <img v-if="styleData.preview" :src="styleData.preview" />
+        <img v-if="styleData.customPreview" :src="styleData.customPreview" />
+        <img v-else-if="styleData.preview" :src="styleData.preview" />
         <img v-else class="no-image" src="@/images/no-image.png" alt="No preview" />
         <div v-if="styleData.license" class="style-license">{{ styleData.license }}</div>
       </div>
