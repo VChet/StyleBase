@@ -108,11 +108,5 @@ export default {
 
 .dialog-buttons {
   text-align: center;
-
-  button {
-    width: 170px;
-    height: 50px;
-    font-size: 18px;
-  }
 }
 </style>

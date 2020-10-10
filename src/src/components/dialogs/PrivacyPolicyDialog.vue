@@ -78,11 +78,5 @@ p {
 .dialog-buttons {
   margin-top: 1.5rem;
   text-align: center;
-
-  button {
-    width: 170px;
-    height: 50px;
-    font-size: 18px;
-  }
 }
 </style>

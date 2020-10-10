@@ -110,11 +110,5 @@ export default {
 .dialog-buttons {
   display: flex;
   justify-content: space-between;
-
-  button {
-    width: 170px;
-    height: 50px;
-    font-size: 18px;
-  }
 }
 </style>

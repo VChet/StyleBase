@@ -48,7 +48,9 @@
             </a>
           </li>
           <li class="buttons">
-            <a class="button style-button-filled" :href="styleData.usercss" rel="noopener" target="_blank">Install</a>
+            <a class="button style-button-filled mobile-wide" :href="styleData.usercss" rel="noopener" target="_blank"
+              >Install</a
+            >
           </li>
         </ul>
       </div>
@@ -175,8 +177,6 @@ export default {
       &.buttons {
         a {
           margin-right: 1rem;
-          width: 175px;
-          height: 50px;
         }
 
         a:last-child {
