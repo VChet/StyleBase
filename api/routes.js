@@ -13,6 +13,11 @@ const cache = apicache.middleware;
 const onlyStatus200 = (req, res) => res.statusCode === 200;
 const cacheSuccessful = cache("10 minutes", onlyStatus200);
 
+const clearCache = (req, res, next) => {
+  apicache.clear();
+  next();
+};
+
 // Allow 1 request per 10 minutes
 const GHRateLimiter = rateLimit({
   windowMs: 10 * 60 * 1000,
@@ -79,8 +84,8 @@ router.get("/owner/:owner/:page?", cacheSuccessful, getStylesByOwner);
 router.post("/style/add", recaptcha, addStyle);
 router.put("/style/update/all", GHRateLimiter, updateAllStyles);
 router.put("/style/update", GHRateLimiter, updateStyle);
-router.put("/style/edit", isAuthorized, editStyle);
-router.delete("/style/delete", isAuthorized, deleteStyle);
+router.put("/style/edit", isAuthorized, clearCache, editStyle);
+router.delete("/style/delete", isAuthorized, clearCache, deleteStyle);
 
 router.get("/me", getCurrentUser);
 
