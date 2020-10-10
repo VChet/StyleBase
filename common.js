@@ -93,6 +93,7 @@ function addExpressMiddleware(app) {
           "'self'",
           "data:",
           "https://raw.githubusercontent.com",
+          "https://github.githubassets.com",
           "https://www.google-analytics.com"
         ],
         "style-src": ["'self'", "'unsafe-inline'"],
