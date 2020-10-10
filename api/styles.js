@@ -198,6 +198,18 @@ function editStyle(req, res) {
   if (!customName && !customPreview) {
     return res.status(400).json({ error: "Request must contain customName or customPreview fields" });
   }
+
+  if (customPreview) {
+    try {
+      const previewURL = new URL(customPreview);
+      if (!previewURL.protocol.includes("https:")) {
+        return res.status(400).json({ error: "Preview must be from a secure source" });
+      }
+    } catch (error) {
+      return res.status(400).json({ error: "Invalid preview URL" });
+    }
+  }
+
   Style.findOneAndUpdate(
     { url: req.styleData.url },
     { $set: { customName, customPreview } },
