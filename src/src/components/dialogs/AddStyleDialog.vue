@@ -7,7 +7,7 @@
         <close-button v-show="url" @click="url = ''" />
       </div>
       <div class="dialog-buttons">
-        <button class="style-button" type="button" :disabled="isSubmitting" @click="$emit('close')">Not now</button>
+        <button class="style-button" type="button" @click="$emit('close')">Not now</button>
         <vue-recaptcha
           ref="recaptcha"
           tabindex="0"
@@ -16,7 +16,7 @@
           @verify="submitStyle"
           @expired="onCaptchaExpired"
         >
-          <button class="style-button-filled" type="submit">Add</button>
+          <button class="style-button-filled" :disabled="isSubmitting" type="submit">Add</button>
         </vue-recaptcha>
       </div>
     </template>
