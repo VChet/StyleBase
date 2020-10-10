@@ -194,14 +194,14 @@ function updateAllStyles(req, res) {
 }
 
 function editStyle(req, res) {
-  const { customName, customPreview } = req.body;
-  if (!customName && !customPreview) {
+  const { url, ...customData } = req.body;
+  if (!customData.customName && !customData.customPreview) {
     return res.status(400).json({ error: "Request must contain customName or customPreview fields" });
   }
 
-  if (customPreview) {
+  if (customData.customPreview) {
     try {
-      const previewURL = new URL(customPreview);
+      const previewURL = new URL(customData.customPreview);
       if (!previewURL.protocol.includes("https:")) {
         return res.status(400).json({ error: "Preview must be from a secure source" });
       }
@@ -210,9 +210,15 @@ function editStyle(req, res) {
     }
   }
 
+  // Remove non-custom fields
+  Object.keys(customData).forEach(key => {
+    const fieldToDelete = !["customName", "customPreview"].includes(key);
+    return fieldToDelete && delete customData[key];
+  });
+
   Style.findOneAndUpdate(
     { url: req.styleData.url },
-    { $set: { customName, customPreview } },
+    { $set: customData },
     { new: true },
     (error, style) => {
       if (error) return res.status(500).json({ error });
