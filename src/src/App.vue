@@ -47,9 +47,7 @@ export default {
     }
   },
   mounted() {
-    this.$gtag.pageview({
-      page_path: '/'
-    });
+    this.$gtag.pageview({ page_path: window.location.pathname });
   },
   methods: {
     openNavLink(navLink) {
