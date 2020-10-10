@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/VChet/StyleBase/compare/v1.3.1...v1.4.0) (2020-10-10)
+
+
+### Features
+
+* **header:** add burger menu ([a8dc3a6](https://github.com/VChet/StyleBase/commit/a8dc3a693d21b61ebf9fb770beb6057fb9416d1f))
+
+
+### Bug Fixes
+
+* **helmet:** add githubassets.com to img-src CSP ([fde5008](https://github.com/VChet/StyleBase/commit/fde5008ebe3eea2771d00b28c20eccfa56bf1cbe))
+* make "b" uppercase in the site name ([a5eee88](https://github.com/VChet/StyleBase/commit/a5eee886b715669a73403d52045811ff522aa78c))
+* **helmet:** add data scheme to img-src CSP ([c3485dc](https://github.com/VChet/StyleBase/commit/c3485dc25931da392264622dbd93e76a395ca36a))
+* **styles:** add margin to title on mobile ([b9da67c](https://github.com/VChet/StyleBase/commit/b9da67ccdc0204c014e5420b37c16bfcee51d0f6))
+
 ### [1.3.1](https://github.com/VChet/StyleBase/compare/v1.3.0...v1.3.1) (2020-10-08)
 
 
