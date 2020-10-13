@@ -19,6 +19,10 @@
       <!-- eslint-disable-next-line vue/no-v-html -->
       <div class="description" v-html="parseEmoji(styleData.description)"></div>
 
+      <ul v-if="styleData.topics.length" class="topics">
+        <li v-for="topic in styleData.topics" :key="topic">{{ topic }}</li>
+      </ul>
+
       <div v-if="authorizedUser" class="edit">
         <input
           :value="styleData.customName"
@@ -185,6 +189,24 @@ export default {
 .description {
   margin: 1rem 0;
   font-size: 20px;
+}
+
+.topics {
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  list-style: none;
+  user-select: none;
+
+  li {
+    padding: 0.5rem;
+    background-color: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    white-space: nowrap;
+  }
 }
 
 .edit {
