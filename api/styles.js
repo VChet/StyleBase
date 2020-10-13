@@ -18,7 +18,12 @@ async function retrieveRepositoryData(link) {
   }
 
   try {
-    const config = { headers: { Authorization: `token ${token}` } };
+    const config = {
+      headers: {
+        Authorization: `token ${token}`,
+        Accept: "application/vnd.github.mercy-preview+json"
+      }
+    };
     const [repo, contents] = await Promise.all([
       axios.get(`https://api.github.com/repos${pathname}`, config),
       axios.get(`https://api.github.com/repos${pathname}/contents`, config)
