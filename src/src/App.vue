@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <app-header :user="user" @open-nav-link="openNavLink" />
-    <Home />
+    <Home :user="user" />
     <app-footer @open-nav-link="openNavLink" />
 
     <how-to-use-dialog :open="showHowtoUseModal" @close="showHowtoUseModal = false" />
