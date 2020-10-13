@@ -1,8 +1,8 @@
 <template>
   <base-dialog v-if="open" size="extra-large" @close="$emit('close')">
     <template>
-      <div class="style-info-header">
-        <div class="style-info-title">
+      <div class="header">
+        <div class="title">
           <a :href="`${styleData.url}`" rel="noopener" target="_blank">
             {{ styleData.customName || removeDashes(styleData.name) }}
           </a>
@@ -13,13 +13,13 @@
             </button>
           </span>
         </div>
-        <div class="style-info-date">Updated {{ dateFromNow(styleData.lastUpdate) }}</div>
+        <div class="last-update">Updated {{ dateFromNow(styleData.lastUpdate) }}</div>
       </div>
 
       <!-- eslint-disable-next-line vue/no-v-html -->
-      <div class="style-info-description" v-html="parseEmoji(styleData.description)"></div>
+      <div class="description" v-html="parseEmoji(styleData.description)"></div>
 
-      <div v-if="authorizedUser" class="style-edit">
+      <div v-if="authorizedUser" class="edit">
         <input
           :value="styleData.customName"
           type="text"
@@ -35,14 +35,14 @@
         <button class="style-button" @click="editStyle">Edit</button>
       </div>
 
-      <div class="style-info-image">
+      <div class="image">
         <img v-if="styleData.customPreview" :src="styleData.customPreview" />
         <img v-else-if="styleData.preview" :src="styleData.preview" />
         <img v-else class="no-image" src="@/images/no-image.png" alt="No preview" />
         <div v-if="styleData.license" class="style-license">{{ styleData.license }}</div>
       </div>
 
-      <div class="style-info-content">
+      <div class="content">
         <ul>
           <li>
             <a :href="`${styleData.url}/stargazers`" rel="noopener" target="_blank">
@@ -150,12 +150,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.style-info-header {
+.header {
   display: flex;
   align-items: center;
   margin-bottom: 1.5rem;
 
-  .style-info-title {
+  .title {
     font-size: 30px;
     font-weight: bold;
     line-height: 1;
@@ -176,18 +176,42 @@ export default {
     }
   }
 
-  .style-info-date {
+  .last-update {
     font-size: 20px;
     margin-left: auto;
   }
 }
 
-.style-info-description {
+.description {
   margin: 1rem 0;
   font-size: 20px;
 }
 
-.style-info-image {
+.edit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 1rem 0;
+
+  input,
+  button {
+    margin: 0.5rem 0;
+  }
+
+  input {
+    flex: 1;
+    box-sizing: border-box;
+    height: 50px;
+    margin-right: 1rem;
+    padding: 0 15px;
+  }
+
+  button {
+    flex: 0 1 auto;
+  }
+}
+
+.image {
   position: relative;
   display: flex;
   justify-content: center;
@@ -217,31 +241,7 @@ export default {
   }
 }
 
-.style-edit {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin: 1.5rem 0;
-
-  input,
-  button {
-    margin: 0.5rem 0;
-  }
-
-  input {
-    flex: 1;
-    box-sizing: border-box;
-    height: 50px;
-    margin-right: 1rem;
-    padding: 0 15px;
-  }
-
-  button {
-    flex: 0 1 auto;
-  }
-}
-
-.style-info-content {
+.content {
   ul {
     margin: 0;
     display: flex;
