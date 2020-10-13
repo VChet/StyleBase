@@ -149,10 +149,10 @@ function addStyle(req, res) {
 }
 
 function updateStyle(req, res) {
-  const styleId = req.params.id;
-  if (!styleId) return res.status(400).json({ error: "Request must contain styleId field" });
+  const { url } = req.body;
+  if (!url) return res.status(400).json({ error: "Request must contain url field" });
 
-  Style.findById(styleId, async (error, style) => {
+  Style.findOne({ url }, async (error, style) => {
     if (error) return res.status(500).json({ error });
     if (!style) return res.status(404).json({ error: "Style was not found in our base" });
 
@@ -163,8 +163,8 @@ function updateStyle(req, res) {
     if (data.isArchived) return res.status(400).json({ error: "Repository is archived" });
     if (data.isFork) return res.status(400).json({ error: "Repository is forked" });
 
-    Style.findByIdAndUpdate(
-      styleId,
+    Style.findOneAndUpdate(
+      { url },
       data,
       { new: true },
       (updateError, newStyle) => {
@@ -193,12 +193,41 @@ function updateAllStyles(req, res) {
   });
 }
 
-async function deleteStyle(req, res) {
-  const { url } = req.body;
-  const existingStyle = await Style.findOne({ url }).lean();
-  if (!existingStyle) return res.status(404).json({ error: "Style does not exist" });
+function editStyle(req, res) {
+  const { url, ...customData } = req.body;
+  if (!customData.customName && !customData.customPreview) {
+    return res.status(400).json({ error: "Request must contain customName or customPreview fields" });
+  }
 
-  Style.findOneAndDelete({ url }, (error, style) => {
+  if (customData.customPreview) {
+    try {
+      const previewURL = new URL(customData.customPreview);
+      if (!previewURL.protocol.includes("https:")) {
+        return res.status(400).json({ error: "Preview must be from a secure source" });
+      }
+    } catch (error) {
+      return res.status(400).json({ error: "Invalid preview URL" });
+    }
+  }
+
+  // Remove non-custom fields
+  Object.keys(customData).forEach(key => {
+    const fieldToDelete = !["customName", "customPreview"].includes(key);
+    return fieldToDelete && delete customData[key];
+  });
+
+  Style.findOneAndUpdate(
+    { url: req.styleData.url },
+    { $set: customData },
+    { new: true },
+    (error, style) => {
+      if (error) return res.status(500).json({ error });
+      return res.status(200).json({ style });
+    });
+}
+
+async function deleteStyle(req, res) {
+  Style.findOneAndDelete({ url: req.styleData.url }, (error, style) => {
     if (error) return res.status(500).json({ error });
     return res.status(200).json({ style });
   });
@@ -230,6 +259,7 @@ module.exports = {
   addStyle,
   updateStyle,
   updateAllStyles,
+  editStyle,
   deleteStyle,
   getStylesByOwner
 };

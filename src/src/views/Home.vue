@@ -59,7 +59,9 @@
     <style-info-dialog
       :open="showStyleInfoModal"
       :style-data="selectedStyle"
+      :user="user"
       @search-by-owner="(value) => (ownerFilter = value)"
+      @update-styles="getStyles"
       @close="closeStyleModal"
     />
   </main>
@@ -82,6 +84,13 @@ export default {
   },
   directives: {
     debounce
+  },
+  props: {
+    user: {
+      type: Object,
+      required: true,
+      default: () => {}
+    }
   },
   data() {
     return {

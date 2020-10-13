@@ -1,7 +1,16 @@
 <template>
   <div class="style-card">
     <div class="image-container">
-      <img v-if="styleData.preview" :src="styleData.preview" :alt="`Preview of ${styleData.name} style`" />
+      <img
+        v-if="styleData.customPreview"
+        :src="styleData.customPreview"
+        :alt="`Preview of ${styleData.customName || styleData.name} style`"
+      />
+      <img
+        v-else-if="styleData.preview"
+        :src="styleData.preview"
+        :alt="`Preview of ${styleData.customName || styleData.name} style`"
+      />
       <img v-else class="no-image" src="@/images/no-image.png" alt="No preview" />
       <a
         class="button style-button-filled"
@@ -15,7 +24,7 @@
     </div>
 
     <div class="data" @click="$emit('open', $props.styleData)">
-      <div class="name">{{ removeDashes(styleData.name) }}</div>
+      <div class="name">{{ styleData.customName || removeDashes(styleData.name) }}</div>
       <div>by {{ styleData.owner }}</div>
       <div class="footer">
         <span>{{ pluralize(styleData.stargazers, 'star') }}</span>

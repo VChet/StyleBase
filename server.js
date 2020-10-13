@@ -18,7 +18,7 @@ addExpressMiddleware(app);
 app.use(express.static("public"));
 app.use("/api", api);
 
-app.get("/login", passport.authenticate("github", { scope: ["user:email"] }));
+app.get("/login", passport.authenticate("github", { scope: ["read:user"] }));
 app.get("/github/callback", passport.authenticate("github"), (req, res) => res.redirect("/"));
 
 const clientIndex = path.join(__dirname, "public/index.html");

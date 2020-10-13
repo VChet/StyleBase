@@ -4,7 +4,7 @@
       <div class="style-info-header">
         <div class="style-info-title">
           <a :href="`${styleData.url}`" rel="noopener" target="_blank">
-            {{ removeDashes(styleData.name) }}
+            {{ styleData.customName || removeDashes(styleData.name) }}
           </a>
           <span class="owner">
             by
@@ -19,8 +19,25 @@
       <!-- eslint-disable-next-line vue/no-v-html -->
       <div class="style-info-description" v-html="parseEmoji(styleData.description)"></div>
 
+      <div v-if="authorizedUser" class="style-edit">
+        <input
+          :value="styleData.customName"
+          type="text"
+          placeholder="Style name"
+          @change="(e) => (customName = e.target.value)"
+        />
+        <input
+          :value="styleData.customPreview"
+          type="text"
+          placeholder="Preview url"
+          @change="(e) => (customPreview = e.target.value)"
+        />
+        <button class="style-button" @click="editStyle">Edit</button>
+      </div>
+
       <div class="style-info-image">
-        <img v-if="styleData.preview" :src="styleData.preview" />
+        <img v-if="styleData.customPreview" :src="styleData.customPreview" />
+        <img v-else-if="styleData.preview" :src="styleData.preview" />
         <img v-else class="no-image" src="@/images/no-image.png" alt="No preview" />
         <div v-if="styleData.license" class="style-license">{{ styleData.license }}</div>
       </div>
@@ -59,6 +76,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import { styleInfoMixin } from '@/mixins';
 
 import BaseDialog from '@/components/dialogs/BaseDialog';
@@ -79,6 +98,52 @@ export default {
       type: Object,
       required: true,
       default: () => {}
+    },
+    user: {
+      type: Object,
+      required: true,
+      default: () => {}
+    }
+  },
+  data() {
+    return {
+      authorizedUser: false,
+      customName: this.styleData.customName,
+      customPreview: this.styleData.customPreview
+    };
+  },
+  watch: {
+    styleData() {
+      this.checkAuthorization();
+    },
+    user() {
+      this.checkAuthorization();
+    }
+  },
+  methods: {
+    checkAuthorization() {
+      const isOwner = this.styleData.owner === this.user.username;
+      const isAdmin = this.user.role === 'Admin';
+      this.authorizedUser = isOwner || isAdmin;
+    },
+    editStyle() {
+      axios
+        .put('/api/style/edit', {
+          url: this.styleData.url,
+          customName: this.customName,
+          customPreview: this.customPreview
+        })
+        .then((response) => {
+          alert(`"${response.data.style.name}" style updated`);
+          this.$emit('update-styles');
+          this.$emit('close');
+        })
+        .catch((error) => {
+          alert(error.response.data.error);
+        })
+        .finally(() => {
+          this.$gtag.event('edit style request', { event_category: 'style info dialog' });
+        });
     }
   }
 };
@@ -149,6 +214,30 @@ export default {
     .style-license {
       opacity: 0;
     }
+  }
+}
+
+.style-edit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 1.5rem 0;
+
+  input,
+  button {
+    margin: 0.5rem 0;
+  }
+
+  input {
+    flex: 1;
+    box-sizing: border-box;
+    height: 50px;
+    margin-right: 1rem;
+    padding: 0 15px;
+  }
+
+  button {
+    flex: 0 1 auto;
   }
 }
 
