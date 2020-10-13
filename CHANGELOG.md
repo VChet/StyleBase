@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/VChet/StyleBase/compare/v1.4.0...v1.5.0) (2020-10-13)
+
+
+### Features
+
+* **login:** add login button and user session check ([cf17bc6](https://github.com/VChet/StyleBase/commit/cf17bc61c5d266a93c7cd0a890d8618a38675b41))
+* **Style:** add 'edit style' request and custom fields ([fe3b347](https://github.com/VChet/StyleBase/commit/fe3b3470539b4b6d2126f469635fdf825867950b))
+* **style card:** use manually added title and preview ([b49ad47](https://github.com/VChet/StyleBase/commit/b49ad47cf51ca07410de34a6d6f7dc6ec0aa6ae4))
+* **style info:** add "edit style" block ([a95cc8d](https://github.com/VChet/StyleBase/commit/a95cc8d7ef00fd1bc09b592b614092140add0298))
+
+
+### Bug Fixes
+
+* **add style:** move disabled state from exit button to submit button ([9af0285](https://github.com/VChet/StyleBase/commit/9af0285c6fd5865a342c2b21e2f62fd6514a3451))
+* **analytics:** set correct page path ([a075166](https://github.com/VChet/StyleBase/commit/a075166b8cb6a0aad0ae0ddae55e41da547c9620))
+* **authentication:** change scope from email to profile data ([63b170d](https://github.com/VChet/StyleBase/commit/63b170dde08d5b65d26a1351c18e15933c35ce42))
+* **buttons:** set width and height globally, add mobile styles ([4b31241](https://github.com/VChet/StyleBase/commit/4b31241435c9155f7a54bcd0d9f807f4980402fd))
+* **edit style:** add custom preview protocol check ([9b9d46f](https://github.com/VChet/StyleBase/commit/9b9d46f71b19524840cd7ce420d7e19409eda9cb))
+* **edit style:** allow owner to edit the style ([2bd833e](https://github.com/VChet/StyleBase/commit/2bd833e3837c0308872c36b14e0a24302b0669e7))
+* **edit style:** clear cache on style edit and delete ([599891e](https://github.com/VChet/StyleBase/commit/599891ede90003fa277b636e491b813650878fcf))
+* **edit style:** update only customName and customPreview fields ([944c6e9](https://github.com/VChet/StyleBase/commit/944c6e90fccc36fc0e69fe8ee17a0259e81150d4))
+* **helmet:** allow images from any secure source ([1fa889b](https://github.com/VChet/StyleBase/commit/1fa889bafaf955b4c3bdd49ddcc4c57e44f85675))
+* **update style:** use url instead of _id to update style ([be1cc0f](https://github.com/VChet/StyleBase/commit/be1cc0fb7d155863a330a41637e778a47dace25e))
+
 ## [1.4.0](https://github.com/VChet/StyleBase/compare/v1.3.1...v1.4.0) (2020-10-10)
 
 
