@@ -20,7 +20,9 @@
       <div class="description" v-html="parseEmoji(styleData.description)"></div>
 
       <ul v-if="styleData.topics.length" class="topics">
-        <li v-for="topic in styleData.topics" :key="topic">{{ topic }}</li>
+        <li v-for="topic in styleData.topics" :key="topic">
+          <button @click="$emit('search-topic', topic)">{{ topic }}</button>
+        </li>
       </ul>
 
       <div v-if="authorizedUser" class="edit">
@@ -198,14 +200,20 @@ export default {
   align-items: center;
   gap: 0.5rem;
   list-style: none;
-  user-select: none;
 
   li {
-    padding: 0.5rem;
-    background-color: #fff;
-    border: 1px solid var(--color-border);
-    border-radius: 4px;
-    white-space: nowrap;
+    button {
+      padding: 0.5rem;
+      background-color: #fff;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      white-space: nowrap;
+      transition: border-color 0.3s;
+
+      &:hover {
+        border-color: var(--color-main-dark);
+      }
+    }
   }
 }
 

@@ -61,6 +61,7 @@
       :style-data="selectedStyle"
       :user="user"
       @search-by-owner="(value) => (ownerFilter = value)"
+      @search-topic="(value) => (searchQuery = value)"
       @update-styles="getStyles"
       @close="closeStyleModal"
     />
@@ -120,7 +121,8 @@ export default {
       if (filter) this.searchByOwner();
     },
     searchQuery() {
-      this.searchStyles();
+      this.closeStyleModal();
+      this.searchQuery ? this.searchStyles() : this.resetFilters();
     },
     showStyleInfoModal(isActive) {
       const $body = document.body;
@@ -202,19 +204,15 @@ export default {
         });
     },
     searchStyles() {
-      if (this.searchQuery) {
-        axios
-          .get(`/api/search?query=${this.searchQuery}`)
-          .then((response) => {
-            window.history.replaceState({}, `${this.searchQuery} | StyleBase`, `/search/${this.searchQuery}`);
-            this.styles = response.data.styles;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      } else {
-        this.resetFilters();
-      }
+      axios
+        .get(`/api/search?query=${this.searchQuery}`)
+        .then((response) => {
+          window.history.replaceState({}, `${this.searchQuery} | StyleBase`, `/search/${this.searchQuery}`);
+          this.styles = response.data.styles;
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
     searchByOwner() {
       axios
