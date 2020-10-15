@@ -54,6 +54,7 @@ async function retrieveRepositoryData(link) {
       owner: repo.data.owner.login,
       created: repo.data.created_at,
       lastUpdate: repo.data.updated_at,
+      topics: repo.data.topics,
       stargazers: repo.data.stargazers_count,
       watchers: repo.data.subscribers_count,
       forks: repo.data.forks,

@@ -16,6 +16,7 @@ const schema = new Schema({
   owner: String,
   created: Date,
   lastUpdate: Date,
+  topics: Array,
   stargazers: Number,
   watchers: Number,
   forks: Number,
@@ -28,7 +29,12 @@ const schema = new Schema({
   customPreview: String
 });
 
-schema.index({ name: "text", customName: "text", owner: "text" });
+schema.index({
+  name: "text",
+  customName: "text",
+  owner: "text",
+  topics: "text"
+});
 schema.plugin(mongoosePaginate);
 
 exports.Style = mongoose.model("Style", schema);
