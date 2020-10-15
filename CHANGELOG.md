@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/VChet/StyleBase/compare/v1.5.0...v1.6.0) (2020-10-15)
+
+
+### Features
+
+* **parser:** add mercy-preview header ([a121495](https://github.com/VChet/StyleBase/commit/a12149562de37a19f534b8c0456c3f5f304bef9c))
+* **style info:** add search by topic ([231f750](https://github.com/VChet/StyleBase/commit/231f750fd6b9643888f8ce774bab6eeb4220f098))
+* **style info:** add topics block ([162d927](https://github.com/VChet/StyleBase/commit/162d9278d38006882166262bffd77d82cc180148))
+* **styles:** store topics in DB ([f46a996](https://github.com/VChet/StyleBase/commit/f46a99621bb5ba40da22ecbf4fa3e10deaa6f8e4))
+
 ## [1.5.0](https://github.com/VChet/StyleBase/compare/v1.4.0...v1.5.0) (2020-10-13)
 
 
