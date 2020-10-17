@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/VChet/StyleBase/compare/v1.6.0...v1.7.0) (2020-10-17)
+
+
+### Features
+
+* add logout button ([be178f4](https://github.com/VChet/StyleBase/commit/be178f492cc7b967a44e7d8314b9c7e4d839181f))
+
+
+### Bug Fixes
+
+* **buttons:** add types and aria-labels ([c83fea0](https://github.com/VChet/StyleBase/commit/c83fea032a90ad3b704211f8ca8383a8204eca7a))
+* **style info:** add alternative text to image ([401fb94](https://github.com/VChet/StyleBase/commit/401fb9454fa8d54520fad759d5edd3dd05909da3))
+* **style info:** fix mobile styles ([2380dd5](https://github.com/VChet/StyleBase/commit/2380dd529b130334efb8d4b4017c45f360c864b8))
+
 ## [1.6.0](https://github.com/VChet/StyleBase/compare/v1.5.0...v1.6.0) (2020-10-15)
 
 
