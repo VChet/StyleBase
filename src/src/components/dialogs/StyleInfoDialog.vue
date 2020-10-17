@@ -158,7 +158,7 @@ export default {
 <style scoped lang="scss">
 .header {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   margin-bottom: 1.5rem;
 
   .title {
@@ -183,14 +183,27 @@ export default {
   }
 
   .last-update {
-    font-size: 20px;
     margin-left: auto;
+    white-space: nowrap;
+    font-size: 1.25rem;
+
+    @include media-size-tablet {
+      margin: 1rem 0 0;
+      font-size: initial;
+    }
+  }
+
+  @include media-size-tablet {
+    flex-direction: column;
   }
 }
 
 .description {
   margin: 1rem 0;
-  font-size: 20px;
+  font-size: 1.25rem;
+  @include media-size-tablet {
+    font-size: initial;
+  }
 }
 
 .topics {
@@ -198,7 +211,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
   list-style: none;
 
   li {
@@ -290,6 +303,10 @@ export default {
       &:not(.buttons) {
         a {
           font-size: 1.75rem;
+
+          @include media-size-tablet {
+            font-size: 1.5rem;
+          }
         }
       }
 
