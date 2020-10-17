@@ -16,7 +16,10 @@
         <button class="link" type="button" @click="$emit('open-nav-link', 'showHowtoUseModal')">How to Use</button>
         <button class="link" type="button" @click="$emit('open-nav-link', 'showAddStyleModal')">Add Style</button>
         <a v-if="!user.username" href="/login">Login</a>
-        <button v-else class="link" type="button">{{ user.username }}</button>
+        <template v-else>
+          <button class="link" type="button">{{ user.username }}</button>
+          <a href="/logout">Logout</a>
+        </template>
       </nav>
     </div>
   </header>
