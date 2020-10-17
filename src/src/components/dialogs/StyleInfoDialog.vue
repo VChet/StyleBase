@@ -42,8 +42,11 @@
       </div>
 
       <div class="image">
-        <img v-if="styleData.customPreview" :src="styleData.customPreview" />
-        <img v-else-if="styleData.preview" :src="styleData.preview" />
+        <img
+          v-if="styleData.customPreview || styleData.preview"
+          :src="styleData.customPreview || styleData.preview"
+          :alt="`Preview of ${styleData.customName || styleData.name} style`"
+        />
         <img v-else class="no-image" src="@/images/no-image.png" alt="No preview" />
         <div v-if="styleData.license" class="style-license">{{ styleData.license }}</div>
       </div>
