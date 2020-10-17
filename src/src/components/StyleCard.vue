@@ -9,6 +9,7 @@
       <img v-else class="no-image" src="@/images/no-image.png" alt="No preview" />
       <a
         class="button style-button-filled"
+        type="button"
         :href="styleData.usercss"
         rel="noopener"
         target="_blank"

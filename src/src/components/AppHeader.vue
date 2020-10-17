@@ -1,8 +1,14 @@
 <template>
   <header :class="{ active: menuIsActive }">
     <div class="container">
-      <button class="link logo" @click="scrollToTop">StyleBase</button>
-      <button class="link burger-menu" @click="menuIsActive = !menuIsActive">
+      <button class="link logo" type="button" @click="scrollToTop">StyleBase</button>
+      <button
+        class="link burger-menu"
+        type="button"
+        :aria-label="menuIsActive ? 'Close the menu' : 'Open the menu'"
+        :aria-expanded="menuIsActive ? 'true' : 'false'"
+        @click="menuIsActive = !menuIsActive"
+      >
         <span></span>
         <span></span>
       </button>

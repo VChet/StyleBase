@@ -24,7 +24,7 @@
           type="text"
           placeholder="Search by style name or owner..."
         />
-        <close-button v-show="searchQuery" @click="resetFilters" />
+        <close-button v-show="searchQuery" aria-label="Clear the search input" @click="resetFilters" />
       </section>
       <section class="main-container">
         <div class="section-header">
@@ -32,7 +32,7 @@
             Styles
             <span v-if="ownerFilter">
               by {{ ownerFilter }}
-              <close-button @click="resetFilters" />
+              <close-button aria-label="Clear the owner filter" @click="resetFilters" />
             </span>
           </div>
           <hr />

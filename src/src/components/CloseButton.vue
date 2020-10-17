@@ -1,5 +1,5 @@
 <template>
-  <button class="close-button" type="button" @click="$emit('click')">
+  <button class="close-button" type="button" v-bind="$attrs" @click="$emit('click')">
     <span class="cross-first-line" />
     <span class="cross-second-line" />
   </button>

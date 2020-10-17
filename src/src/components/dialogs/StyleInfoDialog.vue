@@ -21,11 +21,11 @@
 
       <ul v-if="styleData.topics.length" class="topics">
         <li v-for="topic in styleData.topics" :key="topic">
-          <button @click="$emit('search-topic', topic)">{{ topic }}</button>
+          <button type="button" @click="$emit('search-topic', topic)">{{ topic }}</button>
         </li>
       </ul>
 
-      <div v-if="authorizedUser" class="edit">
+      <form v-if="authorizedUser" class="edit">
         <input
           :value="styleData.customName"
           type="text"
@@ -38,8 +38,8 @@
           placeholder="Preview url"
           @change="(e) => (customPreview = e.target.value)"
         />
-        <button class="style-button" @click="editStyle">Edit</button>
-      </div>
+        <button class="style-button" type="submit" @click="editStyle">Edit</button>
+      </form>
 
       <div class="image">
         <img

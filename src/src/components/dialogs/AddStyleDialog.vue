@@ -4,7 +4,7 @@
       <div class="dialog-title">Add new style</div>
       <div class="dialog-input">
         <input v-model.trim="url" type="text" placeholder="Link to GitHub repository" />
-        <close-button v-show="url" @click="url = ''" />
+        <close-button v-show="url" aria-label="Clear the input" @click="url = ''" />
       </div>
       <div class="dialog-buttons">
         <button class="style-button" type="button" @click="$emit('close')">Not now</button>
@@ -16,7 +16,7 @@
           @verify="submitStyle"
           @expired="onCaptchaExpired"
         >
-          <button class="style-button-filled" :disabled="isSubmitting" type="submit">Add</button>
+          <button class="style-button-filled" type="submit" :disabled="isSubmitting">Add</button>
         </vue-recaptcha>
       </div>
     </template>
