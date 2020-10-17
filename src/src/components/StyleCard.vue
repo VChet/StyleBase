@@ -2,13 +2,8 @@
   <div class="style-card">
     <div class="image-container">
       <img
-        v-if="styleData.customPreview"
-        :src="styleData.customPreview"
-        :alt="`Preview of ${styleData.customName || styleData.name} style`"
-      />
-      <img
-        v-else-if="styleData.preview"
-        :src="styleData.preview"
+        v-if="styleData.customPreview || styleData.preview"
+        :src="styleData.customPreview || styleData.preview"
         :alt="`Preview of ${styleData.customName || styleData.name} style`"
       />
       <img v-else class="no-image" src="@/images/no-image.png" alt="No preview" />
