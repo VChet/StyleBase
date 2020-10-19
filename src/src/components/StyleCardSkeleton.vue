@@ -1,50 +1,89 @@
 <template>
-  <div class="style-card-skeleton"></div>
+  <base-card>
+    <template #image>
+      <div class="skeleton-image"></div>
+    </template>
+
+    <template #data>
+      <div class="skeleton-data">
+        <div class="name"></div>
+        <div class="owner"></div>
+      </div>
+    </template>
+
+    <template #footer>
+      <div class="skeleton-footer">
+        <span class="stars"></span>
+        <span class="date"></span>
+      </div>
+    </template>
+  </base-card>
 </template>
 
 <script>
+import BaseCard from '@/components/BaseCard.vue';
+
 export default {
-  name: 'StyleCardSkeleton'
+  name: 'StyleCardSkeleton',
+  components: {
+    BaseCard
+  }
 };
 </script>
 
 <style scoped lang="scss">
-.style-card-skeleton {
+.style-card {
+  animation: shine 1s infinite alternate;
+}
+
+.skeleton-image {
+  height: 100%;
   width: 100%;
-  border-radius: 4px;
-  border: 1px solid var(--color-border);
-  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.12);
-  height: 300px;
+  background-image: linear-gradient(lightgray 200px, transparent 0);
+  background-size: 100% 200px;
+}
 
-  background-image: linear-gradient(
-      100deg,
-      rgba(255, 255, 255, 0),
-      rgba(255, 255, 255, 0.1) 25%,
-      rgba(255, 255, 255, 0.2) 50%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    linear-gradient(lightgray 200px, transparent 0), linear-gradient(lightgray 20px, transparent 0),
-    linear-gradient(lightgray 10px, transparent 0), linear-gradient(lightgray 10px, transparent 0),
-    linear-gradient(lightgray 10px, transparent 0);
+.skeleton-data {
+  height: 100%;
 
-  background-repeat: no-repeat;
-  background-size: 100px 100%, 100% 200px, calc(100% - 2rem) 1rem, calc(50% - 2rem) 1rem, 25% 1rem, 40% 1rem;
-  background-position: 0 0, 0 0, 1rem 220px, 1rem 240px, 1rem calc(300px - 1.5rem), 90% calc(300px - 1.5rem);
+  .name {
+    height: 20px;
+    margin-bottom: 10px;
+    background: lightgray;
+  }
 
-  animation: shine 3s infinite;
+  .owner {
+    height: 10px;
+    width: 50%;
+    background: lightgray;
+  }
+}
+
+.skeleton-footer {
+  display: flex;
+  width: 100%;
+
+  .stars {
+    height: 10px;
+    width: 30%;
+    background: lightgray;
+  }
+
+  .date {
+    height: 10px;
+    width: 50%;
+    background: lightgray;
+    margin-left: auto;
+  }
 }
 
 @keyframes shine {
-  0% {
-    background-position: 0 100%, 0 0, 1rem 220px, 1rem 240px, 1rem calc(300px - 1.5rem), 90% calc(300px - 1.5rem);
+  from {
+    opacity: 1;
   }
 
-  50% {
-    background-position: 100% 0, 0 0, 1rem 220px, 1rem 240px, 1rem calc(300px - 1.5rem), 90% calc(300px - 1.5rem);
-  }
-
-  100% {
-    background-position: 0 100%, 0 0, 1rem 220px, 1rem 240px, 1rem calc(300px - 1.5rem), 90% calc(300px - 1.5rem);
+  to {
+    opacity: 0.4;
   }
 }
 </style>
