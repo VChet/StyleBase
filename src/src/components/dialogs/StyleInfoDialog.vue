@@ -25,7 +25,7 @@
         </li>
       </ul>
 
-      <form v-if="authorizedUser" class="edit">
+      <form v-if="authorizedUser" class="edit" @submit.prevent="editStyle">
         <input
           :value="styleData.customName"
           type="text"
@@ -38,7 +38,7 @@
           placeholder="Preview url"
           @change="(e) => (customPreview = e.target.value)"
         />
-        <button class="style-button" type="submit" @click="editStyle">Edit</button>
+        <button class="style-button" type="submit">Edit</button>
       </form>
 
       <div class="image">
