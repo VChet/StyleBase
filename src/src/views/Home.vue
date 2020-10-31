@@ -49,10 +49,13 @@
             </li>
           </ul>
         </div>
-        <div v-if="styles.length" class="style-grid">
+        <div v-if="isLoading" class="style-grid">
+          <style-card-skeleton v-for="i in 12" :key="i" />
+        </div>
+        <div v-if="!isLoading && styles.length" class="style-grid">
           <style-card v-for="style in styles" :key="style._id" :style-data="style" @open="openStyleCard" />
         </div>
-        <div v-else class="no-results">No results</div>
+        <div v-if="!isLoading && !styles.length" class="no-results">No results</div>
       </section>
     </div>
 
@@ -74,6 +77,8 @@ import axios from 'axios';
 import StyleCard from '@/components/StyleCard';
 import StyleInfoDialog from '@/components/dialogs/StyleInfoDialog';
 import CloseButton from '@/components/CloseButton.vue';
+import StyleCardSkeleton from '@/components/StyleCardSkeleton';
+
 import debounce from '@/directives/debounce';
 
 export default {
@@ -81,7 +86,8 @@ export default {
   components: {
     StyleCard,
     StyleInfoDialog,
-    CloseButton
+    CloseButton,
+    StyleCardSkeleton
   },
   directives: {
     debounce
@@ -204,15 +210,23 @@ export default {
         });
     },
     searchStyles() {
-      axios
-        .get(`/api/search?query=${this.searchQuery}`)
-        .then((response) => {
-          window.history.replaceState({}, `${this.searchQuery} | StyleBase`, `/search/${this.searchQuery}`);
-          this.styles = response.data.styles;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      if (this.searchQuery) {
+        this.isLoading = true;
+        axios
+          .get(`/api/search?query=${this.searchQuery}`)
+          .then((response) => {
+            window.history.replaceState({}, `${this.searchQuery} | StyleBase`, `/search/${this.searchQuery}`);
+            this.styles = response.data.styles;
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
+      } else {
+        this.resetFilters();
+      }
     },
     searchByOwner() {
       axios
