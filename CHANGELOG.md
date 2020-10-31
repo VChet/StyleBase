@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/VChet/StyleBase/compare/v1.7.0...v1.8.0) (2020-10-31)
+
+
+### Features
+
+* **components:** add BaseCard component ([bbc8807](https://github.com/VChet/StyleBase/commit/bbc880768c9e654b451a7572f1358a1e74805875))
+* **components:** update StyleCard and StyleCardSkeleton ([2eb0ed0](https://github.com/VChet/StyleBase/commit/2eb0ed03d90bedc58bb6eeda6af7be75bf35f2a5))
+* **Components:** add skeleton loader component for StyleCard ([10f4321](https://github.com/VChet/StyleBase/commit/10f43216f71494c8ff96de6fdd2572bf1398a95e))
+* **recaptcha:** use rate-limiter instead of recaptcha ([075ddbe](https://github.com/VChet/StyleBase/commit/075ddbe14d23d2467ee2ac05b15b08ef55f0a4bf))
+* **style card:** change skeleton animation ([1270691](https://github.com/VChet/StyleBase/commit/1270691e3369fefd95ac60f2029961f5f3833d52))
+* **style info:** add button to delete the style ([11e1bb6](https://github.com/VChet/StyleBase/commit/11e1bb64d6fd7ffd36093a9c2512e305de6251c4))
+
+
+### Bug Fixes
+
+* **helmet:** remove google recaptcha from csp ([6d2e37d](https://github.com/VChet/StyleBase/commit/6d2e37d8fd7e2ffe5a0e3b1e48bb99a5a705b77c))
+* **style grid:** set skeleton cards amount depending on the current page ([27f33d8](https://github.com/VChet/StyleBase/commit/27f33d8e99c313f96c0b1e9e17396273835b2711))
+* **style info:** handle submit via form ([8b6780a](https://github.com/VChet/StyleBase/commit/8b6780a9c2cb5a037dc40e87877471a973428a54))
+* **styles api:** fix url parameters in update and delete requests ([959570c](https://github.com/VChet/StyleBase/commit/959570c114ea431c3ba74c9d2e8ea3dddcf754b1))
+* **vue config:** add login and logout urls to devServer proxy ([d9e7a16](https://github.com/VChet/StyleBase/commit/d9e7a16e8a129f9bc6a993b94993ddee3ab0cfa4))
+* **vue-loader:** preserve whitespace ([61566f1](https://github.com/VChet/StyleBase/commit/61566f1cbbcc3e891058ca3dac2bf296910caa1d))
+
 ## [1.7.0](https://github.com/VChet/StyleBase/compare/v1.6.0...v1.7.0) (2020-10-17)
 
 
