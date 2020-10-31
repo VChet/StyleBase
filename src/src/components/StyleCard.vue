@@ -1,6 +1,6 @@
 <template>
-  <div class="style-card">
-    <div class="image-container">
+  <base-card>
+    <template #image>
       <img
         v-if="styleData.customPreview || styleData.preview"
         :src="styleData.customPreview || styleData.preview"
@@ -17,24 +17,31 @@
       >
         Install
       </a>
-    </div>
+    </template>
 
-    <div class="data" @click="$emit('open', $props.styleData)">
-      <div class="name">{{ styleData.customName || removeDashes(styleData.name) }}</div>
-      <div>by {{ styleData.owner }}</div>
-      <div class="footer">
-        <span>{{ pluralize(styleData.stargazers, 'star') }}</span>
-        <span>updated {{ dateFromNow(styleData.lastUpdate) }}</span>
+    <template #data>
+      <div @click="$emit('open', $props.styleData)">
+        <div class="name">{{ styleData.customName || removeDashes(styleData.name) }}</div>
+        <div>by {{ styleData.owner }}</div>
       </div>
-    </div>
-  </div>
+    </template>
+
+    <template #footer>
+      <span>{{ pluralize(styleData.stargazers, 'star') }}</span>
+      <span>updated {{ dateFromNow(styleData.lastUpdate) }}</span>
+    </template>
+  </base-card>
 </template>
 
 <script>
 import { styleInfoMixin } from '@/mixins';
+import BaseCard from '@/components/BaseCard.vue';
 
 export default {
   name: 'StyleCard',
+  components: {
+    BaseCard
+  },
   mixins: [styleInfoMixin],
   props: {
     styleData: {
@@ -48,12 +55,6 @@ export default {
 
 <style scoped lang="scss">
 .style-card {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  border-radius: 4px;
-  border: 1px solid var(--color-border);
-  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.12);
   transition: transform 0.2s;
 
   &:hover,
@@ -71,13 +72,6 @@ export default {
 }
 
 .image-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px;
-  background-color: #f5e6cc;
-
   img:not(.no-image) {
     width: 100%;
     height: inherit;
@@ -104,13 +98,6 @@ export default {
 }
 
 .data {
-  display: flex;
-  flex-direction: column;
-  height: 100px;
-  padding: 1rem;
-  background-color: #fff;
-  cursor: pointer;
-
   .name {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -122,12 +109,6 @@ export default {
   &:hover .name,
   &:focus .name {
     color: var(--color-main);
-  }
-
-  .footer {
-    margin-top: auto;
-    display: flex;
-    justify-content: space-between;
   }
 }
 </style>
