@@ -68,7 +68,7 @@ export default {
       if (this.clickOutside) {
         this.$emit('close');
       } else {
-        this.$emit('clickOutside');
+        this.$emit('click-outside');
       }
     }
   }

@@ -1,86 +1,84 @@
 <template>
   <base-dialog v-if="open" size="extra-large" @close="$emit('close')">
-    <template>
-      <div class="header">
-        <div class="title">
-          <a :href="`${styleData.url}`" rel="noopener" target="_blank">
-            {{ styleData.customName || removeDashes(styleData.name) }}
-          </a>
-          <span class="owner">
-            by
-            <button class="link" type="button" @click="$emit('search-by-owner', styleData.owner)">
-              {{ styleData.owner }}
-            </button>
-          </span>
-        </div>
-        <div class="last-update">Updated {{ dateFromNow(styleData.lastUpdate) }}</div>
+    <div class="header">
+      <div class="title">
+        <a :href="`${styleData.url}`" rel="noopener" target="_blank">
+          {{ styleData.customName || removeDashes(styleData.name) }}
+        </a>
+        <span class="owner">
+          by
+          <button class="link" type="button" @click="$emit('search-by-owner', styleData.owner)">
+            {{ styleData.owner }}
+          </button>
+        </span>
       </div>
+      <div class="last-update">Updated {{ dateFromNow(styleData.lastUpdate) }}</div>
+    </div>
 
-      <!-- eslint-disable-next-line vue/no-v-html -->
-      <div class="description" v-html="parseEmoji(styleData.description)"></div>
+    <!-- eslint-disable-next-line vue/no-v-html -->
+    <div class="description" v-html="parseEmoji(styleData.description)"></div>
 
-      <ul v-if="styleData.topics.length" class="topics">
-        <li v-for="topic in styleData.topics" :key="topic">
-          <button type="button" @click="$emit('search-topic', topic)">{{ topic }}</button>
+    <ul v-if="styleData.topics.length" class="topics">
+      <li v-for="topic in styleData.topics" :key="topic">
+        <button type="button" @click="$emit('search-topic', topic)">{{ topic }}</button>
+      </li>
+    </ul>
+
+    <form v-if="authorizedUser" class="edit" @submit.prevent="editStyle">
+      <input
+        :value="styleData.customName"
+        type="text"
+        placeholder="Style name"
+        @change="(e) => (customName = e.target.value)"
+      />
+      <input
+        :value="styleData.customPreview"
+        type="text"
+        placeholder="Preview url"
+        @change="(e) => (customPreview = e.target.value)"
+      />
+      <button class="style-button" type="submit">Edit</button>
+    </form>
+
+    <div class="image">
+      <img
+        v-if="styleData.customPreview || styleData.preview"
+        :src="styleData.customPreview || styleData.preview"
+        :alt="`Preview of ${styleData.customName || styleData.name} style`"
+      />
+      <img v-else class="no-image" src="@/images/no-image.png" alt="No preview" />
+      <div v-if="styleData.license" class="style-license">{{ styleData.license }}</div>
+    </div>
+
+    <div class="content">
+      <ul>
+        <li>
+          <a :href="`${styleData.url}/stargazers`" rel="noopener" target="_blank">
+            {{ pluralize(styleData.stargazers, 'star') }}
+          </a>
+        </li>
+        <li>
+          <a :href="`${styleData.url}/network/members`" rel="noopener" target="_blank">
+            {{ pluralize(styleData.forks, 'fork') }}
+          </a>
+        </li>
+        <li>
+          <a :href="`${styleData.url}/issues`" rel="noopener" target="_blank">
+            {{ pluralize(styleData.issues, 'issue') }}
+          </a>
+        </li>
+        <li>
+          <a :href="`${styleData.url}/watchers`" rel="noopener" target="_blank">
+            {{ pluralize(styleData.watchers, 'watcher') }}
+          </a>
+        </li>
+        <li class="buttons">
+          <a class="button style-button-filled mobile-wide" :href="styleData.usercss" rel="noopener" target="_blank"
+            >Install</a
+          >
         </li>
       </ul>
-
-      <form v-if="authorizedUser" class="edit" @submit.prevent="editStyle">
-        <input
-          :value="styleData.customName"
-          type="text"
-          placeholder="Style name"
-          @change="(e) => (customName = e.target.value)"
-        />
-        <input
-          :value="styleData.customPreview"
-          type="text"
-          placeholder="Preview url"
-          @change="(e) => (customPreview = e.target.value)"
-        />
-        <button class="style-button" type="submit">Edit</button>
-      </form>
-
-      <div class="image">
-        <img
-          v-if="styleData.customPreview || styleData.preview"
-          :src="styleData.customPreview || styleData.preview"
-          :alt="`Preview of ${styleData.customName || styleData.name} style`"
-        />
-        <img v-else class="no-image" src="@/images/no-image.png" alt="No preview" />
-        <div v-if="styleData.license" class="style-license">{{ styleData.license }}</div>
-      </div>
-
-      <div class="content">
-        <ul>
-          <li>
-            <a :href="`${styleData.url}/stargazers`" rel="noopener" target="_blank">
-              {{ pluralize(styleData.stargazers, 'star') }}
-            </a>
-          </li>
-          <li>
-            <a :href="`${styleData.url}/network/members`" rel="noopener" target="_blank">
-              {{ pluralize(styleData.forks, 'fork') }}
-            </a>
-          </li>
-          <li>
-            <a :href="`${styleData.url}/issues`" rel="noopener" target="_blank">
-              {{ pluralize(styleData.issues, 'issue') }}
-            </a>
-          </li>
-          <li>
-            <a :href="`${styleData.url}/watchers`" rel="noopener" target="_blank">
-              {{ pluralize(styleData.watchers, 'watcher') }}
-            </a>
-          </li>
-          <li class="buttons">
-            <a class="button style-button-filled mobile-wide" :href="styleData.usercss" rel="noopener" target="_blank"
-              >Install</a
-            >
-          </li>
-        </ul>
-      </div>
-    </template>
+    </div>
   </base-dialog>
 </template>
 
