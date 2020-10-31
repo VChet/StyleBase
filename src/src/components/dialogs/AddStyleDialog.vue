@@ -1,6 +1,6 @@
 <template>
   <base-dialog v-if="open" size="small" @close="$emit('close')">
-    <template>
+    <form @submit.prevent="submitStyle">
       <div class="dialog-title">Add new style</div>
       <div class="dialog-input">
         <input v-model.trim="url" type="text" placeholder="Link to GitHub repository" />
@@ -8,24 +8,14 @@
       </div>
       <div class="dialog-buttons">
         <button class="style-button" type="button" @click="$emit('close')">Not now</button>
-        <vue-recaptcha
-          ref="recaptcha"
-          tabindex="0"
-          size="invisible"
-          :sitekey="sitekey"
-          @verify="submitStyle"
-          @expired="onCaptchaExpired"
-        >
-          <button class="style-button-filled" type="submit" :disabled="isSubmitting">Add</button>
-        </vue-recaptcha>
+        <button class="style-button-filled" type="submit" :disabled="isSubmitting">Add</button>
       </div>
-    </template>
+    </form>
   </base-dialog>
 </template>
 
 <script>
 import axios from 'axios';
-import VueRecaptcha from 'vue-recaptcha';
 
 import BaseDialog from '@/components/dialogs/BaseDialog';
 import CloseButton from '@/components/CloseButton.vue';
@@ -34,8 +24,7 @@ export default {
   name: 'StyleInfoDialog',
   components: {
     BaseDialog,
-    CloseButton,
-    VueRecaptcha
+    CloseButton
   },
   props: {
     open: {
@@ -47,20 +36,16 @@ export default {
   data() {
     return {
       url: '',
-      isSubmitting: false,
-      sitekey: process.env.VUE_APP_RECAPTCHA_TOKEN
+      isSubmitting: false
     };
   },
   methods: {
-    submitStyle(recaptchaToken) {
+    submitStyle() {
       if (!this.url || this.isSubmitting) return;
       if (!this.url.includes('github.com')) return alert('Should be github.com repository');
       this.isSubmitting = true;
       axios
-        .post('/api/style/add', {
-          recaptchaToken,
-          url: this.url
-        })
+        .post('/api/style/add', { url: this.url })
         .then((response) => {
           this.url = '';
           this.$emit('close');
@@ -73,9 +58,6 @@ export default {
           this.isSubmitting = false;
           this.$gtag.event('add style request', { event_category: 'add style dialog' });
         });
-    },
-    onCaptchaExpired() {
-      this.$refs.recaptcha.reset();
     }
   }
 };

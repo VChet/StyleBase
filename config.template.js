@@ -14,6 +14,5 @@ module.exports = {
       clientSecret: ""
     },
     token: "" // https://github.com/settings/tokens with public_repo scope
-  },
-  CaptchaSecretKey: "" // https://www.google.com/recaptcha
+  }
 };

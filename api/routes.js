@@ -1,45 +1,25 @@
 const express = require("express");
 const apicache = require("apicache");
 const rateLimit = require("express-rate-limit");
-const axios = require("axios");
 
-const { CaptchaSecretKey } = require("../config");
 const { Style } = require("../models/Style");
 
-// Middleware
+// Cache
 const router = express.Router();
 const cache = apicache.middleware;
-
 const onlyStatus200 = (req, res) => res.statusCode === 200;
 const cacheSuccessful = cache("10 minutes", onlyStatus200);
-
 const clearCache = (req, res, next) => {
   apicache.clear();
   next();
 };
-
-// Allow 1 request per 10 minutes
-const GHRateLimiter = rateLimit({
-  windowMs: 10 * 60 * 1000,
-  max: 1,
-  message: { error: "Too many update requests made from this IP, please try again after 10 minutes" },
+// Rate limiter (allow 30 request per 60 minutes)
+const rateLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 30,
+  message: { error: "Too many update requests made from this IP, please try again after 1 hour" },
   skip: () => process.env.NODE_ENV !== "production"
 });
-
-const recaptcha = (req, res, next) => {
-  if (process.env.NODE_ENV !== "production") return next();
-  const { recaptchaToken } = req.body;
-  axios
-    .post(`https://www.google.com/recaptcha/api/siteverify?secret=${CaptchaSecretKey}&response=${recaptchaToken}`)
-    .then((response) => {
-      if (!response.data.success) return res.status(400).json({ error: "Captcha failed. Try again" });
-      next();
-    })
-    .catch((error) => {
-      console.log(error);
-      return res.status(500).json({ error: "Captcha failed. Try again" });
-    });
-};
 
 const isAuthorized = async (req, res, next) => {
   const { url } = req.body;
@@ -81,9 +61,9 @@ router.get("/styles/:page?", cacheSuccessful, getStyles);
 router.get("/style", cacheSuccessful, getStyleData);
 router.get("/search/:page?", searchStyle);
 router.get("/owner/:owner/:page?", cacheSuccessful, getStylesByOwner);
-router.post("/style/add", recaptcha, addStyle);
-router.put("/style/update/all", GHRateLimiter, updateAllStyles);
-router.put("/style/update", GHRateLimiter, updateStyle);
+router.post("/style/add", rateLimiter, addStyle);
+router.put("/style/update/all", rateLimiter, updateAllStyles);
+router.put("/style/update", rateLimiter, updateStyle);
 router.put("/style/edit", isAuthorized, clearCache, editStyle);
 router.delete("/style/delete", isAuthorized, clearCache, deleteStyle);
 
