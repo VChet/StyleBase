@@ -1,16 +1,14 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
 import App from './App.vue';
-import VueGtag from 'vue-gtag';
+import gtag from 'vue-gtag-next';
 
 import store from './store';
 
-Vue.config.productionTip = false;
+const app = createApp(App);
 
-Vue.use(VueGtag, {
-  config: { id: process.env.VUE_APP_GTAG_ID, deferScriptLoad: true }
+app.use(gtag, {
+  property: { id: process.env.VUE_APP_GTAG_ID }
 });
+app.use(store);
 
-new Vue({
-  store,
-  render: (h) => h(App)
-}).$mount('#app');
+app.mount('#app');

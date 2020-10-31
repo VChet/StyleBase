@@ -121,7 +121,7 @@ export default {
       window.addEventListener('scroll', throttle(this.infiniteScroll, 200));
     });
   },
-  destroyed() {
+  unmounted() {
     window.removeEventListener('scroll', throttle(this.infiniteScroll, 200));
   },
   methods: {

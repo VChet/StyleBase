@@ -1,5 +1,5 @@
 <template>
-  <div class="style-card" v-on="$listeners">
+  <div class="style-card">
     <div class="image-container">
       <slot name="image"></slot>
     </div>
