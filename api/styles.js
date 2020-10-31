@@ -223,7 +223,7 @@ function editStyle(req, res) {
   });
 
   Style.findOneAndUpdate(
-    { url: req.styleData.url },
+    { url },
     { $set: customData },
     { new: true },
     (error, style) => {
@@ -233,7 +233,7 @@ function editStyle(req, res) {
 }
 
 async function deleteStyle(req, res) {
-  Style.findOneAndDelete({ url: req.styleData.url }, (error, style) => {
+  Style.findOneAndDelete({ url: req.body.url }, (error, style) => {
     if (error) return res.status(500).json({ error });
     return res.status(200).json({ style });
   });
