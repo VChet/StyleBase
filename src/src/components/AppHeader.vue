@@ -17,7 +17,7 @@
         <button class="link" type="button" @click="$emit('open-nav-link', 'showAddStyleModal')">Add Style</button>
         <a v-if="!user.username" href="/login">Login</a>
         <template v-else>
-          <button class="link" type="button">{{ user.username }}</button>
+          <button class="link" type="button" @click="setOwnerFilter(user.username)">{{ user.username }}</button>
           <a href="/logout">Logout</a>
         </template>
       </nav>
@@ -26,21 +26,24 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
   name: 'AppHeader',
-  props: {
-    user: {
-      type: Object,
-      required: true,
-      default: () => {}
-    }
-  },
   data() {
     return {
       menuIsActive: false
     };
   },
+  computed: {
+    ...mapGetters({
+      user: 'user/getUser'
+    })
+  },
   methods: {
+    ...mapActions({
+      setOwnerFilter: 'styleGrid/setOwnerFilter'
+    }),
     scrollToTop() {
       window.scroll({ top: 0, left: 0, behavior: 'smooth' });
     }
