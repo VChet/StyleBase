@@ -19,7 +19,7 @@ function setPageData({ selectedStyle: style, ownerFilter, searchQuery }) {
 
   document.title = title;
   document.head.querySelector('meta[name=description]').content = description;
-  window.history.replaceState({}, title, url);
+  window.history.replaceState(history.state, title, url);
 }
 
 export default {

@@ -1,13 +1,10 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 
 import styleGrid from './modules/styleGrid';
 import user from './modules/user';
 import alert from './modules/alert';
 
-Vue.use(Vuex);
-
-export default new Vuex.Store({
+export default createStore({
   modules: {
     styleGrid,
     user,

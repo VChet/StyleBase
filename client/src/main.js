@@ -1,21 +1,17 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
 import App from './App.vue';
-import VueGtag from 'vue-gtag';
-import VueRouter from 'vue-router';
+import gtag from 'vue-gtag';
 
 import store from './store';
 import router from './router';
 
-Vue.config.productionTip = false;
+const app = createApp(App);
 
-Vue.use(VueGtag, {
-  config: { id: process.env.VUE_APP_GTAG_ID, deferScriptLoad: true }
-});
+app
+  .use(gtag, {
+    property: { id: process.env.VUE_APP_GTAG_ID, deferScriptLoad: true }
+  })
+  .use(store)
+  .use(router);
 
-Vue.use(VueRouter);
-
-new Vue({
-  store,
-  router,
-  render: (h) => h(App)
-}).$mount('#app');
+app.mount('#app');

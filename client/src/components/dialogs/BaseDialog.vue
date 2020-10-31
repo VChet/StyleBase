@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import vClickOutside from 'v-click-outside';
+import { directive } from 'vue3-click-away';
 
 import CloseButton from '@/components/CloseButton.vue';
 
@@ -27,7 +27,7 @@ export default {
     CloseButton
   },
   directives: {
-    clickOutside: vClickOutside.directive
+    ClickOutside: directive
   },
   props: {
     size: {
@@ -52,7 +52,7 @@ export default {
     document.body.style.paddingRight = `${scrollbarWidth}px`;
     document.body.classList.add('no-scroll');
   },
-  destroyed() {
+  unmounted() {
     setTimeout(() => {
       document.body.classList.remove('no-scroll');
       document.body.style.paddingRight = null;

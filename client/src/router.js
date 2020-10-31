@@ -1,4 +1,5 @@
-import VueRouter from 'vue-router';
+import { createWebHistory, createRouter } from 'vue-router';
+
 import Home from '@/views/Home.vue';
 import Profile from '@/views/Profile.vue';
 import HowToUseDialog from '@/components/dialogs/HowToUseDialog.vue';
@@ -29,14 +30,13 @@ const routes = [
     beforeEnter: fetchData
   },
   {
-    path: '*',
+    path: '/:pathMatch(.*)',
     redirect: { name: 'Home' }
   }
 ];
 
-const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
   routes
 });
 

@@ -44,9 +44,11 @@
       </section>
     </div>
 
-    <transition name="transition-dialog">
-      <router-view />
-    </transition>
+    <router-view v-slot="{ Component }">
+      <transition name="transition-dialog">
+        <component :is="Component" />
+      </transition>
+    </router-view>
     <transition name="transition-dialog">
       <StyleInfoDialog v-if="state.showStyleInfoModal" />
     </transition>
@@ -108,7 +110,7 @@ export default {
   created() {
     window.addEventListener('scroll', throttle(this.infiniteScroll, 100));
   },
-  destroyed() {
+  unmounted() {
     window.removeEventListener('scroll', throttle(this.infiniteScroll, 100));
   },
   methods: {
