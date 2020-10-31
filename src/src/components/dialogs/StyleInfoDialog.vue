@@ -24,22 +24,6 @@
       </li>
     </ul>
 
-    <form v-if="authorizedUser" class="edit" @submit.prevent="editStyle">
-      <input
-        :value="styleData.customName"
-        type="text"
-        placeholder="Style name"
-        @change="(e) => (customName = e.target.value)"
-      />
-      <input
-        :value="styleData.customPreview"
-        type="text"
-        placeholder="Preview url"
-        @change="(e) => (customPreview = e.target.value)"
-      />
-      <button class="style-button" type="submit">Edit</button>
-    </form>
-
     <div class="image">
       <img
         v-if="styleData.customPreview || styleData.preview"
@@ -78,6 +62,35 @@
           >
         </li>
       </ul>
+    </div>
+
+    <div v-if="authorizedUser" class="actions">
+      <form class="edit" @submit.prevent="editStyle">
+        <input
+          :value="styleData.customName"
+          type="text"
+          placeholder="Style name"
+          @change="(e) => (customName = e.target.value)"
+        />
+        <input
+          :value="styleData.customPreview"
+          type="text"
+          placeholder="Preview url"
+          @change="(e) => (customPreview = e.target.value)"
+        />
+        <button class="style-button" type="submit">Edit</button>
+      </form>
+      <div class="delete">
+        <div>
+          <strong>Delete this style</strong>
+          <p>
+            Keep in&nbsp;mind that it&nbsp;still can be&nbsp;re&#8209;added. If&nbsp;you don't want your style
+            on&nbsp;this site&nbsp;&mdash; please
+            <a href="mailto:feedback@stylebase.cc" rel="noopener">contact us</a>.
+          </p>
+        </div>
+        <button class="style-button-danger" @click="deleteStyle">Delete</button>
+      </div>
     </div>
   </base-dialog>
 </template>
@@ -150,6 +163,18 @@ export default {
         })
         .finally(() => {
           this.$gtag.event('edit style request', { event_category: 'style info dialog' });
+        });
+    },
+    deleteStyle() {
+      axios
+        .delete('/api/style/delete', { data: { url: this.styleData.url } })
+        .then((response) => {
+          alert(`"${response.data.style.name}" style deleted`);
+          this.$emit('update-styles');
+          this.$emit('close');
+        })
+        .catch((error) => {
+          alert(error.response.data.error);
         });
     }
   }
@@ -231,30 +256,6 @@ export default {
   }
 }
 
-.edit {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin: 1rem 0;
-
-  input,
-  button {
-    margin: 0.5rem 0;
-  }
-
-  input {
-    flex: 1;
-    box-sizing: border-box;
-    height: 50px;
-    margin-right: 1rem;
-    padding: 0 15px;
-  }
-
-  button {
-    flex: 0 1 auto;
-  }
-}
-
 .image {
   position: relative;
   display: flex;
@@ -325,6 +326,54 @@ export default {
           flex-basis: 100%;
         }
       }
+    }
+  }
+}
+
+.actions {
+  margin-top: 2rem;
+  border-top: 1px solid var(--color-border);
+
+  p {
+    margin: 0.5rem 0;
+  }
+
+  a {
+    color: var(--color-main);
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .edit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 1rem 0;
+
+    input,
+    button {
+      margin: 0.5rem 0;
+    }
+
+    input {
+      flex: 1;
+      box-sizing: border-box;
+      height: 50px;
+      margin-right: 1rem;
+      padding: 0 15px;
+    }
+  }
+
+  .delete {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+
+    div {
+      margin-right: 30px;
     }
   }
 }

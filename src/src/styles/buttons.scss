@@ -39,7 +39,8 @@ button.link {
 }
 
 .style-button,
-.style-button-filled {
+.style-button-filled,
+.style-button-danger {
   width: 170px;
   height: 50px;
   font-size: 18px;
@@ -88,5 +89,22 @@ button.link {
   &:active {
     background-color: var(--color-main-darkest);
     border-color: var(--color-main-darkest);
+  }
+}
+
+.style-button-danger {
+  border: 1px solid #dc3545;
+  background-color: transparent;
+  font-weight: bold;
+  color: #dc3545;
+
+  &:hover {
+    background-color: var(--color-main-lightest);
+  }
+  &:focus {
+    background-color: var(--color-main-lighter);
+  }
+  &:active {
+    background-color: var(--color-main-light);
   }
 }
