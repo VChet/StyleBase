@@ -50,7 +50,7 @@
           </ul>
         </div>
         <div v-if="isLoading" class="style-grid">
-          <style-card-skeleton v-for="i in 12" :key="i" />
+          <style-card-skeleton v-for="i in pagination.page * 16" :key="i" />
         </div>
         <div v-if="!isLoading && styles.length" class="style-grid">
           <style-card v-for="style in styles" :key="style._id" :style-data="style" @open="openStyleCard" />
