@@ -97,10 +97,8 @@ function addExpressMiddleware(app) {
         "style-src": ["'self'", "'unsafe-inline'"],
         "script-src": [
           "'self'",
-          "https://www.google.com/recaptcha/", "https://www.gstatic.com/recaptcha/",
           "https://www.googletagmanager.com", "https://www.google-analytics.com"
         ],
-        "frame-src": ["'self'", "https://www.google.com/recaptcha/"],
         "connect-src": ["'self'", "https://www.google-analytics.com"]
       }
     }
