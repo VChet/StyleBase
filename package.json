@@ -17,7 +17,7 @@
   "dependencies": {
     "agenda": "^3.1.0",
     "apicache": "^1.5.3",
-    "axios": "^0.20.0",
+    "axios": "^0.21.0",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "connect-mongo": "^3.2.0",
@@ -25,7 +25,7 @@
     "express-rate-limit": "^5.1.3",
     "express-session": "^1.17.1",
     "helmet": "^4.1.1",
-    "mongoose": "^5.10.6",
+    "mongoose": "^5.10.11",
     "mongoose-paginate-v2": "^1.3.9",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
@@ -33,10 +33,10 @@
     "repo-images": "^1.0.1"
   },
   "devDependencies": {
-    "eslint": "^7.9.0",
+    "eslint": "^7.12.1",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-sonarjs": "^0.5.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.6"
   }
 }
