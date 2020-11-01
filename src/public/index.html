@@ -20,10 +20,22 @@
     <meta name="msapplication-TileColor" content="#e7d4b7" />
     <meta name="msapplication-config" content="<%= BASE_URL %>browserconfig.xml" />
     <meta name="theme-color" content="#f4ebdd" />
+    <noscript>
+      <style>
+        html,
+        body {
+          background-color: #faf6f0;
+          font-family: Helvetica, sans-serif;
+        }
+      </style>
+    </noscript>
   </head>
   <body>
     <noscript>
-      <strong>This site uses JavaScript to work. Please enable it to continue.</strong>
+      <strong style="display: inline-block; padding: 1rem">
+        This site uses JavaScript to work.<br />
+        Please enable it to continue.
+      </strong>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
