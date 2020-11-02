@@ -70,16 +70,16 @@ export default {
     commit('SET_PAGE', 1);
     dispatch('getStyles');
   },
-  setQuery({ commit, dispatch }, query) {
-    dispatch('setStyleModalVisibility', false);
+  setQuery({ state, commit, dispatch }, query) {
+    if (state.showStyleInfoModal) dispatch('setStyleModalVisibility', false);
     if (query) {
       commit('SET_SEARCH_QUERY', query);
       commit('SET_PAGE', 1);
       dispatch('getStyles');
     }
   },
-  setOwnerFilter({ commit, dispatch }, filter) {
-    dispatch('setStyleModalVisibility', false);
+  setOwnerFilter({ state, commit, dispatch }, filter) {
+    if (state.showStyleInfoModal) dispatch('setStyleModalVisibility', false);
     if (filter) {
       commit('SET_OWNER_FILTER', filter);
       commit('SET_PAGE', 1);
