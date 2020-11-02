@@ -17,14 +17,7 @@
       </section>
       <section class="search-container">
         <label for="search" class="visually-hidden">Style search</label>
-        <input
-          id="search"
-          v-debounce="500"
-          :value="state.searchQuery"
-          type="text"
-          placeholder="Search by style name or owner..."
-          @change="(e) => setQuery(e.target.value)"
-        />
+        <input id="search" v-model="searchQuery" type="text" placeholder="Search by style name or owner..." />
         <close-button v-show="state.searchQuery" aria-label="Clear the search input" @click="resetFilters" />
       </section>
       <section class="main-container">
@@ -72,8 +65,6 @@ import StyleInfoDialog from '@/components/dialogs/StyleInfoDialog';
 import CloseButton from '@/components/CloseButton.vue';
 import StyleCardSkeleton from '@/components/StyleCardSkeleton';
 
-import debounce from '@/directives/debounce';
-
 export default {
   name: 'Home',
   components: {
@@ -82,13 +73,26 @@ export default {
     CloseButton,
     StyleCardSkeleton
   },
-  directives: {
-    debounce
+  data() {
+    return {
+      timeout: setTimeout(() => {}, 0)
+    };
   },
   computed: {
     ...mapGetters({
       state: 'styleGrid/getState'
-    })
+    }),
+    searchQuery: {
+      get: function () {
+        return this.state.searchQuery;
+      },
+      set: function (query) {
+        if (this.timeout) clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          this.setQuery(query);
+        }, 500);
+      }
+    }
   },
   created() {
     this.getStyles().then(() => {
@@ -97,7 +101,7 @@ export default {
   },
   mounted() {
     const pathname = window.location.pathname.split('/');
-    if (pathname[1] === 'search') return this.setQuery(pathname[2]);
+    if (pathname[1] === 'search') return (this.searchQuery = pathname[2]);
     const owner = pathname[1];
     if (!owner) return;
     const name = pathname[2];
