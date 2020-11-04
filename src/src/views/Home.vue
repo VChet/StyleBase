@@ -36,6 +36,7 @@
                 class="link"
                 type="button"
                 :class="{ active: state.selectedSort === index }"
+                :disabled="state.isLoading"
                 @click="setSorting(index)"
               >
                 {{ option }}
