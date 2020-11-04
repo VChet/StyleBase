@@ -72,11 +72,9 @@ export default {
   },
   setQuery({ state, commit, dispatch }, query) {
     if (state.showStyleInfoModal) dispatch('setStyleModalVisibility', false);
-    if (query) {
-      commit('SET_SEARCH_QUERY', query);
-      commit('SET_PAGE', 1);
-      dispatch('getStyles');
-    }
+    commit('SET_SEARCH_QUERY', query);
+    commit('SET_PAGE', 1);
+    dispatch('getStyles');
   },
   setOwnerFilter({ state, commit, dispatch }, filter) {
     if (state.showStyleInfoModal) dispatch('setStyleModalVisibility', false);
