@@ -1,5 +1,5 @@
 <template>
-  <base-dialog v-if="open" size="extra-large" @close="$emit('close')">
+  <base-dialog v-if="open" size="extra-large" @close="closeStyleModal">
     <div class="header">
       <div class="title">
         <a :href="`${styleData.url}`" rel="noopener" target="_blank">
@@ -7,7 +7,7 @@
         </a>
         <span class="owner">
           by
-          <button class="link" type="button" @click="$emit('search-by-owner', styleData.owner)">
+          <button class="link" type="button" @click="setOwnerFilter(styleData.owner)">
             {{ styleData.owner }}
           </button>
         </span>
@@ -20,7 +20,7 @@
 
     <ul v-if="styleData.topics.length" class="topics">
       <li v-for="topic in styleData.topics" :key="topic">
-        <button type="button" @click="$emit('search-topic', topic)">{{ topic }}</button>
+        <button type="button" @click="setQuery(topic)">{{ topic }}</button>
       </li>
     </ul>
 
@@ -64,7 +64,7 @@
       </ul>
     </div>
 
-    <div v-if="authorizedUser" class="actions">
+    <div v-if="isAuthorized" class="actions">
       <form class="edit" @submit.prevent="editStyle">
         <input
           :value="styleData.customName"
@@ -97,6 +97,7 @@
 
 <script>
 import axios from 'axios';
+import { mapActions, mapGetters } from 'vuex';
 
 import { styleInfoMixin } from '@/mixins';
 
@@ -113,39 +114,32 @@ export default {
       type: Boolean,
       required: true,
       default: false
-    },
-    styleData: {
-      type: Object,
-      required: true,
-      default: () => {}
-    },
-    user: {
-      type: Object,
-      required: true,
-      default: () => {}
     }
   },
   data() {
     return {
-      authorizedUser: false,
-      customName: this.styleData.customName,
-      customPreview: this.styleData.customPreview
+      customName: '',
+      customPreview: ''
     };
   },
-  watch: {
-    styleData() {
-      this.checkAuthorization();
-    },
-    user() {
-      this.checkAuthorization();
+  computed: {
+    ...mapGetters({
+      styleData: 'styleGrid/getSelectedStyle',
+      user: 'user/getUser'
+    }),
+    isAuthorized() {
+      const isOwner = this.styleData.owner === this.user.username;
+      const isAdmin = this.user.role === 'Admin';
+      return isOwner || isAdmin;
     }
   },
   methods: {
-    checkAuthorization() {
-      const isOwner = this.styleData.owner === this.user.username;
-      const isAdmin = this.user.role === 'Admin';
-      this.authorizedUser = isOwner || isAdmin;
-    },
+    ...mapActions({
+      getStyles: 'styleGrid/getStyles',
+      setOwnerFilter: 'styleGrid/setOwnerFilter',
+      setQuery: 'styleGrid/setQuery',
+      closeStyleModal: 'styleGrid/closeStyleModal'
+    }),
     editStyle() {
       axios
         .put('/api/style/edit', {
@@ -155,8 +149,8 @@ export default {
         })
         .then((response) => {
           alert(`"${response.data.style.name}" style updated`);
-          this.$emit('update-styles');
-          this.$emit('close');
+          this.getStyles();
+          this.closeStyleModal();
         })
         .catch((error) => {
           alert(error.response.data.error);

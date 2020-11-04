@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <app-header :user="user" @open-nav-link="openNavLink" />
-    <Home :user="user" />
+    <app-header @open-nav-link="openNavLink" />
+    <Home />
     <app-footer @open-nav-link="openNavLink" />
 
     <how-to-use-dialog :open="showHowtoUseModal" @close="showHowtoUseModal = false" />
@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapActions } from 'vuex';
 
 import AppHeader from '@/components/AppHeader.vue';
 import Home from '@/views/Home.vue';
@@ -34,9 +34,7 @@ export default {
     return {
       showHowtoUseModal: false,
       showAddStyleModal: false,
-      showPrivacyModal: false,
-
-      user: {}
+      showPrivacyModal: false
     };
   },
   computed: {
@@ -50,23 +48,16 @@ export default {
       isActive ? $body.classList.add('no-scroll') : $body.classList.remove('no-scroll');
     }
   },
-  beforeMount() {
+  created() {
     this.getUser();
   },
   mounted() {
     this.$gtag.pageview({ page_path: window.location.pathname });
   },
   methods: {
-    getUser() {
-      axios
-        .get('/api/me')
-        .then((response) => {
-          if (!response.data.error) this.user = response.data.user;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
+    ...mapActions({
+      getUser: 'user/getUser'
+    }),
     openNavLink(navLink) {
       this[navLink] = true;
     }

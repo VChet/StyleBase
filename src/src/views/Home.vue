@@ -17,69 +17,53 @@
       </section>
       <section class="search-container">
         <label for="search" class="visually-hidden">Style search</label>
-        <input
-          id="search"
-          v-model.lazy="searchQuery"
-          v-debounce="500"
-          type="text"
-          placeholder="Search by style name or owner..."
-        />
-        <close-button v-show="searchQuery" aria-label="Clear the search input" @click="resetFilters" />
+        <input id="search" v-model="searchQuery" type="text" placeholder="Search by style name or owner..." />
+        <close-button v-show="state.searchQuery" aria-label="Clear the search input" @click="reset" />
       </section>
       <section class="main-container">
         <div class="section-header">
           <div class="title">
             Styles
-            <span v-if="ownerFilter">
-              by {{ ownerFilter }}
-              <close-button aria-label="Clear the owner filter" @click="resetFilters" />
+            <span v-if="state.ownerFilter">
+              by {{ state.ownerFilter }}
+              <close-button aria-label="Clear the owner filter" @click="reset" />
             </span>
           </div>
           <hr />
-          <ul v-show="!searchQuery && !ownerFilter" class="sort-options">
-            <li v-for="(option, index) in sortOptions" :key="index">
+          <ul v-show="!state.searchQuery && !state.ownerFilter" class="sort-options">
+            <li v-for="(option, index) in state.sortOptions" :key="index">
               <button
                 class="link"
                 type="button"
-                :class="{ active: selectedOption === index }"
-                @click="selectedOption = index"
+                :class="{ active: state.selectedSort === index }"
+                @click="setSorting(index)"
               >
                 {{ option }}
               </button>
             </li>
           </ul>
         </div>
-        <div v-if="isLoading" class="style-grid">
-          <style-card-skeleton v-for="i in pagination.page * 16" :key="i" />
+        <div v-if="state.isLoading" class="style-grid">
+          <style-card-skeleton v-for="i in state.pagination.page * 16" :key="i" />
         </div>
-        <div v-if="!isLoading && styles.length" class="style-grid">
-          <style-card v-for="style in styles" :key="style._id" :style-data="style" @open="openStyleCard" />
+        <div v-if="!state.isLoading && state.styles.length" class="style-grid">
+          <style-card v-for="style in state.styles" :key="style._id" :style-data="style" />
         </div>
-        <div v-if="!isLoading && !styles.length" class="no-results">No results</div>
+        <div v-if="!state.isLoading && !state.styles.length" class="no-results">No results</div>
       </section>
     </div>
 
-    <style-info-dialog
-      :open="showStyleInfoModal"
-      :style-data="selectedStyle"
-      :user="user"
-      @search-by-owner="(value) => (ownerFilter = value)"
-      @search-topic="(value) => (searchQuery = value)"
-      @update-styles="getStyles"
-      @close="closeStyleModal"
-    />
+    <style-info-dialog :open="state.showStyleInfoModal" />
   </main>
 </template>
 
 <script>
-import axios from 'axios';
+import { mapActions, mapGetters } from 'vuex';
 
 import StyleCard from '@/components/StyleCard';
 import StyleInfoDialog from '@/components/dialogs/StyleInfoDialog';
 import CloseButton from '@/components/CloseButton.vue';
 import StyleCardSkeleton from '@/components/StyleCardSkeleton';
-
-import debounce from '@/directives/debounce';
 
 export default {
   name: 'Home',
@@ -89,70 +73,31 @@ export default {
     CloseButton,
     StyleCardSkeleton
   },
-  directives: {
-    debounce
-  },
-  props: {
-    user: {
-      type: Object,
-      required: true,
-      default: () => {}
-    }
-  },
   data() {
     return {
-      styles: [],
-      isLoading: true,
-      pagination: {
-        page: 1,
-        hasNextPage: false
-      },
-
-      searchQuery: '',
-      ownerFilter: '',
-
-      sortOptions: ['Recently added', 'Recently updated', 'Most liked'],
-      selectedOption: 0,
-
-      selectedStyle: {},
-      showStyleInfoModal: false
+      timeout: setTimeout(() => {}, 0)
     };
   },
-  watch: {
-    selectedOption() {
-      this.getStyles();
-    },
-    ownerFilter(filter) {
-      this.closeStyleModal();
-      if (filter) this.searchByOwner();
-    },
-    searchQuery() {
-      this.closeStyleModal();
-      this.searchQuery ? this.searchStyles() : this.resetFilters();
-    },
-    showStyleInfoModal(isActive) {
-      const $body = document.body;
-      isActive ? $body.classList.add('no-scroll') : $body.classList.remove('no-scroll');
+  computed: {
+    ...mapGetters({
+      state: 'styleGrid/getState'
+    }),
+    searchQuery: {
+      get: function () {
+        return this.state.searchQuery;
+      },
+      set: function (query) {
+        if (this.timeout) clearTimeout(this.timeout);
+        this.timeout = setTimeout(() => {
+          this.setQuery(query);
+        }, 500);
+      }
     }
   },
   created() {
-    axios
-      .get('/api/styles')
-      .then((response) => {
-        this.styles = response.data.styles;
-        this.pagination = {
-          page: response.data.page,
-          hasNextPage: response.data.hasNextPage
-        };
-
-        window.addEventListener('scroll', this.infiniteScroll);
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        this.isLoading = false;
-      });
+    this.getStyles().then(() => {
+      window.addEventListener('scroll', this.infiniteScroll);
+    });
   },
   mounted() {
     const pathname = window.location.pathname.split('/');
@@ -160,150 +105,34 @@ export default {
     const owner = pathname[1];
     if (!owner) return;
     const name = pathname[2];
-    if (!name) return (this.ownerFilter = owner);
-    this.getStyle(owner, name);
+    if (!name) return this.setOwnerFilter(owner);
+    this.getStyle({ owner, name });
   },
   destroyed() {
     window.removeEventListener('scroll', this.infiniteScroll);
   },
   methods: {
-    getStyles() {
-      let params;
-      switch (this.selectedOption) {
-        case 1:
-          params = { sort: 'update' };
-          break;
-        case 2:
-          params = { sort: 'stars' };
-          break;
-        default:
-          params = {};
-          break;
-      }
-
-      this.isLoading = true;
-      axios
-        .get('/api/styles', { params })
-        .then((response) => {
-          this.styles = response.data.styles;
-          this.pagination = {
-            page: response.data.page,
-            hasNextPage: response.data.hasNextPage
-          };
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
-    },
-    getStyle(owner, name) {
-      const params = { owner, name };
-      axios
-        .get('/api/style', { params })
-        .then((response) => {
-          this.openStyleCard(response.data.style);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-    searchStyles() {
-      if (this.searchQuery) {
-        this.isLoading = true;
-        axios
-          .get(`/api/search?query=${this.searchQuery}`)
-          .then((response) => {
-            window.history.replaceState({}, `${this.searchQuery} | StyleBase`, `/search/${this.searchQuery}`);
-            this.styles = response.data.styles;
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-          .finally(() => {
-            this.isLoading = false;
-          });
-      } else {
-        this.resetFilters();
-      }
-    },
-    searchByOwner() {
-      axios
-        .get(`/api/owner/${this.ownerFilter}`)
-        .then((response) => {
-          window.history.replaceState({}, `Styles by ${this.ownerFilter} | StyleBase`, `/${this.ownerFilter}`);
-          this.styles = response.data.styles;
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    },
-    resetFilters() {
-      window.history.replaceState({}, document.title, '/');
-      this.searchQuery = '';
-      this.ownerFilter = '';
-      this.pagination.page = 1;
-      this.getStyles();
-    },
-    getMoreStyles() {
-      let URL = `/api/styles/${this.pagination.page}`;
-      if (this.searchQuery) {
-        URL = `/api/search/${this.pagination.page}?query=${this.searchQuery}`;
-      }
-      if (this.ownerFilter) {
-        URL = `/api/owner/${this.ownerFilter}/${this.pagination.page}`;
-      }
-
-      let params;
-      switch (this.selectedOption) {
-        case 1:
-          params = { sort: 'update' };
-          break;
-        case 2:
-          params = { sort: 'stars' };
-          break;
-        default:
-          params = {};
-          break;
-      }
-
-      this.isLoading = true;
-      axios
-        .get(URL, { params })
-        .then((response) => {
-          this.styles = this.styles.concat(response.data.styles);
-          this.pagination = {
-            page: response.data.page,
-            hasNextPage: response.data.hasNextPage
-          };
-        })
-        .catch((error) => {
-          console.error(error);
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
-    },
-    openStyleCard(styleData) {
-      window.history.replaceState({}, `${styleData.name} | StyleBase`, `/${styleData.owner}/${styleData.name}`);
-
-      this.selectedStyle = styleData;
-      this.showStyleInfoModal = true;
-    },
-    closeStyleModal() {
-      if (!this.searchQuery && !this.ownerFilter) window.history.replaceState({}, document.title, '/');
-      this.showStyleInfoModal = false;
-      this.selectedStyle = {};
+    ...mapActions({
+      getStyles: 'styleGrid/getStyles',
+      getStyle: 'styleGrid/getStyle',
+      selectStyle: 'styleGrid/selectStyle',
+      setPage: 'styleGrid/setPage',
+      setSorting: 'styleGrid/setSorting',
+      setQuery: 'styleGrid/setQuery',
+      setOwnerFilter: 'styleGrid/setOwnerFilter',
+      resetFilters: 'styleGrid/resetFilters'
+    }),
+    reset() {
+      clearTimeout(this.timeout);
+      this.resetFilters();
     },
     infiniteScroll() {
       if (
         document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight &&
-        this.pagination.hasNextPage &&
-        !this.isLoading
+        this.state.pagination.hasNextPage &&
+        !this.state.isLoading
       ) {
-        this.pagination.page++;
-        this.getMoreStyles();
+        this.setPage(this.state.pagination.page + 1);
       }
     }
   }

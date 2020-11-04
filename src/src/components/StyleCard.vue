@@ -20,7 +20,7 @@
     </template>
 
     <template #data>
-      <div @click="$emit('open', $props.styleData)">
+      <div @click="openStyleModal(styleData)">
         <div class="name">{{ styleData.customName || removeDashes(styleData.name) }}</div>
         <div>by {{ styleData.owner }}</div>
       </div>
@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 import { styleInfoMixin } from '@/mixins';
 import BaseCard from '@/components/BaseCard.vue';
 
@@ -49,6 +51,11 @@ export default {
       required: true,
       default: () => {}
     }
+  },
+  methods: {
+    ...mapActions({
+      openStyleModal: 'styleGrid/openStyleModal'
+    })
   }
 };
 </script>
