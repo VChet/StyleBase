@@ -18,7 +18,7 @@
       <section class="search-container">
         <label for="search" class="visually-hidden">Style search</label>
         <input id="search" v-model="searchQuery" type="text" placeholder="Search by style name or owner..." />
-        <close-button v-show="state.searchQuery" aria-label="Clear the search input" @click="resetFilters" />
+        <close-button v-show="state.searchQuery" aria-label="Clear the search input" @click="reset" />
       </section>
       <section class="main-container">
         <div class="section-header">
@@ -26,7 +26,7 @@
             Styles
             <span v-if="state.ownerFilter">
               by {{ state.ownerFilter }}
-              <close-button aria-label="Clear the owner filter" @click="resetFilters" />
+              <close-button aria-label="Clear the owner filter" @click="reset" />
             </span>
           </div>
           <hr />
@@ -122,6 +122,10 @@ export default {
       setOwnerFilter: 'styleGrid/setOwnerFilter',
       resetFilters: 'styleGrid/resetFilters'
     }),
+    reset() {
+      clearTimeout(this.timeout);
+      this.resetFilters();
+    },
     infiniteScroll() {
       if (
         document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight &&
