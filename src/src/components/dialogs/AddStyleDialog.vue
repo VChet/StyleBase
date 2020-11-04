@@ -16,6 +16,7 @@
 
 <script>
 import axios from 'axios';
+import { mapActions } from 'vuex';
 
 import BaseDialog from '@/components/dialogs/BaseDialog';
 import CloseButton from '@/components/CloseButton.vue';
@@ -40,19 +41,24 @@ export default {
     };
   },
   methods: {
+    ...mapActions({
+      flashAlert: 'alert/flashAlert'
+    }),
     submitStyle() {
       if (!this.url || this.isSubmitting) return;
-      if (!this.url.includes('github.com')) return alert('Should be github.com repository');
+      if (!this.url.includes('github.com')) {
+        return this.flashAlert({ type: 'warning', message: 'Should be github.com repository' });
+      }
       this.isSubmitting = true;
       axios
         .post('/api/style/add', { url: this.url })
         .then((response) => {
           this.url = '';
           this.$emit('close');
-          alert(`"${response.data.style.name}" added successfully`);
+          this.flashAlert({ type: 'success', message: `"${response.data.style.name}" added successfully` });
         })
         .catch((error) => {
-          alert(error.response.data.error);
+          this.flashAlert({ type: 'error', message: error.response.data.error });
         })
         .finally(() => {
           this.isSubmitting = false;

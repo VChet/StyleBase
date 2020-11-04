@@ -141,7 +141,8 @@ export default {
       getStyles: 'styleGrid/getStyles',
       setOwnerFilter: 'styleGrid/setOwnerFilter',
       setQuery: 'styleGrid/setQuery',
-      closeStyleModal: 'styleGrid/closeStyleModal'
+      closeStyleModal: 'styleGrid/closeStyleModal',
+      flashAlert: 'alert/flashAlert'
     }),
     editStyle() {
       axios
@@ -151,12 +152,12 @@ export default {
           customPreview: this.customPreview
         })
         .then((response) => {
-          alert(`"${response.data.style.name}" style updated`);
+          this.flashAlert({ type: 'success', message: `"${response.data.style.name}" style updated` });
           this.getStyles();
           this.closeStyleModal();
         })
         .catch((error) => {
-          alert(error.response.data.error);
+          this.flashAlert({ type: 'error', message: error.response.data.error });
         })
         .finally(() => {
           this.$gtag.event('edit style request', { event_category: 'style info dialog' });
@@ -166,12 +167,12 @@ export default {
       axios
         .delete('/api/style/delete', { data: { url: this.styleData.url } })
         .then((response) => {
-          alert(`"${response.data.style.name}" style deleted`);
+          this.flashAlert({ type: 'success', message: `"${response.data.style.name}" style deleted` });
           this.getStyles();
           this.closeStyleModal();
         })
         .catch((error) => {
-          alert(error.response.data.error);
+          this.flashAlert({ type: 'error', message: error.response.data.error });
         });
     }
   }
