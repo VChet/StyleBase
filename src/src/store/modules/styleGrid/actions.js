@@ -9,17 +9,16 @@ export default {
   async getStyles({ state, commit }) {
     commit('SET_LOADING', true);
 
-    let params = {};
+    const params = {};
     params.page = state.pagination.page;
 
-    let url = '/api/styles';
+    let url = '/api/styles/';
     if (state.searchQuery) {
-      url = '/api/search';
       params.query = state.searchQuery;
       window.history.replaceState({}, `${state.searchQuery} | StyleBase`, `/search/${state.searchQuery}`);
     }
     if (state.ownerFilter) {
-      url = `/api/owner/${state.ownerFilter}`;
+      url += state.ownerFilter;
       window.history.replaceState({}, `Styles by ${state.ownerFilter} | StyleBase`, `/${state.ownerFilter}`);
     }
 

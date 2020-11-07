@@ -80,27 +80,30 @@ async function retrieveRepositoryData(link) {
 }
 
 function getStyles(req, res) {
-  const { page = 1 } = req.query;
+  const { query, page = 1, sort } = req.query;
+  const { owner } = req.params;
 
-  let sort;
-  if (req.query.sort === "stars") {
-    sort = "-stargazers";
-  } else if (req.query.sort === "update") {
-    sort = "-lastUpdate";
-  } else {
-    sort = "-_id";
+  let filter = {};
+  if (query) filter = { $text: { $search: req.query.query } };
+  if (owner) filter = { owner };
+
+  let sortOrder = "-_id";
+  if (sort === "stars") {
+    sortOrder = "-stargazers";
+  } else if (sort === "update") {
+    sortOrder = "-lastUpdate";
   }
 
   const customLabels = { totalDocs: "totalStyles", docs: "styles" };
   const options = {
     page,
-    sort,
     customLabels,
+    sort: sortOrder,
     limit: 16,
     collation: { locale: "en" }
   };
 
-  Style.paginate({}, options, (error, data) => {
+  Style.paginate(filter, options, (error, data) => {
     if (error) return res.status(500).json({ error });
     return res.status(200).json(data);
   });
@@ -113,62 +116,6 @@ function getStyleData(req, res) {
     if (error) return res.status(500).json({ error });
     if (!style) return res.status(404).json({ error: "Style not found" });
     return res.status(200).json({ style });
-  });
-}
-
-function searchStyle(req, res) {
-  const { page = 1 } = req.query;
-
-  let sort;
-  if (req.query.sort === "stars") {
-    sort = "-stargazers";
-  } else if (req.query.sort === "update") {
-    sort = "-lastUpdate";
-  } else {
-    sort = "-_id";
-  }
-
-  const customLabels = { totalDocs: "totalStyles", docs: "styles" };
-  const options = {
-    page,
-    sort,
-    limit: 16,
-    collation: { locale: "en" },
-    customLabels
-  };
-
-  Style.paginate({ $text: { $search: req.query.query } }, options, (error, styles) => {
-    if (error) return res.status(500).json({ error });
-    return res.status(200).json(styles);
-  });
-}
-
-function getStylesByOwner(req, res) {
-  const { page = 1 } = req.query;
-  const { owner } = req.params;
-  if (!owner) return res.status(400).json({ error: "Request must contain repository owner" });
-
-  let sort;
-  if (req.query.sort === "stars") {
-    sort = "-stargazers";
-  } else if (req.query.sort === "update") {
-    sort = "-lastUpdate";
-  } else {
-    sort = "-_id";
-  }
-
-  const customLabels = { totalDocs: "totalStyles", docs: "styles" };
-  const options = {
-    page,
-    sort,
-    limit: 16,
-    collation: { locale: "en" },
-    customLabels
-  };
-
-  Style.paginate({ owner }, options, (error, data) => {
-    if (error) return res.status(500).json({ error });
-    return res.status(200).json(data);
   });
 }
 
@@ -283,8 +230,6 @@ module.exports = {
   retrieveRepositoryData,
   getStyles,
   getStyleData,
-  searchStyle,
-  getStylesByOwner,
   addStyle,
   updateStyle,
   updateAllStyles,
