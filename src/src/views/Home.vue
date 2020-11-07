@@ -30,7 +30,7 @@
             </span>
           </div>
           <hr />
-          <ul class="sort-options">
+          <ul v-if="state.styles.length > 1" class="sort-options">
             <li v-for="(option, index) in state.sortOptions" :key="index">
               <button
                 class="link"
