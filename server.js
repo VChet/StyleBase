@@ -6,7 +6,7 @@ const config = require("./config");
 const {
   addExpressMiddleware,
   CORSMiddleware
-} = require("./common");
+} = require("./middleware");
 const api = require("./api/routes");
 
 const app = express();
