@@ -100,6 +100,7 @@ function getStyles(req, res) {
     customLabels,
     sort: sortOrder,
     limit: 16,
+    lean: true,
     collation: { locale: "en" }
   };
 
