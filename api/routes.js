@@ -45,12 +45,12 @@ const {
   getStyles,
   getStyleData,
   searchStyle,
+  getStylesByOwner,
   addStyle,
   updateAllStyles,
   updateStyle,
   editStyle,
-  deleteStyle,
-  getStylesByOwner
+  deleteStyle
 } = require("./styles");
 
 const {

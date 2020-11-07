@@ -30,7 +30,7 @@
             </span>
           </div>
           <hr />
-          <ul v-show="!state.searchQuery && !state.ownerFilter" class="sort-options">
+          <ul class="sort-options">
             <li v-for="(option, index) in state.sortOptions" :key="index">
               <button
                 class="link"

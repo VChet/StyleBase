@@ -118,9 +118,20 @@ function getStyleData(req, res) {
 
 function searchStyle(req, res) {
   const { page = 1 } = req.params;
+  let { sort } = req.query;
+
+  if (req.query.sort === "stars") {
+    sort = "-stargazers";
+  } else if (req.query.sort === "update") {
+    sort = "-lastUpdate";
+  } else {
+    sort = "-_id";
+  }
+
   const customLabels = { totalDocs: "totalStyles", docs: "styles" };
   const options = {
     page,
+    sort,
     limit: 16,
     collation: { locale: "en" },
     customLabels
@@ -129,6 +140,35 @@ function searchStyle(req, res) {
   Style.paginate({ $text: { $search: req.query.query } }, options, (error, styles) => {
     if (error) return res.status(500).json({ error });
     return res.status(200).json(styles);
+  });
+}
+
+function getStylesByOwner(req, res) {
+  const { owner, page = 1 } = req.params;
+  if (!owner) return res.status(400).json({ error: "Request must contain repository owner" });
+
+  let { sort } = req.query;
+
+  if (req.query.sort === "stars") {
+    sort = "-stargazers";
+  } else if (req.query.sort === "update") {
+    sort = "-lastUpdate";
+  } else {
+    sort = "-_id";
+  }
+
+  const customLabels = { totalDocs: "totalStyles", docs: "styles" };
+  const options = {
+    page,
+    sort,
+    limit: 16,
+    collation: { locale: "en" },
+    customLabels
+  };
+
+  Style.paginate({ owner }, options, (error, data) => {
+    if (error) return res.status(500).json({ error });
+    return res.status(200).json(data);
   });
 }
 
@@ -239,33 +279,15 @@ async function deleteStyle(req, res) {
   });
 }
 
-function getStylesByOwner(req, res) {
-  const { owner, page = 1 } = req.params;
-  if (!owner) return res.status(400).json({ error: "Request must contain repository owner" });
-
-  const customLabels = { totalDocs: "totalStyles", docs: "styles" };
-  const options = {
-    page,
-    limit: 16,
-    collation: { locale: "en" },
-    customLabels
-  };
-
-  Style.paginate({ owner }, options, (error, data) => {
-    if (error) return res.status(500).json({ error });
-    return res.status(200).json(data);
-  });
-}
-
 module.exports = {
   retrieveRepositoryData,
   getStyles,
   getStyleData,
   searchStyle,
+  getStylesByOwner,
   addStyle,
   updateStyle,
   updateAllStyles,
   editStyle,
-  deleteStyle,
-  getStylesByOwner
+  deleteStyle
 };
