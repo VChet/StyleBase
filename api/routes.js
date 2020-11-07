@@ -57,10 +57,10 @@ const {
   getCurrentUser
 } = require("./users");
 
-router.get("/styles/:page?", cacheSuccessful, getStyles);
+router.get("/styles", cacheSuccessful, getStyles);
 router.get("/style", cacheSuccessful, getStyleData);
-router.get("/search/:page?", searchStyle);
-router.get("/owner/:owner/:page?", cacheSuccessful, getStylesByOwner);
+router.get("/search", searchStyle);
+router.get("/owner/:owner", cacheSuccessful, getStylesByOwner);
 router.post("/style/add", rateLimiter, addStyle);
 router.put("/style/update/all", rateLimiter, updateAllStyles);
 router.put("/style/update", rateLimiter, updateStyle);

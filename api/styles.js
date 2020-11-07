@@ -80,9 +80,9 @@ async function retrieveRepositoryData(link) {
 }
 
 function getStyles(req, res) {
-  const { page = 1 } = req.params;
-  let { sort } = req.query;
+  const { page = 1 } = req.query;
 
+  let sort;
   if (req.query.sort === "stars") {
     sort = "-stargazers";
   } else if (req.query.sort === "update") {
@@ -117,9 +117,9 @@ function getStyleData(req, res) {
 }
 
 function searchStyle(req, res) {
-  const { page = 1 } = req.params;
-  let { sort } = req.query;
+  const { page = 1 } = req.query;
 
+  let sort;
   if (req.query.sort === "stars") {
     sort = "-stargazers";
   } else if (req.query.sort === "update") {
@@ -144,11 +144,11 @@ function searchStyle(req, res) {
 }
 
 function getStylesByOwner(req, res) {
-  const { owner, page = 1 } = req.params;
+  const { page = 1 } = req.query;
+  const { owner } = req.params;
   if (!owner) return res.status(400).json({ error: "Request must contain repository owner" });
 
-  let { sort } = req.query;
-
+  let sort;
   if (req.query.sort === "stars") {
     sort = "-stargazers";
   } else if (req.query.sort === "update") {

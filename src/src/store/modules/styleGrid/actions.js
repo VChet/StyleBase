@@ -9,26 +9,26 @@ export default {
   async getStyles({ state, commit }) {
     commit('SET_LOADING', true);
 
-    let url = `/api/styles/${state.pagination.page}`;
+    let params = {};
+    params.page = state.pagination.page;
+
+    let url = '/api/styles';
     if (state.searchQuery) {
-      url = `/api/search/${state.pagination.page}?query=${state.searchQuery}`;
+      url = '/api/search';
+      params.query = state.searchQuery;
       window.history.replaceState({}, `${state.searchQuery} | StyleBase`, `/search/${state.searchQuery}`);
     }
     if (state.ownerFilter) {
-      url = `/api/owner/${state.ownerFilter}/${state.pagination.page}`;
+      url = `/api/owner/${state.ownerFilter}`;
       window.history.replaceState({}, `Styles by ${state.ownerFilter} | StyleBase`, `/${state.ownerFilter}`);
     }
 
-    let params;
     switch (state.selectedSort) {
       case 1:
-        params = { sort: 'update' };
+        params.sort = 'update';
         break;
       case 2:
-        params = { sort: 'stars' };
-        break;
-      default:
-        params = {};
+        params.sort = 'stars';
         break;
     }
 
