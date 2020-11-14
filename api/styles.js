@@ -192,9 +192,13 @@ function editStyle(req, res) {
 
   if (customData.customPreview) {
     try {
-      const previewURL = new URL(customData.customPreview);
-      if (!previewURL.protocol.includes("https:")) {
+      const previewUrl = new URL(customData.customPreview);
+      const imagePattern = /\.(png|gif|jpg|svg|bmp|icns|ico|sketch)$/i;
+      if (!previewUrl.protocol.includes("https:")) {
         return res.status(400).json({ error: "Preview must be from a secure source" });
+      }
+      if (!imagePattern.test(previewUrl.pathname)) {
+        return res.status(415).json({ error: "Preview file must be an image" });
       }
     } catch (error) {
       return res.status(400).json({ error: "Invalid preview URL" });
