@@ -1,5 +1,17 @@
 const { Style } = require("../models/Style");
-const { retrieveRepositoryData } = require("./parser");
+const {
+  retrieveRepositoryFiles,
+  retrieveRepositoryData
+} = require("./parser");
+
+async function getRepositoryFiles(req, res) {
+  let { url } = req.query;
+  url = url.replace(/\/$/, ""); // Trim trailing slash
+
+  const files = await retrieveRepositoryFiles(url);
+  if (!files.length) return res.status(400).json({ error: "Repository does not contain UserCSS files" });
+  return res.status(200).json({ files });
+}
 
 function getStyles(req, res) {
   const { query, page = 1, sort } = req.query;
@@ -44,13 +56,14 @@ function getStyleData(req, res) {
 
 function addStyle(req, res) {
   let { url } = req.body;
+  const { usercss } = req.body;
   url = url.replace(/\/$/, ""); // Trim trailing slash
 
-  Style.findOne({ url }, async (error, style) => {
+  Style.findOne({ url, usercss: usercss.download_url }, async (error, style) => {
     if (error) return res.status(500).json({ error });
-    if (style) return res.status(409).json({ error: "Repository was already added to our base" });
+    if (style) return res.status(409).json({ error: "Style was already added to our base" });
 
-    const data = await retrieveRepositoryData(url);
+    const data = await retrieveRepositoryData(url, usercss);
     if (data.status === 404) return res.status(404).json({ error: "Repository was not found" });
     if (data.error) return res.status(data.status).json({ error: data.error });
     if (data.isPrivate) return res.status(403).json({ error: "Repository is private" });
@@ -69,26 +82,23 @@ function updateStyle(req, res) {
   const { url } = req.body;
   if (!url) return res.status(400).json({ error: "Request must contain url field" });
 
-  Style.findOne({ url }, async (error, style) => {
+  Style.find({ url }, async (error, styles) => {
     if (error) return res.status(500).json({ error });
-    if (!style) return res.status(404).json({ error: "Style was not found in our base" });
+    if (!styles.length) return res.status(404).json({ error: "Repository was not found in our base" });
 
-    const data = await retrieveRepositoryData(style.url);
+    const data = await retrieveRepositoryData(url);
     if (data.status === 404) return res.status(404).json({ error: "Repository was not found" });
     if (data.error) return res.status(data.status).json({ error: data.error });
     if (data.isPrivate) return res.status(403).json({ error: "Repository is private" });
     if (data.isArchived) return res.status(400).json({ error: "Repository is archived" });
     if (data.isFork) return res.status(400).json({ error: "Repository is forked" });
 
-    Style.findOneAndUpdate(
-      { url },
-      data,
-      { new: true },
-      (updateError, newStyle) => {
-        if (updateError) return res.status(500).json({ error: updateError });
-        return res.status(200).json({ style: newStyle });
-      }
-    );
+    delete data.name;
+
+    Style.updateMany({ url }, data, { new: true }, (updateError, updatedStyles) => {
+      if (updateError) return res.status(500).json({ error: updateError });
+      return res.status(200).json({ styles: updatedStyles });
+    });
   });
 }
 
@@ -140,6 +150,7 @@ async function deleteStyle(req, res) {
 }
 
 module.exports = {
+  getRepositoryFiles,
   getStyles,
   getStyleData,
   addStyle,

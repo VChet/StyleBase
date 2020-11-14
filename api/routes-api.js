@@ -46,6 +46,7 @@ const isAuthorized = async (req, res, next) => {
 
 const {
   getStyles,
+  getRepositoryFiles,
   getStyleData,
   addStyle,
   updateAllStyles,
@@ -59,6 +60,7 @@ const {
 } = require("./users");
 
 router.get("/styles/:owner?", cacheSuccessful, getStyles);
+router.get("/style/files", getRepositoryFiles);
 router.get("/style", cacheSuccessful, getStyleData);
 router.post("/style/add", rateLimiter, addStyle);
 router.put("/style/update/all", rateLimiter, updateAllStyles);

@@ -3,7 +3,25 @@ const repoImages = require("repo-images");
 
 const { token } = require("../config").github;
 
-async function retrieveRepositoryData(url) {
+async function retrieveRepositoryFiles(url) {
+  let repoUrl;
+  try {
+    repoUrl = new URL(url).pathname;
+  } catch (error) {
+    return { status: 400, error: "Invalid URL" };
+  }
+
+  const config = {
+    headers: { Authorization: `token ${token}` }
+  };
+
+  const contents = await axios.get(`https://api.github.com/repos${repoUrl}/contents`, config);
+  const stylePattern = /\.user\.(css|styl)$/;
+  const files = contents.data.filter((file) => stylePattern.test(file.name));
+  return files;
+}
+
+async function retrieveRepositoryData(url, usercss = null) {
   let repoUrl;
   try {
     repoUrl = new URL(url).pathname;
@@ -18,19 +36,7 @@ async function retrieveRepositoryData(url) {
         Accept: "application/vnd.github.mercy-preview+json"
       }
     };
-    const [repo, contents] = await Promise.all([
-      axios.get(`https://api.github.com/repos${repoUrl}`, config),
-      axios.get(`https://api.github.com/repos${repoUrl}/contents`, config)
-    ]);
-    const stylePattern = /\.user\.(css|styl)$/;
-    const usercss = contents.data.find(file => stylePattern.test(file.name));
-    if (!usercss) {
-      return {
-        status: 400,
-        error: "Repository does not contain UserCSS file"
-      };
-    }
-
+    const repo = await axios.get(`https://api.github.com/repos${repoUrl}`, config);
     const branch = repo.data.default_branch;
     const images = await repoImages(repoUrl.substr(1), { token, branch });
     let preview;
@@ -40,9 +46,8 @@ async function retrieveRepositoryData(url) {
       preview = `https://raw.githubusercontent.com${repoUrl}/${branch}/${previewObj.path}`;
     }
 
-    return {
+    const styleData = {
       url: repo.data.html_url,
-      usercss: usercss.download_url,
       preview,
       name: repo.data.name,
       description: repo.data.description,
@@ -59,6 +64,13 @@ async function retrieveRepositoryData(url) {
       isArchived: repo.data.archived,
       isFork: repo.data.fork
     };
+
+    if (usercss) {
+      styleData.usercss = usercss.download_url;
+      styleData.name = usercss.name.replace(/\s+/g, "-");
+    }
+
+    return styleData;
   } catch (error) {
     if (!error.response) {
       console.log(error);
@@ -71,4 +83,7 @@ async function retrieveRepositoryData(url) {
   }
 }
 
-module.exports = { retrieveRepositoryData };
+module.exports = {
+  retrieveRepositoryFiles,
+  retrieveRepositoryData
+};
