@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/VChet/StyleBase/compare/v1.8.0...v2.0.0) (2020-11-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* endpoint for styles by specific owner is changed from 'api/owner/:owner' to 'api/styles/:owner'
+* endpoint for styles filtered by query is removed ('api/search/'). Now use 'api/styles/' with the 'query' GET parameter
+
+### Features
+
+* **parser:** support '.user.styl' files ([f7dd9aa](https://github.com/VChet/StyleBase/commit/f7dd9aa5043b0baedb3074d70dccf599ad8f44f6))
+* **styles:** add sorting for styles filtered by query and by owner ([df46ecc](https://github.com/VChet/StyleBase/commit/df46ecc15459557b427e0ee99d2d7c98e9e86df6))
+* **vuex:** add vuex, styles and user states, mutations, actions ([a036be5](https://github.com/VChet/StyleBase/commit/a036be5f43d43e99f7919f248cd58e1218c7f759))
+
+
+### Bug Fixes
+
+* **no script:** add styles for no-script block ([9b05746](https://github.com/VChet/StyleBase/commit/9b05746239811bd0da25c5d66e251afdf635fce8))
+* **search:** change debounce behavior ([a7c1fc0](https://github.com/VChet/StyleBase/commit/a7c1fc0a31975315f045e00a514ffd758ef319d6))
+* **search:** clear timeout on reset ([fd408c3](https://github.com/VChet/StyleBase/commit/fd408c3af3a1f3c302d31cb5454af80a3dfc306a))
+* **sort order:** disable sort buttons on loading ([5651789](https://github.com/VChet/StyleBase/commit/565178905ac20551c9936d6e1a6621443b2757d2))
+* **sort order:** hide sort order if only one style found ([4733f24](https://github.com/VChet/StyleBase/commit/4733f24a4e92f1467cca560ec2abf3d87648eb05))
+* **styles api:** add lean parameter ([6713392](https://github.com/VChet/StyleBase/commit/6713392c5a387953ad007c8b10e55fc344600038))
+* **styles api:** allow empty custom name and custom preview fields ([e154638](https://github.com/VChet/StyleBase/commit/e154638f91b66598916242a13ef009b313a3c7d6))
+* **styles api:** check custom preview file extension ([a197043](https://github.com/VChet/StyleBase/commit/a19704335203e168d85a549aa38e1b9d5281815b))
+* **vuex:** close modal window only if opened ([0033769](https://github.com/VChet/StyleBase/commit/0033769843ba44e26e879e1a60020d0ef0a28135))
+* **vuex:** set search query even if it's empty ([8b32947](https://github.com/VChet/StyleBase/commit/8b32947df35b0fe5f8cc28df9e4ef86eea76ec0d))
+
+
+* refactor!(styles api): use same function for query and owner search ([b39ffc5](https://github.com/VChet/StyleBase/commit/b39ffc5ca52436997624d5a1c596d5fa0b401631))
+
 ## [1.8.0](https://github.com/VChet/StyleBase/compare/v1.7.0...v1.8.0) (2020-10-31)
 
 
