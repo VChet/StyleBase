@@ -8,10 +8,12 @@ const { retrieveRepositoryData } = require("../api/parser");
 const schema = new Schema({
   url: {
     type: String,
-    required: true,
+    required: true
+  },
+  usercss: {
+    type: String,
     unique: true
   },
-  usercss: String,
   preview: String,
   name: String,
   description: String,
