@@ -28,11 +28,12 @@ async function retrieveRepositoryData(link) {
       axios.get(`https://api.github.com/repos${pathname}`, config),
       axios.get(`https://api.github.com/repos${pathname}/contents`, config)
     ]);
-    const usercss = contents.data.find(file => file.name.includes("user.css"));
+    const stylePattern = /\.user\.(css|styl)$/;
+    const usercss = contents.data.find(file => stylePattern.test(file.name));
     if (!usercss) {
       return {
         status: 400,
-        error: "Repository does not contain usercss file"
+        error: "Repository does not contain UserCSS file"
       };
     }
 
