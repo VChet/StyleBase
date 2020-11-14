@@ -189,9 +189,6 @@ function updateAllStyles(req, res) {
 
 function editStyle(req, res) {
   const { url, ...customData } = req.body;
-  if (!customData.customName && !customData.customPreview) {
-    return res.status(400).json({ error: "Request must contain customName or customPreview fields" });
-  }
 
   if (customData.customPreview) {
     try {
