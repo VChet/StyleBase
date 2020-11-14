@@ -21,7 +21,7 @@ import BaseDialog from '@/components/dialogs/BaseDialog';
 import CloseButton from '@/components/CloseButton.vue';
 
 export default {
-  name: 'StyleInfoDialog',
+  name: 'AddStyleDialog',
   components: {
     BaseDialog,
     CloseButton

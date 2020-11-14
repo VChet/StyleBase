@@ -32,7 +32,7 @@
 import BaseDialog from '@/components/dialogs/BaseDialog';
 
 export default {
-  name: 'StyleInfoDialog',
+  name: 'HowToUseDialog',
   components: {
     BaseDialog
   },
