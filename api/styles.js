@@ -137,7 +137,7 @@ function addStyle(req, res) {
 
     const newStyle = new Style(data);
     newStyle.save((saveError) => {
-      if (saveError) return res.status(500).json({ error: saveError });
+      if (saveError) return res.status(500).json({ error: `${saveError.code}: ${saveError.name}` });
       return res.status(201).json({ style: newStyle });
     });
   });
