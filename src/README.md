@@ -1,5 +1,7 @@
 # StyleBase Frontend
 
+![Vue](https://img.shields.io/github/package-json/dependency-version/VChet/StyleBase/vue?color=41b883&filename=src%2Fpackage.json)
+![Vuex](https://img.shields.io/github/package-json/dependency-version/VChet/StyleBase/vuex?color=41b883&filename=src%2Fpackage.json)
 [![CC](https://img.shields.io/badge/Conventional%20Commits-1.0.0-green.svg)](https://conventionalcommits.org)
 
 ## Development
@@ -13,3 +15,5 @@
    ```
 1. Serve client `npm start`
 1. Build files to serve via node server `npm run build`
+
+### [Server](../README.md)
