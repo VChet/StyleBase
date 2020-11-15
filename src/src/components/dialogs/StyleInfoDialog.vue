@@ -65,31 +65,34 @@
     </div>
 
     <div v-if="isAuthorized" class="actions">
-      <form class="edit" @submit.prevent="editStyle">
-        <input
-          :value="styleData.customName"
-          type="text"
-          placeholder="Style name"
-          @change="(e) => (customName = e.target.value)"
-        />
-        <input
-          :value="styleData.customPreview"
-          type="text"
-          placeholder="Preview url"
-          @change="(e) => (customPreview = e.target.value)"
-        />
-        <button class="style-button" type="submit">Edit</button>
-      </form>
-      <div class="delete">
-        <div>
-          <strong>Delete this style</strong>
-          <p>
+      <div class="action-group">
+        <strong class="action-title">Edit style</strong>
+        <form @submit.prevent="editStyle">
+          <input
+            :value="styleData.customName"
+            type="text"
+            placeholder="Style name"
+            @change="(e) => (customName = e.target.value)"
+          />
+          <input
+            :value="styleData.customPreview"
+            type="text"
+            placeholder="Preview url"
+            @change="(e) => (customPreview = e.target.value)"
+          />
+          <button class="style-button" type="submit">Edit</button>
+        </form>
+      </div>
+      <div class="action-group">
+        <strong class="action-title">Delete style</strong>
+        <form @submit.prevent="deleteStyle">
+          <span>
             Keep in&nbsp;mind that it&nbsp;still can be&nbsp;re&#8209;added. If&nbsp;you don't want your style
             on&nbsp;this site&nbsp;&mdash; please
             <a href="mailto:feedback@stylebase.cc" rel="noopener">contact us</a>.
-          </p>
-        </div>
-        <button class="style-button-danger" @click="deleteStyle">Delete</button>
+          </span>
+          <button class="style-button-danger" type="submit">Delete</button>
+        </form>
       </div>
     </div>
   </base-dialog>
@@ -324,50 +327,36 @@ export default {
   }
 }
 
-.actions {
-  margin-top: 2rem;
+.action-group {
+  margin: 1.5rem 0;
   border-top: 1px solid var(--color-border);
 
-  p {
+  .action-title {
+    font-size: 20px;
+    display: inline-block;
+    margin: 1rem 0 0.5rem;
+  }
+
+  form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
     margin: 0.5rem 0;
+  }
+
+  input {
+    flex: 1;
+    box-sizing: border-box;
+    height: 50px;
+    padding: 0 15px;
   }
 
   a {
     color: var(--color-main);
     &:hover {
       text-decoration: underline;
-    }
-  }
-
-  .edit {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin: 1rem 0;
-
-    input,
-    button {
-      margin: 0.5rem 0;
-    }
-
-    input {
-      flex: 1;
-      box-sizing: border-box;
-      height: 50px;
-      margin-right: 1rem;
-      padding: 0 15px;
-    }
-  }
-
-  .delete {
-    display: flex;
-    justify-content: space-between;
-    margin: 1rem 0;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--color-border);
-
-    div {
-      margin-right: 30px;
     }
   }
 }
