@@ -164,8 +164,8 @@ export default {
         .delete('/api/style/delete', { data: { url: this.styleData.url } })
         .then((response) => {
           alert(`"${response.data.style.name}" style deleted`);
-          this.$emit('update-styles');
-          this.$emit('close');
+          this.getStyles();
+          this.closeStyleModal();
         })
         .catch((error) => {
           alert(error.response.data.error);
