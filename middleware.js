@@ -16,7 +16,6 @@ const config = require("./config");
 const { User } = require("./models/User");
 const { Style } = require("./models/Style");
 const { initCollection } = require("./models/init");
-const { retrieveRepositoryData } = require("./api/styles");
 
 // Database
 mongoose.connect(config.mongoUrl, {
@@ -64,21 +63,10 @@ const agenda = new Agenda({
   }
 });
 
-agenda.define("Update all styles", () => {
-  // TODO: move to schema
-  Style.find({}).lean().exec(async (error, styles) => {
-    if (error)console.log({ error });
-    const Bulk = Style.collection.initializeUnorderedBulkOp();
-    const stylesArr = await Promise.all(styles.map(style => retrieveRepositoryData(style.url)));
-    stylesArr.map(style => Bulk.find({ url: style.url }).update({ $set: style }));
-    Bulk.execute((bulkError, result) => {
-      if (bulkError) console.log({ bulkError });
-      console.log("Data updated", result);
-    });
-  });
-});
-
 if (process.env.NODE_ENV === "production") {
+  agenda.define("Update all styles", async () => {
+    console.log(await Style.updateAllStyles());
+  });
   agenda.start().then(() => agenda.every("0 * * * *", "Update all styles"));
 }
 

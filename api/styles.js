@@ -1,84 +1,5 @@
-const axios = require("axios");
-const repoImages = require("repo-images");
-
 const { Style } = require("../models/Style");
-const { token } = require("../config").github;
-
-async function retrieveRepositoryData(link) {
-  let repoURL;
-  let pathname;
-  try {
-    repoURL = new URL(link);
-    pathname = repoURL.pathname;
-  } catch (error) {
-    return {
-      status: 400,
-      error: "Invalid URL",
-    };
-  }
-
-  try {
-    const config = {
-      headers: {
-        Authorization: `token ${token}`,
-        Accept: "application/vnd.github.mercy-preview+json"
-      }
-    };
-    const [repo, contents] = await Promise.all([
-      axios.get(`https://api.github.com/repos${pathname}`, config),
-      axios.get(`https://api.github.com/repos${pathname}/contents`, config)
-    ]);
-    const stylePattern = /\.user\.(css|styl)$/;
-    const usercss = contents.data.find(file => stylePattern.test(file.name));
-    if (!usercss) {
-      return {
-        status: 400,
-        error: "Repository does not contain UserCSS file"
-      };
-    }
-
-    const branch = repo.data.default_branch;
-    const images = await repoImages(pathname.substr(1), { token, branch });
-    let preview;
-    if (images.length) {
-      let previewObj = images.find((img) => img.path.includes("preview"));
-      if (!previewObj) previewObj = images.reduce((a, b) => (a.size > b.size ? a : b));
-      preview = `https://raw.githubusercontent.com${pathname}/${branch}/${previewObj.path}`;
-    }
-
-    return {
-      url: repo.data.html_url,
-      usercss: usercss.download_url,
-      preview,
-      name: repo.data.name,
-      description: repo.data.description,
-      owner: repo.data.owner.login,
-      created: repo.data.created_at,
-      lastUpdate: repo.data.updated_at,
-      topics: repo.data.topics,
-      stargazers: repo.data.stargazers_count,
-      watchers: repo.data.subscribers_count,
-      forks: repo.data.forks,
-      issues: repo.data.open_issues,
-      license: (repo.data.license && repo.data.license.spdx_id) || "",
-      isPrivate: repo.data.private,
-      isArchived: repo.data.archived,
-      isFork: repo.data.fork
-    };
-  } catch (error) {
-    if (!error.response) {
-      console.log(error);
-      return {
-        status: 500,
-        error: "Unhandled server error"
-      };
-    }
-    return {
-      status: error.response.status || error.response.statusCode,
-      error: error.response.statusText || error.response.statusMessage
-    };
-  }
-}
+const { retrieveRepositoryData } = require("./parser");
 
 function getStyles(req, res) {
   const { query, page = 1, sort } = req.query;
@@ -171,21 +92,9 @@ function updateStyle(req, res) {
 }
 
 function updateAllStyles(req, res) {
-  Style.find({}).lean().exec(async (error, styles) => {
-    if (error) return res.status(500).json({ error });
-
-    try {
-      const Bulk = Style.collection.initializeUnorderedBulkOp();
-      const stylesArr = await Promise.all(styles.map(style => retrieveRepositoryData(style.url)));
-      stylesArr.map(style => Bulk.find({ url: style.url }).update({ $set: style }));
-      Bulk.execute((bulkError, result) => {
-        if (bulkError) return res.status(500).json({ error: bulkError });
-        return res.status(200).json({ result });
-      });
-    } catch (dataError) {
-      return res.status(500).json({ error: dataError });
-    }
-  });
+  Style.updateAllStyles()
+    .then((result) => res.status(200).json({ result }))
+    .catch((error) => res.status(500).json({ error }));
 }
 
 function editStyle(req, res) {
@@ -230,7 +139,6 @@ async function deleteStyle(req, res) {
 }
 
 module.exports = {
-  retrieveRepositoryData,
   getStyles,
   getStyleData,
   addStyle,
