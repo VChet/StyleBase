@@ -6,13 +6,13 @@
           {{ styleData.customName || removeDashes(styleData.name) }}
         </a>
         <span class="owner">
-          by
+          {{ $t('styles.by') }}
           <button class="link" type="button" @click="setOwnerFilter(styleData.owner)">
             {{ styleData.owner }}
           </button>
         </span>
       </div>
-      <div class="last-update">Updated {{ dateFromNow(styleData.lastUpdate) }}</div>
+      <div class="last-update">{{ $t('styleInfo.updated') }} {{ dateFromNow(styleData.lastUpdate) }}</div>
     </div>
 
     <!-- eslint-disable-next-line vue/no-v-html -->
@@ -57,41 +57,39 @@
           </a>
         </li>
         <li class="buttons">
-          <a class="button style-button-filled mobile-wide" :href="styleData.usercss" rel="noopener" target="_blank"
-            >Install</a
-          >
+          <a class="button style-button-filled mobile-wide" :href="styleData.usercss" rel="noopener" target="_blank">
+            {{ $t('styleInfo.install') }}
+          </a>
         </li>
       </ul>
     </div>
 
     <div v-if="isAuthorized" class="actions">
       <div class="action-group">
-        <strong class="action-title">Edit style</strong>
+        <strong class="action-title">{{ $t('styleInfo.edit.title') }}</strong>
         <form @submit.prevent="editStyle">
           <input
             :value="styleData.customName"
             type="text"
-            placeholder="Style name"
+            :placeholder="$t('styleInfo.edit.namePlaceholder')"
             @change="(e) => (customName = e.target.value)"
           />
           <input
             :value="styleData.customPreview"
             type="text"
-            placeholder="Preview url"
+            :placeholder="$t('styleInfo.edit.previewPlaceholder')"
             @change="(e) => (customPreview = e.target.value)"
           />
-          <button class="style-button" type="submit">Edit</button>
+          <button class="style-button" type="submit">{{ $t('styleInfo.edit.button') }}</button>
         </form>
       </div>
       <div class="action-group">
-        <strong class="action-title">Delete style</strong>
+        <strong class="action-title">{{ $t('styleInfo.delete.title') }}</strong>
         <form @submit.prevent="deleteStyle">
-          <span>
-            Keep in&nbsp;mind that it&nbsp;still can be&nbsp;re&#8209;added. If&nbsp;you don't want your style
-            on&nbsp;this site&nbsp;&mdash; please
-            <a href="mailto:feedback@stylebase.cc" rel="noopener">contact us</a>.
-          </span>
-          <button class="style-button-danger" type="submit">Delete</button>
+          <i18n tag="span" path="styleInfo.delete.text">
+            <a href="mailto:feedback@stylebase.cc" rel="noopener">{{ $t('styleInfo.delete.contact') }}</a>
+          </i18n>
+          <button class="style-button-danger" type="submit">{{ $t('styleInfo.delete.button') }}</button>
         </form>
       </div>
     </div>

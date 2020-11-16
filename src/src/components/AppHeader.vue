@@ -13,12 +13,16 @@
         <span></span>
       </button>
       <nav>
-        <button class="link" type="button" @click="$emit('open-nav-link', 'showHowtoUseModal')">How to Use</button>
-        <button class="link" type="button" @click="$emit('open-nav-link', 'showAddStyleModal')">Add Style</button>
-        <a v-if="!user.username" href="/login">Login</a>
+        <button class="link" type="button" @click="$emit('open-nav-link', 'showHowtoUseModal')">
+          {{ $t('header.howToUse') }}
+        </button>
+        <button class="link" type="button" @click="$emit('open-nav-link', 'showAddStyleModal')">
+          {{ $t('header.addStyle') }}
+        </button>
+        <a v-if="!user.username" href="/login">{{ $t('header.login') }}</a>
         <template v-else>
           <button class="link" type="button" @click="setOwnerFilter(user.username)">{{ user.username }}</button>
-          <a href="/logout">Logout</a>
+          <a href="/logout">{{ $t('header.logout') }}</a>
         </template>
       </nav>
     </div>

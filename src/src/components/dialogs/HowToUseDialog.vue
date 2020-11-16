@@ -1,29 +1,25 @@
 <template>
   <base-dialog v-if="open" size="medium" @close="$emit('close')">
-    <div class="dialog-title">How to use this styles?</div>
+    <div class="dialog-title">{{ $t('howToUse.title') }}</div>
     <ol class="dialog-list">
       <li>
-        <div class="item-title">Install the extension, which will include styles into webpages.</div>
-        <span v-if="browser">
-          Looks like you're using
-          <span class="browser">{{ browser }}</span> browser.
-          <a :href="browserList[browser]" rel="noopener" target="_blank">Install extension for {{ browser }}</a>
-          or choose a browser manually:
-        </span>
-        <span v-else>Choose extension depending on your browser:</span>
+        <div>{{ $t('howToUse.1.text') }}</div>
+        <i18n v-if="browser" tag="span" path="howToUse.1.browserDetected">
+          <span class="browser">{{ browser }}</span>
+          <a :href="browserList[browser]" rel="noopener" target="_blank">{{ browser }}</a>
+        </i18n>
+        <span v-else>{{ $t('howToUse.1.browserNotDetected') }}</span>
         <ul>
           <li v-for="(link, item, index) in browserList" :key="index">
             <a :href="link" rel="noopener" target="_blank">{{ item }}</a>
           </li>
         </ul>
       </li>
-      <li>
-        Choose a style from our collection and click install, extension will ask you to install new usercss, accept it
-      </li>
-      <li>Style is installed and ready to use</li>
+      <li>{{ $t('howToUse.2') }}</li>
+      <li>{{ $t('howToUse.3') }}</li>
     </ol>
     <div class="dialog-buttons">
-      <button class="style-button-filled" type="button" @click="$emit('close')">Got it!</button>
+      <button class="style-button-filled" type="button" @click="$emit('close')">{{ $t('howToUse.close') }}</button>
     </div>
   </base-dialog>
 </template>

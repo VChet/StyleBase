@@ -3,30 +3,30 @@
     <div class="container">
       <section class="features">
         <div class="feature-item">
-          <div>Automatic Updates</div>
-          <span>Install once and receive updates automatically</span>
+          <div>{{ $t('features.1.title') }}</div>
+          <span>{{ $t('features.1.text') }}</span>
         </div>
         <div class="feature-item">
-          <div>Free to Share</div>
-          <span>Anyone can add own style</span>
+          <div>{{ $t('features.2.title') }}</div>
+          <span>{{ $t('features.2.text') }}</span>
         </div>
         <div class="feature-item">
-          <div>Open Source</div>
-          <span>Install directly from repository</span>
+          <div>{{ $t('features.3.title') }}</div>
+          <span>{{ $t('features.3.text') }}</span>
         </div>
       </section>
       <section class="search-container">
-        <label for="search" class="visually-hidden">Style search</label>
-        <input id="search" v-model="searchQuery" type="text" placeholder="Search by style name or owner..." />
-        <close-button v-show="state.searchQuery" aria-label="Clear the search input" @click="reset" />
+        <label for="search" class="visually-hidden">{{ $t('search') }}</label>
+        <input id="search" v-model="searchQuery" type="text" :placeholder="$t('search.placeholder')" />
+        <close-button v-show="state.searchQuery" :aria-label="$t('search.label')" @click="reset" />
       </section>
       <section class="main-container">
         <div class="section-header">
           <div class="title">
-            Styles
+            {{ $t('styles.title') }}
             <span v-if="state.ownerFilter">
-              by {{ state.ownerFilter }}
-              <close-button aria-label="Clear the owner filter" @click="reset" />
+              {{ $t('styles.by') }} {{ state.ownerFilter }}
+              <close-button :aria-label="$t('styles.clearOwnerLabel')" @click="reset" />
             </span>
           </div>
           <hr />
@@ -39,7 +39,7 @@
                 :disabled="state.isLoading"
                 @click="setSortOrder(option.id)"
               >
-                {{ option.text }}
+                {{ $t(`sort.${option.text}`) }}
               </button>
             </li>
           </ul>

@@ -15,20 +15,20 @@
         target="_blank"
         @click="$gtag.event('install', { event_category: 'stylecard' })"
       >
-        Install
+        {{ $t('styleInfo.install') }}
       </a>
     </template>
 
     <template #data>
       <div @click="openStyleModal(styleData)">
         <div class="name">{{ styleData.customName || removeDashes(styleData.name) }}</div>
-        <div>by {{ styleData.owner }}</div>
+        <div>{{ $t('styles.by') }} {{ styleData.owner }}</div>
       </div>
     </template>
 
     <template #footer>
       <span>{{ pluralize(styleData.stargazers, 'star') }}</span>
-      <span>updated {{ dateFromNow(styleData.lastUpdate) }}</span>
+      <span>{{ $t('styleInfo.updated') }} {{ dateFromNow(styleData.lastUpdate) }}</span>
     </template>
   </base-card>
 </template>
@@ -94,7 +94,7 @@ export default {
     transform: translate(-50%, -50%);
     width: 100px;
     height: 30px;
-    padding: 5px 0;
+    padding: 5px;
     font-size: 18px;
     transition: background-color 0.2s, opacity 0.2s;
 

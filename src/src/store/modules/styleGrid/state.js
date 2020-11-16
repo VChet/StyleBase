@@ -12,15 +12,15 @@ export default {
   sortOptions: [
     {
       id: '_id',
-      text: 'Recently added'
+      text: 'add'
     },
     {
       id: 'lastUpdate',
-      text: 'Recently updated'
+      text: 'update'
     },
     {
       id: 'stargazers',
-      text: 'Most liked'
+      text: 'stars'
     }
   ],
   sortOrder: '_id',
