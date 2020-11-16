@@ -8,8 +8,6 @@
   "license": "MIT",
   "scripts": {
     "start": "node server.js",
-    "db:start": "mongod --bind_ip 127.0.0.1 --port 27017",
-    "db:drop": "mongo stylebase --eval 'printjson(db.dropDatabase())'",
     "server": "nodemon server.js",
     "client:start": "cd src/ && npm start",
     "client:build": "cd src/ && npm run build"
