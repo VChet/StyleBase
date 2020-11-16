@@ -11,6 +11,7 @@ export default {
 
     const params = {};
     params.page = state.pagination.page;
+    params.sort = state.sortOrder;
 
     let url = '/api/styles/';
     if (state.searchQuery) {
@@ -20,15 +21,6 @@ export default {
     if (state.ownerFilter) {
       url += state.ownerFilter;
       window.history.replaceState({}, `Styles by ${state.ownerFilter} | StyleBase`, `/${state.ownerFilter}`);
-    }
-
-    switch (state.selectedSort) {
-      case 1:
-        params.sort = 'update';
-        break;
-      case 2:
-        params.sort = 'stars';
-        break;
     }
 
     await axios
@@ -64,8 +56,8 @@ export default {
     commit('SET_PAGE', page);
     dispatch('getStyles');
   },
-  setSorting({ commit, dispatch }, sortOption) {
-    commit('SET_SORTING', sortOption);
+  setSortOrder({ commit, dispatch }, sortOption) {
+    commit('SET_SORT_ORDER', sortOption);
     commit('SET_PAGE', 1);
     dispatch('getStyles');
   },
@@ -86,7 +78,7 @@ export default {
   resetFilters({ commit, dispatch }) {
     window.history.replaceState({}, document.title, '/');
     commit('SET_SEARCH_QUERY', '');
-    commit('SET_SORTING', 0);
+    commit('SET_SORT_ORDER', 0);
     commit('SET_OWNER_FILTER', '');
     commit('SET_PAGE', 1);
     dispatch('getStyles');

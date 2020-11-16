@@ -20,8 +20,8 @@ export default {
   SET_OWNER_FILTER(state, filter) {
     state.ownerFilter = filter;
   },
-  SET_SORTING(state, sorting) {
-    state.selectedSort = sorting;
+  SET_SORT_ORDER(state, orderId) {
+    state.sortOrder = orderId;
   },
   SET_MODAL_VISIBILITY(state, value) {
     state.showStyleInfoModal = value;

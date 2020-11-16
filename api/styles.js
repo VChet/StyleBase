@@ -10,9 +10,9 @@ function getStyles(req, res) {
   if (owner) filter = { owner };
 
   let sortOrder = "-_id";
-  if (sort === "stars") {
+  if (sort === "stargazers") {
     sortOrder = "-stargazers";
-  } else if (sort === "update") {
+  } else if (sort === "lastUpdate") {
     sortOrder = "-lastUpdate";
   }
 

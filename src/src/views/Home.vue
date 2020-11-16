@@ -35,11 +35,11 @@
               <button
                 class="link"
                 type="button"
-                :class="{ active: state.selectedSort === index }"
+                :class="{ active: state.sortOrder === option.id }"
                 :disabled="state.isLoading"
-                @click="setSorting(index)"
+                @click="setSortOrder(option.id)"
               >
-                {{ option }}
+                {{ option.text }}
               </button>
             </li>
           </ul>
@@ -118,7 +118,7 @@ export default {
       getStyle: 'styleGrid/getStyle',
       selectStyle: 'styleGrid/selectStyle',
       setPage: 'styleGrid/setPage',
-      setSorting: 'styleGrid/setSorting',
+      setSortOrder: 'styleGrid/setSortOrder',
       setQuery: 'styleGrid/setQuery',
       setOwnerFilter: 'styleGrid/setOwnerFilter',
       resetFilters: 'styleGrid/resetFilters'

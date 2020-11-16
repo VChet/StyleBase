@@ -9,8 +9,21 @@ export default {
   searchQuery: '',
   ownerFilter: '',
 
-  sortOptions: ['Recently added', 'Recently updated', 'Most liked'],
-  selectedSort: 0,
+  sortOptions: [
+    {
+      id: '_id',
+      text: 'Recently added'
+    },
+    {
+      id: 'lastUpdate',
+      text: 'Recently updated'
+    },
+    {
+      id: 'stargazers',
+      text: 'Most liked'
+    }
+  ],
+  sortOrder: '_id',
 
   selectedStyle: {},
   showStyleInfoModal: false
