@@ -13,6 +13,9 @@
         <span></span>
       </button>
       <nav>
+        <select v-model="$i18n.locale">
+          <option v-for="(locale, index) in locales" :key="index" :value="locale">{{ locale }}</option>
+        </select>
         <button class="link" type="button" @click="$emit('open-nav-link', 'showHowtoUseModal')">
           {{ $t('header.howToUse') }}
         </button>
@@ -31,11 +34,13 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import localeFiles from '@/locales/index';
 
 export default {
   name: 'AppHeader',
   data() {
     return {
+      locales: Object.keys(localeFiles),
       menuIsActive: false
     };
   },
