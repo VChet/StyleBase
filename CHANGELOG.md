@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/VChet/StyleBase/compare/v2.0.0...v2.0.1) (2020-11-17)
+
+
+### Bug Fixes
+
+* **db:** send code and name on save error ([25cf268](https://github.com/VChet/StyleBase/commit/25cf26852e2683610de33505f284de803aa2fbce))
+* **style info:** fix actions on style removal ([2b909c1](https://github.com/VChet/StyleBase/commit/2b909c14b3ded73ef8ffc7ca67c7f1d49e90cc17))
+* fix dialog component names ([e04f767](https://github.com/VChet/StyleBase/commit/e04f76724e743fb514e9e6455ff85d75101c73da))
+
 ## [2.0.0](https://github.com/VChet/StyleBase/compare/v1.8.0...v2.0.0) (2020-11-14)
 
 
