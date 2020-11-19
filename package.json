@@ -12,6 +12,9 @@
     "client:start": "cd src/ && npm start",
     "client:build": "cd src/ && npm run build"
   },
+  "engines": {
+    "node": "^14.15.1"
+  },
   "dependencies": {
     "agenda": "^3.1.0",
     "apicache": "^1.5.3",
