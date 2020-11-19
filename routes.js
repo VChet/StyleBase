@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 const passport = require("passport");
 
+const { getRss } = require("./api/rss");
+
 const router = express.Router();
 const clientIndex = path.join(__dirname, "public/index.html");
 const maintenance = path.join(__dirname, "maintenance.html");
@@ -13,6 +15,9 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 router.get("/github/callback", passport.authenticate("github"), (req, res) => res.redirect("/"));
+
+// RSS
+router.get("/rss", getRss);
 
 // Client serving
 router.get("*", (req, res) => res.sendFile(clientIndex, (error) => {
