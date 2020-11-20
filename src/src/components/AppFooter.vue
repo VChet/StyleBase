@@ -3,13 +3,16 @@
     <div class="container">
       <ul class="link-list">
         <li>
-      <a href="mailto:feedback@stylebase.cc" rel="noopener">Contact Us</a>
+          <a href="/rss">RSS Feed</a>
         </li>
         <li>
-      <button class="link" type="button" @click="$emit('open-nav-link', 'showPrivacyModal')">Privacy Policy</button>
+          <a href="mailto:feedback@stylebase.cc" rel="noopener">Contact Us</a>
         </li>
         <li>
-      <a href="https://github.com/VChet/StyleBase" rel="noopener" target="_blank">Code on GitHub</a>
+          <button class="link" type="button" @click="$emit('open-nav-link', 'showPrivacyModal')">Privacy Policy</button>
+        </li>
+        <li>
+          <a href="https://github.com/VChet/StyleBase" rel="noopener" target="_blank">Code on GitHub</a>
         </li>
       </ul>
     </div>
