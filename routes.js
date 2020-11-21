@@ -7,7 +7,7 @@ const clientIndex = path.join(__dirname, "public/index.html");
 const maintenance = path.join(__dirname, "maintenance.html");
 
 // Authentication
-router.get("/login", passport.authenticate("github", { scope: ["read:user"] }));
+router.get("/login", passport.authenticate("github"));
 router.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
