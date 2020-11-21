@@ -1,5 +1,5 @@
 <template>
-  <base-card>
+  <BaseCard>
     <template #image>
       <img
         v-if="styleData.customPreview || styleData.preview"
@@ -30,7 +30,7 @@
       <span>{{ pluralize(styleData.stargazers, 'star') }}</span>
       <span>updated {{ dateFromNow(styleData.lastUpdate) }}</span>
     </template>
-  </base-card>
+  </BaseCard>
 </template>
 
 <script>

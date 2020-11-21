@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <app-header @open-nav-link="openNavLink" />
+    <AppHeader @open-nav-link="openNavLink" />
     <Home />
-    <app-footer @open-nav-link="openNavLink" />
+    <AppFooter @open-nav-link="openNavLink" />
 
-    <how-to-use-dialog :open="showHowtoUseModal" @close="showHowtoUseModal = false" />
-    <add-style-dialog :open="showAddStyleModal" @close="showAddStyleModal = false" />
-    <privacy-policy-dialog :open="showPrivacyModal" @close="showPrivacyModal = false" />
+    <HowToUseDialog :open="showHowtoUseModal" @close="showHowtoUseModal = false" />
+    <AddStyleDialog :open="showAddStyleModal" @close="showAddStyleModal = false" />
+    <PrivacyPolicyDialog :open="showPrivacyModal" @close="showPrivacyModal = false" />
   </div>
 </template>
 

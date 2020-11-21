@@ -1,5 +1,5 @@
 <template>
-  <base-dialog v-if="open" size="extra-large" @close="closeStyleModal">
+  <BaseDialog v-if="open" size="extra-large" @close="closeStyleModal">
     <div class="header">
       <div class="title">
         <a :href="`${styleData.url}`" rel="noopener" target="_blank">
@@ -102,7 +102,7 @@
       @confirm="deleteStyle"
       @close="showDeleteDialog = false"
     />
-  </base-dialog>
+  </BaseDialog>
 </template>
 
 <script>

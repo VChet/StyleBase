@@ -1,5 +1,5 @@
 <template>
-  <base-card>
+  <BaseCard>
     <template #image>
       <div class="skeleton-image"></div>
     </template>
@@ -17,7 +17,7 @@
         <span class="date"></span>
       </div>
     </template>
-  </base-card>
+  </BaseCard>
 </template>
 
 <script>

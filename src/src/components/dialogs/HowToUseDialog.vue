@@ -1,5 +1,5 @@
 <template>
-  <base-dialog v-if="open" size="medium" @close="$emit('close')">
+  <BaseDialog v-if="open" size="medium" @close="$emit('close')">
     <div class="dialog-title">How to use this styles?</div>
     <ol class="dialog-list">
       <li>
@@ -25,7 +25,7 @@
     <div class="dialog-buttons">
       <button class="style-button-filled" type="button" @click="$emit('close')">Got it!</button>
     </div>
-  </base-dialog>
+  </BaseDialog>
 </template>
 
 <script>

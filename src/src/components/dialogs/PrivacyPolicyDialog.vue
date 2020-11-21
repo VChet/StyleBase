@@ -1,5 +1,5 @@
 <template>
-  <base-dialog v-if="open" size="large" @close="$emit('close')">
+  <BaseDialog v-if="open" size="large" @close="$emit('close')">
     <h1 class="dialog-title">Privacy Policy</h1>
 
     <h2>Privacy Policy for StyleBase</h2>
@@ -53,7 +53,7 @@
     <div class="dialog-buttons">
       <button class="style-button-filled" type="button" @click="$emit('close')">Close</button>
     </div>
-  </base-dialog>
+  </BaseDialog>
 </template>
 
 <script>

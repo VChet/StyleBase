@@ -18,7 +18,7 @@
       <section class="search-container">
         <label for="search" class="visually-hidden">Style search</label>
         <input id="search" v-model="searchQuery" type="text" placeholder="Search by style name or owner..." />
-        <close-button v-show="state.searchQuery" aria-label="Clear the search input" @click="reset" />
+        <CloseButton v-show="state.searchQuery" aria-label="Clear the search input" @click="reset" />
       </section>
       <section class="main-container">
         <div class="section-header">
@@ -26,7 +26,7 @@
             Styles
             <span v-if="state.ownerFilter">
               by {{ state.ownerFilter }}
-              <close-button aria-label="Clear the owner filter" @click="reset" />
+              <CloseButton aria-label="Clear the owner filter" @click="reset" />
             </span>
           </div>
           <hr />
@@ -45,16 +45,16 @@
           </ul>
         </div>
         <div v-if="state.isLoading" class="style-grid">
-          <style-card-skeleton v-for="i in state.pagination.page * 16" :key="i" />
+          <StyleCardSkeleton v-for="i in state.pagination.page * 16" :key="i" />
         </div>
         <div v-if="!state.isLoading && state.styles.length" class="style-grid">
-          <style-card v-for="style in state.styles" :key="style._id" :style-data="style" />
+          <StyleCard v-for="style in state.styles" :key="style._id" :style-data="style" />
         </div>
         <div v-if="!state.isLoading && !state.styles.length" class="no-results">No results</div>
       </section>
     </div>
 
-    <style-info-dialog :open="state.showStyleInfoModal" />
+    <StyleInfoDialog :open="state.showStyleInfoModal" />
   </main>
 </template>
 

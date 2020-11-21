@@ -1,11 +1,11 @@
 <template>
-  <base-dialog v-if="open" size="small" @close="$emit('close')">
+  <BaseDialog v-if="open" size="small" @close="$emit('close')">
     <div class="dialog-title">{{ message }}</div>
     <div class="dialog-buttons">
       <button class="style-button" type="button" @click="$emit('close')">Cancel</button>
       <button class="style-button" type="button" @click="$emit('confirm')">Proceed</button>
     </div>
-  </base-dialog>
+  </BaseDialog>
 </template>
 
 <script>

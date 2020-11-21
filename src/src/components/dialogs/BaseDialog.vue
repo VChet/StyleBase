@@ -10,7 +10,7 @@
         @clickOutside="onClickOutside"
         @keydown.esc="onClose"
       >
-        <close-button v-if="!closeButtonHidden" aria-label="Close the modal" @click="onClose" />
+        <CloseButton v-if="!closeButtonHidden" aria-label="Close the modal" @click="onClose" />
 
         <div>
           <slot></slot>

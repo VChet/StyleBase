@@ -1,17 +1,17 @@
 <template>
-  <base-dialog v-if="open" size="small" @close="$emit('close')">
+  <BaseDialog v-if="open" size="small" @close="$emit('close')">
     <form @submit.prevent="submitStyle">
       <div class="dialog-title">Add new style</div>
       <div class="dialog-input">
         <input v-model.trim="url" type="text" placeholder="Link to GitHub repository" />
-        <close-button v-show="url" aria-label="Clear the input" @click="url = ''" />
+        <CloseButton v-show="url" aria-label="Clear the input" @click="url = ''" />
       </div>
       <div class="dialog-buttons">
         <button class="style-button" type="button" @click="$emit('close')">Not now</button>
         <button class="style-button-filled" type="submit" :disabled="isSubmitting">Add</button>
       </div>
     </form>
-  </base-dialog>
+  </BaseDialog>
 </template>
 
 <script>
