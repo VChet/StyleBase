@@ -85,7 +85,7 @@
       </div>
       <div class="action-group">
         <strong class="action-title">Delete style</strong>
-        <form @submit.prevent="deleteStyle">
+        <form @submit.prevent="showDeleteDialog = true">
           <span>
             Keep in&nbsp;mind that it&nbsp;still can be&nbsp;re&#8209;added. If&nbsp;you don't want your style
             on&nbsp;this site&nbsp;&mdash; please
@@ -95,6 +95,13 @@
         </form>
       </div>
     </div>
+
+    <ConfirmationDialog
+      :open="showDeleteDialog"
+      message="Remove this style?"
+      @confirm="deleteStyle"
+      @close="showDeleteDialog = false"
+    />
   </base-dialog>
 </template>
 
@@ -105,11 +112,13 @@ import { mapActions, mapGetters } from 'vuex';
 import { styleInfoMixin } from '@/mixins';
 
 import BaseDialog from '@/components/dialogs/BaseDialog';
+import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog';
 
 export default {
   name: 'StyleInfoDialog',
   components: {
-    BaseDialog
+    BaseDialog,
+    ConfirmationDialog
   },
   mixins: [styleInfoMixin],
   props: {
@@ -122,7 +131,8 @@ export default {
   data() {
     return {
       customName: '',
-      customPreview: ''
+      customPreview: '',
+      showDeleteDialog: false
     };
   },
   computed: {
@@ -174,6 +184,9 @@ export default {
         })
         .catch((error) => {
           alert(error.response.data.error);
+        })
+        .finally(() => {
+          this.showDeleteDialog = false;
         });
     }
   }
