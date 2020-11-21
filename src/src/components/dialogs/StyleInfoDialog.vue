@@ -131,9 +131,11 @@ export default {
       user: 'user/getUser'
     }),
     isAuthorized() {
-      const isOwner = this.styleData.owner === this.user.username;
       const isAdmin = this.user.role === 'Admin';
-      return isOwner || isAdmin;
+      const isOwner = this.styleData.owner === this.user.username;
+      const userOrgs = this.user.orgs.map((org) => org.name);
+      const isMember = userOrgs.includes(this.styleData.owner);
+      return isAdmin || isOwner || isMember;
     }
   },
   methods: {

@@ -36,7 +36,9 @@ const isAuthorized = async (req, res, next) => {
   }
   const isAdmin = req.user.role === "Admin";
   const isOwner = req.user.username === existingStyle.owner;
-  if (!isAdmin && !isOwner) {
+  const userOrgs = req.user.orgs.map((org) => org.name);
+  const isMember = userOrgs.includes(existingStyle.owner);
+  if (!isAdmin && !isOwner && !isMember) {
     return res.status(403).json({ error: "You are not authorized to perform this action" });
   }
   next();
