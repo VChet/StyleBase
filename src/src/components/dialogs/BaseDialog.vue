@@ -3,14 +3,13 @@
     <div class="base-dialog">
       <div
         ref="modal"
-        v-click-outside="clickOutside"
+        v-click-outside="closeModal"
         class="base-dialog-window"
         :class="size"
         tabindex="-1"
-        @clickOutside="onClickOutside"
-        @keydown.esc="onClose"
+        @keydown.esc="closeModal"
       >
-        <close-button v-if="!closeButtonHidden" aria-label="Close the modal" @click="onClose" />
+        <close-button v-if="!closeButtonHidden" aria-label="Close the modal" @click="closeModal" />
 
         <div>
           <slot></slot>
@@ -21,7 +20,8 @@
 </template>
 
 <script>
-import clickOutside from '@/directives/clickOutside';
+import vClickOutside from 'v-click-outside';
+
 import CloseButton from '@/components/CloseButton.vue';
 
 export default {
@@ -30,7 +30,7 @@ export default {
     CloseButton
   },
   directives: {
-    clickOutside
+    clickOutside: vClickOutside.directive
   },
   props: {
     size: {
@@ -40,11 +40,6 @@ export default {
       validator(size) {
         return ['small', 'medium', 'large', 'extra-large', 'maximum'].includes(size);
       }
-    },
-    clickOutside: {
-      type: Boolean,
-      required: false,
-      default: true
     },
     transition: {
       type: String,
@@ -61,15 +56,8 @@ export default {
     this.$refs.modal.focus();
   },
   methods: {
-    onClose() {
+    closeModal() {
       this.$emit('close');
-    },
-    onClickOutside() {
-      if (this.clickOutside) {
-        this.$emit('close');
-      } else {
-        this.$emit('click-outside');
-      }
     }
   }
 };
