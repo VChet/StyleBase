@@ -20,10 +20,13 @@ const schema = new Schema({
     required: true,
     unique: true
   },
-  orgs: [{
-    login: String,
-    id: Number
-  }]
+  orgs: {
+    type: [{
+      login: String,
+      id: Number
+    }],
+    default: []
+  }
 });
 
 async function getOrganizations(username) {
