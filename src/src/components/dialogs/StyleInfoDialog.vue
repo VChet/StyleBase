@@ -24,6 +24,10 @@
       </li>
     </ul>
 
+    <div class="share">
+      <a class="twitter" :href="twitterLink" rel="noopener" target="_blank">Share on Twitter</a>
+    </div>
+
     <div class="image">
       <img
         v-if="styleData.customPreview || styleData.preview"
@@ -147,6 +151,12 @@ export default {
       const userOrgs = this.user.orgs.map((org) => org.name);
       const isMember = userOrgs.includes(this.styleData.owner);
       return isAdmin || isOwner || isMember;
+    },
+    twitterLink() {
+      const name = this.styleData.customName || this.styleData.name;
+      const link = `https://stylebase.cc/${this.styleData.owner}/${this.styleData.name}`;
+      const text = encodeURIComponent(`${name} by ${this.styleData.owner}.\n${link}`);
+      return `https://twitter.com/intent/tweet?text=${text}`;
     }
   },
   methods: {
@@ -266,6 +276,17 @@ export default {
       &:hover {
         border-color: var(--color-main-dark);
       }
+    }
+  }
+}
+
+.share {
+  margin: 1rem 0;
+
+  a {
+    color: var(--color-main);
+    &:hover {
+      text-decoration: underline;
     }
   }
 }
