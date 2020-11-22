@@ -141,6 +141,7 @@ export default {
       user: 'user/getUser'
     }),
     isAuthorized() {
+      if (!Object.keys(this.user).length) return false;
       const isAdmin = this.user.role === 'Admin';
       const isOwner = this.styleData.owner === this.user.username;
       const userOrgs = this.user.orgs.map((org) => org.name);
