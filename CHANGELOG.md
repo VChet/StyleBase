@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/VChet/StyleBase/compare/v2.0.1...v2.1.0) (2020-11-22)
+
+
+### Features
+
+* **alert:** add alert snackbar ([6dfb1ce](https://github.com/VChet/StyleBase/commit/6dfb1ce62fe23f549adbe41987f7f8ae7017930c))
+* **authorization:** allow organization members to edit repositories ([2e8afb0](https://github.com/VChet/StyleBase/commit/2e8afb054167ddac2b74b95712e3b1fd4df7e190))
+* **confirmation:** add confirmation dialog component ([ae03ddc](https://github.com/VChet/StyleBase/commit/ae03ddc0946d3235c732babc6d8ff633dc3df502))
+* **style info:** add Twitter share button ([5640879](https://github.com/VChet/StyleBase/commit/564087947ca6bd2537a669f2293dfb51067ecd1a))
+* **style info:** ask for confirmation before deleting a style ([762e4ff](https://github.com/VChet/StyleBase/commit/762e4ffe9845bd6e6c1c8a6ece7dd661f4454473))
+* **user:** store user organizations ([b96a624](https://github.com/VChet/StyleBase/commit/b96a624c9741739b99c1f3387281f0aeae7cfa30))
+
+
+### Bug Fixes
+
+* **authentication:** remove scope to access only public data ([14e60da](https://github.com/VChet/StyleBase/commit/14e60da6e00ea70d520735ccb5f761d8ae6dbe92))
+* **authorization:** handle empty user ([8fffddf](https://github.com/VChet/StyleBase/commit/8fffddff536abdf0f4a4d2aabe174041e96c9d7a))
+* **user model:** set empty orgs array by default ([28a1032](https://github.com/VChet/StyleBase/commit/28a10325a353a35ffea213abacc1ad5af0cfb772))
+
 ### [2.0.1](https://github.com/VChet/StyleBase/compare/v2.0.0...v2.0.1) (2020-11-17)
 
 
