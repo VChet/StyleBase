@@ -18,6 +18,7 @@
     "dayjs": "^1.9.6",
     "node-emoji": "^1.10.0",
     "normalize.css": "^8.0.1",
+    "v-click-outside": "^3.1.2",
     "vue": "^2.6.12",
     "vue-gtag": "^1.10.0",
     "vuex": "^3.5.1"

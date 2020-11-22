@@ -4,6 +4,7 @@
     <Home />
     <AppFooter @open-nav-link="openNavLink" />
 
+    <Alert />
     <HowToUseDialog :open="showHowtoUseModal" @close="showHowtoUseModal = false" />
     <AddStyleDialog :open="showAddStyleModal" @close="showAddStyleModal = false" />
     <PrivacyPolicyDialog :open="showPrivacyModal" @close="showPrivacyModal = false" />
@@ -16,6 +17,7 @@ import { mapActions } from 'vuex';
 import AppHeader from '@/components/AppHeader.vue';
 import Home from '@/views/Home.vue';
 import AppFooter from '@/components/AppFooter.vue';
+import Alert from '@/components/dialogs/Alert.vue';
 import HowToUseDialog from '@/components/dialogs/HowToUseDialog.vue';
 import AddStyleDialog from '@/components/dialogs/AddStyleDialog.vue';
 import PrivacyPolicyDialog from '@/components/dialogs/PrivacyPolicyDialog.vue';
@@ -26,6 +28,7 @@ export default {
     AppHeader,
     Home,
     AppFooter,
+    Alert,
     HowToUseDialog,
     AddStyleDialog,
     PrivacyPolicyDialog
