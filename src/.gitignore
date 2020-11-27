@@ -2,10 +2,6 @@
 node_modules
 /dist
 
-/tests/e2e/videos/
-/tests/e2e/screenshots/
-
-
 # env files
 .env
 
