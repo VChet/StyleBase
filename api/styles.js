@@ -43,7 +43,8 @@ function getStyleData(req, res) {
 }
 
 function addStyle(req, res) {
-  const { url } = req.body;
+  let { url } = req.body;
+  url = url.replace(/\/$/, ""); // Trim trailing slash
 
   Style.findOne({ url }, async (error, style) => {
     if (error) return res.status(500).json({ error });
