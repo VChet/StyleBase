@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/VChet/StyleBase/compare/v2.1.0...v2.2.0) (2020-11-27)
+
+
+### Features
+
+* **rss:** add rss generation ([0438e9c](https://github.com/VChet/StyleBase/commit/0438e9c3d76b1b5bc90dfd6c745a5484f034a3c4))
+* **rss:** add rss link to footer ([4b1da26](https://github.com/VChet/StyleBase/commit/4b1da26c6cd51dcd8f65dc0f647aa5418dc5ec87))
+
+
+### Bug Fixes
+
+* **footer:** increase links font size and paddings in footer on mobile ([2b7302c](https://github.com/VChet/StyleBase/commit/2b7302c238b994db0afb7f43ee98d1ecc8b345d6))
+
 ## [2.1.0](https://github.com/VChet/StyleBase/compare/v2.0.1...v2.1.0) (2020-11-22)
 
 
