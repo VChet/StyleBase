@@ -79,14 +79,14 @@ function addStyle(req, res) {
 }
 
 function updateStyle(req, res) {
-  const { url } = req.body;
-  if (!url) return res.status(400).json({ error: "Request must contain url field" });
+  const { _id } = req.body;
+  if (!_id) return res.status(400).json({ error: "Request must contain _id field" });
 
-  Style.find({ url }, async (error, styles) => {
+  Style.findById(_id, async (error, style) => {
     if (error) return res.status(500).json({ error });
-    if (!styles.length) return res.status(404).json({ error: "Repository was not found in our base" });
+    if (!style) return res.status(404).json({ error: "Style was not found in our base" });
 
-    const data = await retrieveRepositoryData(url);
+    const data = await retrieveRepositoryData(style.url);
     if (data.status === 404) return res.status(404).json({ error: "Repository was not found" });
     if (data.error) return res.status(data.status).json({ error: data.error });
     if (data.isPrivate) return res.status(403).json({ error: "Repository is private" });
@@ -95,9 +95,9 @@ function updateStyle(req, res) {
 
     delete data.name;
 
-    Style.updateMany({ url }, data, { new: true }, (updateError, updatedStyles) => {
+    Style.findByIdAndUpdate(_id, data, { new: true }, (updateError, result) => {
       if (updateError) return res.status(500).json({ error: updateError });
-      return res.status(200).json({ styles: updatedStyles });
+      return res.status(200).json({ result });
     });
   });
 }
@@ -109,7 +109,7 @@ function updateAllStyles(req, res) {
 }
 
 function editStyle(req, res) {
-  const { url, ...customData } = req.body;
+  const { _id, ...customData } = req.body;
 
   if (customData.customPreview) {
     try {
@@ -132,8 +132,8 @@ function editStyle(req, res) {
     return fieldToDelete && delete customData[key];
   });
 
-  Style.findOneAndUpdate(
-    { url },
+  Style.findByIdAndUpdate(
+    _id,
     { $set: customData },
     { new: true },
     (error, style) => {
@@ -143,7 +143,7 @@ function editStyle(req, res) {
 }
 
 async function deleteStyle(req, res) {
-  Style.findOneAndDelete({ url: req.body.url }, (error, style) => {
+  Style.findByIdAndDelete(req.body._id, (error, style) => {
     if (error) return res.status(500).json({ error });
     return res.status(200).json({ style });
   });

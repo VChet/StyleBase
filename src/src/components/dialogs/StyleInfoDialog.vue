@@ -170,7 +170,7 @@ export default {
     editStyle() {
       axios
         .put('/api/style/edit', {
-          url: this.styleData.url,
+          _id: this.styleData._id,
           customName: this.customName,
           customPreview: this.customPreview
         })
@@ -188,7 +188,7 @@ export default {
     },
     deleteStyle() {
       axios
-        .delete('/api/style/delete', { data: { url: this.styleData.url } })
+        .delete('/api/style/delete', { data: { _id: this.styleData._id } })
         .then((response) => {
           this.flashAlert({ type: 'success', message: `"${response.data.style.name}" style deleted` });
           this.getStyles();
