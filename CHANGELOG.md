@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.2.1](https://github.com/VChet/StyleBase/compare/v2.2.0...v2.2.1) (2020-11-30)
+
+
+### Bug Fixes
+
+* **add style:** trim trailing slash from url ([74adde3](https://github.com/VChet/StyleBase/commit/74adde38afdad0bdb30a5a9aadeb4ed026dfb79c))
+* **footer:** fix footer to the bottom of page on desktop and tablets ([cc81131](https://github.com/VChet/StyleBase/commit/cc81131d38a9e98e282b167235dd990150ac6022))
+
 ## [2.2.0](https://github.com/VChet/StyleBase/compare/v2.1.0...v2.2.0) (2020-11-27)
 
 

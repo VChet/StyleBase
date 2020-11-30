@@ -27,12 +27,24 @@ export default {
 
 <style lang="scss" scoped>
 footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
   background-color: var(--color-main-lightest);
   font-size: 14px;
+
+  @include media-size-mobile {
+    position: static;
+  }
 
   .container {
     padding-top: 0.25rem;
     padding-bottom: 0.25rem;
+
+    @include media-size-mobile {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
   }
 
   .link-list {
@@ -45,8 +57,6 @@ footer {
 
     @include media-size-mobile {
       flex-flow: column nowrap;
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
       font-size: 16px;
     }
   }
