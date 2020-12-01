@@ -3,6 +3,8 @@ const repoImages = require("repo-images");
 
 const { token } = require("../config").github;
 
+const stylePattern = /\.user\.(css|styl)$/;
+
 async function retrieveRepositoryFiles(url) {
   let repoUrl;
   try {
@@ -16,7 +18,6 @@ async function retrieveRepositoryFiles(url) {
   };
 
   const contents = await axios.get(`https://api.github.com/repos${repoUrl}/contents`, config);
-  const stylePattern = /\.user\.(css|styl)$/;
   const files = contents.data.filter((file) => stylePattern.test(file.name));
   return files;
 }
@@ -67,7 +68,7 @@ async function retrieveRepositoryData(url, usercss = null) {
 
     if (usercss) {
       styleData.usercss = usercss.download_url;
-      styleData.name = usercss.name.replace(/\s+/g, "-");
+      styleData.name = usercss.name.replace(stylePattern, "").replace(/\s+/g, "-");
     }
 
     return styleData;
