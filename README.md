@@ -18,4 +18,4 @@
    - Start database `mongod`
 1. Start server `npm start`
 
-### [Client](./src/README.md)
+### [Client](./client/README.md)

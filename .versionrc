@@ -5,7 +5,7 @@
       "type": "json"
     },
     {
-      "filename": "./src/package.json",
+      "filename": "./client/package.json",
       "type": "json"
     }
   ]

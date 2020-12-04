@@ -13,8 +13,8 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client:start": "cd src/ && npm start",
-    "client:build": "cd src/ && npm run build"
+    "client:start": "cd client/ && npm start",
+    "client:build": "cd client/ && npm run build"
   },
   "engines": {
     "node": "^14.15.1"
