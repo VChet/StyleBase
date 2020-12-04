@@ -183,7 +183,8 @@ export default {
           customDescription: this.customDescription
         })
         .then((response) => {
-          this.flashAlert({ type: 'success', message: `"${response.data.style.name}" style updated` });
+          const name = response.data.style.customName || response.data.style.name;
+          this.flashAlert({ type: 'success', message: `"${name}" style updated` });
           this.getStyles();
           this.closeStyleModal();
         })
@@ -198,7 +199,8 @@ export default {
       axios
         .delete('/api/style/delete', { data: { _id: this.styleData._id } })
         .then((response) => {
-          this.flashAlert({ type: 'success', message: `"${response.data.style.name}" style deleted` });
+          const name = response.data.style.customName || response.data.style.name;
+          this.flashAlert({ type: 'success', message: `"${name}" style deleted` });
           this.getStyles();
           this.closeStyleModal();
         })

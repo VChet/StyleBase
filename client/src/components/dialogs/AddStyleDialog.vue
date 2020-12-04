@@ -82,7 +82,8 @@ export default {
         .then((response) => {
           this.clear();
           this.$emit('close');
-          this.flashAlert({ type: 'success', message: `"${response.data.style.name}" added successfully` });
+          const name = response.data.style.customName || response.data.style.name;
+          this.flashAlert({ type: 'success', message: `"${name}" added successfully` });
         })
         .catch((error) => {
           this.flashAlert({ type: 'error', message: error.response.data.error });
