@@ -8,7 +8,7 @@ const router = express.Router();
 
 // Cache
 const cache = apicache.middleware;
-const onlyStatus200 = (req, res) => res.statusCode === 200;
+const onlyStatus200 = (req, res) => process.env.NODE_ENV === "production" && res.statusCode === 200;
 const cacheSuccessful = cache("10 minutes", onlyStatus200);
 const clearCache = (req, res, next) => {
   apicache.clear();
