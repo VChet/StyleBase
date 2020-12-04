@@ -16,7 +16,7 @@
     </div>
 
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div class="description" v-html="parseEmoji(styleData.description)"></div>
+    <div class="description" v-html="parseEmoji(styleData.customDescription || styleData.description)"></div>
 
     <ul v-if="styleData.topics.length" class="topics">
       <li v-for="topic in styleData.topics" :key="topic">
@@ -84,6 +84,12 @@
             placeholder="Preview url"
             @change="(e) => (customPreview = e.target.value)"
           />
+          <input
+            :value="styleData.customDescription"
+            type="text"
+            placeholder="Style description"
+            @change="(e) => (customDescription = e.target.value)"
+          />
           <button class="style-button" type="submit">Edit</button>
         </form>
       </div>
@@ -136,6 +142,7 @@ export default {
     return {
       customName: '',
       customPreview: '',
+      customDescription: '',
       showDeleteDialog: false
     };
   },
@@ -170,9 +177,10 @@ export default {
     editStyle() {
       axios
         .put('/api/style/edit', {
-          url: this.styleData.url,
+          _id: this.styleData._id,
           customName: this.customName,
-          customPreview: this.customPreview
+          customPreview: this.customPreview,
+          customDescription: this.customDescription
         })
         .then((response) => {
           this.flashAlert({ type: 'success', message: `"${response.data.style.name}" style updated` });
@@ -188,7 +196,7 @@ export default {
     },
     deleteStyle() {
       axios
-        .delete('/api/style/delete', { data: { url: this.styleData.url } })
+        .delete('/api/style/delete', { data: { _id: this.styleData._id } })
         .then((response) => {
           this.flashAlert({ type: 'success', message: `"${response.data.style.name}" style deleted` });
           this.getStyles();

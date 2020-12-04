@@ -8,10 +8,12 @@ const { retrieveRepositoryData } = require("../api/parser");
 const schema = new Schema({
   url: {
     type: String,
-    required: true,
+    required: true
+  },
+  usercss: {
+    type: String,
     unique: true
   },
-  usercss: String,
   preview: String,
   name: String,
   description: String,
@@ -28,6 +30,7 @@ const schema = new Schema({
   isArchived: Boolean,
   isFork: Boolean,
   customName: String,
+  customDescription: String,
   customPreview: String
 });
 
@@ -41,10 +44,14 @@ schema.plugin(mongoosePaginate);
 
 schema.statics.updateAllStyles = async function updateAllStyles() {
   const Style = this;
-  const styles = await Style.find({}).lean();
+  const repositories = await Style.find({}).distinct("url").lean();
+  const repositoriesData = await Promise.all(repositories.map(repo => retrieveRepositoryData(repo.url)));
   const Bulk = Style.collection.initializeUnorderedBulkOp();
-  const stylesArr = await Promise.all(styles.map(style => retrieveRepositoryData(style.url)));
-  stylesArr.map(style => Bulk.find({ url: style.url }).update({ $set: style }));
+
+  repositoriesData.forEach(styleData => {
+    delete styleData.name;
+    Bulk.find({ url: styleData.url }).update({ $set: styleData });
+  });
   return Bulk.execute();
 };
 

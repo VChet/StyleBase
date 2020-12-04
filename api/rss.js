@@ -28,7 +28,7 @@ async function getRss(req, res) {
       title: style.customName || style.name,
       id: style._id,
       link: `https://stylebase.cc/${style.owner}/${style.name}`,
-      description: style.description,
+      description: style.customDescription || style.description,
       content,
       author: [{ name: style.owner }],
       date: style._id.getTimestamp(),

@@ -1,5 +1,17 @@
 const { Style } = require("../models/Style");
-const { retrieveRepositoryData } = require("./parser");
+const {
+  retrieveRepositoryFiles,
+  retrieveRepositoryData
+} = require("./parser");
+
+async function getRepositoryFiles(req, res) {
+  let { url } = req.query;
+  url = url.replace(/\/$/, ""); // Trim trailing slash
+
+  const files = await retrieveRepositoryFiles(url);
+  if (!files.length) return res.status(400).json({ error: "Repository does not contain UserCSS files" });
+  return res.status(200).json({ files });
+}
 
 function getStyles(req, res) {
   const { query, page = 1, sort } = req.query;
@@ -44,13 +56,14 @@ function getStyleData(req, res) {
 
 function addStyle(req, res) {
   let { url } = req.body;
+  const { usercss } = req.body;
   url = url.replace(/\/$/, ""); // Trim trailing slash
 
-  Style.findOne({ url }, async (error, style) => {
+  Style.findOne({ url, usercss: usercss.download_url }, async (error, style) => {
     if (error) return res.status(500).json({ error });
-    if (style) return res.status(409).json({ error: "Repository was already added to our base" });
+    if (style) return res.status(409).json({ error: "Style was already added to our base" });
 
-    const data = await retrieveRepositoryData(url);
+    const data = await retrieveRepositoryData(url, usercss);
     if (data.status === 404) return res.status(404).json({ error: "Repository was not found" });
     if (data.error) return res.status(data.status).json({ error: data.error });
     if (data.isPrivate) return res.status(403).json({ error: "Repository is private" });
@@ -66,10 +79,10 @@ function addStyle(req, res) {
 }
 
 function updateStyle(req, res) {
-  const { url } = req.body;
-  if (!url) return res.status(400).json({ error: "Request must contain url field" });
+  const { _id } = req.body;
+  if (!_id) return res.status(400).json({ error: "Request must contain _id field" });
 
-  Style.findOne({ url }, async (error, style) => {
+  Style.findById(_id, async (error, style) => {
     if (error) return res.status(500).json({ error });
     if (!style) return res.status(404).json({ error: "Style was not found in our base" });
 
@@ -80,15 +93,12 @@ function updateStyle(req, res) {
     if (data.isArchived) return res.status(400).json({ error: "Repository is archived" });
     if (data.isFork) return res.status(400).json({ error: "Repository is forked" });
 
-    Style.findOneAndUpdate(
-      { url },
-      data,
-      { new: true },
-      (updateError, newStyle) => {
-        if (updateError) return res.status(500).json({ error: updateError });
-        return res.status(200).json({ style: newStyle });
-      }
-    );
+    delete data.name;
+
+    Style.findByIdAndUpdate(_id, data, { new: true }, (updateError, result) => {
+      if (updateError) return res.status(500).json({ error: updateError });
+      return res.status(200).json({ result });
+    });
   });
 }
 
@@ -99,7 +109,7 @@ function updateAllStyles(req, res) {
 }
 
 function editStyle(req, res) {
-  const { url, ...customData } = req.body;
+  const { _id, ...customData } = req.body;
 
   if (customData.customPreview) {
     try {
@@ -118,12 +128,12 @@ function editStyle(req, res) {
 
   // Remove non-custom fields
   Object.keys(customData).forEach(key => {
-    const fieldToDelete = !["customName", "customPreview"].includes(key);
+    const fieldToDelete = !["customName", "customDescription", "customPreview"].includes(key);
     return fieldToDelete && delete customData[key];
   });
 
-  Style.findOneAndUpdate(
-    { url },
+  Style.findByIdAndUpdate(
+    _id,
     { $set: customData },
     { new: true },
     (error, style) => {
@@ -133,13 +143,14 @@ function editStyle(req, res) {
 }
 
 async function deleteStyle(req, res) {
-  Style.findOneAndDelete({ url: req.body.url }, (error, style) => {
+  Style.findByIdAndDelete(req.body._id, (error, style) => {
     if (error) return res.status(500).json({ error });
     return res.status(200).json({ style });
   });
 }
 
 module.exports = {
+  getRepositoryFiles,
   getStyles,
   getStyleData,
   addStyle,

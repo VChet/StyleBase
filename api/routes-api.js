@@ -23,9 +23,9 @@ const rateLimiter = rateLimit({
 });
 
 const isAuthorized = async (req, res, next) => {
-  const { url } = req.body;
-  if (!url) return res.status(400).json({ error: "Request must contain url field" });
-  const existingStyle = await Style.findOne({ url }).lean();
+  const { _id } = req.body;
+  if (!_id) return res.status(400).json({ error: "Request must contain _id field" });
+  const existingStyle = await Style.findById(_id).lean();
   if (!existingStyle) return res.status(404).json({ error: "Style does not exist" });
   req.styleData = existingStyle;
 
@@ -46,6 +46,7 @@ const isAuthorized = async (req, res, next) => {
 
 const {
   getStyles,
+  getRepositoryFiles,
   getStyleData,
   addStyle,
   updateAllStyles,
@@ -59,6 +60,7 @@ const {
 } = require("./users");
 
 router.get("/styles/:owner?", cacheSuccessful, getStyles);
+router.get("/style/files", getRepositoryFiles);
 router.get("/style", cacheSuccessful, getStyleData);
 router.post("/style/add", rateLimiter, addStyle);
 router.put("/style/update/all", rateLimiter, updateAllStyles);
