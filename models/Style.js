@@ -30,6 +30,7 @@ const schema = new Schema({
   isArchived: Boolean,
   isFork: Boolean,
   customName: String,
+  customDescription: String,
   customPreview: String
 });
 

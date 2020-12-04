@@ -128,7 +128,7 @@ function editStyle(req, res) {
 
   // Remove non-custom fields
   Object.keys(customData).forEach(key => {
-    const fieldToDelete = !["customName", "customPreview"].includes(key);
+    const fieldToDelete = !["customName", "customDescription", "customPreview"].includes(key);
     return fieldToDelete && delete customData[key];
   });
 
