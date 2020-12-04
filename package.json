@@ -6,6 +6,10 @@
     "rudnovd"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VChet/StyleBase.git"
+  },
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",

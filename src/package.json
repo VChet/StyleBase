@@ -6,10 +6,17 @@
     "rudnovd"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VChet/StyleBase.git"
+  },
   "scripts": {
     "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
+  },
+  "engines": {
+    "node": "^14.15.1"
   },
   "dependencies": {
     "axios": "^0.21.0",
