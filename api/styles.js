@@ -109,11 +109,13 @@ function updateAllStyles(req, res) {
 }
 
 function editStyle(req, res) {
-  const { _id, ...customData } = req.body;
+  const {
+    _id, customName, customDescription, customPreview
+  } = req.body;
 
-  if (customData.customPreview) {
+  if (customPreview) {
     try {
-      const previewUrl = new URL(customData.customPreview);
+      const previewUrl = new URL(customPreview);
       const imagePattern = /\.(png|gif|jpg|svg|bmp|icns|ico|sketch)$/i;
       if (!previewUrl.protocol.includes("https:")) {
         return res.status(400).json({ error: "Preview must be from a secure source" });
@@ -126,15 +128,9 @@ function editStyle(req, res) {
     }
   }
 
-  // Remove non-custom fields
-  Object.keys(customData).forEach(key => {
-    const fieldToDelete = !["customName", "customDescription", "customPreview"].includes(key);
-    return fieldToDelete && delete customData[key];
-  });
-
   Style.findByIdAndUpdate(
     _id,
-    { $set: customData },
+    { $set: { customName, customDescription, customPreview } },
     { new: true },
     (error, style) => {
       if (error) return res.status(500).json({ error });
