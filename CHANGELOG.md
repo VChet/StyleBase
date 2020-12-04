@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/VChet/StyleBase/compare/v2.2.1...v3.0.0) (2020-12-04)
+
+
+### ⚠ BREAKING CHANGES
+
+* **styles api:** to select style which you want to edit/delete/update pass it's _id (was url)
+
+### Features
+
+* **style model:** remove unique flag from repository, add flag to style ([b272b1d](https://github.com/VChet/StyleBase/commit/b272b1d5f55d6bc02299a4fc1fd2a76ad80d08ca))
+* **styles:** add style file selection ([eae1d73](https://github.com/VChet/StyleBase/commit/eae1d739d2dbdda878198b205e3e8ce5f5fd3169))
+* **styles api:** add 'custom description' field ([e42bd82](https://github.com/VChet/StyleBase/commit/e42bd823afa2fd29d01145ac38302f8b9fef6a16))
+
+
+### Bug Fixes
+
+* **parser:** save style name without file extension ([1ab4111](https://github.com/VChet/StyleBase/commit/1ab4111ad47b06ccae7d16f826bf3bc563871821))
+* **styles api:** edit/delete/update styles using _id field ([f55fbb5](https://github.com/VChet/StyleBase/commit/f55fbb53d62749d23dbb872e4749d940007eee6e))
+
 ### [2.2.1](https://github.com/VChet/StyleBase/compare/v2.2.0...v2.2.1) (2020-11-30)
 
 
