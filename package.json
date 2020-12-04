@@ -23,11 +23,11 @@
     "compression": "^1.7.4",
     "connect-mongo": "^3.2.0",
     "express": "^4.17.1",
-    "express-rate-limit": "^5.1.3",
+    "express-rate-limit": "^5.2.3",
     "express-session": "^1.17.1",
     "feed": "^4.2.1",
     "helmet": "^4.2.0",
-    "mongoose": "^5.10.15",
+    "mongoose": "^5.11.3",
     "mongoose-paginate-v2": "^1.3.11",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
@@ -35,7 +35,7 @@
     "repo-images": "^1.0.1"
   },
   "devDependencies": {
-    "eslint": "^7.13.0",
+    "eslint": "^7.14.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-sonarjs": "^0.5.0",
