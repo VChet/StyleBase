@@ -29,6 +29,9 @@ module.exports = {
       },
       '^/logout': {
         target: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`
+      },
+      '^/rss': {
+        target: `${process.env.VUE_APP_API_URL}:${process.env.VUE_APP_API_PORT}`
       }
     }
   },
