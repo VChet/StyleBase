@@ -3,12 +3,12 @@ version: "3.8"
 services:
   app:
     container_name: ${DOCKER_NAME}
-    build:
-      context: .
-      dockerfile: ./Dockerfile
     env_file: .env
     environment:
       - NODE_ENV=production
     ports:
-      - "${NODE_HOST_PORT}:${NODE_CONTAINER_PORT}"
-    command: node server.js
+      - "${DOCKER_CONTAINER_PORT}:${NODE_PORT}"
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: npm start

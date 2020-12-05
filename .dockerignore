@@ -1,5 +1,7 @@
 node_modules
 client/node_modules
+public
+
 npm-debug.log
 Dockerfile
 docker-compose.yml
