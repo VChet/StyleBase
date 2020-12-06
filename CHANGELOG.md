@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.1](https://github.com/VChet/StyleBase/compare/v3.0.0...v3.0.1) (2020-12-06)
+
+
+### Bug Fixes
+
+* **alerts:** show custom style name in add/update/delete notifications ([adcbcbd](https://github.com/VChet/StyleBase/commit/adcbcbd36597dc04a2ef099abb25d905183cd27c))
+
 ## [3.0.0](https://github.com/VChet/StyleBase/compare/v2.2.1...v3.0.0) (2020-12-04)
 
 
