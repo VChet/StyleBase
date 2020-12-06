@@ -17,5 +17,6 @@
    - Install [mongoDB](https://www.mongodb.com/download-center/community)
    - Start database `mongod`
 1. Start server `npm start`
+1. Build client files `npm run client:build`
 
 ### [Client](./client/README.md)
