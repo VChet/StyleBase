@@ -57,9 +57,16 @@ export default {
   },
   created() {
     this.getUser();
-  },
-  mounted() {
-    this.$gtag.pageview({ page_path: window.location.pathname });
+    if (process.env.NODE_ENV === 'production') {
+      // Google Analytics
+      this.$gtag.pageview({ page_path: window.location.pathname });
+      // Cloudflare Analytics
+      const CFAnalytics = document.createElement('script');
+      CFAnalytics.setAttribute('defer', '');
+      CFAnalytics.setAttribute('src', 'https://static.cloudflareinsights.com/beacon.min.js');
+      CFAnalytics.setAttribute('data-cf-beacon', `{"token": "${process.env.VUE_APP_CLOUDFLARE_TOKEN}"}`);
+      document.body.appendChild(CFAnalytics);
+    }
   },
   methods: {
     ...mapActions({

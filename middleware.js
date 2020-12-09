@@ -85,20 +85,22 @@ if (process.env.NODE_ENV === "production") {
 function addExpressMiddleware(app) {
   app.use(morgan("dev"));
   app.use(helmet({
+    referrerPolicy: { policy: "strict-origin-when-cross-origin" },
     contentSecurityPolicy: {
       directives: {
         "default-src": ["'self'"],
-        "img-src": [
-          "'self'",
-          "data:",
-          "https:"
-        ],
+        "img-src": ["'self'", "data:", "https:"],
         "style-src": ["'self'", "'unsafe-inline'"],
         "script-src": [
           "'self'",
-          "https://www.googletagmanager.com", "https://www.google-analytics.com"
+          "https://www.googletagmanager.com", "https://www.google-analytics.com",
+          "https://cloudflareinsights.com", "https://static.cloudflareinsights.com"
         ],
-        "connect-src": ["'self'", "https://www.google-analytics.com"]
+        "connect-src": [
+          "'self'",
+          "https://www.google-analytics.com",
+          "https://cloudflareinsights.com", "https://static.cloudflareinsights.com"
+        ]
       }
     }
   }));
