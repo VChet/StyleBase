@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.2](https://github.com/VChet/StyleBase/compare/v3.0.1...v3.0.2) (2020-12-09)
+
+
+### Bug Fixes
+
+* **robots.txt:** disallow /login and /logout urls ([e0a4496](https://github.com/VChet/StyleBase/commit/e0a4496e7c936f5e298f6aa470a77f03adcc2baf))
+* **style model:** convert style name to lowercase ([4ef38ff](https://github.com/VChet/StyleBase/commit/4ef38ff6bfd2c94e212b25a06810071fc7a86bc3))
+
 ### [3.0.1](https://github.com/VChet/StyleBase/compare/v3.0.0...v3.0.1) (2020-12-06)
 
 
