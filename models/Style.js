@@ -48,7 +48,7 @@ schema.plugin(mongoosePaginate);
 schema.statics.updateAllStyles = async function updateAllStyles() {
   const Style = this;
   const repositories = await Style.find({}).distinct("url").lean();
-  const repositoriesData = await Promise.all(repositories.map(repo => retrieveRepositoryData(repo.url)));
+  const repositoriesData = await Promise.all(repositories.map(repoUrl => retrieveRepositoryData(repoUrl)));
   const Bulk = Style.collection.initializeUnorderedBulkOp();
 
   repositoriesData.forEach(styleData => {
