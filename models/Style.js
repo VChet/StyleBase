@@ -15,7 +15,10 @@ const schema = new Schema({
     unique: true
   },
   preview: String,
-  name: String,
+  name: {
+    type: String,
+    lowercase: true
+  },
   description: String,
   owner: String,
   created: Date,
