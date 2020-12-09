@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.0.3](https://github.com/VChet/StyleBase/compare/v3.0.2...v3.0.3) (2020-12-09)
+
+
+### Bug Fixes
+
+* **style update:** fix passing wrong argument to the parser ([a1a823b](https://github.com/VChet/StyleBase/commit/a1a823b14faabbc270b24b5ebcfa2acd67ef5d9b))
+
 ### [3.0.2](https://github.com/VChet/StyleBase/compare/v3.0.1...v3.0.2) (2020-12-09)
 
 
