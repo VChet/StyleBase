@@ -4,13 +4,18 @@ const {
   retrieveRepositoryData
 } = require("./parser");
 
-async function getRepositoryFiles(req, res) {
+function getRepositoryFiles(req, res) {
   let { url } = req.query;
   url = url.replace(/\/$/, ""); // Trim trailing slash
 
-  const files = await retrieveRepositoryFiles(url);
-  if (!files.length) return res.status(400).json({ error: "Repository does not contain UserCSS files" });
-  return res.status(200).json({ files });
+  retrieveRepositoryFiles(url)
+    .then((files) => {
+      if (!files.length) return res.status(400).json({ error: "Repository does not contain UserCSS files" });
+      res.status(200).json({ files });
+    })
+    .catch((error) => {
+      res.status(400).json({ error: error.message });
+    });
 }
 
 function getStyles(req, res) {

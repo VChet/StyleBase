@@ -5,46 +5,51 @@ const { token } = require("../config").github;
 
 const stylePattern = /\.user\.(css|styl)$/;
 
-async function retrieveRepositoryFiles(url) {
-  let repoUrl;
-  try {
-    repoUrl = new URL(url).pathname;
-  } catch (error) {
-    return { status: 400, error: "Invalid URL" };
-  }
+function getProviderData(url) {
+  const providers = [
+    {
+      name: "GitHub",
+      host: "github.com",
+      api: "https://api.github.com",
+      config: {
+        headers: {
+          Authorization: `token ${token}`,
+          Accept: "application/vnd.github.mercy-preview+json"
+        }
+      }
+    }
+  ];
+  const { host, pathname } = new URL(url);
+  if (pathname === "/") throw new Error("Empty repository URL");
 
-  const config = {
-    headers: { Authorization: `token ${token}` }
+  const provider = providers.find((pr) => pr.host === host);
+  if (!provider) throw new Error("Unsupported Git hosting provider");
+
+  return {
+    provider,
+    repoUrl: pathname
   };
+}
 
-  const contents = await axios.get(`https://api.github.com/repos${repoUrl}/contents`, config);
+async function retrieveRepositoryFiles(url) {
+  const { provider, repoUrl } = getProviderData(url);
+  const contents = await axios.get(`${provider.api}/repos${repoUrl}/contents`, provider.config);
   const files = contents.data.filter((file) => stylePattern.test(file.name));
   return files;
 }
 
 async function retrieveRepositoryData(url, usercss = null) {
-  let repoUrl;
   try {
-    repoUrl = new URL(url).pathname;
-  } catch (error) {
-    return { status: 400, error: "Invalid URL" };
-  }
+    const { provider, repoUrl } = getProviderData(url);
+    const repo = await axios.get(`${provider.api}/repos${repoUrl}`, provider.config);
 
-  try {
-    const config = {
-      headers: {
-        Authorization: `token ${token}`,
-        Accept: "application/vnd.github.mercy-preview+json"
-      }
-    };
-    const repo = await axios.get(`https://api.github.com/repos${repoUrl}`, config);
     const branch = repo.data.default_branch;
-    const images = await repoImages(repoUrl.substr(1), { token, branch });
+    const images = await repoImages(repo.data.full_name, { token, branch });
     let preview;
     if (images.length) {
       let previewObj = images.find((img) => img.path.includes("preview"));
       if (!previewObj) previewObj = images.reduce((a, b) => (a.size > b.size ? a : b));
-      preview = `https://raw.githubusercontent.com${repoUrl}/${branch}/${previewObj.path}`;
+      preview = `https://raw.githubusercontent.com/${repo.data.full_name}/${branch}/${previewObj.path}`;
     }
 
     const styleData = {
