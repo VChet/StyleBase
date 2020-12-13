@@ -56,6 +56,7 @@ schema.statics.updateAllStyles = async function updateAllStyles() {
 
   repositoriesData.forEach(styleData => {
     delete styleData.name;
+    styleData.owner.id = styleData.owner.id.toString();
     Bulk.find({ url: styleData.url }).update({ $set: styleData });
   });
   return Bulk.execute();
