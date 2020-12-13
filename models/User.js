@@ -17,7 +17,10 @@ const schema = new Schema({
   },
   githubId: {
     type: String,
-    required: true,
+    unique: true
+  },
+  codebergId: {
+    type: String,
     unique: true
   },
   orgs: {
@@ -40,14 +43,28 @@ async function getOrganizations(username) {
 schema.statics.findOrCreate = function findOrCreate(_accessToken, _refreshToken, profile, done) {
   const User = this;
 
-  User.findOne({ githubId: profile.id }, async (error, user) => {
+  const { provider, id, username } = profile;
+  const userId = {};
+  switch (provider) {
+    case "github":
+      userId.githubId = id;
+      break;
+    case "gitea":
+      userId.codebergId = id;
+      break;
+    default:
+      userId.githubId = id;
+      break;
+  }
+
+  User.findOne(userId, async (error, user) => {
     if (error) return done(error);
     if (user) return done(null, user);
 
     const newUser = new User({
-      githubId: profile.id,
-      username: profile.username,
-      orgs: await getOrganizations(profile.username)
+      ...userId,
+      username,
+      orgs: await getOrganizations(username)
     });
 
     newUser.save((saveError) => {

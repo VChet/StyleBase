@@ -6,6 +6,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const passport = require("passport");
 const GitHubStrategy = require("passport-github2").Strategy;
+const GiteaStrategy = require("passport-gitea").Strategy;
 
 const morgan = require("morgan");
 const helmet = require("helmet");
@@ -38,6 +39,16 @@ passport.use(
     clientID: config.github.OAuth.clientId,
     clientSecret: config.github.OAuth.clientSecret,
     callbackURL: "/github/callback"
+  }, User.findOrCreate.bind(User))
+);
+passport.use(
+  new GiteaStrategy({
+    clientID: config.codeberg.OAuth.clientId,
+    clientSecret: config.codeberg.OAuth.clientSecret,
+    callbackURL: "/codeberg/callback",
+    authorizationURL: "https://codeberg.org/login/oauth/authorize",
+    tokenURL: "https://codeberg.org/login/oauth/access_token",
+    userProfileURL: "https://codeberg.org/api/v1/user"
   }, User.findOrCreate.bind(User))
 );
 

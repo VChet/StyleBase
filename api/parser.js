@@ -17,6 +17,12 @@ function getProviderData(url) {
           Accept: "application/vnd.github.mercy-preview+json"
         }
       }
+    },
+    {
+      name: "Codeberg",
+      host: "codeberg.org",
+      api: "https://codeberg.org/api/v1",
+      config: {}
     }
   ];
   const { host, pathname } = new URL(url);
@@ -38,14 +44,7 @@ async function retrieveRepositoryFiles(url) {
   return files;
 }
 
-async function retrieveRepositoryData(url, usercss = null) {
-  const { provider, repoUrl } = getProviderData(url);
-
-  const repo = await axios.get(`${provider.api}/repos${repoUrl}`, provider.config);
-  if (repo.data.private) throw new Error("Repository is private");
-  if (repo.data.archived) throw new Error("Repository is archived");
-  if (repo.data.fork) throw new Error("Repository is forked");
-
+async function collectGithubData(repo) {
   const branch = repo.data.default_branch;
   const images = await repoImages(repo.data.full_name, { token, branch });
   let preview;
@@ -55,12 +54,15 @@ async function retrieveRepositoryData(url, usercss = null) {
     preview = `https://raw.githubusercontent.com/${repo.data.full_name}/${branch}/${previewObj.path}`;
   }
 
-  const styleData = {
+  return {
     url: repo.data.html_url,
     preview,
     name: repo.data.name,
     description: repo.data.description,
-    owner: repo.data.owner.login,
+    owner: {
+      login: repo.data.owner.login,
+      id: repo.data.owner.id
+    },
     created: repo.data.created_at,
     lastUpdate: repo.data.updated_at,
     topics: repo.data.topics,
@@ -73,6 +75,44 @@ async function retrieveRepositoryData(url, usercss = null) {
     isArchived: repo.data.archived,
     isFork: repo.data.fork
   };
+}
+
+function collectCodebergData(repo) {
+  return {
+    url: repo.data.html_url,
+    name: repo.data.name,
+    description: repo.data.description,
+    owner: {
+      login: repo.data.owner.login,
+      id: repo.data.owner.id
+    },
+    created: repo.data.created_at,
+    lastUpdate: repo.data.updated_at,
+    stargazers: repo.data.stars_count,
+    watchers: repo.data.watchers_count,
+    forks: repo.data.forks_count,
+    issues: repo.data.open_issues_count,
+    license: (repo.data.license && repo.data.license.spdx_id) || "",
+    isPrivate: repo.data.private,
+    isArchived: repo.data.archived,
+    isFork: repo.data.fork
+  };
+}
+
+async function retrieveRepositoryData(url, usercss = null) {
+  const { provider, repoUrl } = getProviderData(url);
+
+  const repo = await axios.get(`${provider.api}/repos${repoUrl}`, provider.config);
+  if (repo.data.private) throw new Error("Repository is private");
+  if (repo.data.archived) throw new Error("Repository is archived");
+  if (repo.data.fork) throw new Error("Repository is forked");
+
+  let styleData;
+  if (provider.name === "GitHub") {
+    styleData = await collectGithubData(repo);
+  } else {
+    styleData = collectCodebergData(repo);
+  }
 
   if (usercss) {
     styleData.usercss = usercss.download_url;

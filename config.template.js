@@ -14,5 +14,12 @@ module.exports = {
       clientSecret: ""
     },
     token: "" // https://github.com/settings/tokens with public_repo scope
+  },
+  codeberg: {
+    OAuth: { // https://codeberg.org/user/settings/applications/oauth2
+      clientId: "",
+      clientSecret: ""
+    },
+    token: "" // https://codeberg.org/user/settings/applications
   }
 };

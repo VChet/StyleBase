@@ -3,9 +3,10 @@
     <form @submit.prevent="selectedStyle ? submitStyle() : parseRepository()">
       <div class="dialog-title">Add new style</div>
       <div class="dialog-input">
-        <input v-model.trim="url" type="text" placeholder="Link to GitHub repository" />
+        <input v-model.trim="url" type="text" placeholder="Link to repository" />
         <CloseButton v-show="url" aria-label="Clear the input" @click="clear" />
       </div>
+      <p v-if="!files.length">Supported providers: GitHub, Codeberg</p>
       <ul v-show="files.length > 1" class="file-list">
         <li v-for="(file, index) in files" :key="index">
           <input :id="index" v-model="selectedStyle" type="radio" :value="file" :disabled="isSubmitting" />
@@ -56,8 +57,8 @@ export default {
     }),
     parseRepository() {
       if (!this.url || this.isSubmitting) return;
-      if (!this.url.includes('github.com')) {
-        return this.flashAlert({ type: 'warning', message: 'Should be github.com repository' });
+      if (!['github.com', 'codeberg.org'].some((url) => this.url.includes(url))) {
+        return this.flashAlert({ type: 'warning', message: 'Invalid repository URL' });
       }
       this.isSubmitting = true;
       axios
@@ -111,7 +112,7 @@ export default {
 
 .dialog-input {
   position: relative;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 
   input {
     box-sizing: border-box;
@@ -145,5 +146,6 @@ export default {
 .dialog-buttons {
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
 }
 </style>

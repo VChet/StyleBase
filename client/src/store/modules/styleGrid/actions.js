@@ -93,7 +93,7 @@ export default {
     window.history.replaceState(
       {},
       `${state.selectedStyle.name} | StyleBase`,
-      `/${state.selectedStyle.owner}/${state.selectedStyle.name}`
+      `/${state.selectedStyle.owner.login}/${state.selectedStyle.name}`
     );
   },
   closeStyleModal({ commit, dispatch }) {

@@ -35,7 +35,7 @@ const isAuthorized = async (req, res, next) => {
     return res.status(401).json({ error: "Authentication is required to perform this action" });
   }
   const isAdmin = req.user.role === "Admin";
-  const isOwner = req.user.username === existingStyle.owner;
+  const isOwner = [req.user.githubId, req.user.codebergId].includes(existingStyle.owner.id);
   const userOrgs = req.user.orgs.map((org) => org.name);
   const isMember = userOrgs.includes(existingStyle.owner);
   if (!isAdmin && !isOwner && !isMember) {

@@ -22,7 +22,7 @@
     <template #data>
       <div @click="openStyleModal(styleData)">
         <div class="name">{{ styleData.customName || removeDashes(styleData.name) }}</div>
-        <div>by {{ styleData.owner }}</div>
+        <div>by {{ styleData.owner.login }}</div>
       </div>
     </template>
 

@@ -15,7 +15,9 @@
       <nav>
         <button class="link" type="button" @click="$emit('open-nav-link', 'showHowtoUseModal')">How to Use</button>
         <button class="link" type="button" @click="$emit('open-nav-link', 'showAddStyleModal')">Add Style</button>
-        <a v-if="!user.username" href="/login">Login</a>
+        <button v-if="!user.username" class="link" type="button" @click="$emit('open-nav-link', 'showLoginModal')">
+          Login
+        </button>
         <template v-else>
           <button class="link" type="button" @click="setOwnerFilter(user.username)">{{ user.username }}</button>
           <a href="/logout">Logout</a>

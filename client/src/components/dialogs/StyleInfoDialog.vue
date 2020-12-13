@@ -7,8 +7,8 @@
         </a>
         <span class="owner">
           by
-          <button class="link" type="button" @click="setOwnerFilter(styleData.owner)">
-            {{ styleData.owner }}
+          <button class="link" type="button" @click="setOwnerFilter(styleData.owner.login)">
+            {{ styleData.owner.login }}
           </button>
         </span>
       </div>
@@ -41,22 +41,22 @@
     <div class="content">
       <ul>
         <li>
-          <a :href="`${styleData.url}/stargazers`" rel="noopener" target="_blank">
+          <a :href="getRepoLink('stars')" rel="noopener" target="_blank">
             {{ pluralize(styleData.stargazers, 'star') }}
           </a>
         </li>
         <li>
-          <a :href="`${styleData.url}/network/members`" rel="noopener" target="_blank">
+          <a :href="getRepoLink('forks')" rel="noopener" target="_blank">
             {{ pluralize(styleData.forks, 'fork') }}
           </a>
         </li>
         <li>
-          <a :href="`${styleData.url}/issues`" rel="noopener" target="_blank">
+          <a :href="getRepoLink('issues')" rel="noopener" target="_blank">
             {{ pluralize(styleData.issues, 'issue') }}
           </a>
         </li>
         <li>
-          <a :href="`${styleData.url}/watchers`" rel="noopener" target="_blank">
+          <a :href="getRepoLink('watchers')" rel="noopener" target="_blank">
             {{ pluralize(styleData.watchers, 'watcher') }}
           </a>
         </li>
@@ -124,6 +124,23 @@ import { styleInfoMixin } from '@/mixins';
 import BaseDialog from '@/components/dialogs/BaseDialog';
 import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog';
 
+const providerLinks = [
+  {
+    hostname: 'github.com',
+    stars: 'stargazers',
+    forks: 'network/members',
+    issues: 'issues',
+    watchers: 'watchers'
+  },
+  {
+    hostname: 'codeberg.org',
+    stars: 'stars',
+    forks: 'forks',
+    issues: 'issues',
+    watchers: 'watchers'
+  }
+];
+
 export default {
   name: 'StyleInfoDialog',
   components: {
@@ -154,15 +171,15 @@ export default {
     isAuthorized() {
       if (!Object.keys(this.user).length) return false;
       const isAdmin = this.user.role === 'Admin';
-      const isOwner = this.styleData.owner === this.user.username;
+      const isOwner = [this.user.githubId, this.user.codebergId].includes(this.styleData.owner.id);
       const userOrgs = this.user.orgs.map((org) => org.name);
       const isMember = userOrgs.includes(this.styleData.owner);
       return isAdmin || isOwner || isMember;
     },
     twitterLink() {
       const name = this.styleData.customName || this.styleData.name;
-      const link = `https://stylebase.cc/${this.styleData.owner}/${this.styleData.name}`;
-      const text = encodeURIComponent(`${name} by ${this.styleData.owner}.\n${link}`);
+      const link = `https://stylebase.cc/${this.styleData.owner.login}/${this.styleData.name}`;
+      const text = encodeURIComponent(`${name} by ${this.styleData.owner.login}\n${link}`);
       return `https://twitter.com/intent/tweet?text=${text}`;
     }
   },
@@ -174,6 +191,13 @@ export default {
       closeStyleModal: 'styleGrid/closeStyleModal',
       flashAlert: 'alert/flashAlert'
     }),
+    getRepoLink(slug) {
+      const url = new URL(this.styleData.url);
+      const provider = providerLinks.find((pr) => {
+        return pr.hostname === url.hostname;
+      });
+      return `${url.href}/${provider[slug]}`;
+    },
     editStyle() {
       axios
         .put('/api/style/edit', {

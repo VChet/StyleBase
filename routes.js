@@ -9,12 +9,14 @@ const clientIndex = path.join(__dirname, "public/index.html");
 const maintenance = path.join(__dirname, "maintenance.html");
 
 // Authentication
-router.get("/login", passport.authenticate("github"));
+router.get("/login/github", passport.authenticate("github"));
+router.get("/login/codeberg", passport.authenticate("gitea"));
 router.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
 });
 router.get("/github/callback", passport.authenticate("github"), (req, res) => res.redirect("/"));
+router.get("/codeberg/callback", passport.authenticate("gitea"), (req, res) => res.redirect("/"));
 
 // RSS
 router.get("/rss", getRss);
