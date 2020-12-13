@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.1.1](https://github.com/VChet/StyleBase/compare/v3.1.0...v3.1.1) (2020-12-13)
+
+
+### Bug Fixes
+
+* **parser:** add repository name to parser errors ([e4c36ba](https://github.com/VChet/StyleBase/commit/e4c36baad6ff01cc6b58f0d0fd5fee97846abbdd))
+* **style update:** convert style owner id value to string ([9b1c181](https://github.com/VChet/StyleBase/commit/9b1c1816e7d26d113255b299ebeecc68f1ed69c5))
+* **user:** request organizations depending on a provider ([7a19bc4](https://github.com/VChet/StyleBase/commit/7a19bc4bc7afd47d2902e529d0f62f651f578735))
+
 ## [3.1.0](https://github.com/VChet/StyleBase/compare/v3.0.3...v3.1.0) (2020-12-13)
 
 
