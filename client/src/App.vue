@@ -7,6 +7,7 @@
     <Alert />
     <HowToUseDialog :open="showHowtoUseModal" @close="showHowtoUseModal = false" />
     <AddStyleDialog :open="showAddStyleModal" @close="showAddStyleModal = false" />
+    <LoginDialog :open="showLoginModal" @close="showLoginModal = false" />
     <PrivacyPolicyDialog :open="showPrivacyModal" @close="showPrivacyModal = false" />
   </div>
 </template>
@@ -20,6 +21,7 @@ import AppFooter from '@/components/AppFooter.vue';
 import Alert from '@/components/dialogs/Alert.vue';
 import HowToUseDialog from '@/components/dialogs/HowToUseDialog.vue';
 import AddStyleDialog from '@/components/dialogs/AddStyleDialog.vue';
+import LoginDialog from '@/components/dialogs/LoginDialog.vue';
 import PrivacyPolicyDialog from '@/components/dialogs/PrivacyPolicyDialog.vue';
 
 export default {
@@ -31,18 +33,20 @@ export default {
     Alert,
     HowToUseDialog,
     AddStyleDialog,
+    LoginDialog,
     PrivacyPolicyDialog
   },
   data() {
     return {
       showHowtoUseModal: false,
       showAddStyleModal: false,
+      showLoginModal: false,
       showPrivacyModal: false
     };
   },
   computed: {
     haveActiveModal() {
-      return this.showHowtoUseModal || this.showAddStyleModal || this.showPrivacyModal;
+      return this.showHowtoUseModal || this.showAddStyleModal || this.showLoginModal || this.showPrivacyModal;
     }
   },
   watch: {
