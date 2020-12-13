@@ -4,6 +4,17 @@ const {
   retrieveRepositoryData
 } = require("./parser");
 
+function handleParserError(res, error) {
+  if (error.response) {
+    return res.status(error.response.status).json({ error: error.response.statusText });
+  }
+  if (error.message) {
+    return res.status(400).json({ error: error.message });
+  }
+  console.log(error);
+  res.status(500).json({ error: "Unhandled server error" });
+}
+
 function getRepositoryFiles(req, res) {
   let { url } = req.query;
   url = url.replace(/\/$/, ""); // Trim trailing slash
@@ -14,7 +25,7 @@ function getRepositoryFiles(req, res) {
       res.status(200).json({ files });
     })
     .catch((error) => {
-      res.status(400).json({ error: error.message });
+      handleParserError(res, error);
     });
 }
 
@@ -64,22 +75,21 @@ function addStyle(req, res) {
   const { usercss } = req.body;
   url = url.replace(/\/$/, ""); // Trim trailing slash
 
-  Style.findOne({ url, usercss: usercss.download_url }, async (error, style) => {
-    if (error) return res.status(500).json({ error });
+  Style.findOne({ url, usercss: usercss.download_url }, async (mongoError, style) => {
+    if (mongoError) return res.status(500).json({ error: mongoError });
     if (style) return res.status(409).json({ error: "Style was already added to our base" });
 
-    const data = await retrieveRepositoryData(url, usercss);
-    if (data.status === 404) return res.status(404).json({ error: "Repository was not found" });
-    if (data.error) return res.status(data.status).json({ error: data.error });
-    if (data.isPrivate) return res.status(403).json({ error: "Repository is private" });
-    if (data.isArchived) return res.status(400).json({ error: "Repository is archived" });
-    if (data.isFork) return res.status(400).json({ error: "Repository is forked" });
-
-    const newStyle = new Style(data);
-    newStyle.save((saveError) => {
-      if (saveError) return res.status(500).json({ error: `${saveError.code}: ${saveError.name}` });
-      return res.status(201).json({ style: newStyle });
-    });
+    retrieveRepositoryData(url, usercss)
+      .then((data) => {
+        const newStyle = new Style(data);
+        newStyle.save((saveError) => {
+          if (saveError) return res.status(500).json({ error: `${saveError.code}: ${saveError.name}` });
+          res.status(201).json({ style: newStyle });
+        });
+      })
+      .catch((error) => {
+        handleParserError(res, error);
+      });
   });
 }
 
@@ -87,30 +97,32 @@ function updateStyle(req, res) {
   const { _id } = req.body;
   if (!_id) return res.status(400).json({ error: "Request must contain _id field" });
 
-  Style.findById(_id, async (error, style) => {
-    if (error) return res.status(500).json({ error });
+  Style.findById(_id, async (mongoError, style) => {
+    if (mongoError) return res.status(500).json({ error: mongoError });
     if (!style) return res.status(404).json({ error: "Style was not found in our base" });
 
-    const data = await retrieveRepositoryData(style.url);
-    if (data.status === 404) return res.status(404).json({ error: "Repository was not found" });
-    if (data.error) return res.status(data.status).json({ error: data.error });
-    if (data.isPrivate) return res.status(403).json({ error: "Repository is private" });
-    if (data.isArchived) return res.status(400).json({ error: "Repository is archived" });
-    if (data.isFork) return res.status(400).json({ error: "Repository is forked" });
-
-    delete data.name;
-
-    Style.findByIdAndUpdate(_id, data, { new: true }, (updateError, result) => {
-      if (updateError) return res.status(500).json({ error: updateError });
-      return res.status(200).json({ result });
-    });
+    retrieveRepositoryData(style.url)
+      .then((data) => {
+        delete data.name;
+        Style.findByIdAndUpdate(_id, data, { new: true }, (updateError, result) => {
+          if (updateError) return res.status(500).json({ error: updateError });
+          return res.status(200).json({ result });
+        });
+      })
+      .catch((error) => {
+        res.status(400).json({ error: error.message });
+      });
   });
 }
 
 function updateAllStyles(req, res) {
   Style.updateAllStyles()
-    .then((result) => res.status(200).json({ result }))
-    .catch((error) => res.status(500).json({ error }));
+    .then((result) => {
+      res.status(200).json({ result });
+    })
+    .catch((error) => {
+      handleParserError(res, error);
+    });
 }
 
 function editStyle(req, res) {

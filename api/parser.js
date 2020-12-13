@@ -39,54 +39,47 @@ async function retrieveRepositoryFiles(url) {
 }
 
 async function retrieveRepositoryData(url, usercss = null) {
-  try {
-    const { provider, repoUrl } = getProviderData(url);
-    const repo = await axios.get(`${provider.api}/repos${repoUrl}`, provider.config);
+  const { provider, repoUrl } = getProviderData(url);
 
-    const branch = repo.data.default_branch;
-    const images = await repoImages(repo.data.full_name, { token, branch });
-    let preview;
-    if (images.length) {
-      let previewObj = images.find((img) => img.path.includes("preview"));
-      if (!previewObj) previewObj = images.reduce((a, b) => (a.size > b.size ? a : b));
-      preview = `https://raw.githubusercontent.com/${repo.data.full_name}/${branch}/${previewObj.path}`;
-    }
+  const repo = await axios.get(`${provider.api}/repos${repoUrl}`, provider.config);
+  if (repo.data.private) throw new Error("Repository is private");
+  if (repo.data.archived) throw new Error("Repository is archived");
+  if (repo.data.fork) throw new Error("Repository is forked");
 
-    const styleData = {
-      url: repo.data.html_url,
-      preview,
-      name: repo.data.name,
-      description: repo.data.description,
-      owner: repo.data.owner.login,
-      created: repo.data.created_at,
-      lastUpdate: repo.data.updated_at,
-      topics: repo.data.topics,
-      stargazers: repo.data.stargazers_count,
-      watchers: repo.data.subscribers_count,
-      forks: repo.data.forks,
-      issues: repo.data.open_issues,
-      license: (repo.data.license && repo.data.license.spdx_id) || "",
-      isPrivate: repo.data.private,
-      isArchived: repo.data.archived,
-      isFork: repo.data.fork
-    };
-
-    if (usercss) {
-      styleData.usercss = usercss.download_url;
-      styleData.name = usercss.name.replace(stylePattern, "").replace(/\s+/g, "-");
-    }
-
-    return styleData;
-  } catch (error) {
-    if (!error.response) {
-      console.log(error);
-      return { status: 500, error: "Unhandled server error" };
-    }
-    return {
-      status: error.response.status || error.response.statusCode,
-      error: error.response.statusText || error.response.statusMessage
-    };
+  const branch = repo.data.default_branch;
+  const images = await repoImages(repo.data.full_name, { token, branch });
+  let preview;
+  if (images.length) {
+    let previewObj = images.find((img) => img.path.includes("preview"));
+    if (!previewObj) previewObj = images.reduce((a, b) => (a.size > b.size ? a : b));
+    preview = `https://raw.githubusercontent.com/${repo.data.full_name}/${branch}/${previewObj.path}`;
   }
+
+  const styleData = {
+    url: repo.data.html_url,
+    preview,
+    name: repo.data.name,
+    description: repo.data.description,
+    owner: repo.data.owner.login,
+    created: repo.data.created_at,
+    lastUpdate: repo.data.updated_at,
+    topics: repo.data.topics,
+    stargazers: repo.data.stargazers_count,
+    watchers: repo.data.subscribers_count,
+    forks: repo.data.forks,
+    issues: repo.data.open_issues,
+    license: (repo.data.license && repo.data.license.spdx_id) || "",
+    isPrivate: repo.data.private,
+    isArchived: repo.data.archived,
+    isFork: repo.data.fork
+  };
+
+  if (usercss) {
+    styleData.usercss = usercss.download_url;
+    styleData.name = usercss.name.replace(stylePattern, "").replace(/\s+/g, "-");
+  }
+
+  return styleData;
 }
 
 module.exports = {
