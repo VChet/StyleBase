@@ -7,8 +7,8 @@
         </a>
         <span class="owner">
           by
-          <button class="link" type="button" @click="setOwnerFilter(styleData.owner)">
-            {{ styleData.owner }}
+          <button class="link" type="button" @click="setOwnerFilter(styleData.owner.login)">
+            {{ styleData.owner.login }}
           </button>
         </span>
       </div>
@@ -171,15 +171,15 @@ export default {
     isAuthorized() {
       if (!Object.keys(this.user).length) return false;
       const isAdmin = this.user.role === 'Admin';
-      const isOwner = this.styleData.owner === this.user.username;
+      const isOwner = [this.user.githubId, this.user.codebergId].includes(this.styleData.owner.id);
       const userOrgs = this.user.orgs.map((org) => org.name);
       const isMember = userOrgs.includes(this.styleData.owner);
       return isAdmin || isOwner || isMember;
     },
     twitterLink() {
       const name = this.styleData.customName || this.styleData.name;
-      const link = `https://stylebase.cc/${this.styleData.owner}/${this.styleData.name}`;
-      const text = encodeURIComponent(`${name} by ${this.styleData.owner}.\n${link}`);
+      const link = `https://stylebase.cc/${this.styleData.owner.login}/${this.styleData.name}`;
+      const text = encodeURIComponent(`${name} by ${this.styleData.owner.login}\n${link}`);
       return `https://twitter.com/intent/tweet?text=${text}`;
     }
   },

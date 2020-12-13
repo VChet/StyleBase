@@ -59,7 +59,10 @@ async function collectGithubData(repo) {
     preview,
     name: repo.data.name,
     description: repo.data.description,
-    owner: repo.data.owner.login,
+    owner: {
+      login: repo.data.owner.login,
+      id: repo.data.owner.id
+    },
     created: repo.data.created_at,
     lastUpdate: repo.data.updated_at,
     topics: repo.data.topics,
@@ -79,7 +82,10 @@ function collectCodebergData(repo) {
     url: repo.data.html_url,
     name: repo.data.name,
     description: repo.data.description,
-    owner: repo.data.owner.login,
+    owner: {
+      login: repo.data.owner.login,
+      id: repo.data.owner.id
+    },
     created: repo.data.created_at,
     lastUpdate: repo.data.updated_at,
     stargazers: repo.data.stars_count,

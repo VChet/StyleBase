@@ -20,7 +20,10 @@ const schema = new Schema({
     lowercase: true
   },
   description: String,
-  owner: String,
+  owner: {
+    login: String,
+    id: String
+  },
   created: Date,
   lastUpdate: Date,
   topics: Array,
@@ -40,7 +43,7 @@ const schema = new Schema({
 schema.index({
   name: "text",
   customName: "text",
-  owner: "text",
+  "owner.login": "text",
   topics: "text"
 });
 schema.plugin(mongoosePaginate);

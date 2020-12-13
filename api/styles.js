@@ -35,7 +35,7 @@ function getStyles(req, res) {
 
   let filter = {};
   if (query) filter = { $text: { $search: req.query.query } };
-  if (owner) filter = { owner };
+  if (owner) filter = { "owner.login": owner };
 
   let sortOrder = "-_id";
   if (sort === "stargazers") {
@@ -63,7 +63,7 @@ function getStyles(req, res) {
 function getStyleData(req, res) {
   const { owner, name } = req.query;
   if (!owner || !name) return res.status(400).json({ error: "Request must contain owner and name fields" });
-  Style.findOne({ owner, name }, (error, style) => {
+  Style.findOne({ "owner.login": owner, name }, (error, style) => {
     if (error) return res.status(500).json({ error });
     if (!style) return res.status(404).json({ error: "Style not found" });
     return res.status(200).json({ style });
