@@ -75,7 +75,7 @@ function addStyle(req, res) {
   const { usercss } = req.body;
   url = url.replace(/\/$/, ""); // Trim trailing slash
 
-  Style.findOne({ url, usercss: usercss.download_url }, async (mongoError, style) => {
+  Style.findOne({ usercss: usercss.download_url }, async (mongoError, style) => {
     if (mongoError) return res.status(500).json({ error: mongoError });
     if (style) return res.status(409).json({ error: "Style was already added to our base" });
 
@@ -83,7 +83,7 @@ function addStyle(req, res) {
       .then((data) => {
         const newStyle = new Style(data);
         newStyle.save((saveError) => {
-          if (saveError) return res.status(500).json({ error: `${saveError.code}: ${saveError.name}` });
+          if (saveError) return res.status(500).json({ error: `${saveError.name}: ${saveError.code}` });
           res.status(201).json({ style: newStyle });
         });
       })
