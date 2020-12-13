@@ -32,11 +32,11 @@ const schema = new Schema({
   }
 });
 
-async function getOrganizations(username) {
+async function getOrganizations(api, username) {
   const config = {
     headers: { Authorization: `token ${token}` }
   };
-  const orgs = await axios.get(`https://api.github.com/users/${username}/orgs`, config);
+  const orgs = await axios.get(`${api}/users/${username}/orgs`, config);
   return orgs.data.map((org) => ({ login: org.login, id: org.id }));
 }
 
@@ -45,15 +45,19 @@ schema.statics.findOrCreate = function findOrCreate(_accessToken, _refreshToken,
 
   const { provider, id, username } = profile;
   const userId = {};
+  let api;
   switch (provider) {
     case "github":
       userId.githubId = id;
+      api = "https://api.github.com";
       break;
     case "gitea":
       userId.codebergId = id;
+      api = "https://codeberg.org/api/v1";
       break;
     default:
       userId.githubId = id;
+      api = "https://api.github.com";
       break;
   }
 
@@ -64,7 +68,7 @@ schema.statics.findOrCreate = function findOrCreate(_accessToken, _refreshToken,
     const newUser = new User({
       ...userId,
       username,
-      orgs: await getOrganizations(username)
+      orgs: await getOrganizations(api, username)
     });
 
     newUser.save((saveError) => {
