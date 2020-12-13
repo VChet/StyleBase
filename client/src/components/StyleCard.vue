@@ -111,6 +111,7 @@ export default {
     font-size: 20px;
     font-weight: bold;
     transition: color 0.2s;
+    text-transform: capitalize;
   }
 
   &:hover .name,

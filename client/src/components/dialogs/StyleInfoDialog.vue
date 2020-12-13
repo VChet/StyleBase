@@ -226,6 +226,10 @@ export default {
     font-weight: bold;
     line-height: 1;
 
+    a {
+      text-transform: capitalize;
+    }
+
     .owner {
       font-size: 1rem;
       font-weight: normal;
