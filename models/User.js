@@ -17,7 +17,10 @@ const schema = new Schema({
   },
   githubId: {
     type: String,
-    required: true,
+    unique: true
+  },
+  codebergId: {
+    type: String,
     unique: true
   },
   orgs: {
@@ -40,7 +43,12 @@ async function getOrganizations(username) {
 schema.statics.findOrCreate = function findOrCreate(_accessToken, _refreshToken, profile, done) {
   const User = this;
 
-  User.findOne({ githubId: profile.id }, async (error, user) => {
+  User.findOne({
+    $or: [
+      { githubId: profile.id },
+      { codebergId: profile.id }
+    ]
+  }, async (error, user) => {
     if (error) return done(error);
     if (user) return done(null, user);
 
