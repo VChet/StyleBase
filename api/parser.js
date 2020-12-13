@@ -103,9 +103,9 @@ async function retrieveRepositoryData(url, usercss = null) {
   const { provider, repoUrl } = getProviderData(url);
 
   const repo = await axios.get(`${provider.api}/repos${repoUrl}`, provider.config);
-  if (repo.data.private) throw new Error("Repository is private");
-  if (repo.data.archived) throw new Error("Repository is archived");
-  if (repo.data.fork) throw new Error("Repository is forked");
+  if (repo.data.private) throw new Error(`${repo.data.name} repository is private`);
+  if (repo.data.archived) throw new Error(`${repo.data.name} repository is archived`);
+  if (repo.data.fork) throw new Error(`${repo.data.name} repository is forked`);
 
   let styleData;
   if (provider.name === "GitHub") {
