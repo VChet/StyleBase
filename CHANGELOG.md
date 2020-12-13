@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/VChet/StyleBase/compare/v3.0.3...v3.1.0) (2020-12-13)
+
+
+### Features
+
+* **add style:** support codeberg.org repos ([730a5aa](https://github.com/VChet/StyleBase/commit/730a5aaa68189ba0c23d1b685b33e21588756504))
+* **authentication:**  add gitea login strategy ([885ddcd](https://github.com/VChet/StyleBase/commit/885ddcd69033adb275b6a0f0f981d3c0d0d5b301))
+* **login:** add dialog with login options ([47ffca7](https://github.com/VChet/StyleBase/commit/47ffca731ee9fdd9ea195e5d070ce167bc478a42))
+* **parser:** support codeberg.org repos ([97fdee9](https://github.com/VChet/StyleBase/commit/97fdee91f8245efbe7438dac06cc607f3418c453))
+
+
+### Bug Fixes
+
+* **add style:** fix wrong parameters when looking for duplicates ([27675f0](https://github.com/VChet/StyleBase/commit/27675f0465f02dfcfbb3f28ee93ba17a09da2441))
+* **authorization:** check owner by id instead of username ([5b921ec](https://github.com/VChet/StyleBase/commit/5b921ec8bb1b4c93d98dabf0d28ec47b0bacac95))
+* **parser:** handle empty url, handle unsupported hosting providers ([caddb9a](https://github.com/VChet/StyleBase/commit/caddb9a143a53ea1673d77cff244875f873b03ae))
+* **style card:** capitalize first letters of a style name ([4dfbc40](https://github.com/VChet/StyleBase/commit/4dfbc408ed5fbefd24626958adc8cfc1cafff283))
+* **user model:** fix creating new user with codeberg id ([ad7f2e3](https://github.com/VChet/StyleBase/commit/ad7f2e39f35ae653e947abc4bd1c454701d75f81))
+
 ### [3.0.3](https://github.com/VChet/StyleBase/compare/v3.0.2...v3.0.3) (2020-12-09)
 
 
