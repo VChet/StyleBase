@@ -51,14 +51,17 @@ schema.plugin(mongoosePaginate);
 schema.statics.updateAllStyles = async function updateAllStyles() {
   const Style = this;
   const repositories = await Style.find({}).distinct("url").lean();
-  const repositoriesData = await Promise.all(repositories.map(repoUrl => retrieveRepositoryData(repoUrl)));
+  const repositoriesData = await Promise.allSettled(repositories.map(repoUrl => retrieveRepositoryData(repoUrl)));
   const Bulk = Style.collection.initializeUnorderedBulkOp();
 
-  repositoriesData.forEach(styleData => {
-    delete styleData.name;
-    styleData.owner.id = styleData.owner.id.toString();
-    Bulk.find({ url: styleData.url }).update({ $set: styleData });
-  });
+  repositoriesData
+    .filter(data => data.status === "fulfilled")
+    .forEach(promise => {
+      const styleData = promise.value;
+      delete styleData.name;
+      styleData.owner.id = styleData.owner.id.toString();
+      Bulk.find({ url: styleData.url }).update({ $set: styleData });
+    });
   return Bulk.execute();
 };
 
