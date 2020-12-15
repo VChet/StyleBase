@@ -133,7 +133,7 @@ function editStyle(req, res) {
   if (customPreview) {
     try {
       const previewUrl = new URL(customPreview);
-      const imagePattern = /\.(png|gif|jpg|svg|bmp|icns|ico|sketch)$/i;
+      const imagePattern = /\.(png|gif|jpg|svg|bmp)$/i;
       if (!previewUrl.protocol.includes("https:")) {
         return res.status(400).json({ error: "Preview must be from a secure source" });
       }
