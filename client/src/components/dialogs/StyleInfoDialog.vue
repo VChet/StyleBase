@@ -211,7 +211,7 @@ export default {
     },
     editStyle() {
       axios
-        .put('/api/style/edit', {
+        .patch('/api/style/edit', {
           _id: this.styleData._id,
           customName: this.customName,
           customPreview: this.customPreview,

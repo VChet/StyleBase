@@ -65,7 +65,7 @@ router.get("/style", cacheSuccessful, getStyleData);
 router.post("/style/add", rateLimiter, addStyle);
 router.put("/style/update/all", rateLimiter, updateAllStyles);
 router.put("/style/update", rateLimiter, updateStyle);
-router.put("/style/edit", isAuthorized, clearCache, editStyle);
+router.patch("/style/edit", isAuthorized, clearCache, editStyle);
 router.delete("/style/delete", isAuthorized, clearCache, deleteStyle);
 
 router.get("/me", getCurrentUser);
