@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/VChet/StyleBase/compare/v3.1.1...v3.2.0) (2020-12-15)
+
+
+### Features
+
+* **add style:** set custom fields before submitting a style ([b408ab5](https://github.com/VChet/StyleBase/commit/b408ab5916ee7e3e8b65ba02a3605f08fe129156))
+
+
+### Bug Fixes
+
+* **custom fields:** fix old values rewriting ([06b4175](https://github.com/VChet/StyleBase/commit/06b4175532810b6b8e3b7c7b878c3d25f65cd1a5))
+* **custom preview:** disallow icns, ico, sketch extensions ([a54719f](https://github.com/VChet/StyleBase/commit/a54719f5822193255c7f47814859f8e7079898a7))
+* **style grid:** fetch style list on a style update ([cf0b3a4](https://github.com/VChet/StyleBase/commit/cf0b3a4f856c2733bdf1a473bf60a83962e639b5))
+* **style update:** skip failed requests and update other styles ([08b3db8](https://github.com/VChet/StyleBase/commit/08b3db89300b424316ee3c16059a64090d4b3716))
+* **styles api:** change 'edit style' request method to patch ([698b239](https://github.com/VChet/StyleBase/commit/698b2396dcfb28e7746faca81d49f01d53ee38ff))
+
 ### [3.1.1](https://github.com/VChet/StyleBase/compare/v3.1.0...v3.1.1) (2020-12-13)
 
 
