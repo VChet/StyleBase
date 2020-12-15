@@ -15,6 +15,13 @@ function handleParserError(res, error) {
   res.status(500).json({ error: "Unhandled server error" });
 }
 
+function checkPreviewUrl(url) {
+  const previewUrl = new URL(url);
+  const imagePattern = /\.(png|gif|jpg|svg|bmp)$/i;
+  if (!previewUrl.protocol.includes("https:")) throw new Error("Preview must be from a secure source");
+  if (!imagePattern.test(previewUrl.pathname)) throw new Error("Preview file must be an image");
+}
+
 function getRepositoryFiles(req, res) {
   let { url } = req.query;
   url = url.replace(/\/$/, ""); // Trim trailing slash
@@ -72,16 +79,34 @@ function getStyleData(req, res) {
 
 function addStyle(req, res) {
   let { url } = req.body;
-  const { usercss } = req.body;
+  const {
+    usercss,
+    customName,
+    customDescription,
+    customPreview
+  } = req.body;
   url = url.replace(/\/$/, ""); // Trim trailing slash
 
   Style.findOne({ usercss: usercss.download_url }, async (mongoError, style) => {
     if (mongoError) return res.status(500).json({ error: mongoError });
     if (style) return res.status(409).json({ error: "Style was already added to our base" });
 
+    if (customPreview) {
+      try {
+        checkPreviewUrl(customPreview);
+      } catch (error) {
+        return res.status(400).json({ error: error.message });
+      }
+    }
+
     retrieveRepositoryData(url, usercss)
       .then((data) => {
-        const newStyle = new Style(data);
+        const newStyle = new Style({
+          ...data,
+          customName,
+          customDescription,
+          customPreview
+        });
         newStyle.save((saveError) => {
           if (saveError) return res.status(500).json({ error: `${saveError.name}: ${saveError.code}` });
           res.status(201).json({ style: newStyle });
@@ -132,16 +157,9 @@ function editStyle(req, res) {
 
   if (customPreview) {
     try {
-      const previewUrl = new URL(customPreview);
-      const imagePattern = /\.(png|gif|jpg|svg|bmp)$/i;
-      if (!previewUrl.protocol.includes("https:")) {
-        return res.status(400).json({ error: "Preview must be from a secure source" });
-      }
-      if (!imagePattern.test(previewUrl.pathname)) {
-        return res.status(415).json({ error: "Preview file must be an image" });
-      }
+      checkPreviewUrl(customPreview);
     } catch (error) {
-      return res.status(400).json({ error: "Invalid preview URL" });
+      return res.status(400).json({ error: error.message });
     }
   }
 

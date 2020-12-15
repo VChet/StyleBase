@@ -7,12 +7,17 @@
         <CloseButton v-show="url" aria-label="Clear the input" @click="clear" />
       </div>
       <p v-if="!files.length">Supported providers: GitHub, Codeberg</p>
-      <ul v-show="files.length > 1" class="file-list">
+      <ul class="file-list">
         <li v-for="(file, index) in files" :key="index">
           <input :id="index" v-model="selectedStyle" type="radio" :value="file" :disabled="isSubmitting" />
           <label :for="index">{{ file.name }}</label>
         </li>
       </ul>
+      <div v-if="selectedStyle" class="custom-fields">
+        <input v-model="customName" type="text" placeholder="Style name" />
+        <input v-model="customPreview" type="text" placeholder="Preview url" />
+        <input v-model="customDescription" type="text" placeholder="Style description" />
+      </div>
       <div class="dialog-buttons">
         <button class="style-button" type="button" @click="$emit('close')">Not now</button>
         <button class="style-button-filled" type="submit" :disabled="isSubmitting">
@@ -48,6 +53,9 @@ export default {
       url: '',
       files: [],
       selectedStyle: null,
+      customName: '',
+      customDescription: '',
+      customPreview: '',
       isSubmitting: false
     };
   },
@@ -73,14 +81,19 @@ export default {
         })
         .finally(() => {
           this.isSubmitting = false;
-          if (this.files.length === 1) this.submitStyle();
         });
     },
     submitStyle() {
       if (this.isSubmitting || !this.selectedStyle) return;
       this.isSubmitting = true;
       axios
-        .post('/api/style/add', { url: this.url, usercss: this.selectedStyle })
+        .post('/api/style/add', {
+          url: this.url,
+          usercss: this.selectedStyle,
+          customName: this.customName,
+          customDescription: this.customDescription,
+          customPreview: this.customPreview
+        })
         .then((response) => {
           this.clear();
           const name = response.data.style.customName || response.data.style.name;
@@ -100,6 +113,9 @@ export default {
       this.url = '';
       this.files = [];
       this.selectedStyle = null;
+      this.customName = '';
+      this.customDescription = '';
+      this.customPreview = '';
     }
   }
 };
@@ -132,7 +148,7 @@ export default {
 }
 
 .file-list {
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   list-style-type: none;
 
   li {
@@ -145,9 +161,26 @@ export default {
   }
 }
 
+.custom-fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 1rem 0;
+
+  input {
+    flex: 1;
+    box-sizing: border-box;
+    height: 50px;
+    padding: 0 15px;
+  }
+}
+
 .dialog-buttons {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
+  margin-top: 1.5rem;
 }
 </style>
