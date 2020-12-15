@@ -72,24 +72,9 @@
       <div class="action-group">
         <strong class="action-title">Edit style</strong>
         <form @submit.prevent="editStyle">
-          <input
-            :value="styleData.customName"
-            type="text"
-            placeholder="Style name"
-            @change="(e) => (customName = e.target.value)"
-          />
-          <input
-            :value="styleData.customPreview"
-            type="text"
-            placeholder="Preview url"
-            @change="(e) => (customPreview = e.target.value)"
-          />
-          <input
-            :value="styleData.customDescription"
-            type="text"
-            placeholder="Style description"
-            @change="(e) => (customDescription = e.target.value)"
-          />
+          <input v-model="customName" type="text" placeholder="Style name" />
+          <input v-model="customPreview" type="text" placeholder="Preview url" />
+          <input v-model="customDescription" type="text" placeholder="Style description" />
           <button class="style-button" type="submit">Edit</button>
         </form>
       </div>
@@ -117,7 +102,7 @@
 
 <script>
 import axios from 'axios';
-import { mapActions, mapGetters } from 'vuex';
+import { mapMutations, mapActions, mapGetters } from 'vuex';
 
 import { styleInfoMixin } from '@/mixins';
 
@@ -157,9 +142,6 @@ export default {
   },
   data() {
     return {
-      customName: '',
-      customPreview: '',
-      customDescription: '',
       showDeleteDialog: false
     };
   },
@@ -168,6 +150,30 @@ export default {
       styleData: 'styleGrid/getSelectedStyle',
       user: 'user/getUser'
     }),
+    customName: {
+      get() {
+        return this.styleData.customName;
+      },
+      set: function (value) {
+        this.setName(value);
+      }
+    },
+    customDescription: {
+      get() {
+        return this.styleData.customDescription;
+      },
+      set: function (value) {
+        this.setDescription(value);
+      }
+    },
+    customPreview: {
+      get() {
+        return this.styleData.customPreview;
+      },
+      set: function (value) {
+        this.setPreview(value);
+      }
+    },
     isAuthorized() {
       if (!Object.keys(this.user).length) return false;
       const isAdmin = this.user.role === 'Admin';
@@ -184,6 +190,11 @@ export default {
     }
   },
   methods: {
+    ...mapMutations({
+      setName: 'styleGrid/SET_CUSTOM_NAME',
+      setDescription: 'styleGrid/SET_CUSTOM_DESCRIPTION',
+      setPreview: 'styleGrid/SET_CUSTOM_PREVIEW'
+    }),
     ...mapActions({
       getStyles: 'styleGrid/getStyles',
       setOwnerFilter: 'styleGrid/setOwnerFilter',

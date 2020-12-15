@@ -5,6 +5,15 @@ export default {
   SET_SELECTED_STYLE(state, style) {
     state.selectedStyle = style;
   },
+  SET_CUSTOM_NAME(state, name) {
+    state.selectedStyle.customName = name;
+  },
+  SET_CUSTOM_DESCRIPTION(state, description) {
+    state.selectedStyle.customDescription = description;
+  },
+  SET_CUSTOM_PREVIEW(state, preview) {
+    state.selectedStyle.customPreview = preview;
+  },
   SET_LOADING(state, loading) {
     state.isLoading = loading;
   },
