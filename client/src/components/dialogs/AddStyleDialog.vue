@@ -53,6 +53,7 @@ export default {
   },
   methods: {
     ...mapActions({
+      getStyles: 'styleGrid/getStyles',
       flashAlert: 'alert/flashAlert'
     }),
     parseRepository() {
@@ -82,9 +83,10 @@ export default {
         .post('/api/style/add', { url: this.url, usercss: this.selectedStyle })
         .then((response) => {
           this.clear();
-          this.$emit('close');
           const name = response.data.style.customName || response.data.style.name;
           this.flashAlert({ type: 'success', message: `"${name}" added successfully` });
+          this.getStyles();
+          this.$emit('close');
         })
         .catch((error) => {
           this.flashAlert({ type: 'error', message: error.response.data.error });
