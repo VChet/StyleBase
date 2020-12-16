@@ -44,9 +44,11 @@ export default {
   },
   methods: {
     ...mapActions({
-      setOwnerFilter: 'styleGrid/setOwnerFilter'
+      setOwnerFilter: 'styleGrid/setOwnerFilter',
+      resetFilters: 'styleGrid/resetFilters'
     }),
     scrollToTop() {
+      this.resetFilters();
       window.scroll({ top: 0, left: 0, behavior: 'smooth' });
     }
   }
