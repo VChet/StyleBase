@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.1](https://github.com/VChet/StyleBase/compare/v3.2.0...v3.2.1) (2020-12-16)
+
+
+### Bug Fixes
+
+* **close button:** increase lines width ([376b335](https://github.com/VChet/StyleBase/commit/376b335db7afba23500ce198009555f42da189d2))
+* **feature block:** fix border-width ([b8c1fd0](https://github.com/VChet/StyleBase/commit/b8c1fd03ca77f02c7664014c385122b1d3965479))
+* **header:** clear filters on logo click ([e15825e](https://github.com/VChet/StyleBase/commit/e15825ef35843a51c8a970892b6ff7344e50d0c4))
+
 ## [3.2.0](https://github.com/VChet/StyleBase/compare/v3.1.1...v3.2.0) (2020-12-15)
 
 
