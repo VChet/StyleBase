@@ -19,6 +19,8 @@
 
 :root {
   --color-bg: #faf6f0;
+  --color-bg-light: #f5e6cc;
+  --color-text-bg: #ffffff;
   --color-text: #47525e;
   --color-focus: #ffa500;
   --color-border: #e0e0e0;
@@ -68,6 +70,8 @@ ul {
 input {
   border: 2px solid var(--color-border);
   border-radius: 5px;
+  background-color: var(--color-text-bg);
+  color: var(--color-text);
   outline: 0;
 
   &:focus {

@@ -31,7 +31,7 @@ export default {
   margin: 0 2rem 2rem;
   display: flex;
   align-items: center;
-  background-color: #fff;
+  background-color: var(--color-text-bg);
   border: 1px solid var(--color-border);
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.12);
   border-radius: 4px;

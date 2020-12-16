@@ -30,7 +30,7 @@ footer {
   position: fixed;
   bottom: 0;
   width: 100%;
-  background-color: var(--color-main-lightest);
+  background-color: var(--color-bg);
   font-size: 14px;
 
   @include media-size-mobile {

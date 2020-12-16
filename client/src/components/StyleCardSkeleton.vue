@@ -37,7 +37,7 @@ export default {
 .skeleton-footer > * {
   position: relative;
   height: 14px;
-  background-color: #dfdfdf;
+  background-color: var(--color-main-lightest);
   border-radius: 8px;
 
   &:after {
@@ -48,7 +48,8 @@ export default {
     right: 0;
     left: 0;
     transform: translateX(-70%);
-    background-image: linear-gradient(90deg, transparent 30%, #ffffff4d 50%, transparent 70%);
+    background-image: linear-gradient(90deg, transparent 30%, var(--color-text-bg) 50%, transparent 70%);
+    opacity: 0.3;
     animation: loading 1.5s infinite;
   }
 

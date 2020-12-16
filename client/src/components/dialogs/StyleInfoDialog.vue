@@ -316,7 +316,7 @@ export default {
   li {
     button {
       padding: 0.5rem;
-      background-color: #fff;
+      background-color: var(--color-text-bg);
       border: 1px solid var(--color-border);
       border-radius: 4px;
       white-space: nowrap;
