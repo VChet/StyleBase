@@ -181,7 +181,7 @@ main {
     .feature-item {
       flex-basis: 100%;
       padding: 1rem;
-      border-left: 2px solid var(--color-border);
+      border-left: 1px solid var(--color-border);
     }
   }
 }
