@@ -1,7 +1,7 @@
 <template>
   <button class="close-button" type="button" v-bind="$attrs" @click="$emit('click')">
-    <span class="cross-first-line" />
-    <span class="cross-second-line" />
+    <span class="first-line" />
+    <span class="second-line" />
   </button>
 </template>
 
@@ -22,39 +22,30 @@ export default {
   margin: 0;
   background-color: transparent;
   border-color: transparent;
+  outline: none;
+  opacity: 0.3;
+  transition: opacity 0.2s, transform 0.2s;
 
-  &:hover .cross-first-line,
-  &:hover .cross-second-line {
-    background-color: rgba(0, 0, 0, 0.7);
+  &:hover,
+  &:focus {
+    opacity: 0.75;
+    transform: scale(1.1);
   }
 
-  &:active .cross-first-line,
-  &:active .cross-second-line {
-    transform: rotate(55deg);
-    transition: transform 0.3s;
+  > span {
+    position: absolute;
+    width: 2px;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    background-color: #000;
+
+    &.first-line {
+      transform: translateX(-50%) rotate(135deg);
+    }
+    &.second-line {
+      transform: translateX(-50%) rotate(45deg);
+    }
   }
-}
-
-.cross-first-line,
-.cross-second-line {
-  position: absolute;
-  background-color: rgba(0, 0, 0, 0.3);
-  transition: background-color 0.2s;
-}
-
-.cross-first-line {
-  width: 100%;
-  height: 1px;
-  top: 50%;
-  left: 0;
-  transform: translate(0%, -50%) rotate(45deg);
-}
-
-.cross-second-line {
-  width: 1px;
-  height: 100%;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, 0%) rotate(45deg);
 }
 </style>
