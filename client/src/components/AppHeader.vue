@@ -2,6 +2,16 @@
   <header :class="{ active: menuIsActive }">
     <div class="container">
       <button class="link logo" type="button" @click="scrollToTop">StyleBase</button>
+      <div class="mode-switch">
+        <input
+          id="mode-input"
+          class="visually-hidden"
+          type="checkbox"
+          :value="darkTheme"
+          @change="darkTheme = !darkTheme"
+        />
+        <label for="mode-input">{{ darkTheme ? '☀️' : '🌒' }}</label>
+      </div>
       <button
         class="link burger-menu"
         type="button"
@@ -34,6 +44,7 @@ export default {
   name: 'AppHeader',
   data() {
     return {
+      darkTheme: false,
       menuIsActive: false
     };
   },
@@ -41,6 +52,24 @@ export default {
     ...mapGetters({
       user: 'user/getUser'
     })
+  },
+  watch: {
+    darkTheme(isDark) {
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      localStorage.setItem('dark-theme', isDark);
+    }
+  },
+  mounted() {
+    const storedMode = localStorage.getItem('dark-theme');
+    if (storedMode) {
+      this.darkTheme = JSON.parse(storedMode);
+    } else {
+      const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
+      this.darkTheme = darkMode.matches;
+      darkMode.addListener((query) => {
+        this.darkTheme = query.matches;
+      });
+    }
   },
   methods: {
     ...mapActions({
@@ -89,6 +118,18 @@ header {
     font-weight: bold;
   }
 
+  .mode-switch {
+    margin-left: auto;
+    margin-right: 1.5rem;
+    label {
+      border-bottom: 2px solid transparent;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    input:focus + label {
+      border-color: var(--color-focus);
+    }
+  }
   .burger-menu {
     display: none;
     position: relative;
@@ -125,25 +166,17 @@ header {
   }
 
   nav {
-    button,
-    a {
-      margin-left: 1.5rem;
-    }
+    display: flex;
+    gap: 0.75rem 1.5rem;
 
     @include media-size-tablet {
-      display: flex;
+      margin-top: 0.75rem;
       flex-basis: 100%;
       flex-direction: column;
       align-items: flex-start;
       background-color: var(--color-bg);
       animation: slide-in 0.5s forwards;
       overflow: hidden;
-
-      button,
-      a {
-        margin-top: 0.75rem;
-        margin-left: 0rem;
-      }
     }
   }
 

@@ -33,6 +33,21 @@
   --color-main-darkest: #b85a2e;
 }
 
+[data-theme='dark'] {
+  --color-bg: #191919;
+  --color-bg-light: #272727;
+  --color-text-bg: #222222;
+  --color-text: #dddddd;
+  --color-border: #292929;
+  --color-main-lightest: #333333;
+  --color-main-lighter: #262626;
+  --color-main-light: #1a1a1a;
+  --color-main: #cc6333;
+  --color-main-dark: #b85a2e;
+  --color-main-darker: #a35029;
+  --color-main-darkest: #8f4624;
+}
+
 html,
 body,
 #app {
