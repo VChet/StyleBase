@@ -35,7 +35,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 200px;
-  background-color: #f5e6cc;
+  background-color: var(--color-bg-light);
 }
 
 .data {
@@ -43,7 +43,7 @@ export default {
   flex-direction: column;
   height: 100px;
   padding: 1rem;
-  background-color: #fff;
+  background-color: var(--color-text-bg);
   cursor: pointer;
 
   .footer {

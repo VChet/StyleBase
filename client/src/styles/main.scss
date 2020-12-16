@@ -19,16 +19,33 @@
 
 :root {
   --color-bg: #faf6f0;
+  --color-bg-light: #f5e6cc;
+  --color-text-bg: #ffffff;
   --color-text: #47525e;
   --color-focus: #ffa500;
   --color-border: #e0e0e0;
-  --color-main-lightest: #f4ebdd;
-  --color-main-lighter: #eddfca;
-  --color-main-light: #e7d4b7;
-  --color-main: #d37b53;
-  --color-main-dark: #ce6c3e;
-  --color-main-darker: #c15f31;
-  --color-main-darkest: #ad552c;
+  --color-main-lightest: #f2e8d9;
+  --color-main-lighter: #ecddc6;
+  --color-main-light: #e6d1b3;
+  --color-main: #d6835c;
+  --color-main-dark: #d17347;
+  --color-main-darker: #cc6333;
+  --color-main-darkest: #b85a2e;
+}
+
+[data-theme='dark'] {
+  --color-bg: #191919;
+  --color-bg-light: #272727;
+  --color-text-bg: #222222;
+  --color-text: #dddddd;
+  --color-border: #292929;
+  --color-main-lightest: #333333;
+  --color-main-lighter: #262626;
+  --color-main-light: #1a1a1a;
+  --color-main: #cc6333;
+  --color-main-dark: #b85a2e;
+  --color-main-darker: #a35029;
+  --color-main-darkest: #8f4624;
 }
 
 html,
@@ -68,6 +85,8 @@ ul {
 input {
   border: 2px solid var(--color-border);
   border-radius: 5px;
+  background-color: var(--color-text-bg);
+  color: var(--color-text);
   outline: 0;
 
   &:focus {

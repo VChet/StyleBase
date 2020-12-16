@@ -154,7 +154,7 @@ main {
   width: 100%;
   margin: 2rem 0;
   user-select: none;
-  background-color: #fff;
+  background-color: var(--color-text-bg);
   border: 1px solid var(--color-border);
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.12);
 

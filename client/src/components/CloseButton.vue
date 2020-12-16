@@ -38,7 +38,7 @@ export default {
     height: 100%;
     top: 0;
     left: 50%;
-    background-color: #000;
+    background-color: var(--color-text);
 
     &.first-line {
       transform: translateX(-50%) rotate(135deg);
