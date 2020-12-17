@@ -2,6 +2,7 @@
 
 ![Vue](https://img.shields.io/github/package-json/dependency-version/VChet/StyleBase/vue?color=41b883&filename=client%2Fpackage.json)
 ![Vuex](https://img.shields.io/github/package-json/dependency-version/VChet/StyleBase/vuex?color=41b883&filename=client%2Fpackage.json)
+[![CodeClimate](https://api.codeclimate.com/v1/badges/a40a8f663fdbaa36e28a/maintainability)](https://codeclimate.com/github/VChet/StyleBase/maintainability)
 [![CC](https://img.shields.io/badge/Conventional%20Commits-1.0.0-green.svg)](https://conventionalcommits.org)
 
 ## Development
