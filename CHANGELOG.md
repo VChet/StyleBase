@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/VChet/StyleBase/compare/v3.2.1...v3.3.0) (2020-12-17)
+
+
+### Features
+
+* **dark mode:** add dark theme and system theme detection ([e103613](https://github.com/VChet/StyleBase/commit/e103613243443624013181925c8376a5bb2acdf9))
+
+
+### Bug Fixes
+
+* **dark mode:** add ARIA attributes to switcher ([23bf2fa](https://github.com/VChet/StyleBase/commit/23bf2fa105b224e68f262bd47c040c652361b5f4))
+* **styles:** show fetch errors in snackbar ([001c664](https://github.com/VChet/StyleBase/commit/001c66413f2963dc01f0b864e8d91ae069d6d04e))
+* update color scheme and 'no-preview' image ([5233b77](https://github.com/VChet/StyleBase/commit/5233b77164df697d95c9c9a56a70dd60fd22d4d1))
+
 ### [3.2.1](https://github.com/VChet/StyleBase/compare/v3.2.0...v3.2.1) (2020-12-16)
 
 
