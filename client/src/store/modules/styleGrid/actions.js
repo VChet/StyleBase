@@ -6,7 +6,7 @@ function lockScroll(isActive) {
 }
 
 export default {
-  async getStyles({ state, commit }) {
+  async getStyles({ state, commit, dispatch }) {
     commit('SET_LOADING', true);
 
     const params = {};
@@ -34,7 +34,7 @@ export default {
         });
       })
       .catch((error) => {
-        console.error(error);
+        dispatch('alert/flashAlert', { type: 'error', message: error.response.data.error }, { root: true });
       })
       .finally(() => {
         commit('SET_LOADING', false);
@@ -49,7 +49,7 @@ export default {
         dispatch('openStyleModal', response.data.style);
       })
       .catch((error) => {
-        console.error(error);
+        dispatch('alert/flashAlert', { type: 'error', message: error.response.data.error }, { root: true });
       });
   },
   setPage({ commit, dispatch }, page) {
