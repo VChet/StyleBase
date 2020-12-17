@@ -10,7 +10,10 @@
           :value="darkTheme"
           @change="darkTheme = !darkTheme"
         />
-        <label for="mode-input">{{ darkTheme ? '☀️' : '🌒' }}</label>
+        <label for="mode-input">
+          <span v-if="darkTheme" role="img" aria-label="Dark mode">🌒</span>
+          <span v-else role="img" aria-label="Light mode">☀️</span>
+        </label>
       </div>
       <button
         class="link burger-menu"
