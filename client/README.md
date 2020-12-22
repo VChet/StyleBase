@@ -11,9 +11,11 @@
 
 1. Install all dependencies `npm install`
 1. Copy `.env.template`, rename it to `.env` and configure
+
    ```sh
    cp .env.template .env
    ```
+
 1. Start a dev server `npm start` or build files to serve via node server `npm run build`
 
 ### [Server](../README.md)
