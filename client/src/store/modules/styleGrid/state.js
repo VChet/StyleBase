@@ -11,19 +11,19 @@ export default {
 
   sortOptions: [
     {
-      id: '_id',
-      text: 'Recently added'
+      id: 'stargazers',
+      text: 'Most liked'
     },
     {
       id: 'lastUpdate',
       text: 'Recently updated'
     },
     {
-      id: 'stargazers',
-      text: 'Most liked'
+      id: '_id',
+      text: 'Recently added'
     }
   ],
-  sortOrder: '_id',
+  sortOrder: 'stargazers',
 
   selectedStyle: {},
   showStyleInfoModal: false
