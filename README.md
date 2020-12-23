@@ -3,6 +3,10 @@
 [![CodeClimate](https://api.codeclimate.com/v1/badges/a40a8f663fdbaa36e28a/maintainability)](https://codeclimate.com/github/VChet/StyleBase/maintainability)
 [![CC](https://img.shields.io/badge/Conventional%20Commits-1.0.0-green.svg)](https://conventionalcommits.org)
 
+Site for UserCSS theme sharing. Supports GitHub and Codeberg repositories.
+
+![Preview](./meta/preview.png)
+
 ## Development
 
 ### Server
@@ -23,3 +27,11 @@
 1. Build client files `npm run client:build`
 
 ### [Client](./client/README.md)
+
+## License
+
+This project is licensed under the [MIT License](./LICENSE.md).
+
+## Support
+
+You can support this project on [LiberaPay](https://en.liberapay.com/VChet/) or [Buy Me A Coffee](https://ko-fi.com/vchet).
