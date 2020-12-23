@@ -78,7 +78,7 @@ export default {
   resetFilters({ commit, dispatch }) {
     window.history.replaceState({}, document.title, '/');
     commit('SET_SEARCH_QUERY', '');
-    commit('SET_SORT_ORDER', 0);
+    commit('SET_SORT_ORDER', 'stargazers');
     commit('SET_OWNER_FILTER', '');
     commit('SET_PAGE', 1);
     dispatch('getStyles');
