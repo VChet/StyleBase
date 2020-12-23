@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "vue-cli-service serve",
-    "build": "vue-cli-service build --modern",
+    "build": "vue-cli-service build --modern --no-unsafe-inline",
     "lint": "vue-cli-service lint"
   },
   "engines": {
