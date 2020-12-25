@@ -16,18 +16,18 @@ const schema = new Schema({
     default: "User"
   },
   githubId: {
-    type: String,
+    type: Number,
     unique: true
   },
   codebergId: {
-    type: String,
+    type: Number,
     unique: true
   },
   orgs: {
-    type: [{
-      login: String,
-      id: Number
-    }],
+    type: {
+      id: Number,
+      login: String
+    },
     default: []
   }
 });

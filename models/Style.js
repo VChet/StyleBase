@@ -21,8 +21,10 @@ const schema = new Schema({
   },
   description: String,
   owner: {
-    login: String,
-    id: String
+    type: {
+      id: Number,
+      login: String
+    }
   },
   created: Date,
   lastUpdate: Date,
@@ -59,7 +61,6 @@ schema.statics.updateAllStyles = async function updateAllStyles() {
     .forEach(promise => {
       const styleData = promise.value;
       delete styleData.name;
-      styleData.owner.id = styleData.owner.id.toString();
       Bulk.find({ url: styleData.url }).update({ $set: styleData });
     });
   return Bulk.execute();
