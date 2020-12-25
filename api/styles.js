@@ -126,9 +126,8 @@ function updateStyle(req, res) {
     if (mongoError) return res.status(500).json({ error: mongoError });
     if (!style) return res.status(404).json({ error: "Style was not found in our base" });
 
-    retrieveRepositoryData(style.url)
+    retrieveRepositoryData(style.url, { download_url: style.usercss })
       .then((data) => {
-        delete data.name;
         Style.findByIdAndUpdate(_id, data, { new: true }, (updateError, result) => {
           if (updateError) return res.status(500).json({ error: updateError });
           return res.status(200).json({ result });
