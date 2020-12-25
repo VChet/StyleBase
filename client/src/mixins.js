@@ -9,7 +9,7 @@ const styleInfoMixin = {
       return `${num} ${noun}${num === 1 ? '' : suffix}`;
     },
     removeDashes(text) {
-      return text.replace(/[-_]/g, ' ');
+      return text.replace(/_/g, ' ');
     },
     dateFromNow(date) {
       dayjs.extend(relativeTime);
