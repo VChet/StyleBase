@@ -178,8 +178,8 @@ export default {
       if (!Object.keys(this.user).length) return false;
       const isAdmin = this.user.role === 'Admin';
       const isOwner = [this.user.githubId, this.user.codebergId].includes(this.styleData.owner.id);
-      const userOrgs = this.user.orgs.map((org) => org.name);
-      const isMember = userOrgs.includes(this.styleData.owner);
+      const userOrgs = this.user.orgs.map((org) => org.id);
+      const isMember = userOrgs.includes(this.styleData.owner.id);
       return isAdmin || isOwner || isMember;
     },
     twitterLink() {
