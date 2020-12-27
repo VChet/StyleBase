@@ -125,7 +125,7 @@ async function retrieveRepositoryData(url, usercss = null) {
   if (usercss) {
     const metadata = await retrieveStyleMetadata(usercss.download_url, provider.config);
     styleData.usercss = usercss.download_url;
-    styleData.name = metadata.name.replace(/\s+/g, "_").replace(/[^a-z\d-_]/gi, "-");
+    styleData.name = metadata.name.replace(/\s+/g, "_").replace(/[^a-z\d-_()[\]]/gi, "-");
     if (metadata.description) styleData.description = metadata.description;
     if (metadata.license) styleData.license = metadata.license;
   }
