@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.4.0](https://github.com/VChet/StyleBase/compare/v3.3.0...v3.4.0) (2020-12-27)
+
+
+### Features
+
+* **parser:** fill style name, description, license from metadata ([efc6e07](https://github.com/VChet/StyleBase/commit/efc6e07b6b43c8e7025aa55cdbeaa89e389bf162))
+
+
+### Bug Fixes
+
+* **database:** fix owner id being stored as string instead of number ([c060cf0](https://github.com/VChet/StyleBase/commit/c060cf065a27f20ad7b7313e15e52623a0cd9df2))
+* **features:** update texts ([f302361](https://github.com/VChet/StyleBase/commit/f302361d4a8702d19e3b3778c56d6fea26626a93))
+* **login:** add authorization information ([e5fe070](https://github.com/VChet/StyleBase/commit/e5fe070cf0d94ed293d9324c36ad3acffb326133))
+* **rss:** add RSS feed link in the head tag ([3536e92](https://github.com/VChet/StyleBase/commit/3536e92f1ac632d85b0c71dcc48a563a4f50f78d))
+* **server:** remove Access-Control-Allow-Origin header ([b05eca6](https://github.com/VChet/StyleBase/commit/b05eca6792422e9065e60f630c5d94fdc1334c2c))
+* **style edit:** fix user organizations check ([e1cd00c](https://github.com/VChet/StyleBase/commit/e1cd00cae733f0f0a3ffd6544453522938f0a6ab))
+* **style update:** update style with metadata in scheduled update ([0c522e7](https://github.com/VChet/StyleBase/commit/0c522e75bb605e4c5df2911d602714346a81f052))
+* **styles:** rearrange sort options, set 'most liked' as default ([bd553fc](https://github.com/VChet/StyleBase/commit/bd553fc569c63d5b389954e2d948bcf93abc5e09))
+* **styles:** set initial sort order after filter reset ([4372346](https://github.com/VChet/StyleBase/commit/437234666c623fed18d761f48e4a8f737bd86724))
+
 ## [3.3.0](https://github.com/VChet/StyleBase/compare/v3.2.1...v3.3.0) (2020-12-17)
 
 
