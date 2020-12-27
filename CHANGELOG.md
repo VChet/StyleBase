@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.4.1](https://github.com/VChet/StyleBase/compare/v3.4.0...v3.4.1) (2020-12-27)
+
+
+### Bug Fixes
+
+* **alert:** support multiple alerts ([7e8f6f7](https://github.com/VChet/StyleBase/commit/7e8f6f718e4adc37c8e85d2287d5abb26455719f))
+* **helmet:** add data URL to script-src directive ([37ceb3f](https://github.com/VChet/StyleBase/commit/37ceb3fe33b57897c013ecd50461b61c08f528ed))
+* **parser:** do not replace parentheses in style name ([842b64b](https://github.com/VChet/StyleBase/commit/842b64bb21e3b2c720a1a66c3f49fa000ddde0a1))
+
 ## [3.4.0](https://github.com/VChet/StyleBase/compare/v3.3.0...v3.4.0) (2020-12-27)
 
 
