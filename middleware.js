@@ -92,7 +92,7 @@ function addExpressMiddleware(app) {
         "img-src": ["'self'", "data:", "https:"],
         "style-src": ["'self'", "'unsafe-inline'"],
         "script-src": [
-          "'self'",
+          "'self'", "data:",
           "https://www.googletagmanager.com", "https://www.google-analytics.com",
           "https://cloudflareinsights.com", "https://static.cloudflareinsights.com"
         ],
