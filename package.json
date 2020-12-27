@@ -37,7 +37,8 @@
     "passport": "^0.4.1",
     "passport-gitea": "0.0.3",
     "passport-github2": "^0.1.12",
-    "repo-images": "^1.0.1"
+    "repo-images": "^1.0.1",
+    "usercss-meta": "^0.10.0"
   },
   "devDependencies": {
     "eslint": "^7.15.0",

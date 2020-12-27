@@ -1,5 +1,6 @@
 const axios = require("axios");
 const repoImages = require("repo-images");
+const metaParser = require("usercss-meta");
 
 const { token } = require("../config").github;
 
@@ -42,6 +43,13 @@ async function retrieveRepositoryFiles(url) {
   const contents = await axios.get(`${provider.api}/repos${repoUrl}/contents`, provider.config);
   const files = contents.data.filter((file) => stylePattern.test(file.name));
   return files;
+}
+
+async function retrieveStyleMetadata(fileUrl, config) {
+  const content = await axios.get(fileUrl, config);
+  const data = metaParser.parse(content.data);
+  if (data.errors.length) console.log(data.errors);
+  return data.metadata;
 }
 
 async function collectGithubData(repo) {
@@ -115,8 +123,11 @@ async function retrieveRepositoryData(url, usercss = null) {
   }
 
   if (usercss) {
+    const metadata = await retrieveStyleMetadata(usercss.download_url, provider.config);
     styleData.usercss = usercss.download_url;
-    styleData.name = usercss.name.replace(stylePattern, "").replace(/\s+/g, "-");
+    styleData.name = metadata.name.replace(/\s+/g, "_").replace(/[^a-z\d-_]/gi, "-");
+    if (metadata.description) styleData.description = metadata.description;
+    if (metadata.license) styleData.license = metadata.license;
   }
 
   return styleData;
