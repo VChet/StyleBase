@@ -1,17 +1,12 @@
-let timeout;
-
 export default {
-  flashAlert({ commit }, { type, message }) {
-    clearTimeout(timeout);
-    if (type) commit('SET_TYPE', type);
-    commit('SET_MESSAGE', message);
-    commit('SET_VISIBILITY', true);
-    timeout = setTimeout(() => {
-      commit('SET_VISIBILITY', false);
+  flashAlert({ commit }, payload) {
+    const id = Math.random().toString(36).substr(2, 9);
+    commit('ADD_ALERT', { ...payload, id });
+    setTimeout(() => {
+      commit('REMOVE_ALERT', id);
     }, 5000);
   },
-  close({ commit }) {
-    clearTimeout(timeout);
-    commit('SET_VISIBILITY', false);
+  close({ commit }, id) {
+    commit('REMOVE_ALERT', id);
   }
 };

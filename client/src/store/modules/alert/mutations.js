@@ -1,11 +1,8 @@
 export default {
-  SET_VISIBILITY(state, visibility) {
-    state.show = visibility;
+  ADD_ALERT(state, payload) {
+    state.alerts.push(payload);
   },
-  SET_TYPE(state, type) {
-    state.type = type;
-  },
-  SET_MESSAGE(state, message) {
-    state.message = message;
+  REMOVE_ALERT(state, id) {
+    state.alerts = state.alerts.filter((alert) => alert.id !== id);
   }
 };

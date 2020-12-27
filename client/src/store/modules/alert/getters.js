@@ -1,3 +1,3 @@
 export default {
-  getState: (state) => state
+  getAlerts: (state) => state.alerts
 };
