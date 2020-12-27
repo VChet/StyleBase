@@ -11,6 +11,10 @@
         Codeberg
       </a>
     </div>
+    <p>
+      The authorization will allow you to edit styles that belong to you or your organization. We store only your
+      username, id, and your public organizations.
+    </p>
     <div class="dialog-buttons">
       <button class="style-button-filled" type="button" @click="$emit('close')">Close</button>
     </div>
