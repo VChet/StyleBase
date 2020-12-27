@@ -7,12 +7,12 @@
           <span>Install once and receive updates automatically</span>
         </div>
         <div class="feature-item">
-          <div>Free to Share</div>
-          <span>Anyone can add own style</span>
+          <div>Easy to Share</div>
+          <span>You only need a link to the style repository</span>
         </div>
         <div class="feature-item">
-          <div>Open Source</div>
-          <span>Install directly from repository</span>
+          <div>Easy to Contribute</div>
+          <span>Send feedback directly to the style's author</span>
         </div>
       </section>
       <section class="search-container">
