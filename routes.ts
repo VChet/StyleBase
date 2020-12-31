@@ -1,8 +1,8 @@
-const express = require("express");
-const path = require("path");
-const passport = require("passport");
+import express from "express";
+import path from "path";
+import passport from "passport";
 
-const { getRss } = require("./api/rss");
+import { getRss } from "./api/rss";
 
 const router = express.Router();
 const clientIndex = path.join(__dirname, "public/index.html");
@@ -15,15 +15,15 @@ router.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
 });
-router.get("/github/callback", passport.authenticate("github"), (req, res) => res.redirect("/"));
-router.get("/codeberg/callback", passport.authenticate("gitea"), (req, res) => res.redirect("/"));
+router.get("/github/callback", passport.authenticate("github"), (_req, res) => res.redirect("/"));
+router.get("/codeberg/callback", passport.authenticate("gitea"), (_req, res) => res.redirect("/"));
 
 // RSS
 router.get("/rss", getRss);
 
 // Client serving
-router.get("*", (req, res) => res.sendFile(clientIndex, (error) => {
+router.get("*", (_req, res) => res.sendFile(clientIndex, (error: NodeJS.ErrnoException) => {
   if (error && error.code === "ENOENT") return res.status(503).sendFile(maintenance);
 }));
 
-module.exports = router;
+export default router;

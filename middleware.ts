@@ -1,22 +1,24 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
-const Agenda = require("agenda");
+import Agenda from "agenda";
 
-const session = require("express-session");
+import session from "express-session";
 const MongoStore = require("connect-mongo")(session);
-const passport = require("passport");
-const GitHubStrategy = require("passport-github2").Strategy;
-const GiteaStrategy = require("passport-gitea").Strategy;
+import passport from "passport";
+import { Strategy as GitHubStrategy } from "passport-github2";
+//@ts-ignore
+import { Strategy as GiteaStrategy } from "passport-gitea";
 
-const morgan = require("morgan");
-const helmet = require("helmet");
-const bodyParser = require("body-parser");
-const compression = require("compression");
+import morgan from "morgan";
+import helmet from "helmet";
+import bodyParser from "body-parser";
+import compression from "compression";
 
-const config = require("./config");
-const { User } = require("./models/User");
-const { Style } = require("./models/Style");
-const { initCollection } = require("./models/init");
+import config from "./config";
+import { IUser, User } from "./models/User";
+import { Style } from "./models/Style";
+import { initCollection } from "./models/init";
+import { Application } from "express";
 
 // Database
 mongoose.connect(config.mongoUrl, {
@@ -52,12 +54,12 @@ passport.use(
   }, User.findOrCreate.bind(User))
 );
 
-passport.serializeUser((user, done) => {
+passport.serializeUser((user: any, done) => {
   done(null, user._id);
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id, (error, user) => {
+  User.findById(id, (error: any, user: IUser) => {
     if (error) return done(error);
     return done(null, user);
   });
@@ -82,7 +84,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Middleware
-function addExpressMiddleware(app) {
+export function addExpressMiddleware(app: Application) {
   app.use(morgan("dev"));
   app.use(helmet({
     referrerPolicy: { policy: "strict-origin-when-cross-origin" },
@@ -111,5 +113,3 @@ function addExpressMiddleware(app) {
   app.use(passport.session());
   app.use(compression());
 }
-
-module.exports = { addExpressMiddleware };

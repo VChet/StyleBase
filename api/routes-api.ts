@@ -1,27 +1,27 @@
-const express = require("express");
-const mcache = require("memory-cache");
-const rateLimit = require("express-rate-limit");
+import express, { NextFunction, Request, Response } from "express";
+import mcache from "memory-cache";
+import rateLimit from "express-rate-limit";
 
-const { Style } = require("../models/Style");
+import { Style } from "../models/Style";
 
-const router = express.Router();
+export const router = express.Router();
 
 // Cache
-const cache = (duration) => (req, res, next) => {
+const cache = (duration: number) => (req: Request, res: Response, next: NextFunction) => {
   const key = `__express__${req.originalUrl}` || req.url;
   const cachedBody = mcache.get(key);
   if (cachedBody) return res.send(cachedBody);
 
   res.sendResponse = res.send;
-  res.send = (body) => {
-    if (!process.env.NODE_ENV === "production" && res.statusCode === 200) {
+  res.send = (body: any) => {
+    if (!(process.env.NODE_ENV === "production") && res.statusCode === 200) {
       mcache.put(key, body, duration * 60 * 1000);
     }
-    res.sendResponse(body);
+    return res.sendResponse(body);
   };
   next();
 };
-const clearCache = (req, res, next) => {
+const clearCache = (_req: Request, _res: Response, next: NextFunction) => {
   mcache.clear();
   next();
 };
@@ -30,11 +30,14 @@ const clearCache = (req, res, next) => {
 const rateLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   max: 30,
-  message: { error: "Too many update requests made from this IP, please try again after 1 hour" },
+  message: {
+    status: 429,
+    message: "Too many update requests made from this IP, please try again after 1 hour"
+  },
   skip: () => process.env.NODE_ENV !== "production"
 });
 
-const isAuthorized = async (req, res, next) => {
+const isAuthorized = async (req: Request, res: Response, next: NextFunction) => {
   const { _id } = req.body;
   if (!_id) return res.status(400).json({ error: "Request must contain _id field" });
   const existingStyle = await Style.findById(_id).lean();
@@ -56,20 +59,9 @@ const isAuthorized = async (req, res, next) => {
   next();
 };
 
-const {
-  getStyles,
-  getRepositoryFiles,
-  getStyleData,
-  addStyle,
-  updateAllStyles,
-  updateStyle,
-  editStyle,
-  deleteStyle
-} = require("./styles");
+import { getStyles, getRepositoryFiles, getStyleData, addStyle, updateAllStyles, updateStyle, editStyle, deleteStyle } from "./styles";
 
-const {
-  getCurrentUser
-} = require("./users");
+import { getCurrentUser } from "./users";
 
 router.get("/styles/:owner?", cache(10), getStyles);
 router.get("/style/files", cache(10), getRepositoryFiles);
@@ -82,4 +74,4 @@ router.delete("/style/delete", isAuthorized, clearCache, deleteStyle);
 
 router.get("/me", getCurrentUser);
 
-module.exports = router;
+export default router;
