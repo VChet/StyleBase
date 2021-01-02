@@ -21,8 +21,10 @@
 
     <template #data>
       <div @click="openStyleModal(styleData)">
-        <div class="name">{{ styleData.customName || removeDashes(styleData.name) }}</div>
-        <div>by {{ styleData.owner.login }}</div>
+        <div class="name" :title="styleData.customName || removeDashes(styleData.name)">
+          {{ styleData.customName || removeDashes(styleData.name) }}
+        </div>
+        <div class="owner">by {{ styleData.owner.login }}</div>
       </div>
     </template>
 
@@ -106,17 +108,22 @@ export default {
 
 .data {
   .name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-transform: capitalize;
     font-size: 20px;
     font-weight: bold;
     transition: color 0.2s;
-    text-transform: capitalize;
   }
-
   &:hover .name,
   &:focus .name {
     color: var(--color-main);
+  }
+
+  .owner {
+    margin-top: 0.25rem;
   }
 }
 </style>
