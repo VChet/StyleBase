@@ -50,10 +50,14 @@ export async function retrieveRepositoryFiles(url: string) {
 }
 
 async function retrieveStyleMetadata(fileUrl: string, options: AxiosRequestConfig) {
-  const content = await axios.get(fileUrl, options);
-  const data = metaParser.parse(content.data);
-  if (data.errors.length) console.log(data.errors);
-  return data.metadata;
+  try {
+    const content = await axios.get(fileUrl, options);
+    const data = metaParser.parse(content.data);
+    if (data.errors.length) console.log(data.errors);
+    return data.metadata;
+  } catch (error) {
+    throw new Error(error)
+  }
 }
 
 async function collectGithubData(repo: GitHubRepository) {
@@ -126,7 +130,9 @@ export async function retrieveRepositoryData(url: string, usercss: Pick<File, "d
   }
 
   if (usercss) {
-    const metadata = await retrieveStyleMetadata(usercss.download_url, provider.options);
+    const metadata = await retrieveStyleMetadata(usercss.download_url, provider.options).catch((error) => {
+      throw new Error(`${repo.data.owner.login}/${repo.data.name}. ${error.message}`);
+    });
     styleData.usercss = usercss.download_url;
     styleData.name = metadata.name.replace(/\s+/g, "_").replace(/[^a-z\d-_()[\]]/gi, "-");
     if (metadata.description) styleData.description = metadata.description;

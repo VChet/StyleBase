@@ -87,6 +87,8 @@ StyleSchema.statics.updateAllStyles = async function updateAllStyles() {
     if (promise.status === "fulfilled") {
       const styleData = promise.value;
       Bulk.find({ usercss: styleData.usercss }).update({ $set: styleData });
+    } else {
+      console.log(promise.reason.message);
     }
   });
   return Bulk.execute();
