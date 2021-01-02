@@ -97,9 +97,13 @@ a {
 .dialog-list {
   font-size: 18px;
   line-height: 28px;
+  padding-left: 1rem;
 
   > li {
     padding: 0.5rem 0;
+    @include media-size-mobile {
+      padding: 0.25rem 0;
+    }
   }
 
   .browser-list {

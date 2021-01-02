@@ -1,7 +1,7 @@
 <template>
   <BaseDialog v-if="open" size="small" @close="$emit('close')">
     <form @submit.prevent="selectedStyle ? submitStyle() : parseRepository()">
-      <div class="dialog-title">Add new style</div>
+      <h1 class="dialog-title">Add new style</h1>
       <div class="dialog-input">
         <input v-model.trim="url" type="text" placeholder="Link to repository" />
         <CloseButton v-show="url" aria-label="Clear the input" @click="clear" />

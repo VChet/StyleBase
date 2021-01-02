@@ -84,22 +84,23 @@ export default {
   background-color: var(--color-bg);
   border-radius: 0.3rem;
 
+  @include media-size-mobile {
+    width: unset;
+    margin: 0;
+    padding: 1.5rem;
+  }
   &:focus {
     outline: none;
   }
-
   &.small {
     max-width: 450px;
   }
-
   &.medium {
     max-width: 600px;
   }
-
   &.large {
     max-width: 800px;
   }
-
   &.extra-large {
     max-width: 1130px;
   }
@@ -109,19 +110,15 @@ export default {
   &-enter-active {
     transition: opacity 0.2s ease-in-out;
   }
-
   &-leave-active {
     transition: opacity 0.2s ease-in;
   }
-
   &-enter {
     opacity: 0;
   }
-
   &-enter-to {
     opacity: 1;
   }
-
   &-leave-to {
     opacity: 0;
 
