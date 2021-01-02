@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "lib": ["DOM", "ES2020.Promise"],
+    "target": "ESNext",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "experimentalDecorators": true,
+    "typeRoots": ["./types/"],
+    "types": [
+      "@types/agenda",
+      "@types/compression",
+      "@types/express-rate-limit",
+      "@types/express-session",
+      "@types/express",
+      "@types/memory-cache",
+      "@types/mongoose-paginate-v2",
+      "@types/mongoose",
+      "@types/morgan",
+      "@types/node",
+      "@types/passport-github2",
+      "@types/passport"
+    ]
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

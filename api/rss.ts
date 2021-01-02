@@ -1,8 +1,9 @@
-const { Feed } = require("feed");
+import { Request, Response } from "express";
+import { Feed } from "feed";
 
-const { Style } = require("../models/Style");
+import { IStyle, Style } from "../models/Style";
 
-async function getRss(req, res) {
+export async function getRss(_req: Request, res: Response) {
   const feed = new Feed({
     title: "StyleBase",
     description: "Website styles from various authors",
@@ -13,23 +14,23 @@ async function getRss(req, res) {
       name: "StyleBase",
       link: "https://stylebase.cc",
       email: "feedback@stylebase.cc"
-    }
+    },
+    copyright: "All styles belong to their first authors"
   });
 
   const styles = await Style.find({}).lean();
-  styles.forEach(style => {
-    let content = [];
+  styles.forEach((style: IStyle) => {
+    let content: Array<string> = [];
     content.push(`${style.customName || style.name} by ${style.owner.login}.`);
     content.push(`<a href='${style.usercss}'>Install UserCSS</a>`);
     content.push(`<a href='${style.url}'>Repository</a>`);
-    content = content.join("<br />");
 
     feed.addItem({
       title: style.customName || style.name,
       id: style._id,
       link: `https://stylebase.cc/${style.owner.login}/${style.name}`,
       description: style.customDescription || style.description,
-      content,
+      content: content.join("<br />"),
       author: [{ name: style.owner.login }],
       date: style._id.getTimestamp(),
       image: style.customPreview || style.preview
@@ -38,7 +39,3 @@ async function getRss(req, res) {
 
   res.type("application/xml").send(feed.rss2());
 }
-
-module.exports = {
-  getRss
-};
