@@ -4,15 +4,16 @@ import { Feed } from "feed";
 import { IStyle, Style } from "../models/Style";
 
 export default async function getRss(_req: Request, res: Response) {
+  const siteUrl: string = "https://stylebase.cc";
   const feed = new Feed({
     title: "StyleBase",
     description: "Website styles from various authors",
-    id: "https://stylebase.cc",
-    link: "https://stylebase.cc",
-    favicon: "https://stylebase.cc/favicon.ico",
+    id: siteUrl,
+    link: siteUrl,
+    favicon: `${siteUrl}/favicon.ico`,
     author: {
       name: "StyleBase",
-      link: "https://stylebase.cc",
+      link: siteUrl,
       email: "feedback@stylebase.cc"
     },
     copyright: "All styles belong to their first authors"
@@ -28,7 +29,7 @@ export default async function getRss(_req: Request, res: Response) {
     feed.addItem({
       title: style.customName || style.name,
       id: style._id,
-      link: `https://stylebase.cc/${style.owner.login}/${style.name}`,
+      link: `${siteUrl}/${style.owner.login}/${style.name}`,
       description: style.customDescription || style.description,
       content: content.join("<br />"),
       author: [{ name: style.owner.login }],

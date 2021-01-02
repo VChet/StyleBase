@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 // @ts-ignore
 import repoImages from "repo-images";
 // @ts-ignore
@@ -44,9 +44,11 @@ function getProviderData(url: string) {
 
 export async function retrieveRepositoryFiles(url: string) {
   const { provider, repoUrl } = getProviderData(url);
-  const contents = await axios.get(`${provider.api}/repos${repoUrl}/contents`, provider.options);
-  const files: Array<File> = contents.data.filter((file: File) => stylePattern.test(file.name));
-  return files;
+  const contents: AxiosResponse<Array<File>> = await axios.get(
+    `${provider.api}/repos${repoUrl}/contents`,
+    provider.options
+  );
+  return contents.data.filter((file) => stylePattern.test(file.name));
 }
 
 async function retrieveStyleMetadata(fileUrl: string, options: AxiosRequestConfig) {

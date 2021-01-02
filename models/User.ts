@@ -64,19 +64,15 @@ UserSchema.statics.findOrCreate = function (_accessToken: string, _refreshToken:
   const { provider, id, displayName } = profile;
   const userId: Pick<IUser, "githubId" | "codebergId"> = {};
   let api: string;
-  switch (provider) {
-    case "github":
-      userId.githubId = parseInt(id, 10);
-      api = "https://api.github.com";
-      break;
-    case "gitea":
-      userId.codebergId = parseInt(id, 10);
-      api = "https://codeberg.org/api/v1";
-      break;
-    default:
-      userId.githubId = parseInt(id, 10);
-      api = "https://api.github.com";
-      break;
+
+  if (provider === "github") {
+    userId.githubId = parseInt(id, 10);
+    api = "https://api.github.com";
+  } else if (provider === "gitea") {
+    userId.codebergId = parseInt(id, 10);
+    api = "https://codeberg.org/api/v1";
+  } else {
+    console.log("Unsupported provider", provider);
   }
 
   User.findOne(userId, async (error: any, user: IUser) => {

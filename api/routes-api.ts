@@ -27,7 +27,7 @@ const cache = (duration: number) => (req: Request, res: Response, next: NextFunc
 
   res.sendResponse = res.send;
   res.send = (body: any) => {
-    if (!(process.env.NODE_ENV === "production") && res.statusCode === 200) {
+    if (process.env.NODE_ENV !== "production" && res.statusCode === 200) {
       mcache.put(key, body, duration * 60 * 1000);
     }
     return res.sendResponse(body);
