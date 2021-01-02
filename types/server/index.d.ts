@@ -1,5 +1,5 @@
 import { Send } from "express";
-import { SessionOptions } from "express-session"
+import { SessionOptions } from "express-session";
 import { IStyle } from "../../models/Style";
 import { IUser } from "../../models/User";
 

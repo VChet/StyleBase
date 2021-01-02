@@ -1,6 +1,6 @@
 import { Style } from "./Style";
 
-export async function initCollection() {
+export default async function initCollection() {
   if (process.env.NODE_ENV === "test") return;
 
   const styles = await Style.find({}).lean();

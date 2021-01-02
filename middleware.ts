@@ -3,22 +3,22 @@ import mongoose from "mongoose";
 import Agenda from "agenda";
 
 import session from "express-session";
-const MongoStore = require("connect-mongo")(session);
 import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
-//@ts-ignore
+// @ts-ignore
 import { Strategy as GiteaStrategy } from "passport-gitea";
 
 import morgan from "morgan";
 import helmet from "helmet";
 import bodyParser from "body-parser";
 import compression from "compression";
+import { Application } from "express";
+import ConnectMongo from "connect-mongo";
 
 import config from "./config";
 import { IUser, User } from "./models/User";
 import { Style } from "./models/Style";
-import { initCollection } from "./models/init";
-import { Application } from "express";
+import initCollection from "./models/init";
 
 // Database
 mongoose.connect(config.mongoUrl, {
@@ -28,6 +28,7 @@ mongoose.connect(config.mongoUrl, {
   useUnifiedTopology: true
 });
 
+const MongoStore = ConnectMongo(session);
 config.session.store = new MongoStore({
   mongooseConnection: mongoose.connection,
   ttl: 14 * 24 * 60 * 60
@@ -84,7 +85,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Middleware
-export function addExpressMiddleware(app: Application) {
+export default function addExpressMiddleware(app: Application) {
   app.use(morgan("dev"));
   app.use(helmet({
     referrerPolicy: { policy: "strict-origin-when-cross-origin" },

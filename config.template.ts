@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Config } from "./types/server";
 
 export default {

@@ -1,10 +1,10 @@
 import { Document, Schema, Model, model } from "mongoose";
 import axios, { AxiosResponse } from "axios";
 
-import config from "../config";
 import { Profile } from "passport";
+import config from "../config";
 
-type Role = 'User' | 'Admin'
+type Role = "User" | "Admin";
 
 export interface Organization {
   id: number;
@@ -17,7 +17,7 @@ export interface IUser extends Document {
   githubId?: number;
   codebergId?: number;
   orgs: Array<Organization>;
-};
+}
 
 export interface IUserModel extends Model<IUser> {
   findOrCreate: (_accessToken: string, _refreshToken: string, profile: any, done: any) => void;
@@ -58,23 +58,23 @@ async function getOrganizations(api: string, username: string): Promise<Array<Or
   return orgs.data.map((org: any) => ({ login: org.login, id: org.id }));
 }
 
-UserSchema.statics.findOrCreate = function findOrCreate(_accessToken: string, _refreshToken: string, profile: Profile, done: any) {
+UserSchema.statics.findOrCreate = function (_accessToken: string, _refreshToken: string, profile: Profile, done: any) {
   const User: IUserModel = this;
 
   const { provider, id, displayName } = profile;
-  let userId: Pick<IUser, 'githubId' | 'codebergId'> = {};
+  const userId: Pick<IUser, "githubId" | "codebergId"> = {};
   let api: string;
   switch (provider) {
     case "github":
-      userId.githubId = parseInt(id);
+      userId.githubId = parseInt(id, 10);
       api = "https://api.github.com";
       break;
     case "gitea":
-      userId.codebergId = parseInt(id);
+      userId.codebergId = parseInt(id, 10);
       api = "https://codeberg.org/api/v1";
       break;
     default:
-      userId.githubId = parseInt(id);
+      userId.githubId = parseInt(id, 10);
       api = "https://api.github.com";
       break;
   }

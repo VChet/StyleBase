@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
-//@ts-ignore
+// @ts-ignore
 import repoImages from "repo-images";
-//@ts-ignore
+// @ts-ignore
 import metaParser from "usercss-meta";
 
 import config from "../config";
@@ -56,7 +56,7 @@ async function retrieveStyleMetadata(fileUrl: string, options: AxiosRequestConfi
     if (data.errors.length) console.log(data.errors);
     return data.metadata;
   } catch (error) {
-    throw new Error(error)
+    throw new Error(error);
   }
 }
 

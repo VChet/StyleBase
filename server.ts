@@ -1,7 +1,7 @@
 import express, { Application } from "express";
 
 import config from "./config";
-import { addExpressMiddleware } from "./middleware";
+import addExpressMiddleware from "./middleware";
 import routesApi from "./api/routes-api";
 import routes from "./routes";
 

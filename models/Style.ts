@@ -27,7 +27,7 @@ export interface IStyle extends Document {
   customName?: string
   customDescription?: string
   customPreview?: string
-};
+}
 
 export interface IStyleModel extends PaginateModel<IStyle> {
   updateAllStyles: () => any;

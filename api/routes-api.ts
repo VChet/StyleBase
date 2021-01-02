@@ -4,6 +4,19 @@ import rateLimit from "express-rate-limit";
 
 import { Style } from "../models/Style";
 
+import {
+  getStyles,
+  getRepositoryFiles,
+  getStyleData,
+  addStyle,
+  updateAllStyles,
+  updateStyle,
+  editStyle,
+  deleteStyle
+} from "./styles";
+
+import getCurrentUser from "./users";
+
 export const router = express.Router();
 
 // Cache
@@ -58,10 +71,6 @@ const isAuthorized = async (req: Request, res: Response, next: NextFunction) => 
   }
   next();
 };
-
-import { getStyles, getRepositoryFiles, getStyleData, addStyle, updateAllStyles, updateStyle, editStyle, deleteStyle } from "./styles";
-
-import { getCurrentUser } from "./users";
 
 router.get("/styles/:owner?", cache(10), getStyles);
 router.get("/style/files", cache(10), getRepositoryFiles);

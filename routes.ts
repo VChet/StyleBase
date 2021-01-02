@@ -2,7 +2,7 @@ import express from "express";
 import path from "path";
 import passport from "passport";
 
-import { getRss } from "./api/rss";
+import getRss from "./api/rss";
 
 const router = express.Router();
 const clientIndex = path.join(__dirname, "public/index.html");

@@ -3,7 +3,7 @@ import { Feed } from "feed";
 
 import { IStyle, Style } from "../models/Style";
 
-export async function getRss(_req: Request, res: Response) {
+export default async function getRss(_req: Request, res: Response) {
   const feed = new Feed({
     title: "StyleBase",
     description: "Website styles from various authors",
@@ -20,7 +20,7 @@ export async function getRss(_req: Request, res: Response) {
 
   const styles = await Style.find({}).lean();
   styles.forEach((style: IStyle) => {
-    let content: Array<string> = [];
+    const content: Array<string> = [];
     content.push(`${style.customName || style.name} by ${style.owner.login}.`);
     content.push(`<a href='${style.usercss}'>Install UserCSS</a>`);
     content.push(`<a href='${style.url}'>Repository</a>`);

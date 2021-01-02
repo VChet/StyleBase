@@ -168,7 +168,8 @@ export function editStyle(req: Request, res: Response) {
     (error, style) => {
       if (error) return res.status(500).json({ error });
       return res.status(200).json({ style });
-    });
+    }
+  );
 }
 
 export async function deleteStyle(req: Request, res: Response) {
