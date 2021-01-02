@@ -1,4 +1,6 @@
-import express, { Application } from "express";
+import express from "express";
+
+import type { Application } from "express";
 
 import config from "./config";
 import addExpressMiddleware from "./middleware";

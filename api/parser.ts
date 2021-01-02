@@ -1,12 +1,15 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios from "axios";
 // @ts-ignore
 import repoImages from "repo-images";
 // @ts-ignore
 import metaParser from "usercss-meta";
 
+import type { AxiosRequestConfig, AxiosResponse } from "axios";
+import type { IStyle } from "../models/Style";
+import type { File, GitHubRepository, GiteaRepository } from "../types/api";
+import type { Provider } from "../types/server";
+
 import config from "../config";
-import { File, GitHubRepository, GiteaRepository } from "../types/api";
-import { Provider } from "../types/server";
 
 const stylePattern = /\.user\.(css|styl)$/;
 
@@ -67,8 +70,8 @@ async function collectGithubData(repo: GitHubRepository) {
   const images: Array<any> = await repoImages(repo.full_name, { token: config.github.token, branch });
   let preview: string | undefined;
   if (images.length) {
-    let previewObj = images.find((img: any) => img.path.includes("preview"));
-    if (!previewObj) previewObj = images.reduce((a: any, b: any) => (a.size > b.size ? a : b));
+    let previewObj = images.find((img) => img.path.includes("preview"));
+    if (!previewObj) previewObj = images.reduce((a, b) => (a.size > b.size ? a : b));
     preview = `https://raw.githubusercontent.com/${repo.full_name}/${branch}/${previewObj.path}`;
   }
 
@@ -124,7 +127,7 @@ export async function retrieveRepositoryData(url: string, usercss: Pick<File, "d
   if (repo.data.archived) throw new Error(`${repo.data.name} repository is archived`);
   if (repo.data.fork) throw new Error(`${repo.data.name} repository is forked`);
 
-  let styleData: any;
+  let styleData: Partial<IStyle>;
   if (provider.name === "GitHub") {
     styleData = await collectGithubData(repo.data);
   } else {

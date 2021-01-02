@@ -23,7 +23,7 @@
     "consistent-return": "off",
     "linebreak-style": "off",
     "no-console": "off",
-    "import/no-cycle": "warn",
+    "import/no-cycle": "error",
     "max-len": ["error", {"code": 120 }],
     "no-underscore-dangle": ["error", {"allow": ["_id"]}],
     "@typescript-eslint/naming-convention": "off",

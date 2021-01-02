@@ -1,7 +1,7 @@
-import { Send } from "express";
-import { SessionOptions } from "express-session";
-import { IStyle } from "../../models/Style";
-import { IUser } from "../../models/User";
+import type { Send } from "express";
+import type { SessionOptions } from "express-session";
+import type { IStyle } from "../../models/Style";
+import type { IUser } from "../../models/User";
 
 export interface Config {
   appPort: string;
@@ -10,29 +10,31 @@ export interface Config {
   github: {
     /**
      * OAuth data, obtained from
-     *
-     * https://github.com/settings/developers
-     *
-     * https://codeberg.org/user/settings/applications/oauth2
+     * {@link https://github.com/settings/developers|GitHub}
      */
     OAuth: {
       clientId: string;
       clientSecret: string;
     }
     /**
-     * User token with public_repo scope
-     *
-     * https://github.com/settings/tokens
-     *
-     * https://codeberg.org/user/settings/applications
+     * User token with public_repo scope, obtained from
+     * {@link https://github.com/settings/tokens|GitHub}
      */
     token: string
   },
   codeberg: {
+    /**
+     * OAuth data, obtained from
+     * {@link https://codeberg.org/user/settings/applications/oauth2|Codeberg}
+     */
     OAuth: {
       clientId: string;
       clientSecret: string;
     }
+    /**
+     * User token with public_repo scope, obtained from
+     * {@link https://codeberg.org/user/settings/applications|Codeberg}
+     */
     token: string;
   }
 }

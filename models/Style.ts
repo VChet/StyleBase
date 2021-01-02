@@ -1,5 +1,8 @@
-import { Document, Schema, model, PaginateModel } from "mongoose";
+import { Schema, model } from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
+
+import type { Document, PaginateModel } from "mongoose";
+import type { BulkWriteResult, UnorderedBulkOperation } from "mongodb";
 
 import { retrieveRepositoryData } from "../api/parser";
 
@@ -30,7 +33,7 @@ export interface IStyle extends Document {
 }
 
 export interface IStyleModel extends PaginateModel<IStyle> {
-  updateAllStyles: () => any;
+  updateAllStyles: () => Promise<BulkWriteResult>;
 }
 
 const StyleSchema: Schema = new Schema({
@@ -75,14 +78,14 @@ StyleSchema.index({
 });
 StyleSchema.plugin(mongoosePaginate);
 
-StyleSchema.statics.updateAllStyles = async function updateAllStyles() {
-  const Style: IStyleModel = this;
+StyleSchema.statics.updateAllStyles = async function (): Promise<BulkWriteResult> {
+  const Style: any = this;
   const styles: Array<IStyle> = await Style.find({}).lean();
   const stylesData = await Promise.allSettled(
     styles.map(({ url, usercss }) => retrieveRepositoryData(url, { download_url: usercss }))
   );
 
-  const Bulk = Style.collection.initializeUnorderedBulkOp();
+  const Bulk: UnorderedBulkOperation = Style.collection.initializeUnorderedBulkOp();
   stylesData.forEach((promise) => {
     if (promise.status === "fulfilled") {
       const styleData = promise.value;

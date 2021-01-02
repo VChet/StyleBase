@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { Config } from "./types/server";
+import type { Config } from "./types/server";
 
 export default {
   appPort: "7540",

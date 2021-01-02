@@ -18,6 +18,7 @@
       "@types/express-session",
       "@types/express",
       "@types/memory-cache",
+      "@types/mongodb",
       "@types/mongoose-paginate-v2",
       "@types/mongoose",
       "@types/morgan",

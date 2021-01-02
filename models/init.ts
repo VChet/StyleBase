@@ -6,7 +6,7 @@ export default async function initCollection() {
   const styles = await Style.find({}).lean();
   if (styles && styles.length) return styles;
 
-  const initialStyles = [{
+  const initialStyles: Array<any> = [{
     url: "https://github.com/StylishThemes/GitHub-Dark",
     usercss: "https://raw.githubusercontent.com/StylishThemes/GitHub-Dark/master/github-dark.user.css"
   }, {

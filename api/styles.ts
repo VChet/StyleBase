@@ -1,6 +1,8 @@
-import { Request, Response } from "express";
-import { PaginateOptions } from "mongoose";
-import { Style, IStyle } from "../models/Style";
+import type { Request, Response } from "express";
+import type { CallbackError, PaginateOptions } from "mongoose";
+import type { IStyle } from "../models/Style";
+
+import { Style } from "../models/Style";
 import { retrieveRepositoryFiles, retrieveRepositoryData } from "./parser";
 
 function handleParserError(res: Response, error: any) {
@@ -69,7 +71,7 @@ export function getStyles(req: Request, res: Response) {
 export function getStyleData(req: Request, res: Response) {
   const { owner, name } = req.query;
   if (!owner || !name) return res.status(400).json({ error: "Request must contain owner and name fields" });
-  Style.findOne({ "owner.login": owner, name: name as string }, (error: any, style: IStyle) => {
+  Style.findOne({ "owner.login": owner, name: name as string }, (error: CallbackError, style: IStyle) => {
     if (error) return res.status(500).json({ error });
     if (!style) return res.status(404).json({ error: "Style not found" });
     return res.status(200).json({ style });
@@ -86,7 +88,7 @@ export function addStyle(req: Request, res: Response) {
   } = req.body;
   url = url.replace(/\/$/, ""); // Trim trailing slash
 
-  Style.findOne({ usercss: usercss.download_url }, async (mongoError: any, style: IStyle) => {
+  Style.findOne({ usercss: usercss.download_url }, async (mongoError: CallbackError, style: IStyle) => {
     if (mongoError) return res.status(500).json({ error: mongoError });
     if (style) return res.status(409).json({ error: "Style was already added to our base" });
 
@@ -106,8 +108,8 @@ export function addStyle(req: Request, res: Response) {
           customDescription,
           customPreview
         });
-        newStyle.save((saveError: any) => {
-          if (saveError) return res.status(500).json({ error: `${saveError.name}: ${saveError.code}` });
+        newStyle.save((saveError) => {
+          if (saveError) return res.status(500).json({ error: `${saveError.name}: ${saveError.message}` });
           res.status(201).json({ style: newStyle });
         });
       })
@@ -121,7 +123,7 @@ export function updateStyle(req: Request, res: Response) {
   const { _id } = req.body;
   if (!_id) return res.status(400).json({ error: "Request must contain _id field" });
 
-  Style.findById(_id, async (mongoError: any, style: IStyle) => {
+  Style.findById(_id, async (mongoError: CallbackError, style: IStyle) => {
     if (mongoError) return res.status(500).json({ error: mongoError });
     if (!style) return res.status(404).json({ error: "Style was not found in our base" });
 
@@ -140,10 +142,10 @@ export function updateStyle(req: Request, res: Response) {
 
 export function updateAllStyles(_req: Request, res: Response) {
   Style.updateAllStyles()
-    .then((result: any) => {
+    .then((result) => {
       res.status(200).json({ result });
     })
-    .catch((error: any) => {
+    .catch((error) => {
       handleParserError(res, error);
     });
 }

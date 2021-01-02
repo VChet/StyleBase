@@ -1,6 +1,8 @@
-import express, { NextFunction, Request, Response } from "express";
+import { Router } from "express";
 import mcache from "memory-cache";
 import rateLimit from "express-rate-limit";
+
+import type { Request, Response, NextFunction } from "express";
 
 import { Style } from "../models/Style";
 
@@ -17,7 +19,7 @@ import {
 
 import getCurrentUser from "./users";
 
-export const router = express.Router();
+export const router = Router();
 
 // Cache
 const cache = (duration: number) => (req: Request, res: Response, next: NextFunction) => {

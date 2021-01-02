@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-
+import ConnectMongo from "connect-mongo";
+import session from "express-session";
 import Agenda from "agenda";
 
-import session from "express-session";
 import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
 // @ts-ignore
@@ -12,11 +12,13 @@ import morgan from "morgan";
 import helmet from "helmet";
 import bodyParser from "body-parser";
 import compression from "compression";
-import { Application } from "express";
-import ConnectMongo from "connect-mongo";
+
+import type { CallbackError } from "mongoose";
+import type { Application } from "express";
+import type { IUser } from "./models/User";
 
 import config from "./config";
-import { IUser, User } from "./models/User";
+import { User } from "./models/User";
 import { Style } from "./models/Style";
 import initCollection from "./models/init";
 
@@ -55,12 +57,12 @@ passport.use(
   }, User.findOrCreate.bind(User))
 );
 
-passport.serializeUser((user: any, done) => {
+passport.serializeUser((user: IUser, done) => {
   done(null, user._id);
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id, (error: any, user: IUser) => {
+  User.findById(id, (error: CallbackError, user: IUser) => {
     if (error) return done(error);
     return done(null, user);
   });

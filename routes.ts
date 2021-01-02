@@ -1,10 +1,10 @@
-import express from "express";
+import { Router } from "express";
 import path from "path";
 import passport from "passport";
 
 import getRss from "./api/rss";
 
-const router = express.Router();
+const router = Router();
 const clientIndex = path.join(__dirname, "public/index.html");
 const maintenance = path.join(__dirname, "maintenance.html");
 
