@@ -1,27 +1,37 @@
 <template>
   <BaseDialog v-if="open" size="medium" @close="$emit('close')">
-    <div class="dialog-title">How to use this styles?</div>
+    <h1 class="dialog-title">How to Use</h1>
+    <h2>Installing styles</h2>
     <ol class="dialog-list">
       <li>
-        <div class="item-title">Install the extension, which will include styles into webpages.</div>
+        <div class="item-title">Install a userstyle manager, which will include styles into webpages.</div>
         <span v-if="browser">
-          Looks like you're using
-          <span class="browser">{{ browser }}</span> browser.
+          Looks like you're using <b>{{ browser }}</b> browser.
           <a :href="browserList[browser]" rel="noopener" target="_blank">Install extension for {{ browser }}</a>
           or choose a browser manually:
         </span>
         <span v-else>Choose extension depending on your browser:</span>
-        <ul>
+        <ul class="browser-list">
           <li v-for="(link, item, index) in browserList" :key="index">
             <a :href="link" rel="noopener" target="_blank">{{ item }}</a>
           </li>
         </ul>
       </li>
+      <li>Choose a style and click install, extension will open a new tab showing some basic information & options</li>
+      <li>Click on "Install style" to install the style</li>
       <li>
-        Choose a style from our collection and click install, extension will ask you to install new usercss, accept it
+        Once installed, you will be redirected to editor page with the newly installed/updated UserCSS loaded. Close
+        this if you don't want or need to modify the style.
       </li>
-      <li>Style is installed and ready to use</li>
     </ol>
+    <a href="https://github.com/openstyles/stylus/wiki/UserCSS#how-do-i-install-usercss" rel="noopener" target="_blank">
+      More information
+    </a>
+    <h2>
+      <a href="https://github.com/openstyles/stylus/wiki/Writing-styles#writing-styles" rel="noopener" target="_blank">
+        Writing styles
+      </a>
+    </h2>
     <div class="dialog-buttons">
       <button class="style-button-filled" type="button" @click="$emit('close')">Got it!</button>
     </div>
@@ -74,6 +84,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+a {
+  text-decoration: underline;
+}
+
 .dialog-title {
   font-size: 30px;
   margin-bottom: 1rem;
@@ -84,25 +98,25 @@ export default {
   font-size: 18px;
   line-height: 28px;
 
-  ul {
-    display: inline-flex;
+  > li {
+    padding: 0.5rem 0;
+  }
+
+  .browser-list {
+    display: inline;
     list-style: none;
 
-    li:not(:first-child) {
-      margin-left: 0.5rem;
+    li {
+      display: inline;
+      &:not(:last-child):after {
+        content: ', ';
+      }
     }
-  }
-
-  .browser {
-    font-weight: bold;
-  }
-
-  a {
-    text-decoration: underline;
   }
 }
 
 .dialog-buttons {
+  margin-top: 1rem;
   text-align: center;
 }
 </style>
