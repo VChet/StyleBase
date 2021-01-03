@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.5.0](https://github.com/VChet/StyleBase/compare/v3.4.1...v3.5.0) (2021-01-03)
+
+### Features
+
+* TypeScript support for server
+
+### Bug Fixes
+
+* **dialogs:** update titles and paddings ([377fc6e](https://github.com/VChet/StyleBase/commit/377fc6e61eccb946c3172f4499f31df9a84d9705))
+* **favicon:** optimize svg ([145fdda](https://github.com/VChet/StyleBase/commit/145fddaac22a56aac36c942ea6846ab0fa299de0))
+* **favicon:** remove legacy icons  ([38d9a61](https://github.com/VChet/StyleBase/commit/38d9a61452e478038c324f5a12e1964aa2c99550))
+* **filter:** do not request all styles when the owner filter is active ([e118225](https://github.com/VChet/StyleBase/commit/e11822561be97dff1a7648fd05baeb3b97921563))
+* **HowToUse:** update texts ([f742e79](https://github.com/VChet/StyleBase/commit/f742e79ab4a5c051298ab49d75cb6cdb13c5f5e9))
+* **parser:** throw and catch metadata parser errors ([6f44ab2](https://github.com/VChet/StyleBase/commit/6f44ab2bd1ead4926d861d273d5d40420cb187df))
+* **style card:** truncate name that's longer than 2 lines ([5845bec](https://github.com/VChet/StyleBase/commit/5845bec6ea337e230b0889cc1705dbc690d20114))
+
 ### [3.4.1](https://github.com/VChet/StyleBase/compare/v3.4.0...v3.4.1) (2020-12-27)
 
 
