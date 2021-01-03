@@ -184,8 +184,9 @@ export default {
     },
     twitterLink() {
       const name = this.styleData.customName || this.styleData.name;
-      const link = `https://stylebase.cc/${this.styleData.owner.login}/${this.styleData.name}`;
-      const text = encodeURIComponent(`${name} by ${this.styleData.owner.login}\n${link}`);
+      const owner = this.styleData.owner.login;
+      const link = `https://stylebase.cc/${this.styleData.styleId}`;
+      const text = encodeURIComponent(`${name} by ${owner}\n${link}`);
       return `https://twitter.com/intent/tweet?text=${text}`;
     }
   },

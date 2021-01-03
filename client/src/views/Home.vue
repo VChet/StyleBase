@@ -99,10 +99,8 @@ export default {
     const pathname = window.location.pathname.split('/');
     pathname.shift();
     if (pathname[0] === 'search') return this.setQuery(pathname[1]);
-
-    const [owner, name] = pathname;
-    if (owner && !name) return this.setOwnerFilter(owner);
-    if (owner && name) this.getStyle({ owner, name });
+    if (pathname[0] === 'user') return this.setOwnerFilter(pathname[1]);
+    if (pathname[0] === 'style') this.getStyle({ styleId: pathname[1] });
     this.getStyles().then(() => {
       window.addEventListener('scroll', this.infiniteScroll);
     });

@@ -69,9 +69,10 @@ export function getStyles(req: Request, res: Response) {
 }
 
 export function getStyleData(req: Request, res: Response) {
-  const { owner, name } = req.query;
-  if (!owner || !name) return res.status(400).json({ error: "Request must contain owner and name fields" });
-  Style.findOne({ "owner.login": owner, name: name as string }, (error: CallbackError, style: IStyle) => {
+  const { styleId } = req.query;
+  if (!styleId) return res.status(400).json({ error: "Request must contain styleId field" });
+  if (typeof styleId !== "string") return res.status(400).json({ error: "Invalid styleId" });
+  Style.findOne({ styleId }, (error: CallbackError, style: IStyle) => {
     if (error) return res.status(500).json({ error });
     if (!style) return res.status(404).json({ error: "Style not found" });
     return res.status(200).json({ style });
