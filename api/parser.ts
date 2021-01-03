@@ -1,12 +1,10 @@
 import axios from "axios";
-// @ts-ignore
 import repoImages from "repo-images";
-// @ts-ignore
 import metaParser from "usercss-meta";
 
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import type { IStyle } from "../models/Style";
-import type { File, GitHubRepository, GiteaRepository } from "../types/api";
+import type { GitHubRepository, GiteaRepository, File } from "../types/api";
 import type { Provider } from "../types/server";
 
 import config from "../config";
@@ -67,7 +65,7 @@ async function retrieveStyleMetadata(fileUrl: string, options: AxiosRequestConfi
 
 async function collectGithubData(repo: GitHubRepository) {
   const branch = repo.default_branch;
-  const images: Array<any> = await repoImages(repo.full_name, { token: config.github.token, branch });
+  const images = await repoImages(repo.full_name, { token: config.github.token, branch });
   let preview: string | undefined;
   if (images.length) {
     let previewObj = images.find((img) => img.path.includes("preview"));

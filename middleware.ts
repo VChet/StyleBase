@@ -5,7 +5,6 @@ import Agenda from "agenda";
 
 import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
-// @ts-ignore
 import { Strategy as GiteaStrategy } from "passport-gitea";
 
 import morgan from "morgan";
