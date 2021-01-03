@@ -159,18 +159,18 @@ export interface GiteaRepository {
 }
 
 export interface File {
-  name: string
-  path: string
-  sha: string
-  size: number
-  url: string
-  html_url: string
-  git_url: string
-  download_url: string
-  type: string
+  name: string;
+  path: string;
+  sha: string;
+  size: number;
+  url: string;
+  html_url: string;
+  git_url: string;
+  download_url: string;
+  type: string;
   _links: {
-    self: string
-    git: string
-    html: string
+    self: string;
+    git: string;
+    html: string;
   }
 }

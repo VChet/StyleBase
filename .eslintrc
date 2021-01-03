@@ -27,6 +27,8 @@
     "max-len": ["error", {"code": 120 }],
     "no-underscore-dangle": ["error", {"allow": ["_id"]}],
     "@typescript-eslint/naming-convention": "off",
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "@typescript-eslint/no-inferrable-types": "error",
     "@typescript-eslint/comma-dangle": ["error", "never"],
     "@typescript-eslint/quotes": ["error", "double", {"avoidEscape": true, "allowTemplateLiterals": true}]
   }

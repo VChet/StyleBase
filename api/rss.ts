@@ -6,7 +6,7 @@ import type { IStyle } from "../models/Style";
 import { Style } from "../models/Style";
 
 export default async function getRss(_req: Request, res: Response) {
-  const siteUrl: string = "https://stylebase.cc";
+  const siteUrl = "https://stylebase.cc";
   const feed = new Feed({
     title: "StyleBase",
     description: "Website styles from various authors",
