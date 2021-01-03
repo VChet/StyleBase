@@ -1,5 +1,6 @@
 # StyleBase
 
+[![TypeScript](https://img.shields.io/badge/types-TypeScript-007acc)](https://www.typescriptlang.org)
 [![CodeClimate](https://api.codeclimate.com/v1/badges/a40a8f663fdbaa36e28a/maintainability)](https://codeclimate.com/github/VChet/StyleBase/maintainability)
 [![CC](https://img.shields.io/badge/Conventional%20Commits-1.0.0-green.svg)](https://conventionalcommits.org)
 
@@ -14,10 +15,10 @@ Site for UserCSS theme sharing. Supports GitHub and Codeberg repositories.
 1. Clone repository
 1. Install [Node.js](https://nodejs.org/en/download/package-manager/)
 1. Install all dependencies `npm install`
-1. Copy `config.template.js`, rename it to `config.js` and configure
+1. Copy `config.template.ts`, rename it to `config.ts` and configure
 
    ```sh
-   cp config.template.js config.js
+   cp config.template.ts config.ts
    ```
 
 1. Connect to the database (skip if using remote DB)
@@ -34,4 +35,4 @@ This project is licensed under the [MIT License](./LICENSE.md).
 
 ## Support
 
-You can support this project on [LiberaPay](https://en.liberapay.com/VChet/) or [Buy Me A Coffee](https://ko-fi.com/vchet).
+You can support this project on [LiberaPay](https://en.liberapay.com/VChet/) or [Ko-fi](https://ko-fi.com/vchet).
