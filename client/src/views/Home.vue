@@ -96,18 +96,16 @@ export default {
     }
   },
   created() {
+    const pathname = window.location.pathname.split('/');
+    pathname.shift();
+    if (pathname[0] === 'search') return this.setQuery(pathname[1]);
+
+    const [owner, name] = pathname;
+    if (owner && !name) return this.setOwnerFilter(owner);
+    if (owner && name) this.getStyle({ owner, name });
     this.getStyles().then(() => {
       window.addEventListener('scroll', this.infiniteScroll);
     });
-  },
-  mounted() {
-    const pathname = window.location.pathname.split('/');
-    if (pathname[1] === 'search') return (this.searchQuery = pathname[2]);
-    const owner = pathname[1];
-    if (!owner) return;
-    const name = pathname[2];
-    if (!name) return this.setOwnerFilter(owner);
-    this.getStyle({ owner, name });
   },
   destroyed() {
     window.removeEventListener('scroll', this.infiniteScroll);
