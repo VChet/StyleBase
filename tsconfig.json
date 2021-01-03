@@ -12,6 +12,7 @@
     "experimentalDecorators": true,
     "typeRoots": ["./types/"],
     "types": [
+      "./types/",
       "@types/agenda",
       "@types/compression",
       "@types/express-rate-limit",
