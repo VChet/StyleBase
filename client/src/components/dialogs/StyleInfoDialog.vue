@@ -104,7 +104,7 @@
 import axios from 'axios';
 import { mapMutations, mapActions, mapGetters } from 'vuex';
 
-import { styleInfoMixin } from '@/mixins';
+import styleInfo from '@/mixins';
 
 import BaseDialog from '@/components/dialogs/BaseDialog';
 import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog';
@@ -132,7 +132,7 @@ export default {
     BaseDialog,
     ConfirmationDialog
   },
-  mixins: [styleInfoMixin],
+  mixins: [styleInfo],
   props: {
     open: {
       type: Boolean,

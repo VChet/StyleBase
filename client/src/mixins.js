@@ -1,9 +1,12 @@
-const dayjs = require('dayjs');
-const relativeTime = require('dayjs/plugin/relativeTime');
-const emoji = require('node-emoji');
-const emojiFallback = require('@/githubEmoji.json');
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import { emojify } from 'node-emoji';
 
-const styleInfoMixin = {
+import emojiFallback from '@/githubEmoji.json';
+
+dayjs.extend(relativeTime);
+
+export default {
   methods: {
     pluralize(num, noun, suffix = 's') {
       return `${num} ${noun}${num === 1 ? '' : suffix}`;
@@ -12,7 +15,6 @@ const styleInfoMixin = {
       return text.replace(/_/g, ' ');
     },
     dateFromNow(date) {
-      dayjs.extend(relativeTime);
       return dayjs(date).fromNow();
     },
     parseEmoji(text) {
@@ -21,9 +23,7 @@ const styleInfoMixin = {
         if (!url) return '';
         return `<img class="emoji" src="${url}.png" alt="${name}" />`;
       };
-      return emoji.emojify(text, onMissing);
+      return emojify(text, onMissing);
     }
   }
 };
-
-module.exports = { styleInfoMixin };

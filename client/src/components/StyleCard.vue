@@ -38,7 +38,7 @@
 <script>
 import { mapActions } from 'vuex';
 
-import { styleInfoMixin } from '@/mixins';
+import styleInfo from '@/mixins';
 import BaseCard from '@/components/BaseCard.vue';
 
 export default {
@@ -46,7 +46,7 @@ export default {
   components: {
     BaseCard
   },
-  mixins: [styleInfoMixin],
+  mixins: [styleInfo],
   props: {
     styleData: {
       type: Object,
