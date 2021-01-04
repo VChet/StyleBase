@@ -137,7 +137,7 @@ export async function retrieveRepositoryData(url: string, usercss: Pick<File, "d
       throw new Error(`${repo.data.owner.login}/${repo.data.name}. ${error.message}`);
     });
     styleData.usercss = usercss.download_url;
-    styleData.name = metadata.name.replace(/\s+/g, "_").replace(/[^a-z\d-_()[\]]/gi, "-");
+    styleData.name = metadata.name;
     if (metadata.description) styleData.description = metadata.description;
     if (metadata.license) styleData.license = metadata.license;
   }
