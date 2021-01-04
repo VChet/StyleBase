@@ -5,7 +5,6 @@ import Agenda from "agenda";
 
 import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
-import { Strategy as GiteaStrategy } from "passport-gitea";
 
 import morgan from "morgan";
 import helmet from "helmet";
@@ -46,7 +45,8 @@ passport.use(
   }, User.findOrCreate.bind(User))
 );
 passport.use(
-  new GiteaStrategy({
+  "codeberg",
+  new GitHubStrategy({
     clientID: config.codeberg.OAuth.clientId,
     clientSecret: config.codeberg.OAuth.clientSecret,
     callbackURL: "/codeberg/callback",

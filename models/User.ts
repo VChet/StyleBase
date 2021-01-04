@@ -22,7 +22,7 @@ export interface IUser extends Document {
 }
 
 export interface IUserModel extends Model<IUser> {
-  findOrCreate: (_accessToken: string, _refreshToken: string, profile: Profile, done: any) => any;
+  findOrCreate: (_accessToken: string, _refreshToken: string, profile: Profile, done: Function) => any;
 }
 
 export const UserSchema: Schema = new Schema({
@@ -60,7 +60,12 @@ async function getOrganizations(api: string, username: string): Promise<Array<Or
   return orgs.data.map((org) => ({ login: org.login, id: org.id }));
 }
 
-UserSchema.statics.findOrCreate = function (_accessToken: string, _refreshToken: string, profile: Profile, done: any) {
+UserSchema.statics.findOrCreate = function (
+  _accessToken: string,
+  _refreshToken: string,
+  profile: Profile,
+  done: Function
+) {
   const User: any = this;
 
   const { provider, id, displayName } = profile;
@@ -70,7 +75,7 @@ UserSchema.statics.findOrCreate = function (_accessToken: string, _refreshToken:
   if (provider === "github") {
     userId.githubId = parseInt(id, 10);
     api = "https://api.github.com";
-  } else if (provider === "gitea") {
+  } else if (provider === "codeberg") {
     userId.codebergId = parseInt(id, 10);
     api = "https://codeberg.org/api/v1";
   } else {

@@ -19,7 +19,7 @@ export interface GitHubUser {
   site_admin: boolean;
 }
 
-export interface GiteaUser {
+export interface CodebergUser {
   id: number;
   login: string;
   full_name: string;
@@ -118,9 +118,9 @@ export interface GitHubRepository {
   subscribers_count: number;
 }
 
-export interface GiteaRepository {
+export interface CodebergRepository {
   id: number;
-  owner: GiteaUser;
+  owner: CodebergUser;
   name: string;
   full_name: string;
   description: string;

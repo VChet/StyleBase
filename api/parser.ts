@@ -4,7 +4,7 @@ import metaParser from "usercss-meta";
 
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import type { IStyle } from "../models/Style";
-import type { GitHubRepository, GiteaRepository, File } from "../types/api";
+import type { GitHubRepository, CodebergRepository, File } from "../types/api";
 import type { Provider } from "../types/server";
 
 import config from "../config";
@@ -96,7 +96,7 @@ async function collectGithubData(repo: GitHubRepository) {
   };
 }
 
-function collectCodebergData(repo: GiteaRepository) {
+function collectCodebergData(repo: CodebergRepository) {
   return {
     url: repo.html_url,
     name: repo.name,
