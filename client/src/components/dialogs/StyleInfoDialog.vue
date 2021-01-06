@@ -3,7 +3,7 @@
     <div class="header">
       <div class="title">
         <a :href="`${styleData.url}`" rel="noopener" target="_blank">
-          {{ styleData.customName || removeDashes(styleData.name) }}
+          {{ styleData.customName || styleData.name }}
         </a>
         <span class="owner">
           by

@@ -21,8 +21,8 @@
 
     <template #data>
       <div @click="openStyleModal(styleData)">
-        <div class="name" :title="styleData.customName || removeDashes(styleData.name)">
-          {{ styleData.customName || removeDashes(styleData.name) }}
+        <div class="name" :title="styleData.customName || styleData.name">
+          {{ styleData.customName || styleData.name }}
         </div>
         <div class="owner">by {{ styleData.owner.login }}</div>
       </div>
