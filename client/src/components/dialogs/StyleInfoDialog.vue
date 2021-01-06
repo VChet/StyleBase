@@ -3,7 +3,7 @@
     <div class="header">
       <div class="title">
         <a :href="`${styleData.url}`" rel="noopener" target="_blank">
-          {{ styleData.customName || removeDashes(styleData.name) }}
+          {{ styleData.customName || styleData.name }}
         </a>
         <span class="owner">
           by
@@ -184,8 +184,9 @@ export default {
     },
     twitterLink() {
       const name = this.styleData.customName || this.styleData.name;
-      const link = `https://stylebase.cc/${this.styleData.owner.login}/${this.styleData.name}`;
-      const text = encodeURIComponent(`${name} by ${this.styleData.owner.login}\n${link}`);
+      const owner = this.styleData.owner.login;
+      const link = `https://stylebase.cc/${this.styleData.styleId}`;
+      const text = encodeURIComponent(`${name} by ${owner}\n${link}`);
       return `https://twitter.com/intent/tweet?text=${text}`;
     }
   },

@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import mongoosePaginate from "mongoose-paginate-v2";
+import { customAlphabet } from "nanoid";
 
 import type { Document, PaginateModel } from "mongoose";
 import type { BulkWriteResult, UnorderedBulkOperation } from "mongodb";
@@ -11,7 +12,7 @@ export interface IStyle extends Document {
   usercss: string
   preview?: string
   name: string
-  description?: string,
+  description?: string
   owner: {
     id: number
     login: string
@@ -27,6 +28,7 @@ export interface IStyle extends Document {
   isPrivate: boolean
   isArchived: boolean
   isFork: boolean
+  styleId: string
   customName?: string
   customDescription?: string
   customPreview?: string
@@ -35,6 +37,8 @@ export interface IStyle extends Document {
 export interface IStyleModel extends PaginateModel<IStyle> {
   updateAllStyles: () => Promise<BulkWriteResult>;
 }
+
+const styleIdAlphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
 const StyleSchema: Schema = new Schema({
   url: {
@@ -65,6 +69,10 @@ const StyleSchema: Schema = new Schema({
   isPrivate: Boolean,
   isArchived: Boolean,
   isFork: Boolean,
+  styleId: {
+    type: String,
+    default: () => customAlphabet(styleIdAlphabet, 11)()
+  },
   customName: String,
   customDescription: String,
   customPreview: String

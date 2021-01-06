@@ -31,7 +31,7 @@ export default async function getRss(_req: Request, res: Response) {
     feed.addItem({
       title: style.customName || style.name,
       id: style._id,
-      link: `${siteUrl}/${style.owner.login}/${style.name}`,
+      link: `${siteUrl}/style/${style.styleId}`,
       description: style.customDescription || style.description,
       content: content.join("<br />"),
       author: [{ name: style.owner.login }],

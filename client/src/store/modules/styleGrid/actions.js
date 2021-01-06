@@ -20,7 +20,7 @@ export default {
     }
     if (state.ownerFilter) {
       url += state.ownerFilter;
-      window.history.replaceState({}, `Styles by ${state.ownerFilter} | StyleBase`, `/${state.ownerFilter}`);
+      window.history.replaceState({}, `Styles by ${state.ownerFilter} | StyleBase`, `/user/${state.ownerFilter}`);
     }
 
     await axios
@@ -41,8 +41,8 @@ export default {
       });
     return true;
   },
-  getStyle({ dispatch }, { owner, name }) {
-    const params = { owner, name };
+  getStyle({ dispatch }, { styleId }) {
+    const params = { styleId };
     axios
       .get('/api/style', { params })
       .then((response) => {
@@ -92,8 +92,8 @@ export default {
     dispatch('setStyleModalVisibility', true);
     window.history.replaceState(
       {},
-      `${state.selectedStyle.name} | StyleBase`,
-      `/${state.selectedStyle.owner.login}/${state.selectedStyle.name}`
+      `${state.selectedStyle.styleId} | StyleBase`,
+      `/style/${state.selectedStyle.styleId}`
     );
   },
   closeStyleModal({ commit, dispatch }) {
