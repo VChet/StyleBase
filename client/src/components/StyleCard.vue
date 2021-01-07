@@ -29,8 +29,14 @@
     </template>
 
     <template #footer>
-      <span>{{ pluralize(styleData.stargazers, 'star') }}</span>
-      <span>updated {{ dateFromNow(styleData.lastUpdate) }}</span>
+      <span :title="`${styleData.stargazers} stars`">
+        <span role="img" aria-label="stars">⭐</span>
+        {{ styleData.stargazers }}
+      </span>
+      <span :title="`Updated ${dateFromNow(styleData.lastUpdate)}`">
+        {{ dateFromNow(styleData.lastUpdate) }}
+        <span role="img" aria-label="last update">🕓</span>
+      </span>
     </template>
   </BaseCard>
 </template>
