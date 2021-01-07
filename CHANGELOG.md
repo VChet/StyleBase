@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/VChet/StyleBase/compare/v3.5.0...v4.0.0) (2021-01-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **styles:** URL's for styles and users have changed.
+New style URL: stylebase.cc/style/%url%
+New user URL: stylebase.cc/user/%username%
+
+### Features
+
+* **styles:** add styleId field to be used in style url ([9ebb722](https://github.com/VChet/StyleBase/commit/9ebb722cdf3be6d45e1aab1312492bdfffcec030))
+
+
+### Bug Fixes
+
+* **favicon:** optimize svg ([9523220](https://github.com/VChet/StyleBase/commit/952322076caf69c1a82d89b4732d4c6f66a38e76))
+* **parser:** store original style name ([e1d8ecc](https://github.com/VChet/StyleBase/commit/e1d8ecc21d66f69a74171974f97647f18fb6da8d))
+* **style card:** show original style name ([a8f9e06](https://github.com/VChet/StyleBase/commit/a8f9e06d3e4cac9957bad66f76227f66eca21589))
+
 ## [3.5.0](https://github.com/VChet/StyleBase/compare/v3.4.1...v3.5.0) (2021-01-03)
 
 ### Features
