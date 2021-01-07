@@ -49,7 +49,9 @@ export default {
   .footer {
     margin-top: auto;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
+    gap: 0.25rem 0.5rem;
   }
 }
 </style>
