@@ -68,10 +68,11 @@ UserSchema.statics.findOrCreate = function (
 ) {
   const User: any = this;
 
-  const { provider, id, displayName } = profile;
+  const { provider, id, username } = profile;
+  if (!username) return done(new Error("Missing username"));
+
   const userId: Pick<IUser, "githubId" | "codebergId"> = {};
   let api: string;
-
   if (provider === "github") {
     userId.githubId = parseInt(id, 10);
     api = "https://api.github.com";
@@ -88,8 +89,8 @@ UserSchema.statics.findOrCreate = function (
 
     const newUser: IUser = new User({
       ...userId,
-      username: displayName,
-      orgs: await getOrganizations(api, displayName)
+      username,
+      orgs: await getOrganizations(api, username)
     });
 
     newUser.save((saveError) => {
