@@ -29,10 +29,7 @@ mongoose.connect(config.mongoUrl, {
 });
 
 const MongoStore = ConnectMongo(session);
-config.session.store = new MongoStore({
-  mongooseConnection: mongoose.connection,
-  ttl: 14 * 24 * 60 * 60
-});
+config.session.store = new MongoStore({ mongooseConnection: mongoose.connection });
 mongoose.connection.on("error", console.error.bind(console, "MongoDB connection error:"));
 initCollection();
 

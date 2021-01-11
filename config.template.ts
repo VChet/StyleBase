@@ -9,7 +9,12 @@ export default {
     name: "stylebase.sid",
     proxy: true,
     resave: true,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+      secure: true,
+      maxAge: 3600000 * 24 * 14
+    },
+    rolling: true
   },
   github: {
     OAuth: {
