@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.1](https://github.com/VChet/StyleBase/compare/v4.0.0...v4.0.1) (2021-01-11)
+
+
+### Bug Fixes
+
+* **auth:** store username instead of displayName ([f3c73a5](https://github.com/VChet/StyleBase/commit/f3c73a5808e9e5a5f227aa8d9239aa40177eb56c))
+* **session:** keep user logged in ([d3cbd63](https://github.com/VChet/StyleBase/commit/d3cbd63892dc98578435e1e9953e76bb97467e05))
+* **style card:** add gap between "stars" and "last update" blocks ([ce45e87](https://github.com/VChet/StyleBase/commit/ce45e8720cb582a34789efd2876a6e8064ca6f3d))
+* **style card:** replace text with emojis ([9e4cf64](https://github.com/VChet/StyleBase/commit/9e4cf649cbcb7189ae533bc5d0e6689e658fa642))
+
 ## [4.0.0](https://github.com/VChet/StyleBase/compare/v3.5.0...v4.0.0) (2021-01-07)
 
 
