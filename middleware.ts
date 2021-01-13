@@ -107,7 +107,16 @@ export default function addExpressMiddleware(app: Application) {
   }));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
-  app.use(session(config.session));
+  app.use(session({
+    proxy: true,
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 3600000 * 24 * 14
+    },
+    rolling: true,
+    ...config.session
+  }));
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(compression());
