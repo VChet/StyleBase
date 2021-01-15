@@ -5,8 +5,21 @@ function lockScroll(isActive) {
   isActive ? $body.classList.add('no-scroll') : $body.classList.remove('no-scroll');
 }
 
+function setPageUrl({ selectedStyle, ownerFilter, searchQuery }) {
+  if (selectedStyle.styleId) {
+    window.history.replaceState({}, `${selectedStyle.styleId} | StyleBase`, `/style/${selectedStyle.styleId}`);
+  } else if (ownerFilter) {
+    window.history.replaceState({}, `Styles by ${ownerFilter} | StyleBase`, `/user/${ownerFilter}`);
+  } else if (searchQuery) {
+    window.history.replaceState({}, `${searchQuery} | StyleBase`, `/search/${searchQuery}`);
+  } else {
+    window.history.replaceState({}, document.title, '/');
+  }
+}
+
 export default {
-  async getStyles({ state, commit, dispatch }) {
+  getStyles({ state, commit, dispatch }) {
+    setPageUrl(state);
     commit('SET_LOADING', true);
 
     const params = {};
@@ -14,16 +27,10 @@ export default {
     params.sort = state.sortOrder;
 
     let url = '/api/styles/';
-    if (state.searchQuery) {
-      params.query = state.searchQuery;
-      window.history.replaceState({}, `${state.searchQuery} | StyleBase`, `/search/${state.searchQuery}`);
-    }
-    if (state.ownerFilter) {
-      url += state.ownerFilter;
-      window.history.replaceState({}, `Styles by ${state.ownerFilter} | StyleBase`, `/user/${state.ownerFilter}`);
-    }
+    if (state.ownerFilter) url += state.ownerFilter;
+    if (state.searchQuery) params.query = state.searchQuery;
 
-    await axios
+    axios
       .get(url, { params })
       .then((response) => {
         const styles = state.pagination.page === 1 ? response.data.styles : state.styles.concat(response.data.styles);
@@ -39,7 +46,6 @@ export default {
       .finally(() => {
         commit('SET_LOADING', false);
       });
-    return true;
   },
   getStyle({ dispatch }, { styleId }) {
     const params = { styleId };
@@ -62,13 +68,13 @@ export default {
     dispatch('getStyles');
   },
   setQuery({ state, commit, dispatch }, query) {
-    if (state.showStyleInfoModal) dispatch('setStyleModalVisibility', false);
+    if (state.showStyleInfoModal) dispatch('closeStyleModal');
     commit('SET_SEARCH_QUERY', query);
     commit('SET_PAGE', 1);
     dispatch('getStyles');
   },
   setOwnerFilter({ state, commit, dispatch }, filter) {
-    if (state.showStyleInfoModal) dispatch('setStyleModalVisibility', false);
+    if (state.showStyleInfoModal) dispatch('closeStyleModal');
     if (filter) {
       commit('SET_OWNER_FILTER', filter);
       commit('SET_PAGE', 1);
@@ -76,7 +82,6 @@ export default {
     }
   },
   resetFilters({ commit, dispatch }) {
-    window.history.replaceState({}, document.title, '/');
     commit('SET_SEARCH_QUERY', '');
     commit('SET_SORT_ORDER', 'stargazers');
     commit('SET_OWNER_FILTER', '');
@@ -90,15 +95,11 @@ export default {
   openStyleModal({ state, commit, dispatch }, style) {
     commit('SET_SELECTED_STYLE', style);
     dispatch('setStyleModalVisibility', true);
-    window.history.replaceState(
-      {},
-      `${state.selectedStyle.styleId} | StyleBase`,
-      `/style/${state.selectedStyle.styleId}`
-    );
+    setPageUrl(state);
   },
-  closeStyleModal({ commit, dispatch }) {
+  closeStyleModal({ state, commit, dispatch }) {
     commit('SET_SELECTED_STYLE', {});
     dispatch('setStyleModalVisibility', false);
-    window.history.replaceState({}, document.title, '/');
+    setPageUrl(state);
   }
 };
