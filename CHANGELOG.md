@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/VChet/StyleBase/compare/v4.0.1...v4.1.0) (2021-01-15)
+
+
+### Features
+
+* **meta:** change title and description in different states ([85893bc](https://github.com/VChet/StyleBase/commit/85893bcce37cd2698df79c1b63e98b5dffb50619))
+* **search:** add search by query with active owner filter ([45e0ddd](https://github.com/VChet/StyleBase/commit/45e0ddd592565aa9357f3a7c19cda20a250441f3))
+
+
+### Bug Fixes
+
+* **seo:** disallow "/search/" in robots.txt ([c93ee5d](https://github.com/VChet/StyleBase/commit/c93ee5d09f2c5ae4ddcffda1614e63b0e6ed6006))
+* **url:** correctly set URL when closing a modal with active filters ([a459df5](https://github.com/VChet/StyleBase/commit/a459df50cc8c902cedafb979950396530018fcdb))
+
 ### [4.0.1](https://github.com/VChet/StyleBase/compare/v4.0.0...v4.0.1) (2021-01-11)
 
 
