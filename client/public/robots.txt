@@ -2,5 +2,6 @@ User-agent: *
 
 Disallow: /login$
 Disallow: /logout$
+Disallow: /search/
 
 Allow: /
