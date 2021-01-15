@@ -41,9 +41,9 @@ export function getStyles(req: Request, res: Response) {
   const { query, page = 1, sort } = req.query;
   const { owner } = req.params;
 
-  let filter = {};
-  if (query) filter = { $text: { $search: req.query.query } };
-  if (owner) filter = { "owner.login": owner };
+  const filter: { "owner.login"?: string, $text?: { $search: string } } = {};
+  if (owner) filter["owner.login"] = owner;
+  if (query && typeof query === "string") filter.$text = { $search: query };
 
   let sortOrder = "-_id";
   if (sort === "stargazers") {
