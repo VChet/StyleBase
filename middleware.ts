@@ -39,7 +39,7 @@ passport.use(
     clientID: config.github.OAuth.clientId,
     clientSecret: config.github.OAuth.clientSecret,
     callbackURL: "/github/callback",
-    proxy: true
+    proxy: process.env.NODE_ENV === "production"
   }, User.findOrCreate.bind(User))
 );
 passport.use(
@@ -48,7 +48,7 @@ passport.use(
     clientID: config.codeberg.OAuth.clientId,
     clientSecret: config.codeberg.OAuth.clientSecret,
     callbackURL: "/codeberg/callback",
-    proxy: true,
+    proxy: process.env.NODE_ENV === "production",
     authorizationURL: "https://codeberg.org/login/oauth/authorize",
     tokenURL: "https://codeberg.org/login/oauth/access_token",
     userProfileURL: "https://codeberg.org/api/v1/user"
@@ -86,7 +86,7 @@ if (process.env.NODE_ENV === "production") {
 
 // Middleware
 export default function addExpressMiddleware(app: Application) {
-  app.enable("trust proxy");
+  if (process.env.NODE_ENV === "production") app.enable("trust proxy");
   app.use(morgan("dev"));
   app.use(helmet({
     referrerPolicy: { policy: "strict-origin-when-cross-origin" },
@@ -111,7 +111,7 @@ export default function addExpressMiddleware(app: Application) {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(session({
-    proxy: true,
+    proxy: process.env.NODE_ENV === "production",
     resave: true,
     saveUninitialized: false,
     cookie: {
