@@ -5,21 +5,31 @@ function lockScroll(isActive) {
   isActive ? $body.classList.add('no-scroll') : $body.classList.remove('no-scroll');
 }
 
-function setPageUrl({ selectedStyle, ownerFilter, searchQuery }) {
-  if (selectedStyle.styleId) {
-    window.history.replaceState({}, `${selectedStyle.styleId} | StyleBase`, `/style/${selectedStyle.styleId}`);
+function setPageData({ selectedStyle: style, ownerFilter, searchQuery }) {
+  let title = 'Collection of UserCSS styles | StyleBase';
+  let description = 'Website styles from various authors. Find and share your UserCSS style at StyleBase.cc';
+  let url = '/';
+
+  if (style.styleId) {
+    title = `${style.customName || style.name} by ${style.owner.login} | StyleBase`;
+    description = style.customDescription || style.description;
+    url = `/style/${style.styleId}`;
   } else if (ownerFilter) {
-    window.history.replaceState({}, `Styles by ${ownerFilter} | StyleBase`, `/user/${ownerFilter}`);
+    title = `Styles by ${ownerFilter} | StyleBase`;
+    url = `/user/${ownerFilter}`;
   } else if (searchQuery) {
-    window.history.replaceState({}, `${searchQuery} | StyleBase`, `/search/${searchQuery}`);
-  } else {
-    window.history.replaceState({}, document.title, '/');
+    title = `${searchQuery} | StyleBase`;
+    url = `/search/${searchQuery}`;
   }
+
+  document.title = title;
+  document.head.querySelector('meta[name=description]').content = description;
+  window.history.replaceState({}, title, url);
 }
 
 export default {
   getStyles({ state, commit, dispatch }) {
-    setPageUrl(state);
+    setPageData(state);
     commit('SET_LOADING', true);
 
     const params = {};
@@ -95,11 +105,11 @@ export default {
   openStyleModal({ state, commit, dispatch }, style) {
     commit('SET_SELECTED_STYLE', style);
     dispatch('setStyleModalVisibility', true);
-    setPageUrl(state);
+    setPageData(state);
   },
   closeStyleModal({ state, commit, dispatch }) {
     commit('SET_SELECTED_STYLE', {});
     dispatch('setStyleModalVisibility', false);
-    setPageUrl(state);
+    setPageData(state);
   }
 };
