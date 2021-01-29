@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.1.1](https://github.com/VChet/StyleBase/compare/v4.1.0...v4.1.1) (2021-01-29)
+
+
+### Bug Fixes
+
+* **auth:** fix codeberg login ([ad265fe](https://github.com/VChet/StyleBase/commit/ad265feee88df1a05e3c841b8728eee85b2ff062))
+* **style card:** open style dialog by clicking anywhere on the card ([54c7077](https://github.com/VChet/StyleBase/commit/54c7077c91abcbdc691868ff4827e6ce8c0e3766))
+
 ## [4.1.0](https://github.com/VChet/StyleBase/compare/v4.0.1...v4.1.0) (2021-01-15)
 
 
