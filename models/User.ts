@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from "axios";
 
 import type { Document, Model, CallbackError } from "mongoose";
 import type { Profile } from "passport";
+import type { ProviderName } from "../types/server";
 
 import config from "../config";
 
@@ -23,7 +24,7 @@ export interface IUser extends Document {
 
 export interface IUserModel extends Model<IUser> {
   findOrCreate: (
-    provider: "github" | "codeberg",
+    provider: ProviderName,
     _accessToken: string,
     _refreshToken: string,
     profile: Profile,
@@ -67,7 +68,7 @@ async function getOrganizations(api: string, username: string): Promise<Array<Or
 }
 
 UserSchema.statics.findOrCreate = function (
-  provider: "github" | "codeberg",
+  provider: ProviderName,
   _accessToken: string,
   _refreshToken: string,
   profile: Profile,
@@ -80,10 +81,10 @@ UserSchema.statics.findOrCreate = function (
 
   const userId: Pick<IUser, "githubId" | "codebergId"> = {};
   let api: string;
-  if (provider === "github") {
+  if (provider === "GitHub") {
     userId.githubId = parseInt(id, 10);
     api = "https://api.github.com";
-  } else if (provider === "codeberg") {
+  } else if (provider === "Codeberg") {
     userId.codebergId = parseInt(id, 10);
     api = "https://codeberg.org/api/v1";
   } else {

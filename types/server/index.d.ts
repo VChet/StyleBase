@@ -39,8 +39,10 @@ export interface Config {
   }
 }
 
+export type ProviderName = "GitHub" | "Codeberg";
+
 export interface Provider {
-  name: string;
+  name: ProviderName;
   host: string;
   api: string;
   options: {
