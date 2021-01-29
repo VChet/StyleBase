@@ -40,7 +40,7 @@ passport.use(
     clientSecret: config.github.OAuth.clientSecret,
     callbackURL: "/github/callback",
     proxy: process.env.NODE_ENV === "production"
-  }, User.findOrCreate.bind(User))
+  }, User.findOrCreate.bind(User, "github"))
 );
 passport.use(
   "codeberg",
@@ -52,7 +52,7 @@ passport.use(
     authorizationURL: "https://codeberg.org/login/oauth/authorize",
     tokenURL: "https://codeberg.org/login/oauth/access_token",
     userProfileURL: "https://codeberg.org/api/v1/user"
-  }, User.findOrCreate.bind(User))
+  }, User.findOrCreate.bind(User, "codeberg"))
 );
 
 passport.serializeUser((user: IUser, done) => {

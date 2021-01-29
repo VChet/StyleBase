@@ -22,7 +22,13 @@ export interface IUser extends Document {
 }
 
 export interface IUserModel extends Model<IUser> {
-  findOrCreate: (_accessToken: string, _refreshToken: string, profile: Profile, done: Function) => any;
+  findOrCreate: (
+    provider: "github" | "codeberg",
+    _accessToken: string,
+    _refreshToken: string,
+    profile: Profile,
+    done: Function
+  ) => any;
 }
 
 export const UserSchema: Schema = new Schema({
@@ -61,6 +67,7 @@ async function getOrganizations(api: string, username: string): Promise<Array<Or
 }
 
 UserSchema.statics.findOrCreate = function (
+  provider: "github" | "codeberg",
   _accessToken: string,
   _refreshToken: string,
   profile: Profile,
@@ -68,7 +75,7 @@ UserSchema.statics.findOrCreate = function (
 ) {
   const User: any = this;
 
-  const { provider, id, username } = profile;
+  const { id, username } = profile;
   if (!username) return done(new Error("Missing username"));
 
   const userId: Pick<IUser, "githubId" | "codebergId"> = {};
