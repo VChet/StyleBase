@@ -1,5 +1,5 @@
 <template>
-  <BaseCard>
+  <BaseCard @click="openStyleModal(styleData)">
     <template #image>
       <img
         v-if="styleData.customPreview || styleData.preview"
@@ -13,14 +13,14 @@
         :href="styleData.usercss"
         rel="noopener"
         target="_blank"
-        @click="$gtag.event('install', { event_category: 'stylecard' })"
+        @click.stop="$gtag.event('install', { event_category: 'stylecard' })"
       >
         Install
       </a>
     </template>
 
     <template #data>
-      <div @click="openStyleModal(styleData)">
+      <div>
         <div class="name" :title="styleData.customName || styleData.name">
           {{ styleData.customName || styleData.name }}
         </div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="style-card">
+  <div class="style-card" v-on="$listeners">
     <div class="image-container">
       <slot name="image"></slot>
     </div>
@@ -27,6 +27,7 @@ export default {
   border-radius: 4px;
   border: 1px solid var(--color-border);
   box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
 }
 
 .image-container {
@@ -44,7 +45,6 @@ export default {
   height: 100px;
   padding: 1rem;
   background-color: var(--color-text-bg);
-  cursor: pointer;
 
   .footer {
     margin-top: auto;
