@@ -69,7 +69,7 @@ export default {
     } else {
       const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
       this.darkTheme = darkMode.matches;
-      darkMode.addListener((query) => {
+      darkMode.addEventListener('change', (query) => {
         this.darkTheme = query.matches;
       });
     }
