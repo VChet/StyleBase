@@ -158,6 +158,8 @@ export interface CodebergRepository {
   internal: boolean;
 }
 
+type FileType = "file" | "dir" | "symlink" | "submodule";
+
 export interface File {
   name: string;
   path: string;
@@ -167,7 +169,7 @@ export interface File {
   html_url: string;
   git_url: string;
   download_url: string;
-  type: string;
+  type: FileType;
   _links: {
     self: string;
     git: string;
