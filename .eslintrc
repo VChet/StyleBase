@@ -10,13 +10,13 @@
   "extends": [
     "airbnb-base",
     "airbnb-typescript/base",
-    "plugin:sonarjs/recommended"
+    "plugin:radar/recommended"
   ],
   "env": {
     "node": true,
     "es6": true
   },
-  "plugins": ["sonarjs"],
+  "plugins": ["radar"],
   "rules": {
     "func-names": "off",
     "object-curly-newline": "off",
