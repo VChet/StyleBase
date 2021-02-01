@@ -11,7 +11,6 @@ import helmet from "helmet";
 import bodyParser from "body-parser";
 import compression from "compression";
 
-import type { CallbackError } from "mongoose";
 import type { Application } from "express";
 import type { IUser } from "./models/User";
 
@@ -60,9 +59,9 @@ passport.serializeUser((user: IUser, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id, (error: CallbackError, user: IUser) => {
+  User.findById(id).lean().exec((error: mongoose.NativeError, user: IUser | null) => {
     if (error) return done(error);
-    return done(null, user);
+    if (user) return done(null, user);
   });
 });
 

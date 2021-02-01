@@ -74,7 +74,7 @@ declare module "usercss-meta" {
     errors: Array<ParseError>;
   }
 
-  export interface MetaParser {
+  interface MetaParser {
     parse(text: string, options?: any): ParseResults;
   }
 

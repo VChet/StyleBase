@@ -1,9 +1,11 @@
+import type { IStyle } from "./Style";
+
 import { Style } from "./Style";
 
 export default async function initCollection() {
   if (process.env.NODE_ENV === "test") return;
 
-  const styles = await Style.find({}).lean();
+  const styles: Array<IStyle> = await Style.find({}).lean();
   if (styles && styles.length) return styles;
 
   const initialStyles: Array<any> = [{

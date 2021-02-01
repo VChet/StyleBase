@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import axios from "axios";
 
-import type { Document, Model, CallbackError } from "mongoose";
+import type { Document, Model, NativeError } from "mongoose";
 import type { Profile } from "passport";
 import type { Provider, ProviderName } from "../types/server";
 import type { CodebergOrganization, GitHubOrganization } from "../types/api";
@@ -77,7 +77,7 @@ UserSchema.statics.findOrCreate = function (
   profile: Profile,
   done: Function
 ) {
-  const User: any = this;
+  const User = this;
 
   const { id, username } = profile;
   if (!username) return done(new Error("Missing username"));
@@ -88,11 +88,11 @@ UserSchema.statics.findOrCreate = function (
   const userId: Pick<IUser, "githubId" | "codebergId"> = {};
   userId[provider.idField] = parseInt(id, 10);
 
-  User.findOne(userId, async (error: CallbackError, user: IUser) => {
+  User.findOne(userId).lean().exec(async (error: NativeError, user: IUser | null) => {
     if (error) return done(error);
     if (user) return done(null, user);
 
-    const newUser: IUser = new User({
+    const newUser = new User({
       ...userId,
       username,
       orgs: await getOrganizations(provider, username)

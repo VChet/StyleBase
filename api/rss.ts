@@ -21,8 +21,8 @@ export default async function getRss(_req: Request, res: Response) {
     copyright: "All styles belong to their first authors"
   });
 
-  const styles = await Style.find({}).lean();
-  styles.forEach((style: IStyle) => {
+  const styles: Array<IStyle> = await Style.find({}).lean();
+  styles.forEach((style) => {
     const content: Array<string> = [];
     content.push(`${style.customName || style.name} by ${style.owner.login}.`);
     content.push(`<a href='${style.usercss}'>Install UserCSS</a>`);

@@ -87,7 +87,7 @@ StyleSchema.index({
 StyleSchema.plugin(mongoosePaginate);
 
 StyleSchema.statics.updateAllStyles = async function (): Promise<BulkWriteResult> {
-  const Style: any = this;
+  const Style = this;
   const styles: Array<IStyle> = await Style.find({}).lean();
   const stylesData = await Promise.allSettled(
     styles.map(({ url, usercss }) => retrieveRepositoryData(url, { download_url: usercss }))

@@ -3,6 +3,7 @@ import mcache from "memory-cache";
 import rateLimit from "express-rate-limit";
 
 import type { Request, Response, NextFunction } from "express";
+import type { IStyle } from "../models/Style";
 
 import { Style } from "../models/Style";
 
@@ -28,7 +29,7 @@ const cache = (duration: number) => (req: Request, res: Response, next: NextFunc
   if (cachedBody) return res.send(cachedBody);
 
   res.sendResponse = res.send;
-  res.send = (body: any) => {
+  res.send = (body) => {
     if (process.env.NODE_ENV !== "production" && res.statusCode === 200) {
       mcache.put(key, body, duration * 60 * 1000);
     }
@@ -55,7 +56,7 @@ const rateLimiter = rateLimit({
 const isAuthorized = async (req: Request, res: Response, next: NextFunction) => {
   const { _id } = req.body;
   if (!_id) return res.status(400).json({ error: "Request must contain _id field" });
-  const existingStyle = await Style.findById(_id).lean();
+  const existingStyle: IStyle | null = await Style.findById(_id).lean();
   if (!existingStyle) return res.status(404).json({ error: "Style does not exist" });
   req.styleData = existingStyle;
 
