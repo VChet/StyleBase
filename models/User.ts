@@ -3,9 +3,10 @@ import axios, { AxiosResponse } from "axios";
 
 import type { Document, Model, CallbackError } from "mongoose";
 import type { Profile } from "passport";
-import type { ProviderName } from "../types/server";
+import type { Provider, ProviderName } from "../types/server";
 
 import config from "../config";
+import providers from "../api/providers";
 
 type Role = "User" | "Admin";
 
@@ -59,16 +60,16 @@ export const UserSchema: Schema = new Schema({
   }
 });
 
-async function getOrganizations(api: string, username: string): Promise<Array<Organization>> {
+async function getOrganizations(provider: Provider, username: string): Promise<Array<Organization>> {
   const options = {
     headers: { Authorization: `token ${config.github.token}` }
   };
-  const orgs: AxiosResponse<Array<Organization>> = await axios.get(`${api}/users/${username}/orgs`, options);
+  const orgs: AxiosResponse<Array<Organization>> = await axios.get(`${provider.api}/users/${username}/orgs`, options);
   return orgs.data.map((org) => ({ login: org.login, id: org.id }));
 }
 
 UserSchema.statics.findOrCreate = function (
-  provider: ProviderName,
+  providerName: ProviderName,
   _accessToken: string,
   _refreshToken: string,
   profile: Profile,
@@ -79,17 +80,11 @@ UserSchema.statics.findOrCreate = function (
   const { id, username } = profile;
   if (!username) return done(new Error("Missing username"));
 
+  const provider = providers.find((pr) => pr.name === providerName);
+  if (!provider) return done(new Error(`Unsupported provider: ${providerName}`));
+
   const userId: Pick<IUser, "githubId" | "codebergId"> = {};
-  let api: string;
-  if (provider === "GitHub") {
-    userId.githubId = parseInt(id, 10);
-    api = "https://api.github.com";
-  } else if (provider === "Codeberg") {
-    userId.codebergId = parseInt(id, 10);
-    api = "https://codeberg.org/api/v1";
-  } else {
-    console.log("Unsupported provider", provider);
-  }
+  userId[provider.idField] = parseInt(id, 10);
 
   User.findOne(userId, async (error: CallbackError, user: IUser) => {
     if (error) return done(error);
@@ -98,7 +93,7 @@ UserSchema.statics.findOrCreate = function (
     const newUser: IUser = new User({
       ...userId,
       username,
-      orgs: await getOrganizations(api, username)
+      orgs: await getOrganizations(provider, username)
     });
 
     newUser.save((saveError) => {

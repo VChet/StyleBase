@@ -8,29 +8,11 @@ import type { GitHubRepository, CodebergRepository, File } from "../types/api";
 import type { Provider } from "../types/server";
 
 import config from "../config";
+import providers from "./providers";
 
 const stylePattern = /\.user\.(css|styl)$/;
 
 function getProviderData(url: string) {
-  const providers: Array<Provider> = [
-    {
-      name: "GitHub",
-      host: "github.com",
-      api: "https://api.github.com",
-      options: {
-        headers: {
-          Authorization: `token ${config.github.token}`,
-          Accept: "application/vnd.github.mercy-preview+json"
-        }
-      }
-    },
-    {
-      name: "Codeberg",
-      host: "codeberg.org",
-      api: "https://codeberg.org/api/v1",
-      options: {}
-    }
-  ];
   const { host, pathname } = new URL(url);
   if (pathname === "/") throw new Error("Empty repository URL");
 

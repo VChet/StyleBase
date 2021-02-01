@@ -45,6 +45,7 @@ export interface Provider {
   name: ProviderName;
   host: string;
   api: string;
+  idField: "githubId" | "codebergId";
   options: {
     headers?: {
       Authorization: string;
