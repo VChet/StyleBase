@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.0](https://github.com/VChet/StyleBase/compare/v4.1.1...v4.2.0) (2021-02-01)
+
+
+### Features
+
+* **parser:** search usercss files in folders ([3b42951](https://github.com/VChet/StyleBase/commit/3b42951618df4cacd9926e87e503ee80c94e84ab))
+* **parser:** search usercss files in subfolders ([d062a2b](https://github.com/VChet/StyleBase/commit/d062a2b410acc1f1f0f6d053fcbf3ac365ee72f8))
+
+
+### Bug Fixes
+
+* **User:** fix Codeberg organization name parsing ([8cdaa7c](https://github.com/VChet/StyleBase/commit/8cdaa7c7ab1428069f982e2e868047d80e25344e))
+
 ### [4.1.1](https://github.com/VChet/StyleBase/compare/v4.1.0...v4.1.1) (2021-01-29)
 
 
