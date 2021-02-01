@@ -26,13 +26,18 @@ function getProviderData(url: string) {
 }
 
 async function getFolderFiles(provider: Provider, root: Array<File>): Promise<Array<File>> {
-  const folders = root.filter((file) => file.type === "dir");
   const files: Array<File> = [];
-  await Promise.all(folders.map(async (folder) => {
-    const contents: AxiosResponse<Array<File>> = await axios.get(folder.url, provider.options);
-    files.push(...contents.data.filter((file) => file.type === "file"));
-  }));
-  return files;
+  files.push(...root.filter((file) => file.type === "file"));
+
+  const folders = root.filter((file) => file.type === "dir");
+  if (folders.length) {
+    await Promise.all(folders.map(async (folder) => {
+      const contents: AxiosResponse<Array<File>> = await axios.get(folder.url, provider.options);
+      files.push(...(await getFolderFiles(provider, contents.data)));
+    }));
+  }
+
+  return files.filter((file) => stylePattern.test(file.name));
 }
 
 export async function retrieveRepositoryFiles(url: string) {
@@ -41,11 +46,7 @@ export async function retrieveRepositoryFiles(url: string) {
     `${provider.api}/repos${repoUrl}/contents`,
     provider.options
   );
-  const files: Array<File> = [];
-  files.push(...contents.data.filter((file) => file.type === "file"));
-  const folderFiles = await getFolderFiles(provider, contents.data);
-  files.push(...folderFiles);
-  return files.filter((file) => stylePattern.test(file.name));
+  return getFolderFiles(provider, contents.data);
 }
 
 async function retrieveStyleMetadata(fileUrl: string, options: AxiosRequestConfig) {
