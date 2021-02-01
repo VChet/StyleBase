@@ -10,13 +10,16 @@
   "extends": [
     "airbnb-base",
     "airbnb-typescript/base",
-    "plugin:radar/recommended"
+    "plugin:radar/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript"
   ],
   "env": {
     "node": true,
     "es6": true
   },
-  "plugins": ["radar"],
+  "plugins": ["import", "radar"],
   "rules": {
     "func-names": "off",
     "object-curly-newline": "off",
