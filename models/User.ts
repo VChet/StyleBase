@@ -1,11 +1,11 @@
 import { Schema, model } from "mongoose";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 import type { Document, Model, CallbackError } from "mongoose";
 import type { Profile } from "passport";
 import type { Provider, ProviderName } from "../types/server";
+import type { CodebergOrganization, GitHubOrganization } from "../types/api";
 
-import config from "../config";
 import providers from "../api/providers";
 
 type Role = "User" | "Admin";
@@ -61,11 +61,13 @@ export const UserSchema: Schema = new Schema({
 });
 
 async function getOrganizations(provider: Provider, username: string): Promise<Array<Organization>> {
-  const options = {
-    headers: { Authorization: `token ${config.github.token}` }
-  };
-  const orgs: AxiosResponse<Array<Organization>> = await axios.get(`${provider.api}/users/${username}/orgs`, options);
-  return orgs.data.map((org) => ({ login: org.login, id: org.id }));
+  const response = await axios.get(`${provider.api}/users/${username}/orgs`, provider.options);
+  return response.data.map((org: GitHubOrganization & CodebergOrganization) => {
+    if (provider.name === "GitHub") {
+      return { login: org.login, id: org.id };
+    }
+    return { login: org.username, id: org.id };
+  });
 }
 
 UserSchema.statics.findOrCreate = function (

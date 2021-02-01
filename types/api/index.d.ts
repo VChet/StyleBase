@@ -1,3 +1,31 @@
+export interface License {
+  key: string;
+  name: string;
+  spdx_id: string;
+  url: string;
+  node_id: string;
+}
+
+type FileType = "file" | "dir" | "symlink" | "submodule";
+
+export interface File {
+  name: string;
+  path: string;
+  sha: string;
+  size: number;
+  url: string;
+  html_url: string;
+  git_url: string;
+  download_url: string;
+  type: FileType;
+  _links: {
+    self: string;
+    git: string;
+    html: string;
+  }
+}
+
+// GitHub
 export interface GitHubUser {
   id: number;
   login: string;
@@ -17,27 +45,6 @@ export interface GitHubUser {
   received_events_url: string;
   type: string;
   site_admin: boolean;
-}
-
-export interface CodebergUser {
-  id: number;
-  login: string;
-  full_name: string;
-  email: string;
-  avatar_url: string;
-  language: string;
-  is_admin: boolean;
-  last_login: string;
-  created: string;
-  username: string;
-}
-
-export interface License {
-  key: string;
-  name: string;
-  spdx_id: string;
-  url: string;
-  node_id: string;
 }
 
 export interface GitHubRepository {
@@ -118,6 +125,35 @@ export interface GitHubRepository {
   subscribers_count: number;
 }
 
+export interface GitHubOrganization {
+  login: string;
+  id: number;
+  node_id: string;
+  url: string;
+  repos_url: string;
+  events_url: string;
+  hooks_url: string;
+  issues_url: string;
+  members_url: string;
+  public_members_url: string;
+  avatar_url: string;
+  description: string;
+}
+
+// Codeberg
+export interface CodebergUser {
+  id: number;
+  login: string;
+  full_name: string;
+  email: string;
+  avatar_url: string;
+  language: string;
+  is_admin: boolean;
+  last_login: string;
+  created: string;
+  username: string;
+}
+
 export interface CodebergRepository {
   id: number;
   owner: CodebergUser;
@@ -158,21 +194,14 @@ export interface CodebergRepository {
   internal: boolean;
 }
 
-type FileType = "file" | "dir" | "symlink" | "submodule";
-
-export interface File {
-  name: string;
-  path: string;
-  sha: string;
-  size: number;
-  url: string;
-  html_url: string;
-  git_url: string;
-  download_url: string;
-  type: FileType;
-  _links: {
-    self: string;
-    git: string;
-    html: string;
-  }
+export interface CodebergOrganization {
+  id: number;
+  username: string;
+  full_name: string;
+  avatar_url: string;
+  description: string;
+  website: string;
+  location: string;
+  visibility: string;
+  repo_admin_change_team_access: boolean;
 }
