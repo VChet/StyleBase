@@ -208,7 +208,6 @@ main {
   display: flex;
   align-items: center;
   margin-bottom: 2rem;
-
   @include media-size-mobile {
     flex-direction: column;
   }
@@ -216,7 +215,6 @@ main {
   .title {
     font-size: 1.25rem;
     font-weight: bold;
-
     @include media-size-mobile {
       margin-bottom: 1rem;
     }
@@ -240,13 +238,15 @@ main {
   .sort-options {
     display: flex;
     margin: 0;
+    gap: 0 1.5rem;
     margin-left: auto;
     list-style-type: none;
     list-style-image: none;
+    @include media-size-mobile {
+      margin-left: unset;
+    }
 
     li {
-      margin: 0 1rem;
-
       button {
         padding-bottom: 0.25rem;
         margin-bottom: -0.25rem;
@@ -256,12 +256,10 @@ main {
         font-size: 1rem;
         text-transform: lowercase;
         transition: color 0.2s, border-color 0.2s;
-
         &.active {
           color: var(--color-main);
           border-color: var(--color-main);
         }
-
         &:focus {
           color: var(--color-main);
           border-color: var(--color-focus);
