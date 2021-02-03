@@ -7,16 +7,26 @@
         <CloseButton v-show="url" aria-label="Clear the input" @click="clear" />
       </div>
       <p v-if="!files.length">Supported providers: GitHub, Codeberg</p>
-      <ul class="file-list">
-        <li v-for="(file, index) in files" :key="index">
-          <input :id="index" v-model="selectedStyle" type="radio" :value="file" :disabled="isSubmitting" />
-          <label :for="index">{{ file.name }}</label>
-        </li>
-      </ul>
-      <div v-if="selectedStyle" class="custom-fields">
-        <input v-model="customName" type="text" placeholder="Style name" />
-        <input v-model="customPreview" type="text" placeholder="Preview url" />
-        <input v-model="customDescription" type="text" placeholder="Style description" />
+      <div v-if="files.length">
+        <h2>Choose file</h2>
+        <ul class="file-list">
+          <li v-for="(file, index) in files" :key="index">
+            <input :id="index" v-model="selectedStyle" type="radio" :value="file" :disabled="isSubmitting" />
+            <label :for="index">{{ file.name }}</label>
+          </li>
+        </ul>
+      </div>
+      <div v-if="selectedStyle">
+        <h2>Edit style data</h2>
+        <div class="custom-fields">
+          <input v-model="customName" type="text" placeholder="Name" />
+          <input v-model="customPreview" type="text" placeholder="Preview URL" />
+          <input v-model="customDescription" type="text" placeholder="Description" />
+        </div>
+        <p>
+          Style name, description and preview will be automatically taken from the style metadata and repository files,
+          but you can enter them manually. If you are the owner of the repository you will be able to edit it later.
+        </p>
       </div>
       <div class="dialog-buttons">
         <button class="style-button" type="button" @click="$emit('close')">Not now</button>
@@ -168,7 +178,6 @@ export default {
   justify-content: space-between;
   gap: 0.5rem;
   margin: 1rem 0;
-
   input {
     flex: 1;
     box-sizing: border-box;
@@ -181,6 +190,6 @@ export default {
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
 }
 </style>
