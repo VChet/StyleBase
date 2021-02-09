@@ -25,8 +25,8 @@ function checkPreviewUrl(url: string) {
 }
 
 export function getRepositoryFiles(req: Request, res: Response) {
-  let { url } = req.query;
-  url = (url as string).replace(/\/$/, ""); // Trim trailing slash
+  if (!req.query.url || typeof req.query.url !== "string") throw new Error("Invalid repository URL");
+  const url = req.query.url.replace(/\/$/, ""); // Trim trailing slash
 
   retrieveRepositoryFiles(url)
     .then((files) => {
@@ -81,14 +81,8 @@ export function getStyleData(req: Request, res: Response) {
 }
 
 export function addStyle(req: Request, res: Response) {
-  let { url } = req.body;
-  const {
-    usercss,
-    customName,
-    customDescription,
-    customPreview
-  } = req.body;
-  url = url.replace(/\/$/, ""); // Trim trailing slash
+  const { usercss, customName, customDescription, customPreview } = req.body;
+  const url = req.body.url.replace(/\/$/, ""); // Trim trailing slash
 
   Style
     .findOne({ usercss: usercss.download_url })
