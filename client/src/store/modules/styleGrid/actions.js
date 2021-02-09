@@ -39,11 +39,12 @@ export default {
     let url = '/api/styles/';
     if (state.ownerFilter) url += state.ownerFilter;
     if (state.searchQuery) params.query = state.searchQuery;
+    if (state.pagination.page === 1) commit('SET_STYLES', []);
 
     axios
       .get(url, { params })
       .then((response) => {
-        const styles = state.pagination.page === 1 ? response.data.styles : state.styles.concat(response.data.styles);
+        const styles = state.styles.concat(response.data.styles);
         commit('SET_STYLES', styles);
         commit('SET_PAGINATION', {
           page: response.data.page,

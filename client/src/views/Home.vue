@@ -44,13 +44,15 @@
             </li>
           </ul>
         </div>
-        <div v-if="state.isLoading" class="style-grid">
-          <StyleCardSkeleton v-for="i in state.pagination.page * 16" :key="i" />
+        <div v-if="state.isLoading || state.styles.length" class="style-grid">
+          <template v-if="state.styles.length">
+            <StyleCard v-for="style in state.styles" :key="style._id" :style-data="style" />
+          </template>
+          <template v-if="state.isLoading">
+            <StyleCardSkeleton v-for="i in 8" :key="i" />
+          </template>
         </div>
-        <div v-if="!state.isLoading && state.styles.length" class="style-grid">
-          <StyleCard v-for="style in state.styles" :key="style._id" :style-data="style" />
-        </div>
-        <div v-if="!state.isLoading && !state.styles.length" class="no-results">No results</div>
+        <div v-else class="no-results">No results</div>
       </section>
     </div>
 
@@ -65,6 +67,19 @@ import StyleCard from '@/components/StyleCard';
 import StyleInfoDialog from '@/components/dialogs/StyleInfoDialog';
 import CloseButton from '@/components/CloseButton.vue';
 import StyleCardSkeleton from '@/components/StyleCardSkeleton';
+
+function throttle(callback, limit) {
+  let waiting = false;
+  return function () {
+    if (!waiting) {
+      callback.apply(this, arguments);
+      waiting = true;
+      setTimeout(() => {
+        waiting = false;
+      }, limit);
+    }
+  };
+}
 
 export default {
   name: 'Home',
@@ -102,11 +117,11 @@ export default {
     if (pathname[0] === 'user') return this.setOwnerFilter(pathname[1]);
     if (pathname[0] === 'style') this.getStyle({ styleId: pathname[1] });
     this.getStyles().then(() => {
-      window.addEventListener('scroll', this.infiniteScroll);
+      window.addEventListener('scroll', throttle(this.infiniteScroll, 200));
     });
   },
   destroyed() {
-    window.removeEventListener('scroll', this.infiniteScroll);
+    window.removeEventListener('scroll', throttle(this.infiniteScroll, 200));
   },
   methods: {
     ...mapActions({
@@ -128,11 +143,9 @@ export default {
       this.setQuery('');
     },
     infiniteScroll() {
-      if (
-        document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight &&
-        this.state.pagination.hasNextPage &&
-        !this.state.isLoading
-      ) {
+      const scrollTrigger = document.documentElement.scrollTop + window.innerHeight * 1.25;
+      const gridBottom = document.documentElement.offsetHeight;
+      if (scrollTrigger >= gridBottom && this.state.pagination.hasNextPage && !this.state.isLoading) {
         this.setPage(this.state.pagination.page + 1);
       }
     }

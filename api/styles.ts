@@ -53,10 +53,9 @@ export function getStyles(req: Request, res: Response) {
     sortOrder = "-lastUpdate";
   }
 
-  const customLabels = { totalDocs: "totalStyles", docs: "styles" };
   const options: PaginateOptions = {
     page: page as number,
-    customLabels,
+    customLabels: { totalDocs: "totalStyles", docs: "styles" },
     sort: sortOrder,
     limit: 16,
     lean: true,
