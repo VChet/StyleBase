@@ -175,7 +175,7 @@ export default {
       }
     },
     isAuthorized() {
-      if (!Object.keys(this.user).length) return false;
+      if (!this.user) return false;
       const isAdmin = this.user.role === 'Admin';
       const isOwner = [this.user.githubId, this.user.codebergId].includes(this.styleData.owner.id);
       const userOrgs = this.user.orgs.map((org) => org.id);
