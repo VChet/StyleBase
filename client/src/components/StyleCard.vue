@@ -7,14 +7,7 @@
         :alt="`Preview of ${styleData.customName || styleData.name} style`"
       />
       <img v-else class="no-image" src="@/images/no-image.png" alt="No preview" />
-      <a
-        class="button style-button-filled"
-        type="button"
-        :href="styleData.usercss"
-        rel="noopener"
-        target="_blank"
-        @click.stop="$gtag.event('install', { event_category: 'stylecard' })"
-      >
+      <a class="button style-button-filled" type="button" :href="styleData.usercss" rel="noopener" target="_blank">
         Install
       </a>
     </template>

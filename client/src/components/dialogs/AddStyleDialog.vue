@@ -93,10 +93,10 @@ export default {
           this.isSubmitting = false;
         });
     },
-    submitStyle() {
+    async submitStyle() {
       if (this.isSubmitting || !this.selectedStyle) return;
       this.isSubmitting = true;
-      axios
+      await axios
         .post('/api/style/add', {
           url: this.url,
           usercss: this.selectedStyle,
@@ -113,11 +113,8 @@ export default {
         })
         .catch((error) => {
           this.flashAlert({ type: 'error', message: error.response.data.error });
-        })
-        .finally(() => {
-          this.isSubmitting = false;
-          this.$gtag.event('add style request', { event_category: 'add style dialog' });
         });
+      this.isSubmitting = false;
     },
     clear() {
       this.url = '';

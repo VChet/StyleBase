@@ -226,9 +226,6 @@ export default {
         })
         .catch((error) => {
           this.flashAlert({ type: 'error', message: error.response.data.error });
-        })
-        .finally(() => {
-          this.$gtag.event('edit style request', { event_category: 'style info dialog' });
         });
     },
     deleteStyle() {
