@@ -7,7 +7,7 @@ import store from './store';
 Vue.config.productionTip = false;
 
 Vue.use(VueGtag, {
-  config: { id: process.env.VUE_APP_GTAG_ID }
+  config: { id: process.env.VUE_APP_GTAG_ID, deferScriptLoad: true }
 });
 
 new Vue({
