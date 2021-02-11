@@ -24,8 +24,7 @@
       "@types/mongoose",
       "@types/morgan",
       "@types/node",
-      "@types/passport-github2",
-      "@types/passport"
+      "@types/passport-github2"
     ]
   },
   "include": [

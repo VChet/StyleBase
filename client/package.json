@@ -16,7 +16,7 @@
     "lint": "vue-cli-service lint"
   },
   "engines": {
-    "node": "^14.15.1"
+    "node": "^14.15.5"
   },
   "dependencies": {
     "axios": "^0.21.1",
