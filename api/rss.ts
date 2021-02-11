@@ -1,7 +1,6 @@
 import { Feed } from "feed";
 
 import type { Request, Response } from "express";
-import type { IStyle } from "../models/Style";
 
 import { Style } from "../models/Style";
 
@@ -21,7 +20,7 @@ export default async function getRss(_req: Request, res: Response) {
     copyright: "All styles belong to their first authors"
   });
 
-  const styles: Array<IStyle> = await Style.find({}).lean();
+  const styles = await Style.find({}).lean();
   styles.forEach((style) => {
     const content: Array<string> = [];
     content.push(`${style.customName || style.name} by ${style.owner.login}.`);

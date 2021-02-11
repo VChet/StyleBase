@@ -58,7 +58,7 @@ declare global {
   namespace Express {
     interface User extends IUser { }
     interface Request {
-      styleData?: IStyle
+      styleData?: Partial<IStyle>
     }
     interface Response {
       sendResponse: Send

@@ -59,9 +59,9 @@ passport.serializeUser((user: IUser, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id).lean().exec((error: mongoose.NativeError, user: IUser | null) => {
+  User.findById(id).lean().exec((error: mongoose.CallbackError, user) => {
     if (error) return done(error);
-    if (user) return done(null, user);
+    if (user) return done(null, user as Express.User);
   });
 });
 

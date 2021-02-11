@@ -3,7 +3,6 @@ import mcache from "memory-cache";
 import rateLimit from "express-rate-limit";
 
 import type { Request, Response, NextFunction } from "express";
-import type { IStyle } from "../models/Style";
 
 import { Style } from "../models/Style";
 
@@ -56,7 +55,7 @@ const rateLimiter = rateLimit({
 const isAuthorized = async (req: Request, res: Response, next: NextFunction) => {
   const { _id } = req.body;
   if (!_id) return res.status(400).json({ error: "Request must contain _id field" });
-  const existingStyle: IStyle | null = await Style.findById(_id).lean();
+  const existingStyle = await Style.findById(_id).lean();
   if (!existingStyle) return res.status(404).json({ error: "Style does not exist" });
   req.styleData = existingStyle;
 

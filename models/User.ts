@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import axios from "axios";
 
-import type { Document, Model, NativeError } from "mongoose";
+import type { Document, Model } from "mongoose";
 import type { Profile } from "passport";
 import type { Provider, ProviderName } from "../types/server";
 import type { CodebergOrganization, GitHubOrganization } from "../types/api";
@@ -70,7 +70,7 @@ async function getOrganizations(provider: Provider, username: string): Promise<A
   });
 }
 
-UserSchema.statics.findOrCreate = function (
+UserSchema.statics.findOrCreate = async function (
   providerName: ProviderName,
   _accessToken: string,
   _refreshToken: string,
@@ -88,8 +88,8 @@ UserSchema.statics.findOrCreate = function (
   const userId: Pick<IUser, "githubId" | "codebergId"> = {};
   userId[provider.idField] = parseInt(id, 10);
 
-  User.findOne(userId).lean().exec(async (error: NativeError, user: IUser | null) => {
-    if (error) return done(error);
+  try {
+    const user = await User.findOne(userId).lean();
     if (user) return done(null, user);
 
     const newUser = new User({
@@ -98,11 +98,11 @@ UserSchema.statics.findOrCreate = function (
       orgs: await getOrganizations(provider, username)
     });
 
-    newUser.save((saveError) => {
-      if (saveError) return done(saveError);
-      done(null, newUser.toObject());
-    });
-  });
+    await newUser.save();
+    done(null, newUser.toObject());
+  } catch (error) {
+    done(error);
+  }
 };
 
 export const User = model<IUser, IUserModel>("User", UserSchema);
