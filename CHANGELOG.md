@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.2.1](https://github.com/VChet/StyleBase/compare/v4.2.0...v4.2.1) (2021-02-11)
+
+
+### Bug Fixes
+
+* **add style:** add custom fields description ([dd6992a](https://github.com/VChet/StyleBase/commit/dd6992a8dfe011bbc7201be5be39293e29a961e0))
+* **style grid:** throttle scroll, do not show skeleton on loaded cards ([2c08316](https://github.com/VChet/StyleBase/commit/2c08316eb5ec079f5edd5d47f57d9c40e47dbe82))
+
 ## [4.2.0](https://github.com/VChet/StyleBase/compare/v4.1.1...v4.2.0) (2021-02-01)
 
 
