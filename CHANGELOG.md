@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.2.2](https://github.com/VChet/StyleBase/compare/v4.2.1...v4.2.2) (2021-02-14)
+
+
+### Bug Fixes
+
+* **User model:** add sparse parameter to ids ([5b90c6f](https://github.com/VChet/StyleBase/commit/5b90c6fa2ea9b17497bb12ba22f89dcdcdab92a5))
+
 ### [4.2.1](https://github.com/VChet/StyleBase/compare/v4.2.0...v4.2.1) (2021-02-11)
 
 
