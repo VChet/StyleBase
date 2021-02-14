@@ -45,11 +45,13 @@ export const UserSchema: Schema = new Schema({
   },
   githubId: {
     type: Number,
-    unique: true
+    unique: true,
+    sparse: true
   },
   codebergId: {
     type: Number,
-    unique: true
+    unique: true,
+    sparse: true
   },
   orgs: {
     type: {
