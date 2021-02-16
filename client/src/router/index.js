@@ -1,7 +1,13 @@
 import VueRouter from 'vue-router';
 import Home from '@/views/Home.vue';
+import Profile from '@/views/Profile.vue';
 
 const routes = [
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
+  },
   {
     path: '/search/:query',
     name: 'Search',
@@ -18,8 +24,13 @@ const routes = [
     component: Home
   },
   {
-    path: '*',
+    path: '/',
     name: 'Home',
+    component: Home
+  },
+  {
+    path: '*',
+    name: 'Default',
     component: Home
   }
 ];

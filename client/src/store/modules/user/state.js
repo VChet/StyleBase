@@ -1,3 +1,4 @@
 export default {
-  user: null
+  user: null,
+  stats: null
 };

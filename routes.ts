@@ -15,8 +15,8 @@ router.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
 });
-router.get("/github/callback", passport.authenticate("github"), (_req, res) => res.redirect("/"));
-router.get("/codeberg/callback", passport.authenticate("codeberg"), (_req, res) => res.redirect("/"));
+router.get("/github/callback", passport.authenticate("github"), (_req, res) => res.redirect("back"));
+router.get("/codeberg/callback", passport.authenticate("codeberg"), (_req, res) => res.redirect("back"));
 
 // RSS
 router.get("/rss", getRss);

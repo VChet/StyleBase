@@ -35,7 +35,8 @@ passport.use(
     clientID: config.github.OAuth.clientId,
     clientSecret: config.github.OAuth.clientSecret,
     callbackURL: "/github/callback",
-    proxy: process.env.NODE_ENV === "production"
+    proxy: process.env.NODE_ENV === "production",
+    passReqToCallback: true
   }, User.findOrCreate.bind(User, "GitHub"))
 );
 passport.use(
@@ -47,7 +48,8 @@ passport.use(
     proxy: process.env.NODE_ENV === "production",
     authorizationURL: "https://codeberg.org/login/oauth/authorize",
     tokenURL: "https://codeberg.org/login/oauth/access_token",
-    userProfileURL: "https://codeberg.org/api/v1/user"
+    userProfileURL: "https://codeberg.org/api/v1/user",
+    passReqToCallback: true
   }, User.findOrCreate.bind(User, "Codeberg"))
 );
 

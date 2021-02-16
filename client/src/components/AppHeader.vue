@@ -1,7 +1,7 @@
 <template>
   <header :class="{ active: menuIsActive }">
     <div class="container">
-      <button class="link logo" type="button" @click="scrollToTop">StyleBase</button>
+      <button class="link logo" type="button" @click="reload">StyleBase</button>
       <div class="mode-switch">
         <input
           id="mode-input"
@@ -30,7 +30,9 @@
         <button class="link" type="button" @click="$emit('open-nav-link', 'showAddStyleModal')">Add Style</button>
         <button v-if="!user" class="link" type="button" @click="$emit('open-nav-link', 'showLoginModal')">Login</button>
         <template v-else>
-          <button class="link" type="button" @click="setOwnerFilter(user.username)">{{ user.username }}</button>
+          <router-link :to="{ name: 'Profile' }">
+            <button type="button" class="link">{{ user.username }}</button>
+          </router-link>
           <a href="/logout">Logout</a>
         </template>
       </nav>
@@ -77,9 +79,13 @@ export default {
       setOwnerFilter: 'styleGrid/setOwnerFilter',
       resetFilters: 'styleGrid/resetFilters'
     }),
-    scrollToTop() {
-      this.resetFilters();
-      window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+    reload() {
+      if (this.$route.name === 'Home') {
+        this.resetFilters();
+        window.scroll({ top: 0, left: 0, behavior: 'smooth' });
+      } else {
+        this.$router.push({ name: 'Home' });
+      }
     }
   }
 };
