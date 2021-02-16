@@ -112,11 +112,10 @@ export default {
     }
   },
   created() {
-    const pathname = window.location.pathname.split('/');
-    pathname.shift();
-    if (pathname[0] === 'search') return this.setQuery(pathname[1]);
-    if (pathname[0] === 'user') return this.setOwnerFilter(pathname[1]);
-    if (pathname[0] === 'style') this.getStyle({ styleId: pathname[1] });
+    const { query, username, styleId } = this.$route.params;
+    if (query) return this.setQuery(query);
+    if (username) return this.setOwnerFilter(username);
+    if (styleId) this.getStyle({ styleId });
     this.getStyles().then(() => {
       window.addEventListener('scroll', throttle(this.infiniteScroll, 200));
     });
