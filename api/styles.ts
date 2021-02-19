@@ -45,11 +45,11 @@ export function getStyles(req: Request, res: Response) {
   if (owner) filter["owner.login"] = owner;
   if (query && typeof query === "string") filter.$text = { $search: query };
 
-  let sortOrder = "-_id";
+  let sortOrder: { [key: string]: 1 | -1 } = { _id: -1 };
   if (sort === "stargazers") {
-    sortOrder = "-stargazers";
+    sortOrder = { stargazers: -1, _id: -1 };
   } else if (sort === "lastUpdate") {
-    sortOrder = "-lastUpdate";
+    sortOrder = { lastUpdate: -1, _id: -1 };
   }
 
   const options: PaginateOptions = {
