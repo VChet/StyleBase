@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.3.0](https://github.com/VChet/StyleBase/compare/v4.2.2...v4.3.0) (2021-02-19)
+
+
+### Features
+
+* **style search:** add search by substring ([8b55132](https://github.com/VChet/StyleBase/commit/8b551325f567bde21fbecf26efab833bbef5bd42))
+
+
+### Bug Fixes
+
+* **sort options:** keep options while loading, decrease opacity ([33c5587](https://github.com/VChet/StyleBase/commit/33c5587a54dbfe9ce1814e5c7f0af885b7ac8411))
+* **style search:** allow search only with query longer than 2 characters ([dd6a3d8](https://github.com/VChet/StyleBase/commit/dd6a3d82f8f16ddf99b116807568f61e4e995632))
+* **styles:** fix style duplication ([7b200db](https://github.com/VChet/StyleBase/commit/7b200db80c9855da60e4d272134c74ab6e75cee3))
+
 ### [4.2.2](https://github.com/VChet/StyleBase/compare/v4.2.1...v4.2.2) (2021-02-14)
 
 
