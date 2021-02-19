@@ -18,7 +18,8 @@
       <section class="search-container">
         <label for="search" class="visually-hidden">Style search</label>
         <input id="search" v-model="searchQuery" type="text" placeholder="Search by style name or owner..." />
-        <CloseButton v-show="state.searchQuery" aria-label="Clear the search input" @click="clearSearch" />
+        <span v-show="searchQuery.length && searchQuery.length < 3" class="query-length">at least 3 characters</span>
+        <CloseButton v-show="searchQuery" aria-label="Clear the search input" @click="clearSearch" />
       </section>
       <section class="main-container">
         <div class="section-header">
@@ -210,7 +211,13 @@ main {
     font-size: 18px;
     padding-left: 18px;
   }
-
+  .query-length {
+    position: absolute;
+    top: 50%;
+    right: 3rem;
+    transform: translateY(-50%);
+    user-select: none;
+  }
   .close-button {
     top: 50%;
     transform: translateY(-50%);

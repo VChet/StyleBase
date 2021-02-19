@@ -79,10 +79,12 @@ export default {
     dispatch('getStyles');
   },
   setQuery({ state, commit, dispatch }, query) {
-    if (state.showStyleInfoModal) dispatch('closeStyleModal');
     commit('SET_SEARCH_QUERY', query);
+    if (query.length && query.length < 3) return;
+
     commit('SET_PAGE', 1);
     dispatch('getStyles');
+    if (state.showStyleInfoModal) dispatch('closeStyleModal');
   },
   setOwnerFilter({ state, commit, dispatch }, filter) {
     if (state.showStyleInfoModal) dispatch('closeStyleModal');
