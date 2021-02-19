@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
-import type { CallbackError, PaginateOptions } from "mongoose";
+import type { CallbackError, FilterQuery, PaginateOptions } from "mongoose";
 import type { AxiosError } from "axios";
+import type { IStyleModel } from "../models/Style";
 
 import { Style } from "../models/Style";
 import { retrieveRepositoryFiles, retrieveRepositoryData } from "./parser";
@@ -23,6 +24,10 @@ function checkPreviewUrl(url: string) {
   if (!imagePattern.test(previewUrl.pathname)) throw new Error("Preview file must be an image");
 }
 
+function escapeRegex(text: string) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+
 export function getRepositoryFiles(req: Request, res: Response) {
   if (!req.query.url || typeof req.query.url !== "string") throw new Error("Invalid repository URL");
   const url = req.query.url.replace(/\/$/, ""); // Trim trailing slash
@@ -41,9 +46,19 @@ export function getStyles(req: Request, res: Response) {
   const { query, page = 1, sort } = req.query;
   const { owner } = req.params;
 
-  const filter: { "owner.login"?: string, $text?: { $search: string } } = {};
+  let filter: FilterQuery<IStyleModel> = {};
+  if (query && typeof query === "string") {
+    const queryRegExp = new RegExp(escapeRegex(query), "gi");
+    filter = {
+      $or: [
+        { name: queryRegExp },
+        { customName: queryRegExp },
+        { "owner.login": queryRegExp },
+        { topics: queryRegExp }
+      ]
+    };
+  }
   if (owner) filter["owner.login"] = owner;
-  if (query && typeof query === "string") filter.$text = { $search: query };
 
   let sortOrder: { [key: string]: 1 | -1 } = { _id: -1 };
   if (sort === "stargazers") {
