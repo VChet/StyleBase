@@ -43,11 +43,11 @@ export function getRepositoryFiles(req: Request, res: Response) {
 }
 
 export function getStyles(req: Request, res: Response) {
-  const { query, page = 1, sort } = req.query;
+  const { query, page = "1", limit = "16", sort } = req.query as { [key: string]: string };
   const { owner } = req.params;
 
   let filter: FilterQuery<IStyleModel> = {};
-  if (query && typeof query === "string") {
+  if (query) {
     const queryRegExp = new RegExp(escapeRegex(query), "gi");
     filter = {
       $or: [
@@ -68,10 +68,10 @@ export function getStyles(req: Request, res: Response) {
   }
 
   const options: PaginateOptions = {
-    page: page as number,
-    customLabels: { totalDocs: "totalStyles", docs: "styles" },
+    page: parseInt(page, 10),
+    limit: parseInt(limit, 10),
     sort: sortOrder,
-    limit: 16,
+    customLabels: { totalDocs: "totalStyles", docs: "styles" },
     lean: true,
     collation: { locale: "en" }
   };
