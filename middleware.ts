@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import ConnectMongo from "connect-mongo";
+import MongoStore from "connect-mongo";
 import session from "express-session";
 import Agenda from "agenda";
 
@@ -26,9 +26,6 @@ mongoose.connect(config.mongoUrl, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-
-const MongoStore = ConnectMongo(session);
-config.session.store = new MongoStore({ mongooseConnection: mongoose.connection });
 mongoose.connection.on("error", console.error.bind(console, "MongoDB connection error:"));
 initCollection();
 
@@ -110,6 +107,7 @@ export default function addExpressMiddleware(app: Application) {
   app.use(json());
   app.use(urlencoded({ extended: true }));
   app.use(session({
+    store: MongoStore.create({ mongoUrl: config.mongoUrl }),
     proxy: process.env.NODE_ENV === "production",
     resave: true,
     saveUninitialized: false,
