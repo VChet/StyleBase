@@ -8,7 +8,7 @@ import { Strategy as GitHubStrategy } from "passport-github2";
 
 import morgan from "morgan";
 import helmet from "helmet";
-import bodyParser from "body-parser";
+import { json, urlencoded } from "express";
 import compression from "compression";
 
 import type { Application } from "express";
@@ -107,8 +107,8 @@ export default function addExpressMiddleware(app: Application) {
       }
     }
   }));
-  app.use(bodyParser.json());
-  app.use(bodyParser.urlencoded({ extended: true }));
+  app.use(json());
+  app.use(urlencoded({ extended: true }));
   app.use(session({
     proxy: process.env.NODE_ENV === "production",
     resave: true,
