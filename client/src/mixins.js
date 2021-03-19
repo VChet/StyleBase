@@ -8,6 +8,10 @@ dayjs.extend(relativeTime);
 
 export default {
   methods: {
+    compressImage(url) {
+      url = url.replace(/^https?:\/\//i, '');
+      return `https://images.weserv.nl/?url=${url}&w=300&h=300&q=60`;
+    },
     pluralize(num, noun, suffix = 's') {
       return `${num} ${noun}${num === 1 ? '' : suffix}`;
     },
