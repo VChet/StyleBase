@@ -22,7 +22,7 @@ export default {
       const onMissing = (name) => {
         const url = emojiFallback[name];
         if (!url) return '';
-        return `<img class="emoji" src="${url}.png" alt="${name}" />`;
+        return `<img class="emoji" src="${url}" alt="${name}" />`;
       };
       return emojify(text, onMissing);
     }
