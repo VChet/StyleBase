@@ -75,7 +75,8 @@ const agenda = new Agenda({
 
 if (process.env.NODE_ENV === "production") {
   agenda.define("Update all styles", async () => {
-    console.log(await Style.updateAllStyles());
+    const result = await Style.updateAllStyles();
+    console.log(`Update successful: ${!!result.ok}. Updated ${result.nModified} of ${result.nMatched}`);
   });
   agenda.start().then(() => agenda.every("0 * * * *", "Update all styles"));
 }
