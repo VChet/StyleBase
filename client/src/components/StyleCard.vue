@@ -6,7 +6,7 @@
         :src="compressImage(styleData.customPreview || styleData.preview)"
         :alt="`Preview of ${styleData.customName || styleData.name} style`"
       />
-      <img v-else class="no-image" src="@/images/no-image.png" alt="No preview" />
+      <img v-else class="no-image invert" src="@/images/no-image.png" alt="No preview" />
       <a class="button style-button-filled" type="button" :href="styleData.usercss" rel="noopener" target="_blank">
         Install
       </a>

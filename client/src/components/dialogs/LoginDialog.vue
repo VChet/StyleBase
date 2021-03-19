@@ -3,7 +3,7 @@
     <h1 class="dialog-title">Login</h1>
     <div class="login-buttons">
       <a class="button style-button mobile-wide" href="/login/github">
-        <img class="icon" src="@/images/github-logo.png" alt="GitHub logo" />
+        <img class="icon invert" src="@/images/github-logo.png" alt="GitHub logo" />
         GitHub
       </a>
       <a class="button style-button mobile-wide" href="/login/codeberg">

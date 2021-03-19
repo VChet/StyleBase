@@ -46,6 +46,9 @@
   --color-main-dark: #b85a2e;
   --color-main-darker: #a35029;
   --color-main-darkest: #8f4624;
+  .invert {
+    filter: invert(0.8);
+}
 }
 
 html,
