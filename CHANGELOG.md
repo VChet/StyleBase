@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.4.1](https://github.com/VChet/StyleBase/compare/v4.4.0...v4.4.1) (2021-03-21)
+
+
+### Bug Fixes
+
+* **maintenance:** add styles for dark color-scheme, add status page ([6c45282](https://github.com/VChet/StyleBase/commit/6c452827243a862ce17768d40244ff72a58060e5))
+* **preview:** keep protocol in 'images.weserv.nl' request ([452b229](https://github.com/VChet/StyleBase/commit/452b2295426c90962cc81a161a0de373dfbcce7d))
+
 ## [4.4.0](https://github.com/VChet/StyleBase/compare/v4.3.0...v4.4.0) (2021-03-21)
 
 
