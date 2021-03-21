@@ -25,6 +25,16 @@
       h1 {
         font-size: 40px;
       }
+      a {
+        color: #cc6333;
+      }
+      @media (prefers-color-scheme: dark) {
+        html,
+        body {
+          background-color: #191919;
+          color: #dddddd;
+        }
+      }
       .container {
         padding-right: 1rem;
         padding-left: 1rem;
@@ -64,6 +74,11 @@
       <div class="container">
         <h1>The site is down for maintenance</h1>
         <p>Sorry for the inconvenience, we'll be back shortly!</p>
+        <p>
+          <a href="https://status.stylebase.cc" rel="noopener">
+            Service Status
+          </a>
+        </p>
       </div>
     </main>
   </body>
