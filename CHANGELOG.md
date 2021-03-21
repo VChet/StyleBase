@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.4.0](https://github.com/VChet/StyleBase/compare/v4.3.0...v4.4.0) (2021-03-21)
+
+
+### Features
+
+* **api:** add limit parameter to /styles request ([b23893e](https://github.com/VChet/StyleBase/commit/b23893e2ebd8ab1f4d2c6721787f1eda7e8789c4))
+* **preview:** compress preview images via images.weserv.nl ([aa042d0](https://github.com/VChet/StyleBase/commit/aa042d02ac78639bdf69145b65dedc464d6c0673))
+
+
+### Bug Fixes
+
+* **emoji:** remove extra file extension ([4b6a60f](https://github.com/VChet/StyleBase/commit/4b6a60f1e02955ead3ec698cf859ca19751c7745))
+* **images:** invert dark images in dark-theme ([5c68f79](https://github.com/VChet/StyleBase/commit/5c68f79045223f79cae160173fed93708dd2682f))
+* **style update:** output update result as string ([8f1877e](https://github.com/VChet/StyleBase/commit/8f1877eab827406aef47c175ff96861a2085bcb6))
+
 ## [4.3.0](https://github.com/VChet/StyleBase/compare/v4.2.2...v4.3.0) (2021-02-19)
 
 
