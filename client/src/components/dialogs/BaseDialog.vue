@@ -19,17 +19,12 @@
 </template>
 
 <script>
-import vClickOutside from 'v-click-outside';
-
 import CloseButton from '@/components/CloseButton.vue';
 
 export default {
   name: 'BaseDialog',
   components: {
     CloseButton
-  },
-  directives: {
-    clickOutside: vClickOutside.directive
   },
   props: {
     size: {
