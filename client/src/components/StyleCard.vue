@@ -5,6 +5,7 @@
         v-if="styleData.customPreview || styleData.preview"
         :src="compressImage(styleData.customPreview || styleData.preview)"
         :alt="`Preview of ${styleData.customName || styleData.name} style`"
+        @error="useOriginalUrl"
       />
       <img v-else class="no-image invert" src="@/images/no-image.png" alt="No preview" />
       <a class="button style-button-filled" type="button" :href="styleData.usercss" rel="noopener" target="_blank">
@@ -56,7 +57,10 @@ export default {
   methods: {
     ...mapActions({
       openStyleModal: 'styleGrid/openStyleModal'
-    })
+    }),
+    useOriginalUrl(e) {
+      e.target.src = this.styleData.customPreview || this.styleData.preview;
+    }
   }
 };
 </script>
