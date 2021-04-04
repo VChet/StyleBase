@@ -13,7 +13,6 @@
     "typeRoots": ["./types/"],
     "types": [
       "./types/",
-      "@types/agenda",
       "@types/compression",
       "@types/express-rate-limit",
       "@types/express-session",
