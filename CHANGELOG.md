@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.4.3](https://github.com/VChet/StyleBase/compare/v4.4.2...v4.4.3) (2021-04-04)
+
+
+### Bug Fixes
+
+* **preview:** render all gif frames instead of only the first one ([133c7ce](https://github.com/VChet/StyleBase/commit/133c7ce86ae99ca58567e6f6bee7ceb688cc5e6d))
+
 ### [4.4.2](https://github.com/VChet/StyleBase/compare/v4.4.1...v4.4.2) (2021-03-23)
 
 
