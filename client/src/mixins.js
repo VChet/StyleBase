@@ -9,7 +9,9 @@ dayjs.extend(relativeTime);
 export default {
   methods: {
     compressImage(url) {
-      return `https://images.weserv.nl/?url=${url}&w=300&h=300&q=60`;
+      const imgUrl = new URL('https://images.weserv.nl');
+      imgUrl.search = new URLSearchParams({ url, w: 300, h: 300, q: 60, n: -1 });
+      return imgUrl;
     },
     pluralize(num, noun, suffix = 's') {
       return `${num} ${noun}${num === 1 ? '' : suffix}`;
