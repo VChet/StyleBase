@@ -19,6 +19,17 @@ declare module "repo-images" {
 }
 
 declare module "usercss-meta" {
+  /** Options {@link https://github.com/openstyles/usercss-meta#createparser|documentation} */
+  interface ParseOptions {
+    unknownKey?: string;
+    mandatoryKeys?: Array<string>;
+    parseKey?: object;
+    parseVar?: object;
+    validateKey?: object;
+    validateVar?: object;
+    allowErrors?: boolean;
+  }
+
   interface ParseError {
     name: string;
     code: string;
@@ -49,24 +60,27 @@ declare module "usercss-meta" {
       description?: string;
       /** Info about the author of the UserCSS style. */
       author?: string;
-      /** The project's homepage that is used in Stylus' Manage and Edit pages to link to UserCSS source. */
+      /**
+       * The project's homepage.
+       * This is used in Stylus' Manage and Edit pages to link to UserCSS source.
+       */
       homepageURL?: string;
       /** The URL the user can report issues to the UserCSS author. */
       supportURL?: string;
       /**
-       * When defined, this URL is used when updating the style
-       * otherwise the style is updated from where it was installed.
+       * When defined, this URL is used when updating the style.
+       * Otherwise the style is updated from where it was installed.
        */
       updateURL?: string;
       /**
-       * Include a license based on the
+       * License based on the
        * {@link https://spdx.org/licenses|SPDX license identifier}.
        */
       license?: string;
-      /** Applies a CSS preprocessor. */
+      /** An applied CSS preprocessor. */
       preprocessor?: string;
       /**
-       * Defines a live-switchable variable which will be compiled to valid CSS
+       * A live-switchable variable which will be compiled to valid CSS
        * according to the preprocessor that is set.
        */
       var?: string;
@@ -75,7 +89,7 @@ declare module "usercss-meta" {
   }
 
   interface MetaParser {
-    parse(text: string, options?: any): ParseResults;
+    parse(text: string, options?: ParseOptions): ParseResults;
   }
 
   const metaParser: MetaParser;
