@@ -30,7 +30,7 @@ export interface IUserModel extends Model<IUser> {
     _refreshToken: string,
     profile: Profile,
     done: Function
-  ) => any;
+  ) => Promise<IUser | Error>;
 }
 
 export const UserSchema: Schema = new Schema({
@@ -91,10 +91,10 @@ UserSchema.statics.findOrCreate = async function (
   userId[provider.idField] = parseInt(id, 10);
 
   try {
-    const user = await User.findOne(userId).lean();
+    const user: IUser = await User.findOne(userId).lean();
     if (user) return done(null, user);
 
-    const newUser = new User({
+    const newUser: IUser = new User({
       ...userId,
       username,
       orgs: await getOrganizations(provider, username)
