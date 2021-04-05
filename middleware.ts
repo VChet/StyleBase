@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import MongoStore from "connect-mongo";
 import session from "express-session";
-import Agenda from "agenda";
+import { Agenda } from "agenda";
 
 import passport from "passport";
 import { Strategy as GitHubStrategy } from "passport-github2";
