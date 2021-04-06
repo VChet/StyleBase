@@ -76,20 +76,18 @@ export default {
         const name = response.data.style.customName || response.data.style.name;
         dispatch('alert/flashAlert', { type: 'success', message: `"${name}" style updated` }, { root: true });
         dispatch('getStyle', response.data.style);
-        dispatch('resetFilters');
       })
       .catch((error) => {
         dispatch('alert/flashAlert', { type: 'error', message: error.response.data.error }, { root: true });
       });
   },
-  deleteStyle({ dispatch }, _id) {
+  deleteStyle({ state, dispatch }, _id) {
     return axios
       .delete('/api/style/delete', { data: { _id } })
       .then((response) => {
         const name = response.data.style.customName || response.data.style.name;
         dispatch('alert/flashAlert', { type: 'success', message: `"${name}" style deleted` }, { root: true });
-        dispatch('resetFilters');
-        dispatch('closeStyleModal');
+        if (state.showStyleInfoModal) dispatch('closeStyleModal');
       })
       .catch((error) => {
         dispatch('alert/flashAlert', { type: 'error', message: error.response.data.error }, { root: true });

@@ -175,6 +175,7 @@ export default {
     ...mapActions({
       editStyleRequest: 'styleGrid/editStyle',
       deleteStyleRequest: 'styleGrid/deleteStyle',
+      resetFilters: 'styleGrid/resetFilters',
       setOwnerFilter: 'styleGrid/setOwnerFilter',
       setQuery: 'styleGrid/setQuery',
       closeStyleModal: 'styleGrid/closeStyleModal'
@@ -194,10 +195,12 @@ export default {
         customPreview,
         customDescription
       });
+      this.resetFilters();
     },
     async deleteStyle() {
       await this.deleteStyleRequest(this.styleData._id);
       this.showDeleteDialog = false;
+      this.resetFilters();
     }
   }
 };
