@@ -101,7 +101,6 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { mapMutations, mapActions, mapGetters } from 'vuex';
 
 import styleInfo from '@/mixins';
@@ -197,11 +196,11 @@ export default {
       setPreview: 'styleGrid/SET_CUSTOM_PREVIEW'
     }),
     ...mapActions({
-      getStyles: 'styleGrid/getStyles',
+      editStyleRequest: 'styleGrid/editStyle',
+      deleteStyleRequest: 'styleGrid/deleteStyle',
       setOwnerFilter: 'styleGrid/setOwnerFilter',
       setQuery: 'styleGrid/setQuery',
-      closeStyleModal: 'styleGrid/closeStyleModal',
-      flashAlert: 'alert/flashAlert'
+      closeStyleModal: 'styleGrid/closeStyleModal'
     }),
     getRepoLink(slug) {
       const url = new URL(this.styleData.url);
@@ -210,39 +209,17 @@ export default {
       });
       return `${url.href}/${provider[slug]}`;
     },
-    editStyle() {
-      axios
-        .patch('/api/style/edit', {
-          _id: this.styleData._id,
-          customName: this.customName,
-          customPreview: this.customPreview,
-          customDescription: this.customDescription
-        })
-        .then((response) => {
-          const name = response.data.style.customName || response.data.style.name;
-          this.flashAlert({ type: 'success', message: `"${name}" style updated` });
-          this.getStyles();
-          this.closeStyleModal();
-        })
-        .catch((error) => {
-          this.flashAlert({ type: 'error', message: error.response.data.error });
-        });
+    async editStyle() {
+      await this.editStyleRequest({
+        _id: this.styleData._id,
+        customName: this.customName,
+        customPreview: this.customPreview,
+        customDescription: this.customDescription
+      });
     },
-    deleteStyle() {
-      axios
-        .delete('/api/style/delete', { data: { _id: this.styleData._id } })
-        .then((response) => {
-          const name = response.data.style.customName || response.data.style.name;
-          this.flashAlert({ type: 'success', message: `"${name}" style deleted` });
-          this.getStyles();
-          this.closeStyleModal();
-        })
-        .catch((error) => {
-          this.flashAlert({ type: 'error', message: error.response.data.error });
-        })
-        .finally(() => {
-          this.showDeleteDialog = false;
-        });
+    async deleteStyle() {
+      await this.deleteStyleRequest(this.styleData._id);
+      this.showDeleteDialog = false;
     }
   }
 };
