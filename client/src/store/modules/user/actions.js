@@ -11,15 +11,15 @@ export default {
         console.error(error);
       });
   },
-  getStats({ dispatch, commit }, { githubId, codebergId }) {
+  getUserStyles({ dispatch, commit }, { githubId, codebergId }) {
     const params = { githubId, codebergId };
     return axios
-      .get('/api/stats', { params })
+      .get('/api/user/styles', { params })
       .then(({ data }) => {
         if (data.error) {
           return dispatch('alert/flashAlert', { type: 'error', message: data.error }, { root: true });
         }
-        commit('SET_STATS', data.stats);
+        commit('SET_STYLES', data.styles);
       })
       .catch(({ response }) => {
         dispatch('alert/flashAlert', { type: 'error', message: response.data.error }, { root: true });

@@ -70,10 +70,12 @@ export default {
         customPreview,
         customDescription
       });
+      this.$emit('fetch');
     },
     async deleteStyle() {
       await this.deleteStyleRequest(this.styleData._id);
       this.showDeleteDialog = false;
+      this.$emit('fetch');
     }
   }
 };

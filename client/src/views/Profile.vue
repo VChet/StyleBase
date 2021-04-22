@@ -4,9 +4,9 @@
       <section class="profile">
         <div>
           <h1 class="username">{{ user.username }}</h1>
-          <div v-if="stats" class="stats">
-            <div>Styles: {{ stats.totalStyles }}</div>
-            <div>Stargazers: {{ stats.totalStargazers }}</div>
+          <div v-if="styles.length" class="stats">
+            <div>Styles: {{ styles.length }}</div>
+            <div>Stargazers: {{ stargazers }}</div>
           </div>
         </div>
         <div class="connected-accounts">
@@ -27,13 +27,13 @@
           {{ user.orgs.map((org) => org.name).join(', ') }}
         </div>
       </section>
-      <section v-if="stylesState.styles.length" class="styles">
+      <section v-if="styles.length" class="styles">
         <div class="section-header">
           <div class="title">Styles</div>
           <hr />
         </div>
         <div class="style-grid">
-          <StyleEditor v-for="style in stylesState.styles" :key="style._id" :style-data="style" />
+          <StyleEditor v-for="style in styles" :key="style._id" :style-data="style" @fetch="fetchData" />
         </div>
       </section>
     </div>
@@ -52,9 +52,11 @@ export default {
   computed: {
     ...mapGetters({
       user: 'user/getUser',
-      stats: 'user/getStats',
-      stylesState: 'styleGrid/getState'
-    })
+      styles: 'user/getStyles'
+    }),
+    stargazers() {
+      return this.styles.reduce((acc, style) => acc + style.stargazers, 0);
+    }
   },
   watch: {
     user() {
@@ -66,13 +68,13 @@ export default {
   },
   methods: {
     ...mapActions({
-      getStats: 'user/getStats',
-      setOwnerFilter: 'styleGrid/setOwnerFilter'
+      getUserStyles: 'user/getUserStyles',
+      resetFilters: 'styleGrid/resetFilters'
     }),
     fetchData() {
       if (this.user) {
-        this.getStats(this.user);
-        this.setOwnerFilter(this.user.username);
+        this.resetFilters();
+        this.getUserStyles(this.user);
       }
     }
   }
