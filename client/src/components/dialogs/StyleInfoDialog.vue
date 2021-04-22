@@ -75,7 +75,7 @@
           <input v-model="customFields.customName" type="text" placeholder="Style name" />
           <input v-model="customFields.customPreview" type="text" placeholder="Preview url" />
           <input v-model="customFields.customDescription" type="text" placeholder="Style description" />
-          <button class="style-button" type="submit">Edit</button>
+          <button class="style-button" :disabled="updating" type="submit">Edit</button>
         </form>
       </div>
       <div class="action-group">
@@ -86,7 +86,7 @@
             on&nbsp;this site&nbsp;&mdash; please
             <a href="mailto:feedback@stylebase.cc" rel="noopener">contact us</a>.
           </span>
-          <button class="style-button-danger" type="submit">Delete</button>
+          <button class="style-button-danger" :disabled="updating" type="submit">Delete</button>
         </form>
       </div>
     </div>
@@ -94,6 +94,7 @@
     <ConfirmationDialog
       :open="showDeleteDialog"
       message="Remove this style?"
+      :loading="updating"
       @confirm="deleteStyle"
       @close="showDeleteDialog = false"
     />
@@ -142,7 +143,8 @@ export default {
   data() {
     return {
       customFields: {},
-      showDeleteDialog: false
+      showDeleteDialog: false,
+      updating: false
     };
   },
   computed: {
@@ -188,6 +190,7 @@ export default {
       return `${url.href}/${provider[slug]}`;
     },
     async editStyle() {
+      this.updating = true;
       const { customName, customPreview, customDescription } = this.customFields;
       await this.editStyleRequest({
         _id: this.styleData._id,
@@ -196,11 +199,14 @@ export default {
         customDescription
       });
       this.resetFilters();
+      this.updating = false;
     },
     async deleteStyle() {
+      this.updating = true;
       await this.deleteStyleRequest(this.styleData._id);
       this.showDeleteDialog = false;
       this.resetFilters();
+      this.updating = false;
     }
   }
 };

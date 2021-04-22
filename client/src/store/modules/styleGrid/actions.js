@@ -69,13 +69,13 @@ export default {
         dispatch('alert/flashAlert', { type: 'error', message: error.response.data.error }, { root: true });
       });
   },
-  editStyle({ dispatch }, payload) {
+  editStyle({ state, dispatch }, payload) {
     return axios
       .patch('/api/style/edit', payload)
       .then((response) => {
         const name = response.data.style.customName || response.data.style.name;
         dispatch('alert/flashAlert', { type: 'success', message: `"${name}" style updated` }, { root: true });
-        dispatch('getStyle', response.data.style);
+        if (state.showStyleInfoModal) dispatch('getStyle', response.data.style);
       })
       .catch((error) => {
         dispatch('alert/flashAlert', { type: 'error', message: error.response.data.error }, { root: true });

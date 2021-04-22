@@ -18,12 +18,17 @@
         <input v-model="customFields.customDescription" type="text" placeholder="Custom Description" />
         <span v-if="styleData.description">Parsed description: {{ styleData.description }}</span>
       </div>
-      <button class="style-button mobile-wide" @click="editStyle">Update</button>
-      <button class="style-button-danger mobile-wide" @click="showDeleteDialog = true">Delete</button>
+      <div class="buttons">
+        <button class="style-button mobile-wide" :disabled="updating" @click="editStyle">Update</button>
+        <button class="style-button-danger mobile-wide" :disabled="updating" @click="showDeleteDialog = true">
+          Delete
+        </button>
+    </div>
     </div>
     <ConfirmationDialog
       :open="showDeleteDialog"
       :message="`Remove ${styleData.customName || styleData.name}?`"
+      :loading="updating"
       @confirm="deleteStyle"
       @close="showDeleteDialog = false"
     />
@@ -51,7 +56,8 @@ export default {
   data() {
     return {
       customFields: { ...this.styleData },
-      showDeleteDialog: false
+      showDeleteDialog: false,
+      updating: false
     };
   },
   methods: {
@@ -63,6 +69,7 @@ export default {
       e.target.src = this.styleData.customPreview || this.styleData.preview;
     },
     async editStyle() {
+      this.updating = true;
       const { customName, customPreview, customDescription } = this.customFields;
       await this.editStyleRequest({
         _id: this.styleData._id,
@@ -71,11 +78,14 @@ export default {
         customDescription
       });
       this.$emit('fetch');
+      this.updating = false;
     },
     async deleteStyle() {
+      this.updating = true;
       await this.deleteStyleRequest(this.styleData._id);
       this.showDeleteDialog = false;
       this.$emit('fetch');
+      this.updating = false;
     }
   }
 };
