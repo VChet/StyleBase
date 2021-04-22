@@ -1,19 +1,21 @@
 <template>
   <div class="editor">
-    <img
-      v-if="styleData.customPreview || styleData.preview"
-      :src="styleData.customPreview || styleData.preview"
-      :alt="`Preview of ${styleData.customName || styleData.name} style`"
-      @error="useOriginalUrl"
-    />
-    <img v-else class="no-image invert" src="@/images/no-image.png" alt="No preview" />
+    <div class="image">
+      <img
+        v-if="styleData.customPreview || styleData.preview"
+        :src="styleData.customPreview || styleData.preview"
+        :alt="`Preview of ${styleData.customName || styleData.name} style`"
+        @error="useOriginalUrl"
+      />
+      <img v-else class="no-image invert" src="@/images/no-image.png" alt="No preview" />
+    </div>
     <div class="actions">
       <div class="inputs">
         <input v-model="customFields.customName" type="text" placeholder="Custom Name" />
         Parsed name: {{ styleData.name }}
         <input v-model="customFields.customPreview" type="text" placeholder="Custom Preview URL" />
         <span v-if="styleData.preview">
-          <a :href="styleData.preview" rel="noopener" target="_blank">Parsed preview</a>
+          Parsed preview: <a :href="styleData.preview" rel="noopener" target="_blank">URL</a>
         </span>
         <input v-model="customFields.customDescription" type="text" placeholder="Custom Description" />
         <span v-if="styleData.description">Parsed description: {{ styleData.description }}</span>
@@ -23,7 +25,7 @@
         <button class="style-button-danger mobile-wide" :disabled="updating" @click="showDeleteDialog = true">
           Delete
         </button>
-    </div>
+      </div>
     </div>
     <ConfirmationDialog
       :open="showDeleteDialog"
@@ -100,12 +102,18 @@ export default {
     flex-wrap: wrap;
   }
 
-  img {
-    max-width: 50%;
+  .image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
     max-height: 300px;
-    object-fit: contain;
     @include media-size-tablet {
+      width: 100%;
+    }
+    img {
       max-width: 100%;
+      max-height: inherit;
     }
   }
 
@@ -125,8 +133,13 @@ export default {
         text-decoration: underline;
       }
     }
-    button {
-      margin-top: 0.5rem;
+    .buttons {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.5rem 1rem;
+      @include media-size-mobile {
+        flex-wrap: wrap;
+      }
     }
   }
 }
