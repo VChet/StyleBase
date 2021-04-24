@@ -1,8 +1,9 @@
 import { Schema, model } from "mongoose";
 import axios from "axios";
 
-import type { Document, Model } from "mongoose";
+import type { Document, Model, CallbackError } from "mongoose";
 import type { Profile } from "passport";
+import type { Request } from "express";
 import type { Provider, ProviderName } from "../types/server";
 import type { CodebergOrganization, GitHubOrganization } from "../types/api";
 
@@ -25,12 +26,13 @@ export interface IUser extends Document {
 
 export interface IUserModel extends Model<IUser> {
   findOrCreate: (
-    provider: ProviderName,
+    providerName: ProviderName,
+    req: Request,
     _accessToken: string,
     _refreshToken: string,
     profile: Profile,
     done: Function
-  ) => Promise<IUser | Error>;
+  ) => void;
 }
 
 export const UserSchema: Schema = new Schema({
@@ -74,6 +76,7 @@ async function getOrganizations(provider: Provider, username: string): Promise<A
 
 UserSchema.statics.findOrCreate = async function (
   providerName: ProviderName,
+  req: Request,
   _accessToken: string,
   _refreshToken: string,
   profile: Profile,
@@ -90,20 +93,20 @@ UserSchema.statics.findOrCreate = async function (
   const userId: Pick<IUser, "githubId" | "codebergId"> = {};
   userId[provider.idField] = parseInt(id, 10);
 
-  try {
-    const user: IUser = await User.findOne(userId).lean();
-    if (user) return done(null, user);
+  const existingUser = await User.findOne(userId).lean();
+  if (!req.isAuthenticated()) {
+    if (existingUser) return done(null, existingUser);
 
-    const newUser: IUser = new User({
-      ...userId,
-      username,
-      orgs: await getOrganizations(provider, username)
-    });
-
-    await newUser.save();
-    done(null, newUser.toObject());
-  } catch (error) {
-    done(error);
+    const newUser = new User({ ...userId, username, orgs: await getOrganizations(provider, username) });
+    newUser.save((saveError: CallbackError) => done(saveError, newUser.toObject()));
+  } else {
+    if (existingUser) await User.findByIdAndDelete(existingUser);
+    User.findByIdAndUpdate(
+      req.user._id,
+      { $set: { ...userId, orgs: await getOrganizations(provider, username) } },
+      { new: true },
+      (updateError: CallbackError, user) => done(updateError, user)
+    );
   }
 };
 

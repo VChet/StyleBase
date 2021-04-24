@@ -17,7 +17,7 @@ import {
   deleteStyle
 } from "./styles";
 
-import getCurrentUser from "./users";
+import { getUser, getUserStyles } from "./users";
 
 export const router = Router();
 
@@ -83,6 +83,7 @@ router.put("/style/update", rateLimiter, clearCache, updateStyle);
 router.patch("/style/edit", isAuthorized, clearCache, editStyle);
 router.delete("/style/delete", isAuthorized, clearCache, deleteStyle);
 
-router.get("/me", getCurrentUser);
+router.get("/me", getUser);
+router.get("/user/styles", getUserStyles);
 
 export default router;

@@ -2,8 +2,8 @@
   <BaseDialog v-if="open" size="small" @close="$emit('close')">
     <h1 class="dialog-title">{{ message }}</h1>
     <div class="dialog-buttons">
-      <button class="style-button" type="button" @click="$emit('close')">Cancel</button>
-      <button class="style-button" type="button" @click="$emit('confirm')">Proceed</button>
+      <button class="style-button" type="button" :disabled="loading" @click="$emit('close')">Cancel</button>
+      <button class="style-button" type="button" :disabled="loading" @click="$emit('confirm')">Proceed</button>
     </div>
   </BaseDialog>
 </template>
@@ -25,6 +25,10 @@ export default {
     message: {
       type: String,
       default: 'Perform an action?'
+    },
+    loading: {
+      type: Boolean,
+      default: false
     }
   }
 };

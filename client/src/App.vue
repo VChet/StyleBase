@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <AppHeader @open-nav-link="openNavLink" />
-    <Home />
+    <router-view />
     <AppFooter @open-nav-link="openNavLink" />
 
     <Alert />
@@ -16,7 +16,6 @@
 import { mapActions } from 'vuex';
 
 import AppHeader from '@/components/AppHeader.vue';
-import Home from '@/views/Home.vue';
 import AppFooter from '@/components/AppFooter.vue';
 import Alert from '@/components/dialogs/Alert.vue';
 import HowToUseDialog from '@/components/dialogs/HowToUseDialog.vue';
@@ -28,7 +27,6 @@ export default {
   name: 'App',
   components: {
     AppHeader,
-    Home,
     AppFooter,
     Alert,
     HowToUseDialog,
