@@ -33,7 +33,7 @@
           <hr />
         </div>
         <div class="style-grid">
-          <StyleEditor v-for="style in styles" :key="style._id" :style-data="style" @fetch="fetchData" />
+          <StyleEditor v-for="style in styles" :key="style._id" :style-data="style" @fetch="getUserStyles" />
         </div>
       </section>
     </div>
@@ -60,19 +60,16 @@ export default {
   },
   watch: {
     user() {
-      this.fetchData();
+      this.getUserStyles();
     }
   },
   created() {
-    this.fetchData();
+    this.getUserStyles();
   },
   methods: {
     ...mapActions({
       getUserStyles: 'user/getUserStyles'
-    }),
-    fetchData() {
-      if (this.user) this.getUserStyles(this.user);
-    }
+    })
   }
 };
 </script>

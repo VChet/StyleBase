@@ -11,8 +11,9 @@ export default {
         console.error(error);
       });
   },
-  getUserStyles({ dispatch, commit }, { githubId, codebergId }) {
-    const params = { githubId, codebergId };
+  getUserStyles({ state, dispatch, commit }) {
+    if (!state.user) return;
+    const params = { githubId: state.user.githubId, codebergId: state.user.codebergId };
     return axios
       .get('/api/user/styles', { params })
       .then(({ data }) => {

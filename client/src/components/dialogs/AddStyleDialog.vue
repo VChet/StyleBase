@@ -72,6 +72,7 @@ export default {
   methods: {
     ...mapActions({
       getStyles: 'styleGrid/getStyles',
+      getUserStyles: 'user/getUserStyles',
       flashAlert: 'alert/flashAlert'
     }),
     parseRepository() {
@@ -109,6 +110,7 @@ export default {
           const name = response.data.style.customName || response.data.style.name;
           this.flashAlert({ type: 'success', message: `"${name}" added successfully` });
           this.getStyles();
+          this.getUserStyles();
           this.$emit('close');
         })
         .catch((error) => {
