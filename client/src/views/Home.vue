@@ -127,7 +127,6 @@ export default {
     ...mapActions({
       getStyles: 'styleGrid/getStyles',
       getStyle: 'styleGrid/getStyle',
-      selectStyle: 'styleGrid/selectStyle',
       setPage: 'styleGrid/setPage',
       setSortOrder: 'styleGrid/setSortOrder',
       setQuery: 'styleGrid/setQuery',
