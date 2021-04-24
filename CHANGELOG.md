@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.5.0](https://github.com/VChet/StyleBase/compare/v4.4.3...v4.5.0) (2021-04-24)
+
+
+### Features
+
+* **confirmation:** add loading state ([3fb01ba](https://github.com/VChet/StyleBase/commit/3fb01bae3f2b6051116d6546aee43132be94afaf))
+* **profile:** add profile page ([bef9568](https://github.com/VChet/StyleBase/commit/bef95681d847f90141b16af952bfea62940aff7d))
+* **profile:** add style info editor ([2d82d33](https://github.com/VChet/StyleBase/commit/2d82d3344100dcb7d0da3561e8a4935fbc35ce53))
+
+
+### Bug Fixes
+
+* **add style:** update user styles on creation ([7aa833e](https://github.com/VChet/StyleBase/commit/7aa833ea4398b9574cf2aabcf92359e8d6fab00a))
+* **style editor:** update styles ([00d2b56](https://github.com/VChet/StyleBase/commit/00d2b5624cde14baa16fa6bb6c01076dd3b4d745))
+
 ### [4.4.3](https://github.com/VChet/StyleBase/compare/v4.4.2...v4.4.3) (2021-04-04)
 
 
