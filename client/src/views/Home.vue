@@ -112,25 +112,16 @@ export default {
     }
   },
   created() {
-    const { query, username, styleId } = this.$route.params;
-    if (query) return this.setQuery(query);
-    if (username) return this.setOwnerFilter(username);
-    if (styleId) this.getStyle({ styleId });
-    this.getStyles().then(() => {
-      window.addEventListener('scroll', throttle(this.infiniteScroll, 200));
-    });
+    window.addEventListener('scroll', throttle(this.infiniteScroll, 200));
   },
   destroyed() {
     window.removeEventListener('scroll', throttle(this.infiniteScroll, 200));
   },
   methods: {
     ...mapActions({
-      getStyles: 'styleGrid/getStyles',
-      getStyle: 'styleGrid/getStyle',
       setPage: 'styleGrid/setPage',
       setSortOrder: 'styleGrid/setSortOrder',
       setQuery: 'styleGrid/setQuery',
-      setOwnerFilter: 'styleGrid/setOwnerFilter',
       resetFilters: 'styleGrid/resetFilters'
     }),
     clearFilters() {

@@ -68,14 +68,10 @@ export default {
   },
   methods: {
     ...mapActions({
-      getUserStyles: 'user/getUserStyles',
-      resetFilters: 'styleGrid/resetFilters'
+      getUserStyles: 'user/getUserStyles'
     }),
     fetchData() {
-      if (this.user) {
-        this.resetFilters();
-        this.getUserStyles(this.user);
-      }
+      if (this.user) this.getUserStyles(this.user);
     }
   }
 };
