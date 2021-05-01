@@ -7,13 +7,6 @@ updates:
     timezone: Asia/Yekaterinburg
   open-pull-requests-limit: 10
   target-branch: develop
-  ignore:
-  - dependency-name: connect-mongo
-    versions:
-    - 4.2.0
-  - dependency-name: agenda
-    versions:
-    - 4.0.1
 - package-ecosystem: npm
   directory: "/client"
   schedule:
