@@ -1,0 +1,20 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: monthly
+    timezone: Asia/Yekaterinburg
+  open-pull-requests-limit: 10
+  target-branch: develop
+- package-ecosystem: npm
+  directory: "/client"
+  schedule:
+    interval: monthly
+    timezone: Asia/Yekaterinburg
+  open-pull-requests-limit: 10
+  target-branch: develop
+  ignore:
+  - dependency-name: sass-loader
+    versions:
+    - ">= 11.a, < 12"
