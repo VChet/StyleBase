@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.5.1](https://github.com/VChet/StyleBase/compare/v4.5.0...v4.5.1) (2021-05-04)
+
+
+### Bug Fixes
+
+* **maintenance:** remove status page link ([7b2ec56](https://github.com/VChet/StyleBase/commit/7b2ec5642b06de5d341ef8bd4bc3b769f5014fc2))
+* **scroll:** decrease throttle limit ([3402a4b](https://github.com/VChet/StyleBase/commit/3402a4bb3041e1372101fdcdddb065cf7e360eee))
+
 ## [4.5.0](https://github.com/VChet/StyleBase/compare/v4.4.3...v4.5.0) (2021-04-24)
 
 
