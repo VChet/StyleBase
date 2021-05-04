@@ -112,10 +112,10 @@ export default {
     }
   },
   created() {
-    window.addEventListener('scroll', throttle(this.infiniteScroll, 200));
+    window.addEventListener('scroll', throttle(this.infiniteScroll, 100));
   },
   destroyed() {
-    window.removeEventListener('scroll', throttle(this.infiniteScroll, 200));
+    window.removeEventListener('scroll', throttle(this.infiniteScroll, 100));
   },
   methods: {
     ...mapActions({
