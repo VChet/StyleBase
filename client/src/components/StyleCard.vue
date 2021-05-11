@@ -8,7 +8,14 @@
         @error="useOriginalUrl"
       />
       <img v-else class="no-image invert" src="@/images/no-image.png" alt="No preview" />
-      <a class="button style-button-filled" type="button" :href="styleData.usercss" rel="noopener" target="_blank">
+      <a
+        class="button style-button-filled"
+        type="button"
+        :href="styleData.usercss"
+        rel="noopener"
+        target="_blank"
+        @click.stop
+      >
         Install
       </a>
     </template>
