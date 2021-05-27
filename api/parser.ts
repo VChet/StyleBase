@@ -120,7 +120,6 @@ export async function retrieveRepositoryData(url: string, usercss: Pick<File, "d
   const repo = await axios.get(`${provider.api}/repos${repoUrl}`, provider.options);
   if (repo.data.private) throw new Error(`${repo.data.name} repository is private`);
   if (repo.data.archived) throw new Error(`${repo.data.name} repository is archived`);
-  if (repo.data.fork) throw new Error(`${repo.data.name} repository is forked`);
 
   let styleData: Partial<IStyle>;
   if (provider.name === "GitHub") {
