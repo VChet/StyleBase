@@ -2,7 +2,7 @@
   <BaseDialog v-if="open" size="extra-large" @close="closeStyleModal">
     <div class="header">
       <div class="title">
-        <a :href="`${styleData.url}`" rel="noopener" target="_blank">
+        <a :href="styleData.url" rel="noopener" target="_blank">
           {{ styleData.customName || styleData.name }}
         </a>
         <span class="owner">
@@ -11,6 +11,10 @@
             {{ styleData.owner.login }}
           </button>
         </span>
+        <div v-if="styleData.isFork" class="fork">
+          forked from
+          <a :href="styleData.parent.url" rel="noopener" target="_blank">{{ styleData.parent.name }}</a>
+        </div>
       </div>
       <div class="last-update">Updated {{ dateFromNow(styleData.lastUpdate) }}</div>
     </div>
@@ -219,12 +223,17 @@ export default {
   margin-bottom: 1.5rem;
 
   .title {
-    font-size: 30px;
+    font-size: 2rem;
     font-weight: bold;
     line-height: 1;
 
     a {
+      display: inline-block;
       text-transform: capitalize;
+      color: var(--color-main);
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
     .owner {
@@ -240,6 +249,13 @@ export default {
           text-decoration: underline;
         }
       }
+    }
+
+    .fork {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      font-weight: normal;
+      white-space: nowrap;
     }
   }
 
