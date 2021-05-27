@@ -128,6 +128,13 @@ export async function retrieveRepositoryData(url: string, usercss: Pick<File, "d
     styleData = collectCodebergData(repo.data);
   }
 
+  if (repo.data.fork) {
+    styleData.parent = {
+      name: repo.data.parent.full_name,
+      url: repo.data.parent.html_url
+    };
+  }
+
   if (usercss) {
     const metadata = await retrieveStyleMetadata(usercss.download_url, provider.options).catch((error) => {
       throw new Error(`${repo.data.owner.login}/${repo.data.name}. ${error.message}`);

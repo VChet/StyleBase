@@ -28,6 +28,10 @@ export interface IStyle extends Document {
   isPrivate: boolean
   isArchived: boolean
   isFork: boolean
+  parent?: {
+    name: string,
+    url: string
+  },
   styleId: string
   customName?: string
   customDescription?: string
@@ -69,6 +73,10 @@ const StyleSchema: Schema = new Schema({
   isPrivate: Boolean,
   isArchived: Boolean,
   isFork: Boolean,
+  parent: {
+    name: String,
+    url: String
+  },
   styleId: {
     type: String,
     default: () => customAlphabet(styleIdAlphabet, 11)()
