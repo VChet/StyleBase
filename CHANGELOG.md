@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.5.2](https://github.com/VChet/StyleBase/compare/v4.5.1...v4.5.2) (2021-05-27)
+
+
+### Bug Fixes
+
+* **parser:** allow forked repos ([70cf27f](https://github.com/VChet/StyleBase/commit/70cf27f32e899890fc39c3295c90086966c43be6))
+* **style card:** stop propagation on install button click ([c613096](https://github.com/VChet/StyleBase/commit/c613096ac5f859611df8c49505c061cea831009e))
+
 ### [4.5.1](https://github.com/VChet/StyleBase/compare/v4.5.0...v4.5.1) (2021-05-04)
 
 
