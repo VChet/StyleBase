@@ -14,7 +14,8 @@ import {
   updateAllStyles,
   updateStyle,
   editStyle,
-  deleteStyle
+  deleteStyle,
+  getAllTopics
 } from "./styles";
 
 import { getUser, getUserStyles } from "./users";
@@ -82,6 +83,7 @@ router.put("/style/update/all", rateLimiter, clearCache, updateAllStyles);
 router.put("/style/update", rateLimiter, clearCache, updateStyle);
 router.patch("/style/edit", isAuthorized, clearCache, editStyle);
 router.delete("/style/delete", isAuthorized, clearCache, deleteStyle);
+router.get("/topics", cache(10), getAllTopics);
 
 router.get("/me", getUser);
 router.get("/user/styles", getUserStyles);

@@ -189,3 +189,21 @@ export async function deleteStyle(req: Request, res: Response) {
     return res.status(200).json({ style });
   });
 }
+
+export function getAllTopics(_req: Request, res: Response) {
+  const pipeline = [
+    { $unwind: "$topics" },
+    { $group: { _id: "$topics", count: { $sum: 1 } } },
+    { $match: {
+      $and: [
+        { count: { $gte: 3 } },
+        { _id: { $nin: ["css", "theme", "awesome", "stylish", "stylus", /usercss/, /userstyle/] } }
+      ]
+    } },
+    { $project: { _id: 0, name: "$_id", count: 1 } }
+  ];
+  Style.aggregate(pipeline).exec((error, topics: Array<{ name: string, count: number }>) => {
+    if (error) return res.status(500).json({ error });
+    return res.status(200).json({ topics });
+  });
+}
