@@ -4,7 +4,7 @@ export default {
     commit('ADD_ALERT', { ...payload, id });
     setTimeout(() => {
       commit('REMOVE_ALERT', id);
-    }, 5000);
+    }, 10000);
   },
   close({ commit }, id) {
     commit('REMOVE_ALERT', id);
