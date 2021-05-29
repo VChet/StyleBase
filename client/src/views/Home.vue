@@ -7,7 +7,7 @@
         <span v-show="searchQuery.length && searchQuery.length < 3" class="query-length">at least 3 characters</span>
         <CloseButton v-show="searchQuery" aria-label="Clear the search input" @click="clearSearch" />
       </section>
-      <TopicCloud class="topics" />
+      <TopicCloud v-if="!state.searchQuery && !state.ownerFilter" class="topics" />
       <section class="main-container">
         <div class="section-header">
           <div class="title">
