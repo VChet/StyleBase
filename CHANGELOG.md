@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.6.0](https://github.com/VChet/StyleBase/compare/v4.5.2...v4.6.0) (2021-05-29)
+
+
+### Features
+
+* **style:** parse and store parent for forked repositories ([7c7c4f3](https://github.com/VChet/StyleBase/commit/7c7c4f3a37d662b291b2584a9e57be71f2bedabc))
+* **style info:** show parent repo for forked styles ([870c845](https://github.com/VChet/StyleBase/commit/870c8456847be7601342b5a8f9d5acbfec5cd5cb))
+* **topics:** add topics aggregation request ([f97dab8](https://github.com/VChet/StyleBase/commit/f97dab8be4f9b898fe68e5a9cdeb1bf388506951))
+* **topics:** replace features block with topics list  ([2fe9169](https://github.com/VChet/StyleBase/commit/2fe9169a683b790b554bf38f7202843cbc2e08ee))
+
+
+### Bug Fixes
+
+* **alert:** increase timeout before disappearing ([fdf5fa6](https://github.com/VChet/StyleBase/commit/fdf5fa6b70edcc54f99f20f33634489608d2c16b))
+* **router:** fix redirect on non-existing pages ([6af2029](https://github.com/VChet/StyleBase/commit/6af2029564f45fa44bf676f3367b40508f3d0137))
+
 ### [4.5.2](https://github.com/VChet/StyleBase/compare/v4.5.1...v4.5.2) (2021-05-27)
 
 
