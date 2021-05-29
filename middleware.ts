@@ -97,8 +97,7 @@ export default function addExpressMiddleware(app: Application) {
         "script-src": [
           "'self'", "data:",
           "https://www.googletagmanager.com", "https://www.google-analytics.com",
-          "https://cloudflareinsights.com", "https://static.cloudflareinsights.com",
-          "'unsafe-eval'" // https://github.com/facebook/regenerator/issues/378
+          "https://cloudflareinsights.com", "https://static.cloudflareinsights.com"
         ],
         "connect-src": [
           "'self'",
