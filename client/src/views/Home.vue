@@ -1,26 +1,13 @@
 <template>
   <main class="Home">
     <div class="container">
-      <section class="features">
-        <div class="feature-item">
-          <div>Automatic Updates</div>
-          <span>Install once and receive updates automatically</span>
-        </div>
-        <div class="feature-item">
-          <div>Easy to Share</div>
-          <span>You only need a link to the style repository</span>
-        </div>
-        <div class="feature-item">
-          <div>Easy to Contribute</div>
-          <span>Send feedback directly to the style's author</span>
-        </div>
-      </section>
       <section class="search-container">
         <label for="search" class="visually-hidden">Style search</label>
         <input id="search" v-model="searchQuery" type="text" placeholder="Search by style name or owner..." />
         <span v-show="searchQuery.length && searchQuery.length < 3" class="query-length">at least 3 characters</span>
         <CloseButton v-show="searchQuery" aria-label="Clear the search input" @click="clearSearch" />
       </section>
+      <TopicCloud class="topics" />
       <section class="main-container">
         <div class="section-header">
           <div class="title">
@@ -67,6 +54,7 @@ import { mapActions, mapGetters } from 'vuex';
 import StyleCard from '@/components/StyleCard';
 import StyleInfoDialog from '@/components/dialogs/StyleInfoDialog';
 import CloseButton from '@/components/CloseButton.vue';
+import TopicCloud from '@/components/TopicCloud.vue';
 import StyleCardSkeleton from '@/components/StyleCardSkeleton';
 
 function throttle(callback, limit) {
@@ -88,6 +76,7 @@ export default {
     StyleCard,
     StyleInfoDialog,
     CloseButton,
+    TopicCloud,
     StyleCardSkeleton
   },
   data() {
@@ -149,50 +138,13 @@ main {
 }
 
 .main-container {
-  margin-bottom: 3rem;
-}
-
-.features {
-  display: flex;
-  width: 100%;
-  margin: 2rem 0;
-  user-select: none;
-  background-color: var(--color-text-bg);
-  border: 1px solid var(--color-border);
-  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.12);
-
-  .feature-item {
-    flex: 1;
-    padding: 1.5rem;
-
-    &:not(:first-of-type) {
-      border-left: 1px solid var(--color-border);
-    }
-
-    div {
-      margin-bottom: 1rem;
-      font-size: 1.25rem;
-      font-weight: bold;
-    }
-  }
-
-  @include media-size-tablet {
-    margin: 1.5rem 0;
-    border: none;
-    flex-wrap: wrap;
-
-    .feature-item {
-      flex-basis: 100%;
-      padding: 1rem;
-      border-left: 1px solid var(--color-border);
-    }
-  }
+  margin: 1rem 0 3rem;
 }
 
 .search-container {
   position: relative;
   display: flex;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 
   input {
     width: 100%;
