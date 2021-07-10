@@ -1,5 +1,6 @@
 @import '~normalize.css';
 @import './buttons.scss';
+@import './transitions.scss';
 
 @font-face {
   font-family: Gilroy;
@@ -48,7 +49,7 @@
   --color-main-darkest: #8f4624;
   .invert {
     filter: invert(0.8);
-}
+  }
 }
 
 html,

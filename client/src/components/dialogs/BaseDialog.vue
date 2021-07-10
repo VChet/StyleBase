@@ -1,21 +1,19 @@
 <template>
-  <transition :name="transition">
-    <div class="base-dialog">
-      <div
-        ref="modal"
-        v-click-outside="closeModal"
-        class="base-dialog-window"
-        :class="size"
-        tabindex="-1"
-        @keydown.esc="closeModal"
-      >
-        <CloseButton v-if="!closeButtonHidden" aria-label="Close the modal" @click="closeModal" />
-        <div>
-          <slot></slot>
-        </div>
+  <div class="base-dialog-wrapper">
+    <div
+      ref="modal"
+      v-click-outside="closeModal"
+      class="base-dialog"
+      :class="size"
+      tabindex="-1"
+      @keydown.esc="closeModal"
+    >
+      <CloseButton v-if="!closeButtonHidden" aria-label="Close the modal" @click="closeModal" />
+      <div>
+        <slot></slot>
       </div>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script>
@@ -34,36 +32,42 @@ export default {
   props: {
     size: {
       type: String,
-      required: false,
       default: 'medium',
       validator(size) {
         return ['small', 'medium', 'large', 'extra-large', 'maximum'].includes(size);
       }
     },
-    transition: {
-      type: String,
-      required: false,
-      default: 'transition-dialog'
-    },
     closeButtonHidden: {
       type: Boolean,
-      required: false,
       default: false
+    },
+    hasRoute: {
+      type: Boolean,
+      default: true
     }
   },
   mounted() {
     this.$refs.modal.focus();
+    const scrollbarWidth = window.innerWidth - document.body.clientWidth;
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+    document.body.classList.add('no-scroll');
+  },
+  destroyed() {
+    setTimeout(() => {
+      document.body.classList.remove('no-scroll');
+      document.body.style.paddingRight = null;
+    }, 200); // transition-dialog duration
   },
   methods: {
     closeModal() {
-      this.$emit('close');
+      this.hasRoute ? this.$router.back() : this.$emit('close');
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.base-dialog {
+.base-dialog-wrapper {
   position: fixed;
   top: 0;
   left: 0;
@@ -74,7 +78,7 @@ export default {
   z-index: 10;
 }
 
-.base-dialog-window {
+.base-dialog {
   position: relative;
   top: 5vh;
   width: 80%;
@@ -103,29 +107,6 @@ export default {
   }
   &.extra-large {
     max-width: 1130px;
-  }
-}
-
-.transition-dialog {
-  &-enter-active {
-    transition: opacity 0.2s ease-in-out;
-  }
-  &-leave-active {
-    transition: opacity 0.2s ease-in;
-  }
-  &-enter {
-    opacity: 0;
-  }
-  &-enter-to {
-    opacity: 1;
-  }
-  &-leave-to {
-    opacity: 0;
-
-    .base-dialog-window {
-      transition: transform 0.2s ease-in;
-      transform: translateY(-50vh);
-    }
   }
 }
 </style>

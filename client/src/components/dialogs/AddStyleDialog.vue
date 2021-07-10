@@ -1,5 +1,5 @@
 <template>
-  <BaseDialog v-if="open" size="small" @close="$emit('close')">
+  <BaseDialog size="small">
     <form @submit.prevent="selectedStyle ? submitStyle() : parseRepository()">
       <h1 class="dialog-title">Add new style</h1>
       <div class="dialog-input">
@@ -29,7 +29,7 @@
         </p>
       </div>
       <div class="dialog-buttons">
-        <button class="style-button" type="button" @click="$emit('close')">Not now</button>
+        <button class="style-button" type="button" @click="$router.back()">Not now</button>
         <button class="style-button-filled" type="submit" :disabled="isSubmitting">
           {{ selectedStyle ? 'Add' : 'Parse' }}
         </button>
@@ -42,7 +42,7 @@
 import axios from 'axios';
 import { mapActions } from 'vuex';
 
-import BaseDialog from '@/components/dialogs/BaseDialog';
+import BaseDialog from '@/components/dialogs/BaseDialog.vue';
 import CloseButton from '@/components/CloseButton.vue';
 
 export default {
@@ -50,13 +50,6 @@ export default {
   components: {
     BaseDialog,
     CloseButton
-  },
-  props: {
-    open: {
-      type: Boolean,
-      required: true,
-      default: false
-    }
   },
   data() {
     return {
@@ -111,7 +104,7 @@ export default {
           this.flashAlert({ type: 'success', message: `"${name}" added successfully` });
           this.getStyles();
           this.getUserStyles();
-          this.$emit('close');
+          this.$router.back();
         })
         .catch((error) => {
           this.flashAlert({ type: 'error', message: error.response.data.error });

@@ -41,7 +41,7 @@
 import styleInfo from '@/mixins';
 import { mapActions } from 'vuex';
 
-import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog';
+import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
 
 export default {
   name: 'StyleEditor',

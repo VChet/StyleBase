@@ -26,13 +26,11 @@
         <span></span>
       </button>
       <nav>
-        <button class="link" type="button" @click="$emit('open-nav-link', 'showHowtoUseModal')">How to Use</button>
-        <button class="link" type="button" @click="$emit('open-nav-link', 'showAddStyleModal')">Add Style</button>
-        <button v-if="!user" class="link" type="button" @click="$emit('open-nav-link', 'showLoginModal')">Login</button>
+        <button class="link" type="button" @click="$router.push({ name: 'HowToUseDialog' })">How to Use</button>
+        <button class="link" type="button" @click="$router.push({ name: 'AddStyleDialog' })">Add Style</button>
+        <button v-if="!user" class="link" type="button" @click="$router.push({ name: 'LoginDialog' })">Login</button>
         <template v-else>
-          <router-link :to="{ name: 'Profile' }">
-            <button type="button" class="link">{{ user.username }}</button>
-          </router-link>
+          <button type="button" class="link" @click="$router.push({ name: 'Profile' })">{{ user.username }}</button>
           <a href="/logout">Logout</a>
         </template>
       </nav>

@@ -44,18 +44,23 @@
       </section>
     </div>
 
-    <StyleInfoDialog :open="state.showStyleInfoModal" />
+    <transition name="transition-dialog">
+      <router-view />
+    </transition>
+    <transition name="transition-dialog">
+      <StyleInfoDialog v-if="state.showStyleInfoModal" />
+    </transition>
   </main>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
 
-import StyleCard from '@/components/StyleCard';
-import StyleInfoDialog from '@/components/dialogs/StyleInfoDialog';
+import StyleCard from '@/components/cards/StyleCard.vue';
+import StyleCardSkeleton from '@/components/cards/StyleCardSkeleton.vue';
+import StyleInfoDialog from '@/components/dialogs/StyleInfoDialog.vue';
 import CloseButton from '@/components/CloseButton.vue';
 import TopicCloud from '@/components/TopicCloud.vue';
-import StyleCardSkeleton from '@/components/StyleCardSkeleton';
 
 function throttle(callback, limit) {
   let waiting = false;

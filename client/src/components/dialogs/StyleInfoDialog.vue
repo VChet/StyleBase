@@ -1,5 +1,5 @@
 <template>
-  <BaseDialog v-if="open" size="extra-large" @close="closeStyleModal">
+  <BaseDialog size="extra-large" :has-route="false" @close="closeStyleModal">
     <div class="header">
       <div class="title">
         <a :href="styleData.url" rel="noopener" target="_blank">
@@ -110,8 +110,8 @@ import { mapActions, mapGetters } from 'vuex';
 
 import styleInfo from '@/mixins';
 
-import BaseDialog from '@/components/dialogs/BaseDialog';
-import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog';
+import BaseDialog from '@/components/dialogs/BaseDialog.vue';
+import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
 
 const providerLinks = [
   {
@@ -137,13 +137,6 @@ export default {
     ConfirmationDialog
   },
   mixins: [styleInfo],
-  props: {
-    open: {
-      type: Boolean,
-      required: true,
-      default: false
-    }
-  },
   data() {
     return {
       customFields: {},

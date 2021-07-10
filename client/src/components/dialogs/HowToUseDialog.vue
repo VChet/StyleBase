@@ -1,5 +1,5 @@
 <template>
-  <BaseDialog v-if="open" size="medium" @close="$emit('close')">
+  <BaseDialog size="medium">
     <h1 class="dialog-title">How to Use</h1>
     <h2>Installing styles</h2>
     <ol class="dialog-list">
@@ -33,25 +33,18 @@
       </a>
     </h2>
     <div class="dialog-buttons">
-      <button class="style-button-filled" type="button" @click="$emit('close')">Got it!</button>
+      <button class="style-button-filled" type="button" @click="$router.back()">Got it!</button>
     </div>
   </BaseDialog>
 </template>
 
 <script>
-import BaseDialog from '@/components/dialogs/BaseDialog';
+import BaseDialog from '@/components/dialogs/BaseDialog.vue';
 
 export default {
   name: 'HowToUseDialog',
   components: {
     BaseDialog
-  },
-  props: {
-    open: {
-      type: Boolean,
-      required: true,
-      default: false
-    }
   },
   data() {
     return {

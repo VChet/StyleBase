@@ -1,5 +1,5 @@
 <template>
-  <BaseDialog v-if="open" size="small" @close="$emit('close')">
+  <BaseDialog v-if="open" :has-route="false" size="small" @close="$emit('close')">
     <h1 class="dialog-title">{{ message }}</h1>
     <div class="dialog-buttons">
       <button class="style-button" type="button" :disabled="loading" @click="$emit('close')">Cancel</button>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import BaseDialog from '@/components/dialogs/BaseDialog';
+import BaseDialog from '@/components/dialogs/BaseDialog.vue';
 
 export default {
   name: 'ConfirmationDialog',

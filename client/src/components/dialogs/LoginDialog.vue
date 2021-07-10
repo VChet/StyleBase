@@ -1,5 +1,5 @@
 <template>
-  <BaseDialog v-if="open" size="small" @close="$emit('close')">
+  <BaseDialog size="small">
     <h1 class="dialog-title">Login</h1>
     <div class="login-buttons">
       <a class="button style-button mobile-wide" href="/login/github">
@@ -16,25 +16,18 @@
       username, id, and your public organizations.
     </p>
     <div class="dialog-buttons">
-      <button class="style-button-filled" type="button" @click="$emit('close')">Close</button>
+      <button class="style-button-filled" type="button" @click="$router.back()">Close</button>
     </div>
   </BaseDialog>
 </template>
 
 <script>
-import BaseDialog from '@/components/dialogs/BaseDialog';
+import BaseDialog from '@/components/dialogs/BaseDialog.vue';
 
 export default {
-  name: 'PrivacyPolicyDialog',
+  name: 'LoginDialog',
   components: {
     BaseDialog
-  },
-  props: {
-    open: {
-      type: Boolean,
-      required: true,
-      default: false
-    }
   }
 };
 </script>
