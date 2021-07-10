@@ -9,7 +9,9 @@
           <a href="mailto:feedback@stylebase.cc" rel="noopener">Contact Us</a>
         </li>
         <li>
-          <button class="link" type="button" @click="$emit('open-nav-link', 'showPrivacyModal')">Privacy Policy</button>
+          <button class="link" type="button" @click="$router.push({ name: 'PrivacyPolicyDialog' })">
+            Privacy Policy
+          </button>
         </li>
         <li>
           <a href="https://github.com/VChet/StyleBase" rel="noopener" target="_blank">Code on GitHub</a>
@@ -29,7 +31,7 @@ export default {
 footer {
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: 100vw;
   background-color: var(--color-bg);
   font-size: 14px;
 

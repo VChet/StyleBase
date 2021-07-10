@@ -1,5 +1,5 @@
 <template>
-  <BaseDialog v-if="open" size="large" @close="$emit('close')">
+  <BaseDialog size="large">
     <h1 class="dialog-title">Privacy Policy</h1>
 
     <h2>Privacy Policy for StyleBase</h2>
@@ -51,7 +51,7 @@
     <p>By using our website, you hereby consent to our Privacy Policy.</p>
 
     <div class="dialog-buttons">
-      <button class="style-button-filled" type="button" @click="$emit('close')">Close</button>
+      <button class="style-button-filled" type="button" @click="$router.back()">Close</button>
     </div>
   </BaseDialog>
 </template>
@@ -63,13 +63,6 @@ export default {
   name: 'PrivacyPolicyDialog',
   components: {
     BaseDialog
-  },
-  props: {
-    open: {
-      type: Boolean,
-      required: true,
-      default: false
-    }
   }
 };
 </script>

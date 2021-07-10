@@ -1,5 +1,5 @@
 <template>
-  <BaseDialog v-if="open" size="extra-large" @close="closeStyleModal">
+  <BaseDialog v-if="open" size="extra-large" :has-route="false" @close="closeStyleModal">
     <div class="header">
       <div class="title">
         <a :href="styleData.url" rel="noopener" target="_blank">
