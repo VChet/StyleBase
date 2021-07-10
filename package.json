@@ -49,7 +49,7 @@
     "repo-images": "^1.0.1",
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5",
-    "usercss-meta": "^0.10.1"
+    "usercss-meta": "^0.11.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.2",
