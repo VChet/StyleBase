@@ -46,7 +46,7 @@
 import { mapActions } from 'vuex';
 
 import styleInfo from '@/mixins';
-import BaseCard from '@/components/BaseCard.vue';
+import BaseCard from '@/components/cards/BaseCard.vue';
 
 export default {
   name: 'StyleCard',

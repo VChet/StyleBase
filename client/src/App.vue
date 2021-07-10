@@ -13,7 +13,7 @@ import { mapActions } from 'vuex';
 
 import AppHeader from '@/components/AppHeader.vue';
 import AppFooter from '@/components/AppFooter.vue';
-import Alert from '@/components/dialogs/Alert.vue';
+import Alert from '@/components/Alert.vue';
 
 export default {
   name: 'App',

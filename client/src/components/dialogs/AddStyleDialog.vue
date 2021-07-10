@@ -42,7 +42,7 @@
 import axios from 'axios';
 import { mapActions } from 'vuex';
 
-import BaseDialog from '@/components/dialogs/BaseDialog';
+import BaseDialog from '@/components/dialogs/BaseDialog.vue';
 import CloseButton from '@/components/CloseButton.vue';
 
 export default {

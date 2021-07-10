@@ -110,8 +110,8 @@ import { mapActions, mapGetters } from 'vuex';
 
 import styleInfo from '@/mixins';
 
-import BaseDialog from '@/components/dialogs/BaseDialog';
-import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog';
+import BaseDialog from '@/components/dialogs/BaseDialog.vue';
+import ConfirmationDialog from '@/components/dialogs/ConfirmationDialog.vue';
 
 const providerLinks = [
   {

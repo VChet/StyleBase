@@ -22,10 +22,10 @@
 </template>
 
 <script>
-import BaseDialog from '@/components/dialogs/BaseDialog';
+import BaseDialog from '@/components/dialogs/BaseDialog.vue';
 
 export default {
-  name: 'PrivacyPolicyDialog',
+  name: 'LoginDialog',
   components: {
     BaseDialog
   }
