@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.1](https://github.com/VChet/StyleBase/compare/v4.6.0...v4.6.1) (2021-07-10)
+
+
+### Bug Fixes
+
+* **topics:** hide topics when filters are active ([c358e29](https://github.com/VChet/StyleBase/commit/c358e29cd977d476a58cc005f8d10bf270e7525d))
+
 ## [4.6.0](https://github.com/VChet/StyleBase/compare/v4.5.2...v4.6.0) (2021-05-29)
 
 
