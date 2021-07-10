@@ -1,10 +1,5 @@
 import axios from 'axios';
 
-function lockScroll(isActive) {
-  const $body = document.body;
-  isActive ? $body.classList.add('no-scroll') : $body.classList.remove('no-scroll');
-}
-
 function setPageData({ selectedStyle: style, ownerFilter, searchQuery }) {
   let title = 'Collection of UserCSS styles | StyleBase';
   let description = 'Website styles from various authors. Find and share your UserCSS style at StyleBase.cc';
@@ -127,7 +122,6 @@ export default {
   },
   setStyleModalVisibility({ commit }, isActive) {
     commit('SET_MODAL_VISIBILITY', isActive);
-    lockScroll(isActive);
   },
   openStyleModal({ state, commit, dispatch }, style) {
     commit('SET_SELECTED_STYLE', style);

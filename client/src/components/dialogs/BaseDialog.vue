@@ -53,8 +53,10 @@ export default {
     document.body.classList.add('no-scroll');
   },
   destroyed() {
-    document.body.classList.remove('no-scroll');
-    document.body.style.paddingRight = null;
+    setTimeout(() => {
+      document.body.classList.remove('no-scroll');
+      document.body.style.paddingRight = null;
+    }, 200); // transition-dialog duration
   },
   methods: {
     closeModal() {

@@ -47,7 +47,9 @@
     <transition name="transition-dialog">
       <router-view />
     </transition>
-    <StyleInfoDialog :open="state.showStyleInfoModal" />
+    <transition name="transition-dialog">
+      <StyleInfoDialog v-if="state.showStyleInfoModal" />
+    </transition>
   </main>
 </template>
 
@@ -242,27 +244,5 @@ main {
 .no-results {
   text-align: center;
   font-size: 1.5rem;
-}
-
-.transition-dialog {
-  &-enter-active {
-    transition: opacity 0.2s ease-in-out;
-  }
-  &-leave-active {
-    transition: opacity 0.2s ease-in;
-  }
-  &-enter {
-    opacity: 0;
-  }
-  &-enter-to {
-    opacity: 1;
-  }
-  &-leave-to {
-    opacity: 0;
-  }
-}
-::v-deep .transition-dialog-leave-to .base-dialog {
-  transition: transform 0.2s ease-in;
-  transform: translateY(-50vh);
 }
 </style>

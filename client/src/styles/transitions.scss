@@ -13,9 +13,9 @@
   }
   &-leave-to {
     opacity: 0;
+    .base-dialog {
+      transition: transform 0.2s ease-in;
+      transform: translateY(-50vh);
+    }
   }
-}
-.transition-dialog-leave-to .base-dialog {
-  transition: transform 0.2s ease-in;
-  transform: translateY(-50vh);
 }

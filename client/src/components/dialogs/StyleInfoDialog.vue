@@ -1,5 +1,5 @@
 <template>
-  <BaseDialog v-if="open" size="extra-large" :has-route="false" @close="closeStyleModal">
+  <BaseDialog size="extra-large" :has-route="false" @close="closeStyleModal">
     <div class="header">
       <div class="title">
         <a :href="styleData.url" rel="noopener" target="_blank">
@@ -137,13 +137,6 @@ export default {
     ConfirmationDialog
   },
   mixins: [styleInfo],
-  props: {
-    open: {
-      type: Boolean,
-      required: true,
-      default: false
-    }
-  },
   data() {
     return {
       customFields: {},
