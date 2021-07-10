@@ -10,27 +10,14 @@ const routes = [
     component: Profile
   },
   {
-    path: '/search/:query',
-    name: 'Search',
-    component: Home,
-    beforeEnter: fetchData
-  },
-  {
-    path: '/user/:username',
-    name: 'User',
-    component: Home,
-    beforeEnter: fetchData
-  },
-  {
-    path: '/style/:styleId',
-    name: 'Style',
-    component: Home,
-    beforeEnter: fetchData
-  },
-  {
     path: '/',
     name: 'Home',
     component: Home,
+    children: [
+      { path: '/style/:styleId', name: 'StyleModal' },
+      { path: '/search/:query', name: 'Search' },
+      { path: '/user/:username', name: 'UserFilter' }
+    ],
     beforeEnter: fetchData
   },
   {
