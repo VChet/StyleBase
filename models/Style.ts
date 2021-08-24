@@ -3,7 +3,6 @@ import mongoosePaginate from "mongoose-paginate-v2";
 import { customAlphabet } from "nanoid";
 
 import type { Document, PaginateModel } from "mongoose";
-import type { BulkWriteResult, UnorderedBulkOperation } from "mongodb";
 
 import { retrieveRepositoryData } from "../api/parser";
 
@@ -39,7 +38,7 @@ export interface IStyle extends Document {
 }
 
 export interface IStyleModel extends PaginateModel<IStyle> {
-  updateAllStyles: () => Promise<BulkWriteResult>;
+  updateAllStyles: () => Promise<any>;
 }
 
 const styleIdAlphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -94,14 +93,14 @@ StyleSchema.index({
 });
 StyleSchema.plugin(mongoosePaginate);
 
-StyleSchema.statics.updateAllStyles = async function (): Promise<BulkWriteResult> {
+StyleSchema.statics.updateAllStyles = async function (): Promise<any> {
   const Style = this;
   const styles: Array<IStyle> = await Style.find({}).lean();
   const stylesData = await Promise.allSettled(
     styles.map(({ url, usercss }) => retrieveRepositoryData(url, { download_url: usercss }))
   );
 
-  const Bulk: UnorderedBulkOperation = Style.collection.initializeUnorderedBulkOp();
+  const Bulk = Style.collection.initializeUnorderedBulkOp();
   stylesData.forEach((promise) => {
     if (promise.status === "fulfilled") {
       const styleData = promise.value;

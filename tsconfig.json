@@ -18,18 +18,12 @@
       "@types/express-session",
       "@types/express",
       "@types/memory-cache",
-      "@types/mongodb",
       "@types/mongoose-paginate-v2",
-      "@types/mongoose",
       "@types/morgan",
       "@types/node",
       "@types/passport-github2"
     ]
   },
-  "include": [
-    "**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
 }

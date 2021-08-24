@@ -65,15 +65,7 @@ passport.deserializeUser((id, done) => {
 });
 
 // Agenda
-const agenda = new Agenda({
-  db: {
-    address: config.mongoUrl,
-    options: {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    }
-  }
-});
+const agenda = new Agenda({ db: { address: config.mongoUrl } });
 
 if (process.env.NODE_ENV === "production") {
   agenda.define("Update all styles", async () => {

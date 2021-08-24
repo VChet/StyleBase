@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import type { CallbackError, FilterQuery, PaginateOptions } from "mongoose";
 import type { AxiosError } from "axios";
-import type { IStyleModel } from "../models/Style";
+import type { IStyle } from "../models/Style";
 
 import { Style } from "../models/Style";
 import { retrieveRepositoryFiles, retrieveRepositoryData } from "./parser";
@@ -46,7 +46,7 @@ export function getStyles(req: Request, res: Response) {
   const { query, page = "1", limit = "16", sort } = req.query as { [key: string]: string };
   const { owner } = req.params;
 
-  let filter: FilterQuery<IStyleModel> = {};
+  let filter: FilterQuery<IStyle> = {};
   if (query) {
     const queryRegExp = new RegExp(escapeRegex(query), "gi");
     filter = {
