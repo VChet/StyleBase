@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.6.2](https://github.com/VChet/StyleBase/compare/v4.6.1...v4.6.2) (2021-08-24)
+
+
+### Bug Fixes
+
+* **style info:** fix empty custom fields ([43596fd](https://github.com/VChet/StyleBase/commit/43596fddfb9a2aede9dd8b05549b38b37173f707))
+* **topics:** update filter ([4c17d20](https://github.com/VChet/StyleBase/commit/4c17d209c3711af689abae5225aa71965afed360))
+* update placeholder text color ([4d3e0c9](https://github.com/VChet/StyleBase/commit/4d3e0c9bca5bceca9f2d33e648930dd8881a21d7))
+
 ### [4.6.1](https://github.com/VChet/StyleBase/compare/v4.6.0...v4.6.1) (2021-07-10)
 
 
