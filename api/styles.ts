@@ -197,7 +197,7 @@ export function getAllTopics(_req: Request, res: Response) {
     { $match: {
       $and: [
         { count: { $gte: 3 } },
-        { _id: { $nin: ["css", "theme", "awesome", "stylish", "stylus", /usercss/, /userstyle/] } }
+        { _id: { $nin: ["css", "awesome", "stylish", "stylus", /theme/, /usercss/, /userstyle/] } }
       ]
     } },
     { $project: { _id: 0, name: "$_id", count: 1 } }
