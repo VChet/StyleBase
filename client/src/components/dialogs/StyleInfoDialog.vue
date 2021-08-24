@@ -170,6 +170,9 @@ export default {
       this.customFields = { ...this.styleData };
     }
   },
+  mounted() {
+    if (this.styleData) this.customFields = { ...this.styleData };
+  },
   methods: {
     ...mapActions({
       editStyleRequest: 'styleGrid/editStyle',
