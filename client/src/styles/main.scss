@@ -23,6 +23,7 @@
   --color-bg-light: #f5e6cc;
   --color-text-bg: #ffffff;
   --color-text: #47525e;
+  --color-text-light: #98a7b8;
   --color-focus: #ffa500;
   --color-border: #e0e0e0;
   --color-main-lightest: #f2e8d9;
@@ -39,6 +40,7 @@
   --color-bg-light: #272727;
   --color-text-bg: #222222;
   --color-text: #dddddd;
+  --color-text-light: #949494;
   --color-border: #292929;
   --color-main-lightest: #333333;
   --color-main-lighter: #262626;
@@ -71,6 +73,10 @@ body.no-scroll {
   font-family: Gilroy, sans-serif;
   font-size: 16px;
   color: var(--color-text);
+}
+
+::placeholder {
+  color: var(--color-text-light);
 }
 
 body {
