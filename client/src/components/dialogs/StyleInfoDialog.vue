@@ -3,7 +3,7 @@
     <div class="header">
       <div class="title">
         <a :href="styleData.url" rel="noopener" target="_blank">
-          {{ styleData.customName || styleData.name }}
+          {{ styleData.name }}
         </a>
         <span class="owner">
           by
@@ -20,7 +20,7 @@
     </div>
 
     <!-- eslint-disable-next-line vue/no-v-html -->
-    <div class="description" v-html="parseEmoji(styleData.customDescription || styleData.description)"></div>
+    <div class="description" v-html="parseEmoji(styleData.description)"></div>
 
     <ul v-if="styleData.topics.length" class="topics">
       <li v-for="topic in styleData.topics" :key="topic">
@@ -36,7 +36,7 @@
       <img
         v-if="styleData.customPreview || styleData.preview"
         :src="styleData.customPreview || styleData.preview"
-        :alt="`Preview of ${styleData.customName || styleData.name} style`"
+        :alt="`Preview of ${styleData.name} style`"
       />
       <img v-else class="no-image" src="@/images/no-image.png" alt="No preview" />
       <div v-if="styleData.license" class="style-license">{{ styleData.license }}</div>
@@ -65,21 +65,19 @@
           </a>
         </li>
         <li class="buttons">
-          <a class="button style-button-filled mobile-wide" :href="styleData.usercss" rel="noopener" target="_blank"
-            >Install</a
-          >
+          <a class="button style-button-filled mobile-wide" :href="styleData.usercss" rel="noopener" target="_blank">
+            Install
+          </a>
         </li>
       </ul>
     </div>
 
     <div v-if="isAuthorized" class="actions">
       <div class="action-group">
-        <strong class="action-title">Edit style</strong>
+        <strong class="action-title">Edit preview</strong>
         <form @submit.prevent="editStyle">
-          <input v-model="customFields.customName" type="text" placeholder="Style name" />
-          <input v-model="customFields.customPreview" type="text" placeholder="Preview url" />
-          <input v-model="customFields.customDescription" type="text" placeholder="Style description" />
-          <button class="style-button" :disabled="updating" type="submit">Edit</button>
+          <input v-model="newCustomPreview" type="text" placeholder="Enter preview URL" />
+          <button class="style-button" :disabled="updating" type="submit">Update preview</button>
         </form>
       </div>
       <div class="action-group">
@@ -139,7 +137,7 @@ export default {
   mixins: [styleInfo],
   data() {
     return {
-      customFields: {},
+      newCustomPreview: null,
       showDeleteDialog: false,
       updating: false
     };
@@ -158,20 +156,18 @@ export default {
       return isAdmin || isOwner || isMember;
     },
     twitterLink() {
-      const name = this.styleData.customName || this.styleData.name;
-      const owner = this.styleData.owner.login;
       const link = `https://stylebase.cc/${this.styleData.styleId}`;
-      const text = encodeURIComponent(`${name} by ${owner}\n${link}`);
+      const text = encodeURIComponent(`${this.styleData.name} by ${this.styleData.owner.login}\n${link}`);
       return `https://twitter.com/intent/tweet?text=${text}`;
     }
   },
   watch: {
     styleData() {
-      this.customFields = { ...this.styleData };
+      this.newCustomPreview = this.styleData.customPreview || null;
     }
   },
   mounted() {
-    if (this.styleData) this.customFields = { ...this.styleData };
+    if (this.styleData.customPreview) this.newCustomPreview = this.styleData.customPreview;
   },
   methods: {
     ...mapActions({
@@ -191,13 +187,7 @@ export default {
     },
     async editStyle() {
       this.updating = true;
-      const { customName, customPreview, customDescription } = this.customFields;
-      await this.editStyleRequest({
-        _id: this.styleData._id,
-        customName,
-        customPreview,
-        customDescription
-      });
+      await this.editStyleRequest({ _id: this.styleData._id, customPreview: this.newCustomPreview });
       this.resetFilters();
       this.updating = false;
     },
@@ -225,7 +215,6 @@ export default {
 
     a {
       display: inline-block;
-      text-transform: capitalize;
       color: var(--color-main);
       &:hover {
         text-decoration: underline;

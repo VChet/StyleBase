@@ -4,7 +4,7 @@
       <img
         v-if="styleData.customPreview || styleData.preview"
         :src="compressImage(styleData.customPreview || styleData.preview)"
-        :alt="`Preview of ${styleData.customName || styleData.name} style`"
+        :alt="`Preview of ${styleData.name} style`"
         @error="useOriginalUrl"
       />
       <img v-else class="no-image invert" src="@/images/no-image.png" alt="No preview" />
@@ -22,9 +22,7 @@
 
     <template #data>
       <div>
-        <div class="name" :title="styleData.customName || styleData.name">
-          {{ styleData.customName || styleData.name }}
-        </div>
+        <div class="name" :title="styleData.name">{{ styleData.name }}</div>
         <div class="owner">by {{ styleData.owner.login }}</div>
       </div>
     </template>
@@ -122,7 +120,6 @@ export default {
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-transform: capitalize;
     font-size: 20px;
     font-weight: bold;
     transition: color 0.2s;

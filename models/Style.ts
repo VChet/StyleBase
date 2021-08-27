@@ -32,8 +32,6 @@ export interface IStyle extends Document {
     url: string
   },
   styleId: string
-  customName?: string
-  customDescription?: string
   customPreview?: string
 }
 
@@ -80,14 +78,11 @@ const StyleSchema: Schema = new Schema({
     type: String,
     default: () => customAlphabet(styleIdAlphabet, 11)()
   },
-  customName: String,
-  customDescription: String,
   customPreview: String
 });
 
 StyleSchema.index({
   name: "text",
-  customName: "text",
   "owner.login": "text",
   topics: "text"
 });

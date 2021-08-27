@@ -52,7 +52,6 @@ export function getStyles(req: Request, res: Response) {
     filter = {
       $or: [
         { name: queryRegExp },
-        { customName: queryRegExp },
         { "owner.login": queryRegExp },
         { topics: queryRegExp }
       ]
@@ -94,7 +93,7 @@ export function getStyleData(req: Request, res: Response) {
 }
 
 export function addStyle(req: Request, res: Response) {
-  const { usercss, customName, customDescription, customPreview } = req.body;
+  const { usercss, customPreview } = req.body;
   const url = req.body.url.replace(/\/$/, ""); // Trim trailing slash
 
   Style.findOne({ usercss: usercss.download_url }).lean().exec(async (mongoError: CallbackError, style) => {
@@ -113,8 +112,6 @@ export function addStyle(req: Request, res: Response) {
       .then((data) => {
         const newStyle = new Style({
           ...data,
-          customName,
-          customDescription,
           customPreview
         });
         newStyle.save((saveError) => {
@@ -160,9 +157,7 @@ export function updateAllStyles(_req: Request, res: Response) {
 }
 
 export function editStyle(req: Request, res: Response) {
-  const {
-    _id, customName, customDescription, customPreview
-  } = req.body;
+  const { _id, customPreview } = req.body;
 
   if (customPreview) {
     try {
@@ -174,7 +169,7 @@ export function editStyle(req: Request, res: Response) {
 
   Style.findByIdAndUpdate(
     _id,
-    { $set: { customName, customDescription, customPreview } },
+    { $set: { customPreview } },
     { new: true },
     (error, style) => {
       if (error) return res.status(500).json({ error });

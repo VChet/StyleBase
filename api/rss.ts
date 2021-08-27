@@ -23,15 +23,15 @@ export default async function getRss(_req: Request, res: Response) {
   const styles = await Style.find({}).lean();
   styles.forEach((style) => {
     const content: Array<string> = [];
-    content.push(`${style.customName || style.name} by ${style.owner.login}.`);
+    content.push(`${style.name} by ${style.owner.login}.`);
     content.push(`<a href='${style.usercss}'>Install UserCSS</a>`);
     content.push(`<a href='${style.url}'>Repository</a>`);
 
     feed.addItem({
-      title: style.customName || style.name,
+      title: style.name,
       id: style._id,
       link: `${siteUrl}/style/${style.styleId}`,
-      description: style.customDescription || style.description,
+      description: style.description,
       content: content.join("<br />"),
       author: [{ name: style.owner.login }],
       date: style._id.getTimestamp(),

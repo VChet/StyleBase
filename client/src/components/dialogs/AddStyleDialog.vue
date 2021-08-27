@@ -17,16 +17,9 @@
         </ul>
       </div>
       <div v-if="selectedStyle">
-        <h2>Edit style data</h2>
-        <div class="custom-fields">
-          <input v-model="customName" type="text" placeholder="Name" />
-          <input v-model="customPreview" type="text" placeholder="Preview URL" />
-          <input v-model="customDescription" type="text" placeholder="Description" />
-        </div>
-        <p>
-          Style name, description and preview will be automatically taken from the style metadata and repository files,
-          but you can enter them manually. If you are the owner of the repository you will be able to edit it later.
-        </p>
+        <h2>Add style preview</h2>
+        <input v-model="customPreview" type="text" placeholder="Enter preview URL" />
+        <p>If preview is not specified, it will be taken automatically from the repository images.</p>
       </div>
       <div class="dialog-buttons">
         <button class="style-button" type="button" @click="$router.back()">Not now</button>
@@ -56,8 +49,6 @@ export default {
       url: '',
       files: [],
       selectedStyle: null,
-      customName: '',
-      customDescription: '',
       customPreview: '',
       isSubmitting: false
     };
@@ -94,14 +85,11 @@ export default {
         .post('/api/style/add', {
           url: this.url,
           usercss: this.selectedStyle,
-          customName: this.customName,
-          customDescription: this.customDescription,
           customPreview: this.customPreview
         })
         .then((response) => {
           this.clear();
-          const name = response.data.style.customName || response.data.style.name;
-          this.flashAlert({ type: 'success', message: `"${name}" added successfully` });
+          this.flashAlert({ type: 'success', message: `"${response.data.style.name}" added successfully` });
           this.getStyles();
           this.getUserStyles();
           this.$router.back();
@@ -115,8 +103,6 @@ export default {
       this.url = '';
       this.files = [];
       this.selectedStyle = null;
-      this.customName = '';
-      this.customDescription = '';
       this.customPreview = '';
     }
   }
@@ -134,19 +120,19 @@ export default {
   position: relative;
   margin-bottom: 1rem;
 
-  input {
-    box-sizing: border-box;
-    width: 100%;
-    height: 50px;
-    padding: 0 15px 0 15px;
-  }
-
   .close-button {
     width: 1.5rem;
     height: 1.5rem;
     top: 50%;
     transform: translateY(-50%);
   }
+}
+
+input[type='text'] {
+  width: 100%;
+  box-sizing: border-box;
+  height: 50px;
+  padding: 0 15px;
 }
 
 .file-list {
@@ -160,21 +146,6 @@ export default {
       padding-left: 0.25rem;
       cursor: pointer;
     }
-  }
-}
-
-.custom-fields {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  margin: 1rem 0;
-  input {
-    flex: 1;
-    box-sizing: border-box;
-    height: 50px;
-    padding: 0 15px;
   }
 }
 

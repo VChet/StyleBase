@@ -6,8 +6,8 @@ function setPageData({ selectedStyle: style, ownerFilter, searchQuery }) {
   let url = '/';
 
   if (style.styleId) {
-    title = `${style.customName || style.name} by ${style.owner.login} | StyleBase`;
-    description = style.customDescription || style.description;
+    title = `${style.name} by ${style.owner.login} | StyleBase`;
+    description = style.description;
     url = `/style/${style.styleId}`;
   } else if (ownerFilter) {
     title = `Styles by ${ownerFilter} | StyleBase`;
@@ -68,8 +68,11 @@ export default {
     return axios
       .patch('/api/style/edit', payload)
       .then((response) => {
-        const name = response.data.style.customName || response.data.style.name;
-        dispatch('alert/flashAlert', { type: 'success', message: `"${name}" style updated` }, { root: true });
+        dispatch(
+          'alert/flashAlert',
+          { type: 'success', message: `"${response.data.style.name}" style updated` },
+          { root: true }
+        );
         if (state.showStyleInfoModal) dispatch('getStyle', response.data.style);
       })
       .catch((error) => {
@@ -80,8 +83,11 @@ export default {
     return axios
       .delete('/api/style/delete', { data: { _id } })
       .then((response) => {
-        const name = response.data.style.customName || response.data.style.name;
-        dispatch('alert/flashAlert', { type: 'success', message: `"${name}" style deleted` }, { root: true });
+        dispatch(
+          'alert/flashAlert',
+          { type: 'success', message: `"${response.data.style.name}" style deleted` },
+          { root: true }
+        );
         if (state.showStyleInfoModal) dispatch('closeStyleModal');
       })
       .catch((error) => {

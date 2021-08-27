@@ -4,21 +4,19 @@
       <img
         v-if="styleData.customPreview || styleData.preview"
         :src="styleData.customPreview || styleData.preview"
-        :alt="`Preview of ${styleData.customName || styleData.name} style`"
+        :alt="`Preview of ${styleData.name} style`"
         @error="useOriginalUrl"
       />
       <img v-else class="no-image invert" src="@/images/no-image.png" alt="No preview" />
     </div>
     <div class="actions">
       <div class="inputs">
-        <input v-model="customFields.customName" type="text" placeholder="Custom Name" />
-        Parsed name: {{ styleData.name }}
-        <input v-model="customFields.customPreview" type="text" placeholder="Custom Preview URL" />
+        <h2>{{ styleData.name }}</h2>
+        <p v-if="styleData.description">{{ styleData.description }}</p>
+        <input v-model="newCustomPreview" type="text" placeholder="Custom Preview URL" />
         <span v-if="styleData.preview">
           Parsed preview: <a :href="styleData.preview" rel="noopener" target="_blank">URL</a>
         </span>
-        <input v-model="customFields.customDescription" type="text" placeholder="Custom Description" />
-        <span v-if="styleData.description">Parsed description: {{ styleData.description }}</span>
       </div>
       <div class="buttons">
         <button class="style-button mobile-wide" :disabled="updating" @click="editStyle">Update</button>
@@ -29,7 +27,7 @@
     </div>
     <ConfirmationDialog
       :open="showDeleteDialog"
-      :message="`Remove ${styleData.customName || styleData.name}?`"
+      :message="`Remove ${styleData.name}?`"
       :loading="updating"
       @confirm="deleteStyle"
       @close="showDeleteDialog = false"
@@ -57,7 +55,7 @@ export default {
   },
   data() {
     return {
-      customFields: { ...this.styleData },
+      newCustomPreview: this.styleData.customPreview || null,
       showDeleteDialog: false,
       updating: false
     };
@@ -72,13 +70,7 @@ export default {
     },
     async editStyle() {
       this.updating = true;
-      const { customName, customPreview, customDescription } = this.customFields;
-      await this.editStyleRequest({
-        _id: this.styleData._id,
-        customName,
-        customPreview,
-        customDescription
-      });
+      await this.editStyleRequest({ _id: this.styleData._id, customPreview: this.newCustomPreview });
       this.$emit('fetch');
       this.updating = false;
     },
