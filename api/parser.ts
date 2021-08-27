@@ -86,7 +86,7 @@ async function collectGithubData(repo: GitHubRepository) {
     watchers: repo.subscribers_count,
     forks: repo.forks,
     issues: repo.open_issues,
-    license: (repo.license && repo.license.spdx_id) || "",
+    license: repo.license?.spdx_id || "",
     isPrivate: repo.private,
     isArchived: repo.archived,
     isFork: repo.fork

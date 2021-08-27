@@ -115,7 +115,7 @@ export interface GitHubRepository {
   archived: boolean;
   disabled: boolean;
   open_issues_count: number;
-  license: License;
+  license?: License;
   topics: Array<string>;
   forks: number;
   open_issues: number;
