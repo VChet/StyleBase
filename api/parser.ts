@@ -117,33 +117,32 @@ function collectCodebergData(repo: CodebergRepository) {
 export async function retrieveRepositoryData(url: string, usercss: Pick<File, "download_url"> | null = null) {
   const { provider, repoUrl } = getProviderData(url);
 
-  const repo = await axios.get(`${provider.api}/repos${repoUrl}`, provider.options);
-  if (repo.data.private) throw new Error(`${repo.data.name} repository is private`);
-  if (repo.data.archived) throw new Error(`${repo.data.name} repository is archived`);
+  try {
+    const repo = await axios.get(`${provider.api}/repos${repoUrl}`, provider.options);
+    if (repo.data.private) throw new Error(`${repo.data.name} repository is private`);
+    if (repo.data.archived) throw new Error(`${repo.data.name} repository is archived`);
 
-  let styleData: Partial<IStyle>;
-  if (provider.name === "GitHub") {
-    styleData = await collectGithubData(repo.data);
-  } else {
-    styleData = collectCodebergData(repo.data);
+    const styleData: Partial<IStyle> = provider.name === "GitHub" ?
+      await collectGithubData(repo.data) :
+      collectCodebergData(repo.data);
+
+    if (repo.data.fork) {
+      styleData.parent = {
+        name: repo.data.parent.full_name,
+        url: repo.data.parent.html_url
+      };
+    }
+
+    if (usercss) {
+      const metadata = await retrieveStyleMetadata(usercss.download_url, provider.options);
+      styleData.usercss = usercss.download_url;
+      styleData.name = metadata.name;
+      if (metadata.description) styleData.description = metadata.description;
+      if (metadata.license) styleData.license = metadata.license;
+    }
+
+    return styleData;
+  } catch (error) {
+    throw new Error(`${url} | ${error.message}`);
   }
-
-  if (repo.data.fork) {
-    styleData.parent = {
-      name: repo.data.parent.full_name,
-      url: repo.data.parent.html_url
-    };
-  }
-
-  if (usercss) {
-    const metadata = await retrieveStyleMetadata(usercss.download_url, provider.options).catch((error) => {
-      throw new Error(`${repo.data.owner.login}/${repo.data.name}. ${error.message}`);
-    });
-    styleData.usercss = usercss.download_url;
-    styleData.name = metadata.name;
-    if (metadata.description) styleData.description = metadata.description;
-    if (metadata.license) styleData.license = metadata.license;
-  }
-
-  return styleData;
 }
