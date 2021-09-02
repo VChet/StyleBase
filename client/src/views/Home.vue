@@ -7,7 +7,12 @@
         <span v-show="searchQuery.length && searchQuery.length < 3" class="query-length">at least 3 characters</span>
         <CloseButton v-show="searchQuery" aria-label="Clear the search input" @click="clearSearch" />
       </section>
-      <TopicCloud v-if="!state.searchQuery && !state.ownerFilter" class="topics" />
+      <TopicCloud v-if="!state.searchQuery && !state.ownerFilter" />
+      <section class="announcement">
+        <button class="link" type="button" @click="$router.push({ name: 'Announcement' })">
+          Important Announcement
+        </button>
+      </section>
       <section class="main-container">
         <div class="section-header">
           <div class="title">
@@ -140,6 +145,21 @@ export default {
 <style scoped lang="scss">
 main {
   flex: 1;
+}
+
+.announcement {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #fff3cd;
+  border: 2px solid #ffeeba;
+  border-radius: 0.25rem;
+  text-align: center;
+  color: #856404;
+  font-size: 1.5rem;
+  .link {
+    color: #856404;
+    text-decoration: underline;
+  }
 }
 
 .main-container {

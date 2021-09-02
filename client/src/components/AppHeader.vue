@@ -27,8 +27,10 @@
       </button>
       <nav>
         <button class="link" type="button" @click="$router.push({ name: 'HowToUseDialog' })">How to Use</button>
-        <button class="link" type="button" @click="$router.push({ name: 'AddStyleDialog' })">Add Style</button>
-        <button v-if="!user" class="link" type="button" @click="$router.push({ name: 'LoginDialog' })">Login</button>
+        <button disabled class="link" type="button" @click="$router.push({ name: 'AddStyleDialog' })">Add Style</button>
+        <button v-if="!user" disabled class="link" type="button" @click="$router.push({ name: 'LoginDialog' })">
+          Login
+        </button>
         <template v-else>
           <button type="button" class="link" @click="$router.push({ name: 'Profile' })">{{ user.username }}</button>
           <a href="/logout">Logout</a>

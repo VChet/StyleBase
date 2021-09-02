@@ -15,10 +15,11 @@ import {
   updateStyle,
   editStyle,
   deleteStyle,
-  getAllTopics
+  getAllTopics,
+  getAllStyles
 } from "./styles";
 
-import { getUser, getUserStyles } from "./users";
+import { getUser } from "./users";
 
 export const router = Router();
 
@@ -84,8 +85,8 @@ router.put("/style/update", rateLimiter, clearCache, updateStyle);
 router.patch("/style/edit", isAuthorized, clearCache, editStyle);
 router.delete("/style/delete", isAuthorized, clearCache, deleteStyle);
 router.get("/topics", cache(10), getAllTopics);
+router.get("/usercssFiles", getAllStyles);
 
 router.get("/me", getUser);
-router.get("/user/styles", getUserStyles);
 
 export default router;

@@ -3,6 +3,7 @@ import path from "path";
 import passport from "passport";
 
 import getRss from "./api/rss";
+import { getUserStyles } from "./api/users";
 
 const router = Router();
 const clientIndex = path.join(__dirname, "public/index.html");
@@ -20,6 +21,8 @@ router.get("/codeberg/callback", passport.authenticate("codeberg"), (_req, res) 
 
 // RSS
 router.get("/rss", getRss);
+
+router.get("/user/styles", getUserStyles);
 
 // Client serving
 router.get("*", (_req, res) => res.sendFile(clientIndex, (error: NodeJS.ErrnoException) => {

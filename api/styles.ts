@@ -202,3 +202,10 @@ export function getAllTopics(_req: Request, res: Response) {
     return res.status(200).json({ topics });
   });
 }
+
+export function getAllStyles(req: Request, res: Response) {
+  Style.distinct("usercss").exec((error, data) => {
+    if (error) return res.status(500).json({ error });
+    return res.status(200).json(data);
+  });
+}

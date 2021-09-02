@@ -1,6 +1,7 @@
 import VueRouter from 'vue-router';
 import Home from '@/views/Home.vue';
 import Profile from '@/views/Profile.vue';
+import Announcement from '@/components/dialogs/Announcement.vue';
 import HowToUseDialog from '@/components/dialogs/HowToUseDialog.vue';
 import AddStyleDialog from '@/components/dialogs/AddStyleDialog.vue';
 import LoginDialog from '@/components/dialogs/LoginDialog.vue';
@@ -21,6 +22,7 @@ const routes = [
       { path: '/style/:styleId', name: 'StyleModal' },
       { path: '/search/:query', name: 'Search' },
       { path: '/user/:username', name: 'UserFilter' },
+      { path: '/announcement', name: 'Announcement', component: Announcement },
       { path: '/how-to-use', name: 'HowToUseDialog', component: HowToUseDialog },
       { path: '/add-style', name: 'AddStyleDialog', component: AddStyleDialog },
       { path: '/login', name: 'LoginDialog', component: LoginDialog },
